@@ -6,9 +6,12 @@
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 let whirlOn = false;
 
-/* ---- Whirl field: particles orbiting in a ring band around the mascot.
-   The radial mask on the wrapper keeps the centre clear; their canvas sits
-   at opacity:0 and fades in over 1.5s once the field starts drawing. ---- */
+/* ---- Whirl field: app screens orbit the mascot on a ring band, with cream
+   particles drifting between them — the screens are runtime-fed canvas
+   drawing on the original site too (no DOM, no CSS; the API data arrives
+   with their app JS). Their radial mask keeps the centre clear for the UFO;
+   this canvas layer sits behind it, which is what makes the screens read as
+   "orbiting behind". Placeholder art: our own exported HappyClaw captures. ---- */
 const canvas = document.querySelector('.whirl-field-canvas');
 if (canvas && !reduced) {
   const ctx = canvas.getContext('2d');
@@ -17,6 +20,33 @@ if (canvas && !reduced) {
   let width = 0;
   let height = 0;
   const particles = [];
+  const tiles = [];
+
+  // The exported HappyClaw run: real before/after captures at both viewports.
+  const SCREENS = [
+    { src: '/runs/06dabc2c/before/desktop.png', w: 150, h: 94 },
+    { src: '/runs/06dabc2c/after/desktop.png', w: 150, h: 94 },
+    { src: '/runs/06dabc2c/before/mobile.png', w: 64, h: 138 },
+    { src: '/runs/06dabc2c/after/mobile.png', w: 64, h: 138 }
+  ];
+  const images = SCREENS.map(screen => {
+    const image = new Image();
+    image.src = screen.src;
+    return { image, ...screen };
+  });
+
+  for (let i = 0; i < 14; i++) {
+    const screen = SCREENS[i % SCREENS.length];
+    tiles.push({
+      image: images[i % images.length],
+      angle: (i / 14) * Math.PI * 2 + Math.random() * 0.3,
+      radius: 0.34 + Math.random() * 0.26,
+      speed: (0.00008 + Math.random() * 0.00022) * (i % 2 ? 1 : -1),
+      scale: 0.8 + Math.random() * 0.5,
+      tilt: (Math.random() - 0.5) * 0.22,
+      alpha: 0.45 + Math.random() * 0.4
+    });
+  }
 
   function resize() {
     width = box?.clientWidth || innerWidth;
@@ -40,6 +70,36 @@ if (canvas && !reduced) {
     });
   }
 
+  function drawTile(tile, rMax) {
+    if (!tile.image.image.complete || tile.image.image.naturalWidth === 0) return;
+    const r = tile.radius * rMax;
+    const x = width / 2 + Math.cos(tile.angle) * r;
+    const y = height / 2 + Math.sin(tile.angle) * r * 0.72; // slight ellipse, matches the mask
+    const w = tile.image.w * tile.scale;
+    const h = tile.image.h * tile.scale;
+    ctx.save();
+    ctx.globalAlpha = tile.alpha;
+    ctx.translate(x, y);
+    ctx.rotate(tile.tilt + Math.sin(tile.angle) * 0.06);
+    ctx.beginPath();
+    ctx.roundRect(-w / 2, -h / 2, w, h, 10);
+    ctx.closePath();
+    ctx.fill();
+    ctx.clip();
+    ctx.drawImage(tile.image.image, -w / 2, -h / 2, w, h);
+    ctx.restore();
+    ctx.save();
+    ctx.globalAlpha = tile.alpha * 0.5;
+    ctx.strokeStyle = 'rgba(240, 220, 200, 0.55)';
+    ctx.lineWidth = 1;
+    ctx.translate(x, y);
+    ctx.rotate(tile.tilt + Math.sin(tile.angle) * 0.06);
+    ctx.beginPath();
+    ctx.roundRect(-w / 2, -h / 2, w, h, 10);
+    ctx.stroke();
+    ctx.restore();
+  }
+
   function frame() {
     if (!whirlOn) {
       whirlOn = true;
@@ -57,6 +117,10 @@ if (canvas && !reduced) {
       ctx.beginPath();
       ctx.arc(cx + Math.cos(p.angle) * r, cy + Math.sin(p.angle) * r, p.size, 0, Math.PI * 2);
       ctx.fill();
+    }
+    for (const tile of tiles) {
+      tile.angle += tile.speed * 16;
+      drawTile(tile, rMax);
     }
     requestAnimationFrame(frame);
   }
