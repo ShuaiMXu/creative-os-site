@@ -1,8 +1,6 @@
-// Portal interactions: agent adapter tabs (from the real registry in
-// packages/harness-core/agents.js), token sliders, copy-to-clipboard.
+// Portal interactions: agent adapter tabs (the real argv from the registry in
+// packages/harness-core/agents.js) and copy-to-clipboard with a toast.
 
-// The exact argv each registered adapter declares. Kept in sync with
-// packages/harness-core/agents.js — if an adapter changes, so does this page.
 const AGENTS = {
   codex: {
     label: 'codex exec',
@@ -22,7 +20,6 @@ const argvPre = document.getElementById('agent-argv');
 const noteP = document.getElementById('agent-note');
 const labelSpan = document.getElementById('agent-label');
 const copyButton = document.getElementById('agent-copy');
-const agentPanel = document.getElementById('agent-panel');
 
 function selectAgent(id) {
   const agent = AGENTS[id];
@@ -30,47 +27,15 @@ function selectAgent(id) {
   argvPre.textContent = agent.argv;
   noteP.textContent = agent.note;
   copyButton.dataset.copy = agent.copy;
-  agentPanel.setAttribute('aria-labelledby', `tab-${id}`);
 }
 
-const tabs = [...document.querySelectorAll('.tab')];
-for (const tab of tabs) {
+for (const tab of document.querySelectorAll('.tab')) {
   tab.addEventListener('click', () => {
-    for (const other of tabs) {
-      other.setAttribute('aria-selected', String(other === tab));
-      other.tabIndex = other === tab ? 0 : -1;
-    }
+    for (const other of document.querySelectorAll('.tab')) other.setAttribute('aria-selected', String(other === tab));
     selectAgent(tab.dataset.agent);
-  });
-  tab.addEventListener('keydown', event => {
-    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
-    event.preventDefault();
-    const current = tabs.indexOf(tab);
-    const next = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : (current + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
-    tabs[next].click();
-    tabs[next].focus();
   });
 }
 selectAgent('codex');
-
-// Token sliders — each one drives one CSS custom property, exactly the way a
-// design token is meant to work: change the declaration, everything redraws.
-const root = document.documentElement;
-for (const slider of document.querySelectorAll('[data-token]')) {
-  slider.addEventListener('input', () => {
-    const value = slider.value;
-    if (slider.dataset.token === 'radius') {
-      root.style.setProperty('--card-radius', `${value}px`);
-      document.getElementById('radius-val').textContent = `${value}px`;
-    } else if (slider.dataset.token === 'hue') {
-      root.style.setProperty('--accent-h', value);
-      document.getElementById('hue-val').textContent = `${value}°`;
-    } else if (slider.dataset.token === 'surface') {
-      root.style.setProperty('--surface-l', value);
-      document.getElementById('surface-val').textContent = `${value}%`;
-    }
-  });
-}
 
 let toastTimer = null;
 function showToast(message) {

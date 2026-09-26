@@ -10,140 +10,132 @@
 </head>
 <body>
   <header class="nav">
-    <div class="wrap nav-row">
-      <a class="brand" href="/apps/portal/">creative os<span class="brand-tag">PORTAL</span></a>
+    <div class="nav-row">
+      <a class="brand" href="/apps/portal/">creative os</a>
       <nav aria-label="主导航">
+        <a href="#loop">闭环</a>
+        <a href="#skills">Skills</a>
         <a href="#agents">Agents</a>
-        <a href="#setup">开始使用</a>
-        <a href="/apps/web/">产品页</a>
-        <a class="nav-accent" href="/apps/designer/?case=happyclaw">Workbench</a>
-        <a class="nav-accent" href="https://github.com/ShuaiMXu/creative-os" target="_blank" rel="noreferrer">GitHub ↗</a>
+        <a href="#setup">接入</a>
+        <a href="#status">状态</a>
       </nav>
+      <div class="nav-actions">
+        <a class="nav-link" href="https://github.com/ShuaiMXu/creative-os" target="_blank" rel="noreferrer">GitHub ↗</a>
+        <a class="btn accent small" href="/apps/designer/?case=happyclaw">打开 Workbench</a>
+      </div>
     </div>
   </header>
 
+  <section class="hero" aria-label="Product Designer">
+    <div class="hero-inner">
+      <div class="badges fade-up" style="--delay:.0s">
+        <span class="badge-pill mono">open-source harness · 27 versioned skills</span>
+        <span class="badge-pill mono">110 tests · 4 schemas</span>
+      </div>
+      <h1 class="fade-up" style="--delay:.08s">跑得起来的产品，<br>也该像被<span class="accent">设计过</span>。</h1>
+      <p class="hero-sub fade-up" style="--delay:.16s">采集证据、诊断、一次限定范围的修改、重新渲染、人的判定——agent 只负责改代码，闭环由本地 Harness 掌管。</p>
+      <div class="hero-actions fade-up" style="--delay:.24s">
+        <a class="btn accent" href="#setup">开始使用 <span aria-hidden="true">↓</span></a>
+        <a class="btn ghost" href="/apps/designer/?case=happyclaw">看一次真实审阅 <span aria-hidden="true">↗</span></a>
+      </div>
+      <p class="scroll-hint mono fade-up" style="--delay:.32s" aria-hidden="true">scroll ↓</p>
+    </div>
+  </section>
+
   <main>
-    <section class="hero wrap">
-      <p class="eyebrow mono">PRODUCT DESIGNER · 给 vibe coding 产物的设计闭环</p>
-      <h1>跑得起来的产品，<br>也该像被<span class="accent">设计过</span>。</h1>
-      <p class="hero-lead">一个本地 Harness：采集证据、诊断、一次限定范围的修改、重新渲染、人的判定。agent 负责执行修改，Harness 负责保存边界和证据。</p>
-      <div class="hero-actions">
-        <a class="button solid" href="#setup">开始使用 <span aria-hidden="true">↓</span></a>
-        <a class="button ghost" href="/apps/designer/?case=happyclaw">打开一次真实审阅 <span aria-hidden="true">↗</span></a>
+    <section id="loop" class="block">
+      <div class="container">
+        <h2>一个闭环，<br>七步都留<span class="accent">证据</span>。</h2>
+        <div class="card-grid">
+          <article class="card"><span class="card-no mono">01</span><h3>采集证据</h3><p>Playwright 双视口截图，HTTP、DOM、溢出与错误遮罩检查。证据带 ID，可追溯。</p></article>
+          <article class="card"><span class="card-no mono">02</span><h3>盘点设计基础</h3><p>token、组件、模式先记为「已观察」；人批准的才是规则。</p></article>
+          <article class="card"><span class="card-no mono">03</span><h3>诊断排序</h3><p>impact × confidence ÷ effort；人可以推翻，必须留理由。</p></article>
+          <article class="card"><span class="card-no mono">04</span><h3>隔离执行</h3><p>选定的 agent 在独立 worktree 里改，不 push、不部署。</p></article>
+          <article class="card"><span class="card-no mono">05</span><h3>前后评估</h3><p>同样的状态重新渲染，结构检查逐项对照。</p></article>
+          <article class="card"><span class="card-no mono">06</span><h3>独立 Visual QA</h3><p>截图复核单独作证；没通过，不接受。</p></article>
+          <article class="card"><span class="card-no mono">07</span><h3>人的判定</h3><p>accept / reject 带理由，写入不可变的 run 账本。</p></article>
+        </div>
       </div>
-      <p class="trust mono">
-        <span>27 个带版本 Skill</span><span aria-hidden="true">·</span>
-        <span>4 份 schema 协议</span><span aria-hidden="true">·</span>
-        <span>110 项测试</span><span aria-hidden="true">·</span>
-        <span>双视口证据采集</span>
-      </p>
     </section>
 
-    <section id="agents" class="wrap section">
-      <h2>用你的 agent <span class="accent">跑一遍</span>。</h2>
-      <p class="section-lead">两个适配器，同一条权限边界：独立 worktree，不 push、不 merge、不部署，宿主仓库指纹前后核验——被动过，该次 run 即判失败。</p>
-      <div class="tabs" role="tablist" aria-label="选择 agent">
-        <button type="button" role="tab" id="tab-codex" aria-controls="agent-panel" aria-selected="true" tabindex="0" data-agent="codex" class="tab mono">codex</button>
-        <button type="button" role="tab" id="tab-claude-code" aria-controls="agent-panel" aria-selected="false" tabindex="-1" data-agent="claude-code" class="tab mono">claude code</button>
+    <section id="skills" class="block alt">
+      <div class="container">
+        <h2>27 个 Skill，<br>按<span class="accent">角色</span>分组。</h2>
+        <p class="section-lead">每个 Skill 带版本、必填输入与结果契约；处理器走白名单，结果一经写入 run 即不可变。</p>
+        <div class="role-grid">
+          <div class="role"><span class="role-count mono">8</span><span class="role-name mono">foundation</span><p>品牌、token、组件与模式的盘点</p></div>
+          <div class="role"><span class="role-count mono">10</span><span class="role-name mono">diagnose</span><p>一致性、信息架构、可访问性、信任与转化</p></div>
+          <div class="role"><span class="role-count mono">2</span><span class="role-name mono">plan</span><p>把 finding 收敛成限定范围的修改意图</p></div>
+          <div class="role"><span class="role-count mono">3</span><span class="role-name mono">review</span><p>视觉层级、响应式与独立 Visual QA</p></div>
+          <div class="role"><span class="role-count mono">4</span><span class="role-name mono">learn</span><p>把人的判定沉淀为项目知识与回归用例</p></div>
+        </div>
       </div>
-      <div class="terminal" id="agent-panel" role="tabpanel" aria-labelledby="tab-codex">
-        <div class="terminal-bar mono"><span id="agent-label">codex exec</span><button type="button" id="agent-copy" class="terminal-copy mono" data-copy="">复制</button></div>
-        <pre class="mono" id="agent-argv">codex exec -C &lt;worktree&gt; -s workspace-write --json -o agent-last-message.md -</pre>
-        <p class="terminal-note" id="agent-note">Prompt 走 stdin；仓库文件一律当作数据，不当作指令。</p>
-      </div>
-      <p class="caption mono">适配器注册表：packages/harness-core/agents.js · 未声明如何满足每条边界的适配器不会被加载</p>
     </section>
 
-    <section id="setup" class="wrap section">
-      <h2>从示例配置，跑通<span class="accent">第一轮</span>。</h2>
-      <ol class="steps">
-        <li>
-          <p class="step-title">先准备 HappyClaw 示例仓库，或复制 project.json 改成你的仓库、预览地址和启动命令；然后接入并采集基线。</p>
-          <div class="terminal">
-            <div class="terminal-bar mono"><span>bash</span><button type="button" class="terminal-copy mono" data-copy="pnpm harness onboard --config examples/happyclaw-site/project.json">复制</button></div>
-            <pre class="mono">pnpm harness onboard --config examples/happyclaw-site/project.json</pre>
-          </div>
-        </li>
-        <li>
-          <p class="step-title">运行有证据边界的 Review Skills，生成 diagnosis；看完截图和诊断后，再确认一条 finding。</p>
-          <div class="terminal">
-            <div class="terminal-bar mono"><span>bash</span><button type="button" class="terminal-copy mono" data-copy="pnpm harness skill --run .harness/runs/RUN_ID --skill visual-hierarchy-reviewer&#10;pnpm harness diagnose --run .harness/runs/RUN_ID&#10;pnpm harness confirm --run .harness/runs/RUN_ID --finding F1 --verdict supported --note &quot;基线仍然支持这条 finding。&quot;&#10;pnpm harness plan --run .harness/runs/RUN_ID --finding F1&#10;pnpm harness execute --run .harness/runs/RUN_ID --repo ../your-app --agent codex">复制全部</button></div>
-            <pre class="mono">pnpm harness skill   --run … --skill visual-hierarchy-reviewer
-pnpm harness diagnose --run …
-pnpm harness confirm --run … --finding F1 --verdict supported --note "…"
+    <section id="agents" class="block">
+      <div class="container">
+        <h2>用你的 agent<br><span class="accent">跑一遍</span>。</h2>
+        <p class="section-lead">两个适配器，同一条权限边界：独立 worktree，不 push、不 merge、不部署，宿主仓库指纹前后核验——被动过，该次 run 即判失败。</p>
+        <div class="tabs" role="tablist" aria-label="选择 agent">
+          <button type="button" role="tab" aria-selected="true" data-agent="codex" class="tab mono">codex</button>
+          <button type="button" role="tab" aria-selected="false" data-agent="claude-code" class="tab mono">claude code</button>
+        </div>
+        <div class="terminal">
+          <div class="terminal-bar mono"><span id="agent-label">codex exec</span><button type="button" id="agent-copy" class="terminal-copy mono" data-copy="">复制</button></div>
+          <pre class="mono" id="agent-argv">codex exec -C &lt;worktree&gt; -s workspace-write --json -o agent-last-message.md -</pre>
+          <p class="terminal-note" id="agent-note">Prompt 走 stdin；仓库文件一律当作数据，不当作指令。</p>
+        </div>
+        <p class="caption mono">适配器注册表：packages/harness-core/agents.js · 说不清如何满足边界的适配器不会被加载</p>
+      </div>
+    </section>
+
+    <section id="setup" class="block alt">
+      <div class="container">
+        <h2>一条命令，<br><span class="accent">五分钟</span>接入。</h2>
+        <ol class="steps">
+          <li>
+            <p class="step-title">接入并采基线——校验 checkout、起预览、等页面就绪、建 run、双视口截图。</p>
+            <div class="terminal">
+              <div class="terminal-bar mono"><span>bash</span><button type="button" class="terminal-copy mono" data-copy="pnpm harness onboard --config examples/happyclaw-site/project.json">复制</button></div>
+              <pre class="mono">pnpm harness onboard --config examples/happyclaw-site/project.json</pre>
+            </div>
+          </li>
+          <li>
+            <p class="step-title">看完基线截图，确认一条 finding，剩下的交给闭环。</p>
+            <div class="terminal">
+              <div class="terminal-bar mono"><span>bash</span><button type="button" class="terminal-copy mono" data-copy="pnpm harness confirm --run .harness/runs/RUN_ID --finding F1 --verdict supported --note &quot;基线仍然支持这条 finding。&quot;&#10;pnpm harness plan --run .harness/runs/RUN_ID --finding F1&#10;pnpm harness execute --run .harness/runs/RUN_ID --repo ../your-app --agent codex">复制全部</button></div>
+              <pre class="mono">pnpm harness confirm --run … --finding F1 --verdict supported --note "…"
 pnpm harness plan    --run … --finding F1
 pnpm harness execute --run … --repo ../your-app --agent codex</pre>
-          </div>
-        </li>
-      </ol>
-      <p class="caption mono">需要 Node 22.15+、pnpm 11.19+、Chrome 或 Edge，以及一个可运行的本地 Git checkout · 完整流程见 docs/harness.md</p>
-    </section>
-
-    <section class="wrap section">
-      <h2>闭环里，现在就能跑的<span class="accent">七件事</span>。</h2>
-      <div class="pitch-grid">
-        <article><h3>采集证据</h3><p>Playwright 双视口截图，HTTP、DOM、水平溢出与错误遮罩检查，证据带 ID。</p></article>
-        <article><h3>盘点设计基础</h3><p>token、组件、模式先记为「已观察」；人批准的才是规则。</p></article>
-        <article><h3>诊断排序</h3><p>impact × confidence ÷ effort 排优先级；人可以推翻，必须留理由。</p></article>
-        <article><h3>隔离执行</h3><p>选定的 agent 在独立 worktree 里做一次限定范围的修改。</p></article>
-        <article><h3>前后评估</h3><p>同样的状态重新渲染，结构检查逐项对照。</p></article>
-        <article><h3>独立 Visual QA</h3><p>截图层面的复核单独作证；没通过，不接受。</p></article>
-        <article><h3>人的判定</h3><p>accept / reject 带理由写入不可变的 run 账本。</p></article>
+            </div>
+          </li>
+        </ol>
+        <p class="caption mono">Node 22.15+ / pnpm 11.19+ · 换应用就复制一份 project.json 改四个字段</p>
       </div>
     </section>
 
-    <section class="wrap section">
-      <div class="playground">
-        <div class="playground-head">
-          <p class="eyebrow mono">TOKENS, LIVE · 令牌实验室</p>
-          <h2>三个滑块，三个 token，<span class="accent">即时重绘</span>。</h2>
-          <p class="section-lead">仓库里的 Design Foundation 治理的就是这些东西——圆角、色相、面板明度。观察到的只是候选，批准过的才约束生成。</p>
-        </div>
-        <div class="playground-grid">
-          <label class="slider">
-            <span class="slider-label mono">radius（圆角）<output id="radius-val">12px</output></span>
-            <input type="range" min="0" max="24" value="12" data-token="radius" aria-label="卡片圆角">
-          </label>
-          <label class="slider">
-            <span class="slider-label mono">hue（强调色相）<output id="hue-val">38°</output></span>
-            <input type="range" min="0" max="360" value="38" data-token="hue" aria-label="强调色相">
-          </label>
-          <label class="slider">
-            <span class="slider-label mono">surface（面板明度）<output id="surface-val">10%</output></span>
-            <input type="range" min="6" max="16" value="10" data-token="surface" aria-label="面板明度">
-          </label>
-        </div>
-        <div class="swatch-row" aria-hidden="true">
-          <span class="swatch mono">--card-radius</span>
-          <span class="swatch mono">--accent-h</span>
-          <span class="swatch mono">--surface-l</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="status section-full">
-      <div class="wrap">
-        <h2>能用什么，<span class="accent">没什么</span>，写在一处。</h2>
+    <section id="status" class="block">
+      <div class="container">
+        <h2>能用什么，<br><span class="accent">没什么</span>，写在一处。</h2>
         <div class="status-grid">
-          <div>
+          <div class="status-col">
             <p class="status-head mono">已可用</p>
             <ul>
               <li>Experience Spec 校验，证据 ID 可追溯</li>
               <li>双视口浏览器采集与结构检查</li>
-              <li>Capture Plan 多步任务状态重放</li>
               <li>27 个带版本 Skill，处理器白名单</li>
               <li>隔离执行 + 宿主仓库指纹核验</li>
               <li>前后评估、独立 Visual QA、人的判定</li>
               <li>不可变的 run 账本与导出</li>
             </ul>
           </div>
-          <div>
+          <div class="status-col">
             <p class="status-head mono wip">仍在开发</p>
             <ul>
               <li>看截图的视觉判断（当前一律 needs-evidence）</li>
               <li>Experience Score 校准与发布</li>
               <li>增量审阅与 Git diff 影响映射</li>
-              <li>更多动作类型与原生 App 状态重放</li>
+              <li>多步任务采集与状态重放</li>
               <li>Workbench 的写入操作（现仅 CLI）</li>
             </ul>
           </div>
@@ -152,23 +144,28 @@ pnpm harness execute --run … --repo ../your-app --agent codex</pre>
       </div>
     </section>
 
-    <section class="wrap section refs">
-      <h2>参考与<span class="accent">灵感</span>。</h2>
-      <div class="ref-list">
-        <a href="https://appllama.io/" target="_blank" rel="noreferrer"><span>Appllama（移动应用证据库与 Skill 分发）</span><span class="mono dim">appllama.io</span></a>
-        <a href="https://godly.website/" target="_blank" rel="noreferrer"><span>Godly Website（现代 Web 设计）</span><span class="mono dim">godly.website</span></a>
-        <a href="https://linear.app/" target="_blank" rel="noreferrer"><span>Linear（产品工艺标杆）</span><span class="mono dim">linear.app</span></a>
-        <a href="https://ui.shadcn.com/" target="_blank" rel="noreferrer"><span>shadcn / ui（无头组件）</span><span class="mono dim">ui.shadcn.com</span></a>
-        <a href="https://github.com/ShuaiMXu/creative-os/blob/main/docs/happyclaw-case.md" target="_blank" rel="noreferrer"><span>HappyClaw 案例记录</span><span class="mono dim">docs/</span></a>
+    <section class="cta">
+      <div class="container">
+        <h2>现在，从一个<br><span class="accent">真实的应用</span>开始。</h2>
+        <div class="cta-command mono">
+          <span class="prompt">$</span>
+          <code>pnpm harness onboard --config examples/happyclaw-site/project.json</code>
+          <button type="button" class="terminal-copy" data-copy="pnpm harness onboard --config examples/happyclaw-site/project.json" aria-label="复制命令">复制</button>
+        </div>
+        <a class="btn ghost" href="https://github.com/ShuaiMXu/creative-os" target="_blank" rel="noreferrer">GitHub 仓库 <span aria-hidden="true">↗</span></a>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="wrap footer-row">
-      <span class="mono">CREATIVE OS · PRODUCT DESIGNER</span>
-      <span class="mono">本页是静态门户；审阅数据只存在于你本地的 run 目录</span>
-      <a href="https://github.com/ShuaiMXu/creative-os" target="_blank" rel="noreferrer">Source ↗</a>
+    <div class="container footer-row">
+      <span class="wordmark">creative os</span>
+      <nav aria-label="页脚">
+        <a href="/apps/web/">产品页</a>
+        <a href="/apps/designer/?case=happyclaw">Workbench</a>
+        <a href="https://github.com/ShuaiMXu/creative-os" target="_blank" rel="noreferrer">Source</a>
+      </nav>
+      <span class="mono dim">本页是静态门户；审阅数据只存在于你本地的 run 目录</span>
     </div>
   </footer>
 
