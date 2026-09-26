@@ -1,0 +1,87 @@
+{
+  "schemaVersion": "0.1",
+  "skill": {
+    "id": "visual-hierarchy-reviewer",
+    "version": "0.1.0",
+    "role": "diagnose"
+  },
+  "runAt": "2026-09-20T15:39:55.981Z",
+  "status": "needs-evidence",
+  "evidence": [
+    {
+      "viewport": "desktop",
+      "screenshot": "before/desktop.png",
+      "h1": [
+        "让 AI Agent\n在你的团队里\n真正干活。"
+      ],
+      "actions": [
+        {
+          "label": "HappyClaw",
+          "href": "/"
+        },
+        {
+          "label": "特性",
+          "href": "#features"
+        },
+        {
+          "label": "截图",
+          "href": "#screenshots"
+        },
+        {
+          "label": "快速开始",
+          "href": "#quickstart"
+        },
+        {
+          "label": "GitHub",
+          "href": "https://github.com/riba2534/happyclaw"
+        },
+        {
+          "label": "在线试用\n↗",
+          "href": "https://claw.shakaka.xyz"
+        },
+        {
+          "label": "查看开源代码\n↗",
+          "href": "https://github.com/riba2534/happyclaw"
+        },
+        {
+          "label": "想自己部署？查看三步快速开始 ↓",
+          "href": "#quickstart"
+        }
+      ]
+    },
+    {
+      "viewport": "mobile",
+      "screenshot": "before/mobile.png",
+      "h1": [
+        "让 AI Agent\n在你的团队里\n真正干活。"
+      ],
+      "actions": [
+        {
+          "label": "HappyClaw",
+          "href": "/"
+        },
+        {
+          "label": "菜单",
+          "href": null
+        },
+        {
+          "label": "在线试用\n↗",
+          "href": "https://claw.shakaka.xyz"
+        },
+        {
+          "label": "查看开源代码\n↗",
+          "href": "https://github.com/riba2534/happyclaw"
+        },
+        {
+          "label": "想自己部署？查看三步快速开始 ↓",
+          "href": "#quickstart"
+        }
+      ]
+    }
+  ],
+  "findings": [],
+  "proposedUpdates": [],
+  "limitations": [
+    "DOM structure can flag review targets but cannot judge visual hierarchy without image analysis and the critical user task."
+  ]
+}

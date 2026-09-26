@@ -1,0 +1,185 @@
+{
+  "version": "0.1",
+  "id": "8f60c961",
+  "createdAt": "2026-09-20T15:30:52.140Z",
+  "source": "https://github.com/ShuaiMXu/happyclaw-site (baseline cf1da7b, reviewed 2026-09-18). The live happyclaw.cc page currently differs from this repository.",
+  "url": "http://127.0.0.1:4321/",
+  "findingId": null,
+  "confirmation": null,
+  "captures": {
+    "before": {
+      "at": "2026-09-20T15:30:54.732Z",
+      "url": "http://127.0.0.1:4321/",
+      "channel": "chrome",
+      "viewports": {
+        "desktop": {
+          "width": 1280,
+          "height": 800,
+          "status": 200,
+          "finalUrl": "http://127.0.0.1:4321/",
+          "screenshot": "before/desktop.png",
+          "dom": {
+            "title": "HappyClaw - 让 AI Agent 在你的团队里真正干活",
+            "h1": [
+              "让 AI Agent\n在你的团队里\n真正干活。"
+            ],
+            "actions": [
+              {
+                "label": "HappyClaw",
+                "href": "/"
+              },
+              {
+                "label": "特性",
+                "href": "#features"
+              },
+              {
+                "label": "截图",
+                "href": "#screenshots"
+              },
+              {
+                "label": "快速开始",
+                "href": "#quickstart"
+              },
+              {
+                "label": "GitHub",
+                "href": "https://github.com/riba2534/happyclaw"
+              },
+              {
+                "label": "在线试用\n↗",
+                "href": "https://claw.shakaka.xyz"
+              },
+              {
+                "label": "查看开源代码\n↗",
+                "href": "https://github.com/riba2534/happyclaw"
+              },
+              {
+                "label": "想自己部署？查看三步快速开始 ↓",
+                "href": "#quickstart"
+              }
+            ],
+            "horizontalOverflow": false
+          }
+        },
+        "mobile": {
+          "width": 390,
+          "height": 844,
+          "status": 200,
+          "finalUrl": "http://127.0.0.1:4321/",
+          "screenshot": "before/mobile.png",
+          "dom": {
+            "title": "HappyClaw - 让 AI Agent 在你的团队里真正干活",
+            "h1": [
+              "让 AI Agent\n在你的团队里\n真正干活。"
+            ],
+            "actions": [
+              {
+                "label": "HappyClaw",
+                "href": "/"
+              },
+              {
+                "label": "菜单",
+                "href": null
+              },
+              {
+                "label": "在线试用\n↗",
+                "href": "https://claw.shakaka.xyz"
+              },
+              {
+                "label": "查看开源代码\n↗",
+                "href": "https://github.com/riba2534/happyclaw"
+              },
+              {
+                "label": "想自己部署？查看三步快速开始 ↓",
+                "href": "#quickstart"
+              }
+            ],
+            "horizontalOverflow": false
+          }
+        }
+      }
+    },
+    "after": null
+  },
+  "plan": null,
+  "execution": null,
+  "skills": [
+    {
+      "id": "foundation-extractor",
+      "version": "0.1.0",
+      "status": "complete",
+      "path": "skills/foundation-extractor.json",
+      "runAt": "2026-09-20T15:39:55.217Z"
+    },
+    {
+      "id": "consistency-auditor",
+      "version": "0.1.0",
+      "status": "complete",
+      "path": "skills/consistency-auditor.json",
+      "runAt": "2026-09-20T15:39:55.597Z"
+    },
+    {
+      "id": "visual-hierarchy-reviewer",
+      "version": "0.1.0",
+      "status": "needs-evidence",
+      "path": "skills/visual-hierarchy-reviewer.json",
+      "runAt": "2026-09-20T15:39:55.981Z"
+    }
+  ],
+  "evaluation": null,
+  "judgment": null,
+  "onboarding": {
+    "status": "ready",
+    "startedAt": "2026-09-20T15:30:35.453Z",
+    "config": {
+      "version": "0.1",
+      "configPath": "project.json",
+      "repo": "happyclaw-site",
+      "url": "http://127.0.0.1:4321/",
+      "browser": "chrome",
+      "start": {
+        "command": "npm",
+        "args": [
+          "run",
+          "dev",
+          "--",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "4321"
+        ],
+        "cwd": "happyclaw-site",
+        "envKeys": [
+          "ASTRO_TELEMETRY_DISABLED"
+        ]
+      }
+    },
+    "repository": {
+      "root": "happyclaw-site",
+      "commit": "17314f0e714e2f8c395913a63dd80127f4925d22",
+      "dirty": false
+    },
+    "preview": {
+      "status": 200,
+      "finalUrl": "http://127.0.0.1:4321/"
+    },
+    "viewports": {
+      "desktop": {
+        "width": 1280,
+        "height": 800
+      },
+      "mobile": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    "completedAt": "2026-09-20T15:30:54.880Z"
+  },
+  "diagnosis": {
+    "path": "diagnosis.json",
+    "schemaVersion": "0.1",
+    "evaluatorVersion": "diagnosis-core@0.1.0",
+    "findingCount": 3,
+    "scoreStatus": "insufficient-evidence",
+    "generatedAt": "2026-09-20T15:40:41.102Z"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "0.1",
+  "skill": {
+    "id": "fix-planner",
+    "version": "0.1.0",
+    "role": "plan"
+  },
+  "runAt": "2026-09-19T14:11:49.121Z",
+  "status": "complete",
+  "evidence": [
+    {
+      "id": "E1",
+      "state": "Repository / src/components/Hero.astro",
+      "observation": "The hero headline is only the product name, HappyClaw. The first descriptive line labels it a self-hosted multi-user AI Agent system; it does not state the team outcome.",
+      "origin": "source-code"
+    },
+    {
+      "id": "E2",
+      "state": "Repository / src/components/Hero.astro",
+      "observation": "The two hero actions are a jump to Quick start and an external GitHub link. The online trial shown on the current public site is absent from this repository version.",
+      "origin": "source-code"
+    }
+  ],
+  "findings": [],
+  "proposedUpdates": [
+    {
+      "type": "fix-plan",
+      "findingId": "F1",
+      "intent": "Lead with a concrete team outcome and explain self-hosting as the supporting mechanism. Make the online trial the primary action; keep GitHub and deployment instructions as clear alternatives.",
+      "constraints": [],
+      "acceptance": [
+        "Preserve existing working paths",
+        "Render the same desktop and mobile states",
+        "Record regressions and remaining uncertainty"
+      ]
+    }
+  ],
+  "limitations": [
+    "This plan preserves declared constraints; file-level edit scope still requires repository inspection."
+  ]
+}

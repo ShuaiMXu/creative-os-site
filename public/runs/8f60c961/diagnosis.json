@@ -1,0 +1,352 @@
+{
+  "schemaVersion": "0.1",
+  "generatedAt": "2026-09-20T15:40:41.102Z",
+  "evaluatorVersion": "diagnosis-core@0.1.0",
+  "evidence": [
+    {
+      "id": "spec:E1",
+      "type": "authored-observation",
+      "source": "source-code",
+      "state": "Repository / src/components/Hero.astro",
+      "observation": "The hero headline is only the product name, HappyClaw. The first descriptive line labels it a self-hosted multi-user AI Agent system; it does not state the team outcome."
+    },
+    {
+      "id": "spec:E2",
+      "type": "authored-observation",
+      "source": "source-code",
+      "state": "Repository / src/components/Hero.astro",
+      "observation": "The two hero actions are a jump to Quick start and an external GitHub link. The online trial shown on the current public site is absent from this repository version."
+    },
+    {
+      "id": "spec:E3",
+      "type": "authored-observation",
+      "source": "source-code",
+      "state": "Repository / src/pages/index.astro",
+      "observation": "The product screenshots come after the full-height hero and a feature-highlights section, so proof of the working interface is not in the first screen of this repository version."
+    },
+    {
+      "id": "capture:before:desktop",
+      "type": "browser-capture",
+      "phase": "before",
+      "viewport": "desktop",
+      "source": "before/desktop.png",
+      "facts": {
+        "status": 200,
+        "finalUrl": "http://127.0.0.1:4321/",
+        "h1": [
+          "让 AI Agent\n在你的团队里\n真正干活。"
+        ],
+        "actions": [
+          {
+            "label": "HappyClaw",
+            "href": "/"
+          },
+          {
+            "label": "特性",
+            "href": "#features"
+          },
+          {
+            "label": "截图",
+            "href": "#screenshots"
+          },
+          {
+            "label": "快速开始",
+            "href": "#quickstart"
+          },
+          {
+            "label": "GitHub",
+            "href": "https://github.com/riba2534/happyclaw"
+          },
+          {
+            "label": "在线试用\n↗",
+            "href": "https://claw.shakaka.xyz"
+          },
+          {
+            "label": "查看开源代码\n↗",
+            "href": "https://github.com/riba2534/happyclaw"
+          },
+          {
+            "label": "想自己部署？查看三步快速开始 ↓",
+            "href": "#quickstart"
+          }
+        ],
+        "horizontalOverflow": false
+      }
+    },
+    {
+      "id": "capture:before:mobile",
+      "type": "browser-capture",
+      "phase": "before",
+      "viewport": "mobile",
+      "source": "before/mobile.png",
+      "facts": {
+        "status": 200,
+        "finalUrl": "http://127.0.0.1:4321/",
+        "h1": [
+          "让 AI Agent\n在你的团队里\n真正干活。"
+        ],
+        "actions": [
+          {
+            "label": "HappyClaw",
+            "href": "/"
+          },
+          {
+            "label": "菜单",
+            "href": null
+          },
+          {
+            "label": "在线试用\n↗",
+            "href": "https://claw.shakaka.xyz"
+          },
+          {
+            "label": "查看开源代码\n↗",
+            "href": "https://github.com/riba2534/happyclaw"
+          },
+          {
+            "label": "想自己部署？查看三步快速开始 ↓",
+            "href": "#quickstart"
+          }
+        ],
+        "horizontalOverflow": false
+      }
+    },
+    {
+      "id": "skill:consistency-auditor:0:0",
+      "type": "skill-evidence",
+      "source": "consistency-auditor@0.1.0",
+      "value": {
+        "value": "#5eead4",
+        "count": 6,
+        "sources": [
+          "src/components/Architecture.astro"
+        ]
+      }
+    },
+    {
+      "id": "skill:consistency-auditor:0:1",
+      "type": "skill-evidence",
+      "source": "consistency-auditor@0.1.0",
+      "value": {
+        "value": "#2dd4bf",
+        "count": 5,
+        "sources": [
+          "src/components/Architecture.astro"
+        ]
+      }
+    },
+    {
+      "id": "skill:consistency-auditor:0:2",
+      "type": "skill-evidence",
+      "source": "consistency-auditor@0.1.0",
+      "value": {
+        "value": "#2dd4bf15",
+        "count": 3,
+        "sources": [
+          "src/components/Architecture.astro"
+        ]
+      }
+    },
+    {
+      "id": "skill:consistency-auditor:0:3",
+      "type": "skill-evidence",
+      "source": "consistency-auditor@0.1.0",
+      "value": {
+        "value": "#d1d5db",
+        "count": 15,
+        "sources": [
+          "src/components/Architecture.astro"
+        ]
+      }
+    },
+    {
+      "id": "skill:consistency-auditor:0:4",
+      "type": "skill-evidence",
+      "source": "consistency-auditor@0.1.0",
+      "value": {
+        "value": "#14b8a6",
+        "count": 8,
+        "sources": [
+          "src/components/Architecture.astro"
+        ]
+      }
+    },
+    {
+      "id": "skill:consistency-auditor:0:5",
+      "type": "skill-evidence",
+      "source": "consistency-auditor@0.1.0",
+      "value": {
+        "value": "#14b8a615",
+        "count": 4,
+        "sources": [
+          "src/components/Architecture.astro"
+        ]
+      }
+    },
+    {
+      "id": "skill:consistency-auditor:0:6",
+      "type": "skill-evidence",
+      "source": "consistency-auditor@0.1.0",
+      "value": {
+        "value": "#0d9488",
+        "count": 7,
+        "sources": [
+          "src/components/Architecture.astro",
+          "src/components/TechStack.astro"
+        ]
+      }
+    },
+    {
+      "id": "skill:consistency-auditor:0:7",
+      "type": "skill-evidence",
+      "source": "consistency-auditor@0.1.0",
+      "value": {
+        "value": "#0d948815",
+        "count": 2,
+        "sources": [
+          "src/components/Architecture.astro"
+        ]
+      }
+    },
+    {
+      "id": "skill:consistency-auditor:0:8",
+      "type": "skill-evidence",
+      "source": "consistency-auditor@0.1.0",
+      "value": {
+        "value": "#0f766e",
+        "count": 5,
+        "sources": [
+          "src/components/Architecture.astro"
+        ]
+      }
+    },
+    {
+      "id": "skill:consistency-auditor:0:9",
+      "type": "skill-evidence",
+      "source": "consistency-auditor@0.1.0",
+      "value": {
+        "value": "#0f766e15",
+        "count": 3,
+        "sources": [
+          "src/components/Architecture.astro"
+        ]
+      }
+    },
+    {
+      "id": "skill:consistency-auditor:0:10",
+      "type": "skill-evidence",
+      "source": "consistency-auditor@0.1.0",
+      "value": {
+        "value": "#115e59",
+        "count": 4,
+        "sources": [
+          "src/components/Architecture.astro"
+        ]
+      }
+    },
+    {
+      "id": "skill:consistency-auditor:0:11",
+      "type": "skill-evidence",
+      "source": "consistency-auditor@0.1.0",
+      "value": {
+        "value": "#115e5915",
+        "count": 3,
+        "sources": [
+          "src/components/Architecture.astro"
+        ]
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "title": "The first screen describes the category before the user outcome",
+      "rootKey": "the first screen describes the category before the user outcome",
+      "evidenceRefs": [
+        "spec:E1",
+        "spec:E2"
+      ],
+      "sources": [
+        {
+          "type": "experience-spec",
+          "id": "F1"
+        }
+      ],
+      "verificationStatus": "authored-candidate",
+      "impact": 5,
+      "confidence": 4,
+      "effort": 2,
+      "priority": 10,
+      "proposal": "Lead with a concrete team outcome and explain self-hosting as the supporting mechanism. Make the online trial the primary action; keep GitHub and deployment instructions as clear alternatives."
+    },
+    {
+      "id": "F2",
+      "title": "The working product appears too late in the page sequence",
+      "rootKey": "the working product appears too late in the page sequence",
+      "evidenceRefs": [
+        "spec:E3"
+      ],
+      "sources": [
+        {
+          "type": "experience-spec",
+          "id": "F2"
+        }
+      ],
+      "verificationStatus": "authored-candidate",
+      "impact": 3,
+      "confidence": 3,
+      "effort": 3,
+      "priority": 3,
+      "proposal": "Bring a representative workspace screenshot or compact product preview into the first screen, with a caption explaining the user task it demonstrates."
+    },
+    {
+      "id": "CONSISTENCY-COLOR-SPRAWL",
+      "title": "13 repeated literal colors are not represented by approved tokens",
+      "rootKey": "13 repeated literal colors are not represented by approved tokens",
+      "evidenceRefs": [
+        "skill:consistency-auditor:0:0",
+        "skill:consistency-auditor:0:1",
+        "skill:consistency-auditor:0:2",
+        "skill:consistency-auditor:0:3",
+        "skill:consistency-auditor:0:4",
+        "skill:consistency-auditor:0:5",
+        "skill:consistency-auditor:0:6",
+        "skill:consistency-auditor:0:7",
+        "skill:consistency-auditor:0:8",
+        "skill:consistency-auditor:0:9",
+        "skill:consistency-auditor:0:10",
+        "skill:consistency-auditor:0:11"
+      ],
+      "sources": [
+        {
+          "type": "skill",
+          "id": "consistency-auditor",
+          "version": "0.1.0"
+        }
+      ],
+      "verificationStatus": "review-target",
+      "impact": 3,
+      "confidence": 3,
+      "effort": 3,
+      "priority": 2,
+      "proposal": null
+    }
+  ],
+  "priorityOverrides": [
+    {
+      "findingId": "CONSISTENCY-COLOR-SPRAWL",
+      "priority": 2,
+      "reason": "This is a code consistency review target, not yet evidence of user-task impact.",
+      "at": "2026-09-20T15:40:41.491Z"
+    }
+  ],
+  "experienceScore": {
+    "status": "insufficient-evidence",
+    "score": null,
+    "evaluator": null,
+    "evidenceCoverage": 0,
+    "dimensions": [],
+    "missing": [
+      "A versioned rubric with all MVP dimensions is required."
+    ]
+  }
+}

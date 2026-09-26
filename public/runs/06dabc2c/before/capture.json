@@ -1,0 +1,83 @@
+{
+  "at": "2026-09-18T15:40:01.804Z",
+  "url": "http://127.0.0.1:4322/",
+  "channel": "chrome",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "finalUrl": "http://127.0.0.1:4322/",
+      "screenshot": "before/desktop.png",
+      "dom": {
+        "title": "HappyClaw - 自托管多用户 AI Agent 系统",
+        "h1": [
+          "HappyClaw"
+        ],
+        "actions": [
+          {
+            "label": "HappyClaw",
+            "href": "/"
+          },
+          {
+            "label": "特性",
+            "href": "#features"
+          },
+          {
+            "label": "截图",
+            "href": "#screenshots"
+          },
+          {
+            "label": "快速开始",
+            "href": "#quickstart"
+          },
+          {
+            "label": "GitHub",
+            "href": "https://github.com/riba2534/happyclaw"
+          },
+          {
+            "label": "快速开始",
+            "href": "#quickstart"
+          },
+          {
+            "label": "GitHub",
+            "href": "https://github.com/riba2534/happyclaw"
+          }
+        ],
+        "horizontalOverflow": false
+      }
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "finalUrl": "http://127.0.0.1:4322/",
+      "screenshot": "before/mobile.png",
+      "dom": {
+        "title": "HappyClaw - 自托管多用户 AI Agent 系统",
+        "h1": [
+          "HappyClaw"
+        ],
+        "actions": [
+          {
+            "label": "HappyClaw",
+            "href": "/"
+          },
+          {
+            "label": "菜单",
+            "href": null
+          },
+          {
+            "label": "快速开始",
+            "href": "#quickstart"
+          },
+          {
+            "label": "GitHub",
+            "href": "https://github.com/riba2534/happyclaw"
+          }
+        ],
+        "horizontalOverflow": false
+      }
+    }
+  }
+}

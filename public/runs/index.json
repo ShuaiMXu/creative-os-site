@@ -1,0 +1,54 @@
+{
+  "version": "0.1",
+  "generatedAt": "2026-09-21T14:59:33.416Z",
+  "runs": [
+    {
+      "id": "8f60c961",
+      "createdAt": "2026-09-20T15:30:52.140Z",
+      "project": "HappyClaw site — repository review",
+      "source": "https://github.com/ShuaiMXu/happyclaw-site (baseline cf1da7b, reviewed 2026-09-18). The live happyclaw.cc page currently differs from this repository.",
+      "url": "http://127.0.0.1:4321/",
+      "findingId": null,
+      "findingTitle": null,
+      "confirmation": null,
+      "captured": {
+        "before": true,
+        "after": false
+      },
+      "executed": false,
+      "evaluated": false,
+      "judgment": null,
+      "skills": [
+        "foundation-extractor",
+        "consistency-auditor",
+        "visual-hierarchy-reviewer"
+      ]
+    },
+    {
+      "id": "06dabc2c",
+      "createdAt": "2026-09-18T15:39:55.596Z",
+      "project": "HappyClaw site — repository review",
+      "source": "https://github.com/ShuaiMXu/happyclaw-site (baseline cf1da7b, reviewed 2026-09-18). The live happyclaw.cc page currently differs from this repository.",
+      "url": "http://127.0.0.1:4322/",
+      "findingId": "F1",
+      "findingTitle": "The first screen describes the category before the user outcome",
+      "confirmation": "supported",
+      "captured": {
+        "before": true,
+        "after": true
+      },
+      "executed": false,
+      "evaluated": true,
+      "judgment": null,
+      "skills": [
+        "foundation-extractor",
+        "consistency-auditor",
+        "visual-hierarchy-reviewer",
+        "fix-planner",
+        "component-reuse-planner",
+        "visual-qa-evaluator",
+        "interaction-reviewer"
+      ]
+    }
+  ]
+}

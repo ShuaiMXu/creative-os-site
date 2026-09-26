@@ -1,0 +1,153 @@
+{
+  "version": "0.1",
+  "at": "2026-09-18T15:40:27.000Z",
+  "views": {
+    "desktop": {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "beforeScreenshot": "before/desktop.png",
+      "afterScreenshot": "after/desktop.png",
+      "beforeStatus": 200,
+      "afterStatus": 200,
+      "beforeH1": [
+        "HappyClaw"
+      ],
+      "afterH1": [
+        "让 AI Agent\n在你的团队里\n真正干活。"
+      ],
+      "beforeActions": [
+        {
+          "label": "HappyClaw",
+          "href": "/"
+        },
+        {
+          "label": "特性",
+          "href": "#features"
+        },
+        {
+          "label": "截图",
+          "href": "#screenshots"
+        },
+        {
+          "label": "快速开始",
+          "href": "#quickstart"
+        },
+        {
+          "label": "GitHub",
+          "href": "https://github.com/riba2534/happyclaw"
+        },
+        {
+          "label": "快速开始",
+          "href": "#quickstart"
+        },
+        {
+          "label": "GitHub",
+          "href": "https://github.com/riba2534/happyclaw"
+        }
+      ],
+      "afterActions": [
+        {
+          "label": "HappyClaw",
+          "href": "/"
+        },
+        {
+          "label": "特性",
+          "href": "#features"
+        },
+        {
+          "label": "截图",
+          "href": "#screenshots"
+        },
+        {
+          "label": "快速开始",
+          "href": "#quickstart"
+        },
+        {
+          "label": "GitHub",
+          "href": "https://github.com/riba2534/happyclaw"
+        },
+        {
+          "label": "在线试用\n↗",
+          "href": "https://claw.shakaka.xyz"
+        },
+        {
+          "label": "查看开源代码\n↗",
+          "href": "https://github.com/riba2534/happyclaw"
+        },
+        {
+          "label": "想自己部署？查看三步快速开始 ↓",
+          "href": "#quickstart"
+        }
+      ],
+      "checks": {
+        "pageResponded": true,
+        "hasHeading": true,
+        "noHorizontalOverflow": true
+      }
+    },
+    "mobile": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "beforeScreenshot": "before/mobile.png",
+      "afterScreenshot": "after/mobile.png",
+      "beforeStatus": 200,
+      "afterStatus": 200,
+      "beforeH1": [
+        "HappyClaw"
+      ],
+      "afterH1": [
+        "让 AI Agent\n在你的团队里\n真正干活。"
+      ],
+      "beforeActions": [
+        {
+          "label": "HappyClaw",
+          "href": "/"
+        },
+        {
+          "label": "菜单",
+          "href": null
+        },
+        {
+          "label": "快速开始",
+          "href": "#quickstart"
+        },
+        {
+          "label": "GitHub",
+          "href": "https://github.com/riba2534/happyclaw"
+        }
+      ],
+      "afterActions": [
+        {
+          "label": "HappyClaw",
+          "href": "/"
+        },
+        {
+          "label": "菜单",
+          "href": null
+        },
+        {
+          "label": "在线试用\n↗",
+          "href": "https://claw.shakaka.xyz"
+        },
+        {
+          "label": "查看开源代码\n↗",
+          "href": "https://github.com/riba2534/happyclaw"
+        },
+        {
+          "label": "想自己部署？查看三步快速开始 ↓",
+          "href": "#quickstart"
+        }
+      ],
+      "checks": {
+        "pageResponded": true,
+        "hasHeading": true,
+        "noHorizontalOverflow": true
+      }
+    }
+  },
+  "conclusion": "Structural checks only. A human must compare screenshots and the user task before claiming UX improvement."
+}

@@ -1,0 +1,146 @@
+{
+  "schemaVersion": "0.1",
+  "skill": {
+    "id": "foundation-extractor",
+    "version": "0.1.0",
+    "role": "foundation"
+  },
+  "runAt": "2026-09-20T15:39:55.217Z",
+  "status": "complete",
+  "evidence": [
+    {
+      "type": "source-scan",
+      "filesScanned": 12,
+      "truncated": false
+    }
+  ],
+  "findings": [],
+  "proposedUpdates": [
+    {
+      "type": "design-foundation",
+      "status": "observed",
+      "tokens": [
+        {
+          "name": "--hover-color",
+          "sourceCount": 1,
+          "sources": [
+            "src/components/TechStack.astro"
+          ]
+        },
+        {
+          "name": "--glass-blur",
+          "sourceCount": 1,
+          "sources": [
+            "src/styles/global.css"
+          ]
+        },
+        {
+          "name": "--glass-saturate",
+          "sourceCount": 1,
+          "sources": [
+            "src/styles/global.css"
+          ]
+        },
+        {
+          "name": "--glass-bg",
+          "sourceCount": 1,
+          "sources": [
+            "src/styles/global.css"
+          ]
+        },
+        {
+          "name": "--glass-bg-dark",
+          "sourceCount": 1,
+          "sources": [
+            "src/styles/global.css"
+          ]
+        },
+        {
+          "name": "--glass-border",
+          "sourceCount": 1,
+          "sources": [
+            "src/styles/global.css"
+          ]
+        },
+        {
+          "name": "--glass-border-dark",
+          "sourceCount": 1,
+          "sources": [
+            "src/styles/global.css"
+          ]
+        },
+        {
+          "name": "--glass-shadow",
+          "sourceCount": 1,
+          "sources": [
+            "src/styles/global.css"
+          ]
+        },
+        {
+          "name": "--glass-highlight",
+          "sourceCount": 1,
+          "sources": [
+            "src/styles/global.css"
+          ]
+        },
+        {
+          "name": "--glass-inner-shadow",
+          "sourceCount": 1,
+          "sources": [
+            "src/styles/global.css"
+          ]
+        }
+      ],
+      "components": [
+        {
+          "name": "Architecture",
+          "source": "src/components/Architecture.astro",
+          "status": "observed"
+        },
+        {
+          "name": "FeatureGrid",
+          "source": "src/components/FeatureGrid.astro",
+          "status": "observed"
+        },
+        {
+          "name": "FeatureHighlights",
+          "source": "src/components/FeatureHighlights.astro",
+          "status": "observed"
+        },
+        {
+          "name": "Footer",
+          "source": "src/components/Footer.astro",
+          "status": "observed"
+        },
+        {
+          "name": "Header",
+          "source": "src/components/Header.astro",
+          "status": "observed"
+        },
+        {
+          "name": "Hero",
+          "source": "src/components/Hero.astro",
+          "status": "observed"
+        },
+        {
+          "name": "QuickStart",
+          "source": "src/components/QuickStart.astro",
+          "status": "observed"
+        },
+        {
+          "name": "ScreenshotShowcase",
+          "source": "src/components/ScreenshotShowcase.astro",
+          "status": "observed"
+        },
+        {
+          "name": "TechStack",
+          "source": "src/components/TechStack.astro",
+          "status": "observed"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Static source scan only; semantic token purpose, component variants and brand intent require human review."
+  ]
+}

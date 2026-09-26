@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "0.1",
+  "skillId": "visual-qa-evaluator",
+  "reviewer": {
+    "type": "model",
+    "name": "Codex visual review",
+    "version": "2026-09-21"
+  },
+  "reviewedAt": "2026-09-21T00:00:00.000Z",
+  "verdict": "fail",
+  "screenshotRefs": [
+    "before/desktop.png",
+    "after/desktop.png",
+    "before/mobile.png",
+    "after/mobile.png"
+  ],
+  "findings": [
+    {
+      "id": "VISUAL_QA_HEADER_CLIP_DESKTOP",
+      "title": "The desktop brand mark is clipped after the change",
+      "observation": "The before desktop header shows the complete logo and HappyClaw wordmark. In the matched after desktop screenshot, only the trailing wordmark text is visible at the left edge, so the header identity is visibly cut off.",
+      "impact": 4,
+      "confidence": "high",
+      "screenshotRefs": [
+        "before/desktop.png",
+        "after/desktop.png"
+      ]
+    }
+  ],
+  "rationale": "The new hero improves outcome clarity, action priority and product proof on desktop and mobile, but the matched desktop render introduces a visible header regression. The change should not pass independent visual QA until that clipping is resolved and recaptured.",
+  "limitations": [
+    "This review covers four static screenshots and does not test interaction, animation, keyboard behavior or intermediate breakpoints.",
+    "No user behavior or conversion data was available."
+  ]
+}

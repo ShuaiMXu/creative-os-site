@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "0.1",
+  "skill": {
+    "id": "consistency-auditor",
+    "version": "0.1.0",
+    "role": "diagnose"
+  },
+  "runAt": "2026-09-20T15:39:55.597Z",
+  "status": "complete",
+  "evidence": [
+    {
+      "type": "source-scan",
+      "filesScanned": 12,
+      "literalColors": 13,
+      "radiusValues": 0
+    }
+  ],
+  "findings": [
+    {
+      "id": "CONSISTENCY-COLOR-SPRAWL",
+      "title": "13 repeated literal colors are not represented by approved tokens",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "value": "#5eead4",
+          "count": 6,
+          "sources": [
+            "src/components/Architecture.astro"
+          ]
+        },
+        {
+          "value": "#2dd4bf",
+          "count": 5,
+          "sources": [
+            "src/components/Architecture.astro"
+          ]
+        },
+        {
+          "value": "#2dd4bf15",
+          "count": 3,
+          "sources": [
+            "src/components/Architecture.astro"
+          ]
+        },
+        {
+          "value": "#d1d5db",
+          "count": 15,
+          "sources": [
+            "src/components/Architecture.astro"
+          ]
+        },
+        {
+          "value": "#14b8a6",
+          "count": 8,
+          "sources": [
+            "src/components/Architecture.astro"
+          ]
+        },
+        {
+          "value": "#14b8a615",
+          "count": 4,
+          "sources": [
+            "src/components/Architecture.astro"
+          ]
+        },
+        {
+          "value": "#0d9488",
+          "count": 7,
+          "sources": [
+            "src/components/Architecture.astro",
+            "src/components/TechStack.astro"
+          ]
+        },
+        {
+          "value": "#0d948815",
+          "count": 2,
+          "sources": [
+            "src/components/Architecture.astro"
+          ]
+        },
+        {
+          "value": "#0f766e",
+          "count": 5,
+          "sources": [
+            "src/components/Architecture.astro"
+          ]
+        },
+        {
+          "value": "#0f766e15",
+          "count": 3,
+          "sources": [
+            "src/components/Architecture.astro"
+          ]
+        },
+        {
+          "value": "#115e59",
+          "count": 4,
+          "sources": [
+            "src/components/Architecture.astro"
+          ]
+        },
+        {
+          "value": "#115e5915",
+          "count": 3,
+          "sources": [
+            "src/components/Architecture.astro"
+          ]
+        }
+      ]
+    }
+  ],
+  "proposedUpdates": [],
+  "limitations": [
+    "Literal-frequency heuristics do not prove a UX inconsistency; generated code and contextual exceptions need review."
+  ]
+}

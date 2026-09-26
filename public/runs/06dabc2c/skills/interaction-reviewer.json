@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "0.1",
+  "skill": {
+    "id": "interaction-reviewer",
+    "version": "0.1.0",
+    "role": "diagnose"
+  },
+  "runAt": "2026-09-19T14:11:52.609Z",
+  "status": "needs-evidence",
+  "evidence": [
+    {
+      "requiredInputs": [
+        "baselineCapture",
+        "criticalTask"
+      ],
+      "available": {
+        "repository": false,
+        "designFoundation": false,
+        "baselineCapture": true,
+        "afterCapture": true,
+        "criticalTask": true,
+        "finding": true,
+        "judgment": false,
+        "projectHistory": false,
+        "gitDiff": false,
+        "regressionCases": false
+      },
+      "missing": []
+    }
+  ],
+  "findings": [],
+  "proposedUpdates": [],
+  "limitations": [
+    "interaction-reviewer requires model-assisted or task-level review beyond the current deterministic handler."
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "0.1",
+  "skill": {
+    "id": "visual-qa-evaluator",
+    "version": "0.1.0",
+    "role": "review"
+  },
+  "runAt": "2026-09-19T14:11:51.466Z",
+  "status": "needs-evidence",
+  "evidence": [
+    {
+      "viewport": "desktop",
+      "before": "before/desktop.png",
+      "after": "after/desktop.png",
+      "beforeH1": [
+        "HappyClaw"
+      ],
+      "afterH1": [
+        "让 AI Agent\n在你的团队里\n真正干活。"
+      ]
+    },
+    {
+      "viewport": "mobile",
+      "before": "before/mobile.png",
+      "after": "after/mobile.png",
+      "beforeH1": [
+        "HappyClaw"
+      ],
+      "afterH1": [
+        "让 AI Agent\n在你的团队里\n真正干活。"
+      ]
+    }
+  ],
+  "findings": [],
+  "proposedUpdates": [],
+  "limitations": [
+    "Matched artifacts are ready, but screenshot-aware independent review is required before claiming visual improvement."
+  ]
+}

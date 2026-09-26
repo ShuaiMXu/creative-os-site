@@ -1,0 +1,413 @@
+{
+  "version": "0.1",
+  "id": "06dabc2c",
+  "createdAt": "2026-09-18T15:39:55.596Z",
+  "source": "https://github.com/ShuaiMXu/happyclaw-site (baseline cf1da7b, reviewed 2026-09-18). The live happyclaw.cc page currently differs from this repository.",
+  "url": "http://127.0.0.1:4322/",
+  "findingId": "F1",
+  "confirmation": {
+    "findingId": "F1",
+    "verdict": "supported",
+    "note": "Baseline cf1da7b shows only the product name and technical category; first-screen actions are Quick start and GitHub.",
+    "at": "2026-09-18T15:40:11.134Z"
+  },
+  "captures": {
+    "before": {
+      "at": "2026-09-18T15:40:01.804Z",
+      "url": "http://127.0.0.1:4322/",
+      "channel": "chrome",
+      "viewports": {
+        "desktop": {
+          "width": 1280,
+          "height": 800,
+          "status": 200,
+          "finalUrl": "http://127.0.0.1:4322/",
+          "screenshot": "before/desktop.png",
+          "dom": {
+            "title": "HappyClaw - 自托管多用户 AI Agent 系统",
+            "h1": [
+              "HappyClaw"
+            ],
+            "actions": [
+              {
+                "label": "HappyClaw",
+                "href": "/"
+              },
+              {
+                "label": "特性",
+                "href": "#features"
+              },
+              {
+                "label": "截图",
+                "href": "#screenshots"
+              },
+              {
+                "label": "快速开始",
+                "href": "#quickstart"
+              },
+              {
+                "label": "GitHub",
+                "href": "https://github.com/riba2534/happyclaw"
+              },
+              {
+                "label": "快速开始",
+                "href": "#quickstart"
+              },
+              {
+                "label": "GitHub",
+                "href": "https://github.com/riba2534/happyclaw"
+              }
+            ],
+            "horizontalOverflow": false
+          }
+        },
+        "mobile": {
+          "width": 390,
+          "height": 844,
+          "status": 200,
+          "finalUrl": "http://127.0.0.1:4322/",
+          "screenshot": "before/mobile.png",
+          "dom": {
+            "title": "HappyClaw - 自托管多用户 AI Agent 系统",
+            "h1": [
+              "HappyClaw"
+            ],
+            "actions": [
+              {
+                "label": "HappyClaw",
+                "href": "/"
+              },
+              {
+                "label": "菜单",
+                "href": null
+              },
+              {
+                "label": "快速开始",
+                "href": "#quickstart"
+              },
+              {
+                "label": "GitHub",
+                "href": "https://github.com/riba2534/happyclaw"
+              }
+            ],
+            "horizontalOverflow": false
+          }
+        }
+      }
+    },
+    "after": {
+      "at": "2026-09-18T15:40:23.287Z",
+      "url": "http://127.0.0.1:4321/",
+      "channel": "chrome",
+      "viewports": {
+        "desktop": {
+          "width": 1280,
+          "height": 800,
+          "status": 200,
+          "finalUrl": "http://127.0.0.1:4321/",
+          "screenshot": "after/desktop.png",
+          "dom": {
+            "title": "HappyClaw - 让 AI Agent 在你的团队里真正干活",
+            "h1": [
+              "让 AI Agent\n在你的团队里\n真正干活。"
+            ],
+            "actions": [
+              {
+                "label": "HappyClaw",
+                "href": "/"
+              },
+              {
+                "label": "特性",
+                "href": "#features"
+              },
+              {
+                "label": "截图",
+                "href": "#screenshots"
+              },
+              {
+                "label": "快速开始",
+                "href": "#quickstart"
+              },
+              {
+                "label": "GitHub",
+                "href": "https://github.com/riba2534/happyclaw"
+              },
+              {
+                "label": "在线试用\n↗",
+                "href": "https://claw.shakaka.xyz"
+              },
+              {
+                "label": "查看开源代码\n↗",
+                "href": "https://github.com/riba2534/happyclaw"
+              },
+              {
+                "label": "想自己部署？查看三步快速开始 ↓",
+                "href": "#quickstart"
+              }
+            ],
+            "horizontalOverflow": false
+          }
+        },
+        "mobile": {
+          "width": 390,
+          "height": 844,
+          "status": 200,
+          "finalUrl": "http://127.0.0.1:4321/",
+          "screenshot": "after/mobile.png",
+          "dom": {
+            "title": "HappyClaw - 让 AI Agent 在你的团队里真正干活",
+            "h1": [
+              "让 AI Agent\n在你的团队里\n真正干活。"
+            ],
+            "actions": [
+              {
+                "label": "HappyClaw",
+                "href": "/"
+              },
+              {
+                "label": "菜单",
+                "href": null
+              },
+              {
+                "label": "在线试用\n↗",
+                "href": "https://claw.shakaka.xyz"
+              },
+              {
+                "label": "查看开源代码\n↗",
+                "href": "https://github.com/riba2534/happyclaw"
+              },
+              {
+                "label": "想自己部署？查看三步快速开始 ↓",
+                "href": "#quickstart"
+              }
+            ],
+            "horizontalOverflow": false
+          }
+        }
+      }
+    }
+  },
+  "plan": {
+    "path": "codex-brief.md",
+    "createdAt": "2026-09-18T15:40:16.872Z"
+  },
+  "execution": null,
+  "evaluation": {
+    "version": "0.1",
+    "at": "2026-09-18T15:40:27.000Z",
+    "views": {
+      "desktop": {
+        "viewport": {
+          "width": 1280,
+          "height": 800
+        },
+        "beforeScreenshot": "before/desktop.png",
+        "afterScreenshot": "after/desktop.png",
+        "beforeStatus": 200,
+        "afterStatus": 200,
+        "beforeH1": [
+          "HappyClaw"
+        ],
+        "afterH1": [
+          "让 AI Agent\n在你的团队里\n真正干活。"
+        ],
+        "beforeActions": [
+          {
+            "label": "HappyClaw",
+            "href": "/"
+          },
+          {
+            "label": "特性",
+            "href": "#features"
+          },
+          {
+            "label": "截图",
+            "href": "#screenshots"
+          },
+          {
+            "label": "快速开始",
+            "href": "#quickstart"
+          },
+          {
+            "label": "GitHub",
+            "href": "https://github.com/riba2534/happyclaw"
+          },
+          {
+            "label": "快速开始",
+            "href": "#quickstart"
+          },
+          {
+            "label": "GitHub",
+            "href": "https://github.com/riba2534/happyclaw"
+          }
+        ],
+        "afterActions": [
+          {
+            "label": "HappyClaw",
+            "href": "/"
+          },
+          {
+            "label": "特性",
+            "href": "#features"
+          },
+          {
+            "label": "截图",
+            "href": "#screenshots"
+          },
+          {
+            "label": "快速开始",
+            "href": "#quickstart"
+          },
+          {
+            "label": "GitHub",
+            "href": "https://github.com/riba2534/happyclaw"
+          },
+          {
+            "label": "在线试用\n↗",
+            "href": "https://claw.shakaka.xyz"
+          },
+          {
+            "label": "查看开源代码\n↗",
+            "href": "https://github.com/riba2534/happyclaw"
+          },
+          {
+            "label": "想自己部署？查看三步快速开始 ↓",
+            "href": "#quickstart"
+          }
+        ],
+        "checks": {
+          "pageResponded": true,
+          "hasHeading": true,
+          "noHorizontalOverflow": true
+        }
+      },
+      "mobile": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "beforeScreenshot": "before/mobile.png",
+        "afterScreenshot": "after/mobile.png",
+        "beforeStatus": 200,
+        "afterStatus": 200,
+        "beforeH1": [
+          "HappyClaw"
+        ],
+        "afterH1": [
+          "让 AI Agent\n在你的团队里\n真正干活。"
+        ],
+        "beforeActions": [
+          {
+            "label": "HappyClaw",
+            "href": "/"
+          },
+          {
+            "label": "菜单",
+            "href": null
+          },
+          {
+            "label": "快速开始",
+            "href": "#quickstart"
+          },
+          {
+            "label": "GitHub",
+            "href": "https://github.com/riba2534/happyclaw"
+          }
+        ],
+        "afterActions": [
+          {
+            "label": "HappyClaw",
+            "href": "/"
+          },
+          {
+            "label": "菜单",
+            "href": null
+          },
+          {
+            "label": "在线试用\n↗",
+            "href": "https://claw.shakaka.xyz"
+          },
+          {
+            "label": "查看开源代码\n↗",
+            "href": "https://github.com/riba2534/happyclaw"
+          },
+          {
+            "label": "想自己部署？查看三步快速开始 ↓",
+            "href": "#quickstart"
+          }
+        ],
+        "checks": {
+          "pageResponded": true,
+          "hasHeading": true,
+          "noHorizontalOverflow": true
+        }
+      }
+    },
+    "conclusion": "Structural checks only. A human must compare screenshots and the user task before claiming UX improvement."
+  },
+  "judgment": null,
+  "skills": [
+    {
+      "id": "foundation-extractor",
+      "version": "0.1.0",
+      "status": "complete",
+      "path": "skills/foundation-extractor.json",
+      "runAt": "2026-09-19T14:02:04.089Z"
+    },
+    {
+      "id": "consistency-auditor",
+      "version": "0.1.0",
+      "status": "complete",
+      "path": "skills/consistency-auditor.json",
+      "runAt": "2026-09-19T14:02:05.273Z"
+    },
+    {
+      "id": "visual-hierarchy-reviewer",
+      "version": "0.1.0",
+      "status": "needs-evidence",
+      "path": "skills/visual-hierarchy-reviewer.json",
+      "runAt": "2026-09-19T14:02:06.435Z"
+    },
+    {
+      "id": "fix-planner",
+      "version": "0.1.0",
+      "status": "complete",
+      "path": "skills/fix-planner.json",
+      "runAt": "2026-09-19T14:11:49.121Z"
+    },
+    {
+      "id": "component-reuse-planner",
+      "version": "0.1.0",
+      "status": "needs-evidence",
+      "path": "skills/component-reuse-planner.json",
+      "runAt": "2026-09-19T14:11:50.300Z"
+    },
+    {
+      "id": "visual-qa-evaluator",
+      "version": "0.1.0",
+      "status": "needs-evidence",
+      "path": "skills/visual-qa-evaluator.json",
+      "runAt": "2026-09-19T14:11:51.466Z"
+    },
+    {
+      "id": "interaction-reviewer",
+      "version": "0.1.0",
+      "status": "needs-evidence",
+      "path": "skills/interaction-reviewer.json",
+      "runAt": "2026-09-19T14:11:52.609Z"
+    }
+  ],
+  "visualReviews": [
+    {
+      "skillId": "visual-qa-evaluator",
+      "verdict": "fail",
+      "reviewer": {
+        "type": "model",
+        "name": "Codex visual review",
+        "version": "2026-09-21"
+      },
+      "reviewedAt": "2026-09-21T00:00:00.000Z",
+      "path": "reviews/visual-qa-evaluator.json"
+    }
+  ]
+}

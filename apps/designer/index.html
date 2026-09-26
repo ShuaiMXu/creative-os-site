@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f1e9">
+  <title>Product Designer — Review workspace</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body class="workspace-page">
+  <header class="nav wrap"><a class="brand" href="/apps/web/"><span class="brand-mark">pd.</span><span>product designer <small>REVIEW LAB</small></span></a><nav aria-label="Review"><a href="/apps/web/">Overview</a><a class="nav-cta" href="https://github.com/ShuaiMXu/creative-os/issues/1">MVP scope ↗</a></nav></header>
+  <main class="wrap review-shell">
+    <div class="review-heading"><div><p class="eyebrow">EXPERIENCE REVIEW / 001</p><h1>A clearer next step for your product.</h1><p>Inspect the evidence, choose a problem, hand off a scoped change, then record what happened.</p></div><div class="case-switch"><label for="case-select">CASE</label><select id="case-select"><option value="happyclaw">HappyClaw site / repository review</option><option value="sample">Northstar / fictional walkthrough</option></select></div></div>
+    <div id="notice" class="notice" role="status"></div>
+    <section class="foundation panel" aria-labelledby="foundation-title">
+      <div class="panel-heading"><span>DESIGN FOUNDATION</span><span id="foundation-status"></span></div>
+      <div class="foundation-heading"><div><h2 id="foundation-title">What should this product stay consistent with?</h2><p>Observed conventions are inventory, not approved rules. Review them before Codex reuses or extends the system.</p></div><span id="foundation-summary" class="foundation-count"></span></div>
+      <div id="foundation-groups" class="foundation-groups"></div>
+    </section>
+    <section id="loop-panel" class="loop panel" aria-labelledby="loop-title" hidden>
+      <div class="panel-heading"><span>EXPERT LOOP</span><span id="loop-stage"></span></div>
+      <div class="loop-heading"><div><h2 id="loop-title">Where is this review, and what happens next?</h2><p id="loop-next" class="loop-next"></p></div></div>
+      <p id="loop-reason" class="loop-reason" hidden></p>
+      <ol id="loop-track" class="loop-track"></ol>
+    </section>
+    <section id="run-panel" class="run panel" aria-labelledby="run-title" hidden>
+      <div class="panel-heading"><span>RUN EVIDENCE</span><span id="run-id"></span></div>
+      <div class="run-heading"><div><h2 id="run-title">What did the harness capture?</h2><p>Screenshots, structural checks and the recorded decision from one local run. Structural checks confirm the page still works; they do not measure design quality.</p></div><span id="run-stage" class="foundation-count"></span></div>
+      <div id="run-shots" class="run-shots"></div>
+      <div id="run-reviews" class="run-reviews"></div>
+      <div id="run-checks" class="run-checks"></div>
+      <p id="run-note" class="small-note"></p>
+    </section>
+    <div class="review-grid">
+      <aside class="context panel"><div class="panel-heading"><span>01 / CONTEXT</span><span>INPUT</span></div><h2 id="project-name"></h2><p id="project-source" class="muted"></p><dl><dt>Product goal</dt><dd id="project-goal"></dd><dt>Audience</dt><dd id="project-audience"></dd><dt>Critical task</dt><dd id="project-task"></dd></dl><h3>Observed evidence</h3><div id="evidence-list"></div><p class="small-note">Evidence is authored from the cited source. No automatic site analysis has run.</p></aside>
+      <section class="diagnosis panel"><div class="panel-heading"><span>02 / DIAGNOSE & PRIORITIZE</span><span id="finding-count"></span></div><h2>Which issue is worth fixing first?</h2><p id="findings-source">Priority is an explicit draft calculation: impact × confidence ÷ effort. Confirm it with a real user task before acting.</p><div id="score" class="score" hidden></div><div id="findings"></div><div class="selected-detail"><span class="eyebrow">SELECTED ISSUE</span><h3 id="selected-title"></h3><p id="selected-proposal"></p><p id="selected-evidence" class="small-note"></p></div></section>
+      <aside class="action panel"><div class="panel-heading"><span>03 / CHANGE & VERIFY</span><span>HUMAN IN CONTROL</span></div><h2>Turn judgment into a reviewable change.</h2><p>The brief below is ready to take into Codex. Automatic editing and browser re-rendering are not connected in this prototype.</p><button id="download-brief" class="button primary full">Download Codex brief ↗</button><details><summary>Read the exact brief</summary><pre id="brief"></pre></details><div class="review-state"><span class="eyebrow">EVALUATION</span><p id="review-before"></p><p id="review-after"></p><span id="review-status" class="status"></span></div><h3>Your judgment</h3><label for="decision">Decision</label><select id="decision"><option value="pending">Not reviewed yet</option><option value="accept">Accept</option><option value="reject">Reject</option></select><label for="reason">Why?</label><textarea id="reason" rows="3" placeholder="What improved, failed, or remains uncertain?"></textarea><button id="save-judgment" class="button secondary full">Save judgment</button><button id="download-spec" class="text-button">Export Experience Spec ↓</button></aside>
+    </div>
+    <section class="next-panel"><span class="eyebrow">NEXT IN THE PRODUCT</span><h2>From one review to a designer that stays.</h2><p>Project history, incremental checks after code changes, evaluator versions and regression examples will turn this single review into a continuous design service.</p></section>
+  </main>
+  <footer class="wrap"><span>PRODUCT DESIGNER / REVIEW LAB</span><span>Source evidence before confident claims.</span></footer>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

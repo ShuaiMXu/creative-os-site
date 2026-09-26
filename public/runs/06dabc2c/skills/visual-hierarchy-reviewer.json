@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "0.1",
+  "skill": {
+    "id": "visual-hierarchy-reviewer",
+    "version": "0.1.0",
+    "role": "diagnose"
+  },
+  "runAt": "2026-09-19T14:02:06.435Z",
+  "status": "needs-evidence",
+  "evidence": [
+    {
+      "viewport": "desktop",
+      "screenshot": "before/desktop.png",
+      "h1": [
+        "HappyClaw"
+      ],
+      "actions": [
+        {
+          "label": "HappyClaw",
+          "href": "/"
+        },
+        {
+          "label": "特性",
+          "href": "#features"
+        },
+        {
+          "label": "截图",
+          "href": "#screenshots"
+        },
+        {
+          "label": "快速开始",
+          "href": "#quickstart"
+        },
+        {
+          "label": "GitHub",
+          "href": "https://github.com/riba2534/happyclaw"
+        },
+        {
+          "label": "快速开始",
+          "href": "#quickstart"
+        },
+        {
+          "label": "GitHub",
+          "href": "https://github.com/riba2534/happyclaw"
+        }
+      ]
+    },
+    {
+      "viewport": "mobile",
+      "screenshot": "before/mobile.png",
+      "h1": [
+        "HappyClaw"
+      ],
+      "actions": [
+        {
+          "label": "HappyClaw",
+          "href": "/"
+        },
+        {
+          "label": "菜单",
+          "href": null
+        },
+        {
+          "label": "快速开始",
+          "href": "#quickstart"
+        },
+        {
+          "label": "GitHub",
+          "href": "https://github.com/riba2534/happyclaw"
+        }
+      ]
+    }
+  ],
+  "findings": [],
+  "proposedUpdates": [],
+  "limitations": [
+    "DOM structure can flag review targets but cannot judge visual hierarchy without image analysis and the critical user task."
+  ]
+}
