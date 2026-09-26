@@ -29,9 +29,9 @@ function selectAgent(id) {
   copyButton.dataset.copy = agent.copy;
 }
 
-for (const tab of document.querySelectorAll('.tab')) {
+for (const tab of document.querySelectorAll('.pd-tab')) {
   tab.addEventListener('click', () => {
-    for (const other of document.querySelectorAll('.tab')) other.setAttribute('aria-selected', String(other === tab));
+    for (const other of document.querySelectorAll('.pd-tab')) other.setAttribute('aria-selected', String(other === tab));
     selectAgent(tab.dataset.agent);
   });
 }

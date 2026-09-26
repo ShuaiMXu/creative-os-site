@@ -6,170 +6,192 @@
   <meta name="theme-color" content="#141414">
   <meta name="description" content="Product Designer：给 vibe coding 产物做持续设计审阅的本地 Harness。采集证据、诊断排序、隔离执行、前后评估、人的判定。">
   <title>Creative OS — Product Designer</title>
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./appllama.css">
+  <link rel="stylesheet" href="./portal.css">
 </head>
-<body>
-  <header class="nav">
-    <div class="nav-row">
-      <a class="brand" href="/apps/portal/">creative os</a>
-      <nav aria-label="主导航">
-        <a href="#loop">闭环</a>
-        <a href="#skills">Skills</a>
-        <a href="#agents">Agents</a>
-        <a href="#setup">接入</a>
-        <a href="#status">状态</a>
-      </nav>
-      <div class="nav-actions">
-        <a class="nav-link" href="https://github.com/ShuaiMXu/creative-os" target="_blank" rel="noreferrer">GitHub ↗</a>
-        <a class="btn accent small" href="/apps/designer/?case=happyclaw">打开 Workbench</a>
+<body class="antialiased">
+
+<header class="fixed inset-x-0 top-0 z-[90]">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-ink/95 via-ink/55 to-transparent transition-opacity duration-500 opacity-100"></div>
+  <nav class="relative border-b transition-[background-color,border-color,backdrop-filter] duration-500 border-transparent backdrop-blur-0">
+    <div class="mx-auto w-full max-w-[1440px] px-5 sm:px-8">
+      <div class="grid grid-cols-[auto_1fr_auto] items-center gap-3 transition-[height] duration-500 ease-spring lg:flex lg:gap-1.5 h-[62px] lg:h-20">
+        <a aria-label="Creative OS home" class="flex shrink-0 items-center rounded-full focus-visible:outline-none" href="/apps/portal/">
+          <span class="text-[17px] font-semibold tracking-[-0.02em] text-label-primary">creative os</span>
+          <span class="font-mono ml-2 hidden text-[9px] tracking-[0.3em] text-accent sm:block">PORTAL</span>
+        </a>
+        <div class="hidden items-center justify-center gap-7 lg:flex">
+          <a class="text-[14px] text-label-secondary transition-colors duration-200 hover:text-label-primary" href="#loop">闭环</a>
+          <a class="text-[14px] text-label-secondary transition-colors duration-200 hover:text-label-primary" href="#skills">Skills</a>
+          <a class="text-[14px] text-label-secondary transition-colors duration-200 hover:text-label-primary" href="#agents">Agents</a>
+          <a class="text-[14px] text-label-secondary transition-colors duration-200 hover:text-label-primary" href="#setup">接入</a>
+          <a class="text-[14px] text-label-secondary transition-colors duration-200 hover:text-label-primary" href="#status">状态</a>
+        </div>
+        <div class="flex items-center justify-end gap-4">
+          <a class="hidden text-[14px] text-label-secondary transition-colors duration-200 hover:text-label-primary sm:block" href="https://github.com/ShuaiMXu/creative-os" target="_blank" rel="noreferrer">GitHub ↗</a>
+          <a class="btn-accent flex h-10 items-center rounded-full px-5 text-[13.5px] font-semibold" href="/apps/designer/?case=happyclaw">打开 Workbench</a>
+        </div>
       </div>
     </div>
-  </header>
+  </nav>
+</header>
 
-  <section class="hero" aria-label="Product Designer">
-    <div class="hero-inner">
-      <div class="badges fade-up" style="--delay:.0s">
-        <span class="badge-pill mono">open-source harness · 27 versioned skills</span>
-        <span class="badge-pill mono">110 tests · 4 schemas</span>
+<main class="min-h-screen">
+  <!-- Hero：他们的整屏 sticky 结构，标题/副文/按钮类名逐字照搬 -->
+  <section class="sticky top-0 z-0 h-[var(--home-hero-height,100svh)] overflow-hidden bg-ink md:h-dvh">
+    <div aria-hidden="true" class="absolute inset-0" style="background:radial-gradient(120% 90% at 50% -10%, rgb(31 31 31) 0%, rgb(20 20 20) 60%);"></div>
+    <div class="relative z-10 mx-auto flex h-full w-full max-w-[1440px] flex-col justify-center px-5 pb-24 pt-32 sm:px-8">
+      <div class="animate-scale-in flex max-w-full flex-wrap items-center gap-x-3 gap-y-1 rounded-full border border-sep bg-surface px-5 py-2.5 shadow-inner-hairline" style="animation-delay:0.02s">
+        <span class="font-mono text-[11px] tracking-[0.06em] text-label-tertiary">open-source harness</span>
+        <span class="font-mono text-[11px] text-accent">·</span>
+        <span class="font-mono text-[11px] tracking-[0.06em] text-label-tertiary">27 versioned skills</span>
+        <span class="font-mono text-[11px] text-accent">·</span>
+        <span class="font-mono text-[11px] tracking-[0.06em] text-label-tertiary">110 tests</span>
+        <span class="font-mono text-[11px] text-accent">·</span>
+        <span class="font-mono text-[11px] tracking-[0.06em] text-label-tertiary">4 schemas</span>
       </div>
-      <h1 class="fade-up" style="--delay:.08s">跑得起来的产品，<br>也该像被<span class="accent">设计过</span>。</h1>
-      <p class="hero-sub fade-up" style="--delay:.16s">采集证据、诊断、一次限定范围的修改、重新渲染、人的判定——agent 只负责改代码，闭环由本地 Harness 掌管。</p>
-      <div class="hero-actions fade-up" style="--delay:.24s">
-        <a class="btn accent" href="#setup">开始使用 <span aria-hidden="true">↓</span></a>
-        <a class="btn ghost" href="/apps/designer/?case=happyclaw">看一次真实审阅 <span aria-hidden="true">↗</span></a>
+      <h1 class="animate-fade-up mt-8 max-w-5xl text-balance text-[48px] font-medium leading-[1.0] tracking-[-0.035em] text-label-primary opacity-0 sm:text-[64px] lg:text-[80px]" style="animation-delay:0.08s">跑得起来的产品，也该像被<span class="theme-accent-word text-accent">设计过</span>。</h1>
+      <p class="animate-fade-up mt-7 max-w-2xl text-balance text-[17px] leading-relaxed text-label-secondary opacity-0 sm:text-[19px]" style="animation-delay:0.16s">采集证据、诊断、一次限定范围的修改、重新渲染、人的判定。agent 只负责改代码，闭环由本地 Harness 掌管。</p>
+      <div class="animate-fade-up mt-10 flex items-center gap-3 opacity-0" style="animation-delay:0.24s">
+        <a class="btn-accent h-14 rounded-full px-9 text-[16px] font-semibold" href="#setup">开始使用</a>
+        <a class="flex h-14 items-center rounded-full px-6 text-[15px] font-medium text-label-tertiary transition-colors duration-200 hover:text-label-primary" href="/apps/designer/?case=happyclaw">看一次真实审阅 ↗</a>
       </div>
-      <p class="scroll-hint mono fade-up" style="--delay:.32s" aria-hidden="true">scroll ↓</p>
     </div>
   </section>
 
-  <main>
-    <section id="loop" class="block">
-      <div class="container">
-        <h2>一个闭环，<br>七步都留<span class="accent">证据</span>。</h2>
-        <div class="card-grid">
-          <article class="card"><span class="card-no mono">01</span><h3>采集证据</h3><p>Playwright 双视口截图，HTTP、DOM、溢出与错误遮罩检查。证据带 ID，可追溯。</p></article>
-          <article class="card"><span class="card-no mono">02</span><h3>盘点设计基础</h3><p>token、组件、模式先记为「已观察」；人批准的才是规则。</p></article>
-          <article class="card"><span class="card-no mono">03</span><h3>诊断排序</h3><p>impact × confidence ÷ effort；人可以推翻，必须留理由。</p></article>
-          <article class="card"><span class="card-no mono">04</span><h3>隔离执行</h3><p>选定的 agent 在独立 worktree 里改，不 push、不部署。</p></article>
-          <article class="card"><span class="card-no mono">05</span><h3>前后评估</h3><p>同样的状态重新渲染，结构检查逐项对照。</p></article>
-          <article class="card"><span class="card-no mono">06</span><h3>独立 Visual QA</h3><p>截图复核单独作证；没通过，不接受。</p></article>
-          <article class="card"><span class="card-no mono">07</span><h3>人的判定</h3><p>accept / reject 带理由，写入不可变的 run 账本。</p></article>
+  <div class="relative z-10 bg-ink">
+    <!-- 闭环七步 -->
+    <section id="loop" class="mx-auto w-full max-w-[1440px] px-5 pb-10 pt-16 sm:px-8 sm:pb-14 sm:pt-20">
+      <h2 class="max-w-4xl text-balance text-[40px] font-medium leading-[1.02] tracking-[-0.03em] text-label-primary sm:text-[60px]">一个闭环，七步都留<span class="theme-accent-word text-accent">证据</span>。</h2>
+      <div class="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="pd-card rounded-2xl border border-sep bg-surface p-6"><span class="font-mono text-[11px] tracking-[0.2em] text-accent">01</span><h3 class="mt-3 text-[15.5px] font-semibold text-label-primary">采集证据</h3><p class="mt-2 text-[13.5px] leading-relaxed text-label-tertiary">Playwright 双视口截图，HTTP、DOM、溢出与错误遮罩检查。证据带 ID，可追溯。</p></div>
+        <div class="pd-card rounded-2xl border border-sep bg-surface p-6"><span class="font-mono text-[11px] tracking-[0.2em] text-accent">02</span><h3 class="mt-3 text-[15.5px] font-semibold text-label-primary">盘点设计基础</h3><p class="mt-2 text-[13.5px] leading-relaxed text-label-tertiary">token、组件、模式先记为「已观察」；人批准的才是规则。</p></div>
+        <div class="pd-card rounded-2xl border border-sep bg-surface p-6"><span class="font-mono text-[11px] tracking-[0.2em] text-accent">03</span><h3 class="mt-3 text-[15.5px] font-semibold text-label-primary">诊断排序</h3><p class="mt-2 text-[13.5px] leading-relaxed text-label-tertiary">impact × confidence ÷ effort；人可以推翻，必须留理由。</p></div>
+        <div class="pd-card rounded-2xl border border-sep bg-surface p-6"><span class="font-mono text-[11px] tracking-[0.2em] text-accent">04</span><h3 class="mt-3 text-[15.5px] font-semibold text-label-primary">隔离执行</h3><p class="mt-2 text-[13.5px] leading-relaxed text-label-tertiary">选定的 agent 在独立 worktree 里改，不 push、不部署。</p></div>
+        <div class="pd-card rounded-2xl border border-sep bg-surface p-6"><span class="font-mono text-[11px] tracking-[0.2em] text-accent">05</span><h3 class="mt-3 text-[15.5px] font-semibold text-label-primary">前后评估</h3><p class="mt-2 text-[13.5px] leading-relaxed text-label-tertiary">同样的状态重新渲染，结构检查逐项对照。</p></div>
+        <div class="pd-card rounded-2xl border border-sep bg-surface p-6"><span class="font-mono text-[11px] tracking-[0.2em] text-accent">06</span><h3 class="mt-3 text-[15.5px] font-semibold text-label-primary">独立 Visual QA</h3><p class="mt-2 text-[13.5px] leading-relaxed text-label-tertiary">截图复核单独作证；没通过，不接受。</p></div>
+        <div class="pd-card rounded-2xl border border-sep bg-surface p-6"><span class="font-mono text-[11px] tracking-[0.2em] text-accent">07</span><h3 class="mt-3 text-[15.5px] font-semibold text-label-primary">人的判定</h3><p class="mt-2 text-[13.5px] leading-relaxed text-label-tertiary">accept / reject 带理由，写入不可变的 run 账本。</p></div>
+        <div class="pd-card pd-card-ghost rounded-2xl border border-dashed border-sep p-6"><span class="font-mono text-[11px] tracking-[0.2em] text-label-quaternary">…</span><h3 class="mt-3 text-[15.5px] font-semibold text-label-secondary">下一步在开发中</h3><p class="mt-2 text-[13.5px] leading-relaxed text-label-quaternary">增量审阅、Git diff 影响映射、看截图的视觉判断。</p></div>
+      </div>
+    </section>
+
+    <!-- Skills 角色 -->
+    <section id="skills" class="border-t border-sep bg-ink-soft">
+      <div class="mx-auto w-full max-w-[1440px] px-5 py-16 sm:px-8 sm:py-20">
+        <h2 class="max-w-4xl text-balance text-[40px] font-medium leading-[1.02] tracking-[-0.03em] text-label-primary sm:text-[60px]">27 个 Skill，按<span class="theme-accent-word text-accent">角色</span>分组。</h2>
+        <p class="mt-6 max-w-2xl text-[15px] leading-relaxed text-label-tertiary">每个 Skill 带版本、必填输入与结果契约；处理器走白名单，结果一经写入 run 即不可变。</p>
+        <div class="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-5">
+          <div class="pd-card rounded-2xl border border-sep bg-surface p-6"><span class="block text-[40px] font-medium tabular-nums leading-none tracking-[-0.03em] text-label-primary">8</span><span class="font-mono mt-3 block text-[10.5px] tracking-[0.22em] text-accent">FOUNDATION</span><p class="mt-2 text-[13px] leading-relaxed text-label-tertiary">品牌、token、组件与模式的盘点</p></div>
+          <div class="pd-card rounded-2xl border border-sep bg-surface p-6"><span class="block text-[40px] font-medium tabular-nums leading-none tracking-[-0.03em] text-label-primary">10</span><span class="font-mono mt-3 block text-[10.5px] tracking-[0.22em] text-accent">DIAGNOSE</span><p class="mt-2 text-[13px] leading-relaxed text-label-tertiary">一致性、信息架构、可访问性、信任与转化</p></div>
+          <div class="pd-card rounded-2xl border border-sep bg-surface p-6"><span class="block text-[40px] font-medium tabular-nums leading-none tracking-[-0.03em] text-label-primary">2</span><span class="font-mono mt-3 block text-[10.5px] tracking-[0.22em] text-accent">PLAN</span><p class="mt-2 text-[13px] leading-relaxed text-label-tertiary">把 finding 收敛成限定范围的修改意图</p></div>
+          <div class="pd-card rounded-2xl border border-sep bg-surface p-6"><span class="block text-[40px] font-medium tabular-nums leading-none tracking-[-0.03em] text-label-primary">3</span><span class="font-mono mt-3 block text-[10.5px] tracking-[0.22em] text-accent">REVIEW</span><p class="mt-2 text-[13px] leading-relaxed text-label-tertiary">视觉层级、响应式与独立 Visual QA</p></div>
+          <div class="pd-card rounded-2xl border border-sep bg-surface p-6"><span class="block text-[40px] font-medium tabular-nums leading-none tracking-[-0.03em] text-label-primary">4</span><span class="font-mono mt-3 block text-[10.5px] tracking-[0.22em] text-accent">LEARN</span><p class="mt-2 text-[13px] leading-relaxed text-label-tertiary">把人的判定沉淀为项目知识与回归用例</p></div>
         </div>
       </div>
     </section>
 
-    <section id="skills" class="block alt">
-      <div class="container">
-        <h2>27 个 Skill，<br>按<span class="accent">角色</span>分组。</h2>
-        <p class="section-lead">每个 Skill 带版本、必填输入与结果契约；处理器走白名单，结果一经写入 run 即不可变。</p>
-        <div class="role-grid">
-          <div class="role"><span class="role-count mono">8</span><span class="role-name mono">foundation</span><p>品牌、token、组件与模式的盘点</p></div>
-          <div class="role"><span class="role-count mono">10</span><span class="role-name mono">diagnose</span><p>一致性、信息架构、可访问性、信任与转化</p></div>
-          <div class="role"><span class="role-count mono">2</span><span class="role-name mono">plan</span><p>把 finding 收敛成限定范围的修改意图</p></div>
-          <div class="role"><span class="role-count mono">3</span><span class="role-name mono">review</span><p>视觉层级、响应式与独立 Visual QA</p></div>
-          <div class="role"><span class="role-count mono">4</span><span class="role-name mono">learn</span><p>把人的判定沉淀为项目知识与回归用例</p></div>
-        </div>
+    <!-- Agent 适配器 -->
+    <section id="agents" class="mx-auto w-full max-w-[1440px] px-5 py-16 sm:px-8 sm:py-20">
+      <h2 class="max-w-4xl text-balance text-[40px] font-medium leading-[1.02] tracking-[-0.03em] text-label-primary sm:text-[60px]">用你的 agent<span class="theme-accent-word text-accent">跑一遍</span>。</h2>
+      <p class="mt-6 max-w-3xl text-[15px] leading-relaxed text-label-tertiary">两个适配器，同一条权限边界：独立 worktree，不 push、不 merge、不部署，宿主仓库指纹前后核验——被动过，该次 run 即判失败。</p>
+      <div class="mt-10 flex gap-2" role="tablist" aria-label="选择 agent">
+        <button type="button" role="tab" aria-selected="true" data-agent="codex" class="pd-tab font-mono rounded-full border border-sep px-5 py-2 text-[13px]">codex</button>
+        <button type="button" role="tab" aria-selected="false" data-agent="claude-code" class="pd-tab font-mono rounded-full border border-sep px-5 py-2 text-[13px]">claude code</button>
       </div>
+      <div class="mt-4 max-w-3xl overflow-hidden rounded-2xl border border-sep bg-ink-deep shadow-card">
+        <div class="flex items-center justify-between border-b border-sep bg-surface/60 px-4 py-2">
+          <span id="agent-label" class="font-mono text-[11px] tracking-[0.12em] text-label-quaternary">codex exec</span>
+          <button type="button" id="agent-copy" class="font-mono text-[11px] tracking-[0.12em] text-label-tertiary transition-colors hover:text-accent" data-copy="">复制</button>
+        </div>
+        <pre id="agent-argv" class="font-mono overflow-x-auto px-4 py-4 text-[13px] leading-7 text-label-primary">codex exec -C &lt;worktree&gt; -s workspace-write --json -o agent-last-message.md -</pre>
+        <p id="agent-note" class="border-t border-sep px-4 py-3 text-[13px] text-label-tertiary">Prompt 走 stdin；仓库文件一律当作数据，不当作指令。</p>
+      </div>
+      <p class="font-mono mt-4 text-[11px] tracking-[0.06em] text-label-quaternary">适配器注册表：packages/harness-core/agents.js · 说不清如何满足边界的适配器不会被加载</p>
     </section>
 
-    <section id="agents" class="block">
-      <div class="container">
-        <h2>用你的 agent<br><span class="accent">跑一遍</span>。</h2>
-        <p class="section-lead">两个适配器，同一条权限边界：独立 worktree，不 push、不 merge、不部署，宿主仓库指纹前后核验——被动过，该次 run 即判失败。</p>
-        <div class="tabs" role="tablist" aria-label="选择 agent">
-          <button type="button" role="tab" aria-selected="true" data-agent="codex" class="tab mono">codex</button>
-          <button type="button" role="tab" aria-selected="false" data-agent="claude-code" class="tab mono">claude code</button>
-        </div>
-        <div class="terminal">
-          <div class="terminal-bar mono"><span id="agent-label">codex exec</span><button type="button" id="agent-copy" class="terminal-copy mono" data-copy="">复制</button></div>
-          <pre class="mono" id="agent-argv">codex exec -C &lt;worktree&gt; -s workspace-write --json -o agent-last-message.md -</pre>
-          <p class="terminal-note" id="agent-note">Prompt 走 stdin；仓库文件一律当作数据，不当作指令。</p>
-        </div>
-        <p class="caption mono">适配器注册表：packages/harness-core/agents.js · 说不清如何满足边界的适配器不会被加载</p>
-      </div>
-    </section>
-
-    <section id="setup" class="block alt">
-      <div class="container">
-        <h2>一条命令，<br><span class="accent">五分钟</span>接入。</h2>
-        <ol class="steps">
-          <li>
-            <p class="step-title">接入并采基线——校验 checkout、起预览、等页面就绪、建 run、双视口截图。</p>
-            <div class="terminal">
-              <div class="terminal-bar mono"><span>bash</span><button type="button" class="terminal-copy mono" data-copy="pnpm harness onboard --config examples/happyclaw-site/project.json">复制</button></div>
-              <pre class="mono">pnpm harness onboard --config examples/happyclaw-site/project.json</pre>
+    <!-- 接入 -->
+    <section id="setup" class="border-t border-sep bg-ink-soft">
+      <div class="mx-auto w-full max-w-[1440px] px-5 py-16 sm:px-8 sm:py-20">
+        <h2 class="max-w-4xl text-balance text-[40px] font-medium leading-[1.02] tracking-[-0.03em] text-label-primary sm:text-[60px]">一条命令，<span class="theme-accent-word text-accent">五分钟</span>接入。</h2>
+        <div class="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <div>
+            <span class="font-mono text-[11px] tracking-[0.2em] text-accent">01</span>
+            <p class="mt-3 text-[15px] leading-relaxed text-label-secondary">接入并采基线——校验 checkout、起预览、等页面就绪、建 run、双视口截图。</p>
+            <div class="mt-4 overflow-hidden rounded-2xl border border-sep bg-ink-deep shadow-card">
+              <div class="flex items-center justify-between border-b border-sep bg-surface/60 px-4 py-2"><span class="font-mono text-[11px] tracking-[0.12em] text-label-quaternary">bash</span><button type="button" class="pd-copy font-mono text-[11px] tracking-[0.12em] text-label-tertiary hover:text-accent" data-copy="pnpm harness onboard --config examples/happyclaw-site/project.json">复制</button></div>
+              <pre class="font-mono overflow-x-auto px-4 py-4 text-[13px] leading-7 text-label-primary">pnpm harness onboard --config examples/happyclaw-site/project.json</pre>
             </div>
-          </li>
-          <li>
-            <p class="step-title">看完基线截图，确认一条 finding，剩下的交给闭环。</p>
-            <div class="terminal">
-              <div class="terminal-bar mono"><span>bash</span><button type="button" class="terminal-copy mono" data-copy="pnpm harness confirm --run .harness/runs/RUN_ID --finding F1 --verdict supported --note &quot;基线仍然支持这条 finding。&quot;&#10;pnpm harness plan --run .harness/runs/RUN_ID --finding F1&#10;pnpm harness execute --run .harness/runs/RUN_ID --repo ../your-app --agent codex">复制全部</button></div>
-              <pre class="mono">pnpm harness confirm --run … --finding F1 --verdict supported --note "…"
+          </div>
+          <div>
+            <span class="font-mono text-[11px] tracking-[0.2em] text-accent">02</span>
+            <p class="mt-3 text-[15px] leading-relaxed text-label-secondary">看完基线截图，确认一条 finding，剩下的交给闭环。</p>
+            <div class="mt-4 overflow-hidden rounded-2xl border border-sep bg-ink-deep shadow-card">
+              <div class="flex items-center justify-between border-b border-sep bg-surface/60 px-4 py-2"><span class="font-mono text-[11px] tracking-[0.12em] text-label-quaternary">bash</span><button type="button" class="pd-copy font-mono text-[11px] tracking-[0.12em] text-label-tertiary hover:text-accent" data-copy="pnpm harness confirm --run .harness/runs/RUN_ID --finding F1 --verdict supported --note &quot;基线仍然支持这条 finding。&quot;&#10;pnpm harness plan --run .harness/runs/RUN_ID --finding F1&#10;pnpm harness execute --run .harness/runs/RUN_ID --repo ../your-app --agent codex">复制全部</button></div>
+              <pre class="font-mono overflow-x-auto px-4 py-4 text-[13px] leading-7 text-label-primary">pnpm harness confirm --run … --finding F1 --verdict supported
 pnpm harness plan    --run … --finding F1
 pnpm harness execute --run … --repo ../your-app --agent codex</pre>
             </div>
-          </li>
-        </ol>
-        <p class="caption mono">Node 22.15+ / pnpm 11.19+ · 换应用就复制一份 project.json 改四个字段</p>
-      </div>
-    </section>
-
-    <section id="status" class="block">
-      <div class="container">
-        <h2>能用什么，<br><span class="accent">没什么</span>，写在一处。</h2>
-        <div class="status-grid">
-          <div class="status-col">
-            <p class="status-head mono">已可用</p>
-            <ul>
-              <li>Experience Spec 校验，证据 ID 可追溯</li>
-              <li>双视口浏览器采集与结构检查</li>
-              <li>27 个带版本 Skill，处理器白名单</li>
-              <li>隔离执行 + 宿主仓库指纹核验</li>
-              <li>前后评估、独立 Visual QA、人的判定</li>
-              <li>不可变的 run 账本与导出</li>
-            </ul>
-          </div>
-          <div class="status-col">
-            <p class="status-head mono wip">仍在开发</p>
-            <ul>
-              <li>看截图的视觉判断（当前一律 needs-evidence）</li>
-              <li>Experience Score 校准与发布</li>
-              <li>增量审阅与 Git diff 影响映射</li>
-              <li>多步任务采集与状态重放</li>
-              <li>Workbench 的写入操作（现仅 CLI）</li>
-            </ul>
           </div>
         </div>
-        <p class="caption mono">失败的 run 和缺失的证据保持可见，不会被替换成示例性的成功。</p>
+        <p class="font-mono mt-6 text-[11px] tracking-[0.06em] text-label-quaternary">Node 22.15+ / pnpm 11.19+ · 换应用就复制一份 project.json 改四个字段</p>
       </div>
     </section>
 
-    <section class="cta">
-      <div class="container">
-        <h2>现在，从一个<br><span class="accent">真实的应用</span>开始。</h2>
-        <div class="cta-command mono">
-          <span class="prompt">$</span>
-          <code>pnpm harness onboard --config examples/happyclaw-site/project.json</code>
-          <button type="button" class="terminal-copy" data-copy="pnpm harness onboard --config examples/happyclaw-site/project.json" aria-label="复制命令">复制</button>
+    <!-- 诚实状态 -->
+    <section id="status" class="mx-auto w-full max-w-[1440px] px-5 py-16 sm:px-8 sm:py-20">
+      <h2 class="max-w-4xl text-balance text-[40px] font-medium leading-[1.02] tracking-[-0.03em] text-label-primary sm:text-[60px]">能用什么，<span class="theme-accent-word text-accent">没什么</span>，写在一处。</h2>
+      <div class="mt-12 grid grid-cols-1 gap-10 md:grid-cols-2">
+        <div>
+          <p class="font-mono text-[11px] tracking-[0.22em] text-accent">已可用</p>
+          <ul class="mt-4 space-y-2.5">
+            <li class="text-[14px] text-label-secondary">— Experience Spec 校验，证据 ID 可追溯</li>
+            <li class="text-[14px] text-label-secondary">— 双视口浏览器采集与结构检查</li>
+            <li class="text-[14px] text-label-secondary">— 27 个带版本 Skill，处理器白名单</li>
+            <li class="text-[14px] text-label-secondary">— 隔离执行 + 宿主仓库指纹核验</li>
+            <li class="text-[14px] text-label-secondary">— 前后评估、独立 Visual QA、人的判定</li>
+            <li class="text-[14px] text-label-secondary">— 不可变的 run 账本与导出</li>
+          </ul>
         </div>
-        <a class="btn ghost" href="https://github.com/ShuaiMXu/creative-os" target="_blank" rel="noreferrer">GitHub 仓库 <span aria-hidden="true">↗</span></a>
+        <div>
+          <p class="font-mono text-[11px] tracking-[0.22em] text-label-tertiary">仍在开发</p>
+          <ul class="mt-4 space-y-2.5">
+            <li class="text-[14px] text-label-tertiary">— 看截图的视觉判断（当前一律 needs-evidence）</li>
+            <li class="text-[14px] text-label-tertiary">— Experience Score 校准与发布</li>
+            <li class="text-[14px] text-label-tertiary">— 增量审阅与 Git diff 影响映射</li>
+            <li class="text-[14px] text-label-tertiary">— 多步任务采集与状态重放</li>
+            <li class="text-[14px] text-label-tertiary">— Workbench 的写入操作（现仅 CLI）</li>
+          </ul>
+        </div>
       </div>
+      <p class="font-mono mt-10 text-[11px] tracking-[0.06em] text-label-quaternary">失败的 run 和缺失的证据保持可见，不会被替换成示例性的成功。</p>
     </section>
-  </main>
 
-  <footer>
-    <div class="container footer-row">
-      <span class="wordmark">creative os</span>
-      <nav aria-label="页脚">
-        <a href="/apps/web/">产品页</a>
-        <a href="/apps/designer/?case=happyclaw">Workbench</a>
-        <a href="https://github.com/ShuaiMXu/creative-os" target="_blank" rel="noreferrer">Source</a>
-      </nav>
-      <span class="mono dim">本页是静态门户；审阅数据只存在于你本地的 run 目录</span>
+    <!-- 结尾 CTA：他们的收尾结构逐字照搬 -->
+    <div class="mx-auto flex w-full max-w-[1440px] flex-col items-center px-6 pb-20 pt-20 text-center sm:pt-24">
+      <h2 class="max-w-5xl text-balance text-[48px] font-medium leading-[1.0] tracking-[-0.03em] text-label-primary sm:text-[80px]">现在，从一个<span class="theme-accent-word text-accent">真实的应用</span>开始。</h2>
+      <p class="mt-8 max-w-2xl text-balance text-[18px] leading-relaxed text-label-tertiary sm:text-[19px]">把你的应用接进闭环——基线、证据、一次修改、一次判定，都留在你自己的机器上。</p>
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+        <button type="button" class="pd-copy btn-accent h-14 rounded-full px-9 text-[16px] font-semibold" data-copy="pnpm harness onboard --config examples/happyclaw-site/project.json">复制接入命令</button>
+        <a class="flex h-14 items-center rounded-full px-6 text-[15px] font-medium text-label-tertiary transition-colors duration-200 hover:text-label-primary" href="https://github.com/ShuaiMXu/creative-os" target="_blank" rel="noreferrer">GitHub 仓库 ↗</a>
+      </div>
     </div>
-  </footer>
+  </div>
+</main>
 
-  <div id="toast" role="status" aria-live="polite"><span id="toast-text">已复制</span></div>
-  <script type="module" src="./main.js"></script>
+<footer class="border-t border-sep bg-ink-soft">
+  <div class="mx-auto flex w-full max-w-[1440px] flex-wrap items-center justify-between gap-4 px-5 py-10 sm:px-8">
+    <span class="text-[15px] font-semibold tracking-[-0.02em] text-label-primary">creative os</span>
+    <nav class="flex items-center gap-6" aria-label="页脚">
+      <a class="text-[13px] text-label-tertiary transition-colors hover:text-label-primary" href="/apps/web/">产品页</a>
+      <a class="text-[13px] text-label-tertiary transition-colors hover:text-label-primary" href="/apps/designer/?case=happyclaw">Workbench</a>
+      <a class="text-[13px] text-label-tertiary transition-colors hover:text-label-primary" href="https://github.com/ShuaiMXu/creative-os" target="_blank" rel="noreferrer">Source ↗</a>
+    </nav>
+    <span class="font-mono text-[10.5px] tracking-[0.06em] text-label-quaternary">本页是静态门户；审阅数据只存在于你本地的 run 目录</span>
+  </div>
+</footer>
+
+<div id="toast" role="status" aria-live="polite" class="btn-accent invisible fixed bottom-6 right-6 z-[95] rounded-full px-5 py-3 text-[13px] font-semibold opacity-0 transition-all duration-300"><span id="toast-text">已复制</span></div>
+
+<script type="module" src="./main.js"></script>
 </body>
 </html>

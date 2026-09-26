@@ -1,0 +1,33 @@
+/* Creative OS additions on top of appllama.css (their compiled framework).
+   Only what their JS bundle would have provided plus our CJK fallbacks —
+   every visual token stays theirs. */
+
+/* Their entrance animations are triggered by their app JS; without it the
+   elements keep `opacity-0`. These keyframes restore the same motion using
+   the curve their transitions use everywhere (cubic-bezier(.16,1,.3,1)). */
+@keyframes fade-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+.animate-fade-up { animation: fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+@keyframes scale-in { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: none; } }
+.animate-scale-in { animation: scale-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up, .animate-scale-in { animation: none; opacity: 1; transform: none; }
+}
+
+/* Instrument Sans has no CJK glyphs; fall through to the system faces for
+   Chinese without changing any of their latin rendering. */
+body { font-family: Instrument Sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif; }
+html { color-scheme: dark; }
+
+/* Cards: their surface cards with the catalog-card shadow stack */
+.pd-card { box-shadow: var(--shadow-catalog-card); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s; }
+.pd-card:hover { transform: translateY(-3px); border-color: rgb(var(--color-accent) / 0.35); }
+.pd-card-ghost:hover { transform: none; border-color: var(--line, rgb(var(--color-sep) / var(--color-sep-alpha))); }
+
+/* Agent tabs */
+.pd-tab { color: rgb(var(--color-label-tertiary)); background: transparent; cursor: pointer; transition: color 0.2s, background 0.2s, border-color 0.2s; }
+.pd-tab:hover { color: rgb(var(--color-label-primary)); }
+.pd-tab[aria-selected="true"] { color: rgb(var(--color-accent-ink)); background: rgb(var(--color-accent)); border-color: rgb(var(--color-accent)); font-weight: 600; }
+
+/* Toast rides on their button treatment */
+#toast.show { opacity: 1; visibility: visible; transform: translateY(0); }
+#toast { transform: translateY(1rem); }
