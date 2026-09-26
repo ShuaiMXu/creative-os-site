@@ -12,6 +12,7 @@ const DST = 'C:/Users/A、/Documents/Codex/2026-09-14/referenced-chatgpt-convers
 const injector = `
 <script>
 (function () {
+  var PD_HERO_DEADLINE = Date.now() + 6000;
   /* ---------- pre-paint cloak: their English page must never flash.
      Head styles survive hydration re-renders (body nodes do not), so this is
      safe to install during parse. ---------- */
@@ -34,9 +35,10 @@ const injector = `
     st.textContent = [
       'header img[alt="Appllama"]{display:none!important}',
       'img[src*="cloud.appllama.io"]{visibility:hidden!important}',
-      '.whirl-field-canvas{display:none!important}',
-      '[class*="HeroUfoMascot_stage"], [class*="HeroUfoMascot_surpriseMarks"]{display:none!important}',
-      '[data-hero-ufo]{display:flex!important;align-items:center;justify-content:center}',
+      /* their hero ships complete: mascot, whirl canvas and entrance effects stay.
+       A stylesheet !important keeps their inline display:none on the mascot
+       wrapper from winning — React rewrites it, but inline non-important loses. */
+      '[data-hero-ufo]{display:block!important}',
       '.footer-ink-cap .wm-stage, footer .wm-stage{display:none!important}',
       'a[href^="https://x.com/appllama"], a[href^="https://www.linkedin.com/company/appllama"], a[href^="https://www.producthunt.com/products/appllama"]{display:none!important}',
       'a[href="/terms"], a[href="/privacy"], a[href="/refund"], a[href="/copyright"], a[href="/support"], a[href="/public-works"], a[href="https://studio.appllama.io/"]{display:none!important}',
@@ -49,12 +51,7 @@ const injector = `
       '.pd-brand i{display:block;margin-top:4px;font:500 9px/1 ui-monospace,monospace;letter-spacing:.3em;font-style:normal;color:rgb(240 220 200)}',
       '.pd-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity 1.5s ease-out}',
       '.pd-placeholder-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;max-width:1440px;margin:48px auto 0;padding:0 clamp(20px,3vw,40px)}',
-      '.pd-placeholder-grid .pd-box{aspect-ratio:4/3}',
-      '.pd-hero-mark{position:relative;width:64px;height:64px;border-radius:999px;border:1px solid rgba(240,220,200,.55);display:flex;align-items:center;justify-content:center;margin-bottom:14px;box-shadow:0 0 0 1px rgba(240,220,200,.12),0 18px 50px -18px rgba(240,220,200,.35)}',
-      '.pd-hero-mark span{font:600 17px/1 -apple-system,"Segoe UI","PingFang SC",sans-serif;letter-spacing:-.03em;color:rgb(240 220 200)}',
-      '.pd-hero-mark i{position:absolute;inset:-7px;border-radius:999px;border:1px dashed rgba(240,220,200,.25);animation:pd-orbit 14s linear infinite}',
-      '@keyframes pd-orbit{to{transform:rotate(360deg)}}',
-      '@media (prefers-reduced-motion: reduce){.pd-hero-mark i{animation:none}}'
+      '.pd-placeholder-grid .pd-box{aspect-ratio:4/3}'
     ].join('\\n');
     document.head.appendChild(st);
   }
@@ -105,25 +102,16 @@ const injector = `
       el.appendChild(brand);
     });
 
-    /* mascot: their stage is hidden by CSS; the slot becomes a monogram mark —
-       a finished-looking placeholder for our future mascot, wrapped in their
-       fade-up container so the entrance animation still plays */
-    var ufoSlot = document.querySelector('[data-hero-ufo]');
-    if (ufoSlot && !ufoSlot.querySelector('.pd-hero-mark')) {
-      var ph = document.createElement('div');
-      ph.className = 'pd-hero-mark';
-      ph.innerHTML = '<i></i><span>co</span>';
-      ph.setAttribute('title', '吉祥物占位');
-      ufoSlot.appendChild(ph);
-    }
-
-    /* our whirl canvas over the hero (their canvas is hidden) */
-    var hero = document.querySelector('section.sticky');
-    if (hero && !hero.querySelector('.pd-canvas')) {
-      var cv = document.createElement('canvas');
-      cv.className = 'pd-canvas';
-      hero.insertBefore(cv, hero.firstChild);
-      startWhirl(cv);
+    /* hero: their complete hero ships as-is — mascot, whirl canvas and
+       entrance effects are theirs, untouched. One fight: their component
+       writes inline display:none on the mascot wrapper until its entrance
+       controller fires, and React re-writes it on every render; when that
+       controller half-fails (offline, headless) the mascot never appears.
+       After 6s, every swap pass forces the wrapper open so their own fadeUp
+       can finish — a no-op wherever their controller already revealed it. */
+    if (Date.now() > PD_HERO_DEADLINE) {
+      var ufoEl = document.querySelector('[data-hero-ufo]');
+      if (ufoEl && ufoEl.style.display === 'none') ufoEl.style.display = 'block';
     }
 
     /* catalog: keep the swapped H2 section, hide the rest of that sheet, add placeholder grid */
@@ -167,86 +155,7 @@ const injector = `
     }
   }
 
-    /* ---------- our whirl: orbiting tiles from both exported runs ---------- */
-  function startWhirl(canvas) {
-    var ctx = canvas.getContext('2d');
-    var DPR = Math.min(window.devicePixelRatio || 1, 2);
-    var SCREENS = [
-      { src: '/runs/06dabc2c/before/desktop.png', w: 150, h: 94 },
-      { src: '/runs/06dabc2c/after/desktop.png', w: 150, h: 94 },
-      { src: '/runs/8f60c961/before/desktop.png', w: 150, h: 94 },
-      { src: '/runs/06dabc2c/before/mobile.png', w: 64, h: 138 },
-      { src: '/runs/06dabc2c/after/mobile.png', w: 64, h: 138 },
-      { src: '/runs/8f60c961/before/mobile.png', w: 64, h: 138 }
-    ];
-    var images = SCREENS.map(function (s) { var im = new Image(); im.src = s.src; return { image: im, w: s.w, h: s.h }; });
-    var tiles = [];
-    for (var i = 0; i < 20; i++) {
-      tiles.push({
-        image: images[i % images.length],
-        angle: (i / 20) * Math.PI * 2 + Math.random() * 0.25,
-        radius: 0.32 + Math.random() * 0.3,
-        speed: (0.00008 + Math.random() * 0.00022) * (i % 2 ? 1 : -1),
-        scale: 0.7 + Math.random() * 0.6,
-        tilt: (Math.random() - 0.5) * 0.22,
-        alpha: 0.4 + Math.random() * 0.45
-      });
-    }
-    var dots = [];
-    for (var j = 0; j < 220; j++) {
-      dots.push({ radius: 0.3 + Math.random() * 0.62, angle: Math.random() * Math.PI * 2, speed: (0.00016 + Math.random() * 0.0006) * (Math.random() < 0.5 ? 1 : -1), size: 0.6 + Math.random() * 1.8, alpha: 0.08 + Math.random() * 0.3 });
-    }
-    function resize() {
-      canvas.width = canvas.parentElement.clientWidth * DPR;
-      canvas.height = canvas.parentElement.clientHeight * DPR;
-      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    }
-    resize();
-    window.addEventListener('resize', resize);
-    var on = false;
-    function frame() {
-      if (!on) { on = true; canvas.style.opacity = '1'; }
-      var w = canvas.width / DPR, h = canvas.height / DPR, rMax = Math.max(w, h) / 2;
-      ctx.clearRect(0, 0, w, h);
-      for (var d = 0; d < dots.length; d++) {
-        var p = dots[d]; p.angle += p.speed * 16;
-        ctx.fillStyle = 'rgba(240,220,200,' + p.alpha + ')';
-        ctx.beginPath();
-        ctx.arc(w / 2 + Math.cos(p.angle) * p.radius * rMax, h / 2 + Math.sin(p.angle) * p.radius * rMax, p.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      for (var t = 0; t < tiles.length; t++) {
-        var tile = tiles[t]; tile.angle += tile.speed * 16;
-        if (!tile.image.image.complete || tile.image.image.naturalWidth === 0) continue;
-        var r = tile.radius * rMax;
-        var x = w / 2 + Math.cos(tile.angle) * r;
-        var y = h / 2 + Math.sin(tile.angle) * r * 0.72;
-        var tw = tile.image.w * tile.scale, th = tile.image.h * tile.scale;
-        ctx.save();
-        ctx.globalAlpha = tile.alpha;
-        ctx.translate(x, y);
-        ctx.rotate(tile.tilt + Math.sin(tile.angle) * 0.06);
-        ctx.beginPath();
-        ctx.roundRect(-tw / 2, -th / 2, tw, th, 10);
-        ctx.closePath();
-        ctx.clip();
-        ctx.drawImage(tile.image.image, -tw / 2, -th / 2, tw, th);
-        ctx.restore();
-        ctx.save();
-        ctx.globalAlpha = tile.alpha * 0.5;
-        ctx.strokeStyle = 'rgba(240,220,200,0.55)';
-        ctx.lineWidth = 1;
-        ctx.translate(x, y);
-        ctx.rotate(tile.tilt + Math.sin(tile.angle) * 0.06);
-        ctx.beginPath();
-        ctx.roundRect(-tw / 2, -th / 2, tw, th, 10);
-        ctx.stroke();
-        ctx.restore();
-      }
-      requestAnimationFrame(frame);
-    }
-    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) requestAnimationFrame(frame);
-  }
+  
 
   /* First pass as soon as the DOM exists — before hydration re-renders —
      then reveal the page. The cloak above guarantees the English original
