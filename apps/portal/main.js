@@ -1,5 +1,5 @@
-import { apps, systems, screens, elements, steps, repositories } from './content.js';
-import { sectionHead, appCard, systemCard, screenCard, elementCard, stepCard } from './components.js';
+import { apps, systems, screens, screenPairs, elements, steps, repositories } from './content.js';
+import { sectionHead, appCard, systemCard, screenPair, elementCard, stepCard } from './components.js';
 
 const content = document.querySelector('#portal-content');
 content.innerHTML = `
@@ -8,15 +8,15 @@ content.innerHTML = `
     <div class="apps-grid">${apps.map(appCard).join('')}</div>
   </section>
   <section class="content-section section-explore" id="explore">
-    ${sectionHead('02 / EXPLORE', 'Design systems become project memory.', '这里展示的不是灵感图库，而是每个项目被提取、确认和持续治理的视觉语言。')}
+    ${sectionHead('02 / EXPLORE', 'Start from a system, then make it yours.', '浏览 HappyHands 已沉淀的项目系统和预设模板。每套都包含 Token、组件、状态和适用场景。')}
     <div class="system-grid">${systems.map(systemCard).join('')}</div>
   </section>
   <section class="content-section section-screens" id="screens">
     ${sectionHead('03 / SCREENS', 'The same state, before and after.', '截图不是装饰素材。每一张都属于一个可复现的页面状态、视口和 run。', '<a class="text-link" href="/apps/designer/?case=happyclaw">Open the full review ↗</a>')}
-    <div class="screens-grid">${screens.map(screenCard).join('')}</div>
+    <div class="screen-pairs">${screenPairs.map(screenPair).join('')}</div>
   </section>
   <section class="content-section section-elements" id="elements">
-    ${sectionHead('04 / UI ELEMENTS', 'Components with evidence, states and rules.', '从已有产品提取组件，再补齐状态、语义 Token、使用规则和可追溯来源。')}
+    ${sectionHead('04 / UI ELEMENTS', 'Reusable templates, ready for product work.', '浏览可直接用于审阅、生成和整改的组件模板。每个模板都带状态、语义 Token 和使用边界。')}
     <div class="elements-grid">${elements.map(elementCard).join('')}</div>
   </section>
   <section class="get-started" id="get-started">
