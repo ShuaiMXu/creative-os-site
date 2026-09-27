@@ -6,3 +6,5 @@ dist/
 # Tools: crawl-skillry.mjs (fetch) + fix-skillry.mjs (rewrite) rebuild it from scratch.
 public/skillry-full/
 .skillry-crawl-state.json
+
+test-results/

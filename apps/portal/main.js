@@ -98,6 +98,7 @@ function renderContent() {
     </section>
     <section class="content-section section-explore" id="explore">
       <div class="section-head"><div><p class="kicker">${c.sections.explore.kicker}</p><h2>${c.sections.explore.title}</h2></div><div><p>${c.sections.explore.copy}</p></div></div>
+      <a class="text-link" href="/apps/studio/">${lang === 'zh' ? '定制你的设计令牌 · Token Studio ↗' : 'Customize your design tokens · Token Studio ↗'}</a>
       <div class="system-grid">${c.systems.map(systemCard).join('')}</div>
     </section>
     <section class="content-section section-screens" id="screens">

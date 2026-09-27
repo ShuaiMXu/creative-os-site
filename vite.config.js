@@ -37,6 +37,7 @@ export default defineConfig({
   build: { rollupOptions: { input: {
     home: resolve('index.html'),
     portal: resolve('apps/portal/index.html'),
+    studio: resolve('apps/studio/index.html'),
     web: resolve('apps/web/index.html'),
     designer: resolve('apps/designer/index.html'),
     appllama: resolve('apps/appllama/index.html'),

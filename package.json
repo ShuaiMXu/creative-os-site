@@ -6,12 +6,37 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
-    "preview": "vite preview --host 127.0.0.1"
+    "preview": "vite preview --host 127.0.0.1",
+    "typecheck": "tsc --noEmit",
+    "test:studio": "node --import tsx --test tests/studio-core.test.ts tests/studio-bridge.test.mjs",
+    "test:studio:browser": "node tests/studio-browser.mjs",
+    "test:studio:harness": "node --import tsx tests/studio-harness.ts"
   },
   "dependencies": {
-    "ajv": "8.20.0"
+    "ajv": "8.20.0",
+    "culori": "^4.0.2",
+    "postcss": "^8.5.28",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@tailwindcss/node": "^4.3.3",
+    "@types/culori": "^4.0.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "playwright-core": "^1.63.0",
+    "prettier": "^3.9.9",
+    "tailwindcss": "^4.3.3",
+    "tailwindcss-v3": "npm:tailwindcss@^3.4.19",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
     "vite": "8.3.0"
-  }
+  },
+  "workspaces": [
+    "apps/studio",
+    "packages/contracts",
+    "packages/ui",
+    "packages/theme-core"
+  ]
 }
