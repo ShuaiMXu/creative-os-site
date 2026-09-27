@@ -31,7 +31,7 @@ const track = document.querySelector('#whirl-track');
 const count = 32;
 for (let index = 0; index < count; index++) {
   const angle = (index / count) * Math.PI * 2;
-  const radius = 39 + (index % 4) * 4.5;
+  const radius = 31 + (index % 4) * 4;
   const tile = document.createElement('span');
   tile.className = 'whirl-tile';
   tile.style.setProperty('--x', `${50 + Math.cos(angle) * radius}%`);
