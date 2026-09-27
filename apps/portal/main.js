@@ -67,7 +67,8 @@ function updateHeroScroll() {
   }
   const travel = Math.max(1, heroStage.offsetHeight - window.innerHeight);
   const progress = Math.min(1, Math.max(0, -heroStage.getBoundingClientRect().top / travel));
-  hero.style.setProperty('--hero-progress', progress.toFixed(3));
+  const easedProgress = 1 - Math.pow(1 - progress, 3);
+  hero.style.setProperty('--hero-progress', easedProgress.toFixed(3));
 }
 function requestHeroScroll() {
   if (!heroFrame) heroFrame = requestAnimationFrame(updateHeroScroll);
