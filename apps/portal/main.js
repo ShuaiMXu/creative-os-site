@@ -54,3 +54,25 @@ document.addEventListener('click', async event => {
 
 const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); }), { threshold: .12 });
 document.querySelectorAll('.content-section, .get-started').forEach(section => observer.observe(section));
+
+const hero = document.querySelector('.hero');
+const heroStage = document.querySelector('.hero-scroll-stage');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+let heroFrame = 0;
+function updateHeroScroll() {
+  heroFrame = 0;
+  if (!hero || !heroStage || reduceMotion.matches) {
+    hero?.style.setProperty('--hero-progress', '0');
+    return;
+  }
+  const travel = Math.max(1, heroStage.offsetHeight - window.innerHeight);
+  const progress = Math.min(1, Math.max(0, -heroStage.getBoundingClientRect().top / travel));
+  hero.style.setProperty('--hero-progress', progress.toFixed(3));
+}
+function requestHeroScroll() {
+  if (!heroFrame) heroFrame = requestAnimationFrame(updateHeroScroll);
+}
+window.addEventListener('scroll', requestHeroScroll, { passive: true });
+window.addEventListener('resize', requestHeroScroll);
+reduceMotion.addEventListener?.('change', requestHeroScroll);
+updateHeroScroll();
