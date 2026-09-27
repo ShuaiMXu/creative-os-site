@@ -1,0 +1,11 @@
+{
+  "name": "@happyhands/studio",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "dependencies": {
+    "@happyhands/contracts": "*",
+    "@happyhands/ui": "*",
+    "@happyhands/theme-core": "*"
+  }
+}

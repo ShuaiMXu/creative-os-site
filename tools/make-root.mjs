@@ -8,7 +8,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 const SRC = fileURLToPath(new URL('./source/home.html', import.meta.url));
-const DST = fileURLToPath(new URL('../index.html', import.meta.url));
+const DST = fileURLToPath(new URL('../apps/appllama/index.html', import.meta.url));
 
 const injector = `
 <script>

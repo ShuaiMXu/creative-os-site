@@ -1,218 +1,332 @@
-// Portal behaviour. The hero whirl is OUR OWN implementation of the spiral
-// screen-rotor: the geometry, distribution and styling parameters were read
-// out of the original site's shipped behaviour (8-turn spiral r=1875·(1−u),
-// arc-length LUT, ≤120 tiles, 90s rotor spin, 3/4 tiles at 14% radius) and
-// reimplemented from scratch — no their-code runs here. Tile images are the
-// crawled catalog screens (public/assets/hero, placeholder by design; swap
-// the files or the manifest to change the showcase). Also on board: the
-// llama bob, the runway scroll choreography, agent tabs, copy-to-clipboard.
+import * as zh from './content.zh.js';
+import * as en from './content.en.js';
+import { repositories, heroScreens } from './content.js';
+import { startWhirl } from './whirl.js';
 
-import heroScreens from './hero-screens.json' with { type: 'json' };
+const LANG_KEY = 'pd-lang';
+let lang = localStorage.getItem(LANG_KEY) || 'zh';
+const t = () => lang === 'zh' ? zh : en;
 
-const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const systemTheme = matchMedia('(prefers-color-scheme: dark)');
+let themePreference = localStorage.getItem('hh-theme');
+if (!['light', 'dark'].includes(themePreference)) themePreference = null;
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  document.documentElement.style.colorScheme = theme;
+  document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#111111' : '#f7f6f3';
+  const button = document.getElementById('theme-toggle');
+  if (button) {
+    button.textContent = theme === 'dark' ? '☀' : '☾';
+    button.setAttribute('aria-label', lang === 'zh' ? `切换到${theme === 'dark' ? '浅色' : '暗黑'}模式` : `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
+  }
+}
+const themeButton = document.createElement('button');
+themeButton.id = 'theme-toggle';
+themeButton.type = 'button';
+document.querySelector('.header-actions').prepend(themeButton);
+themeButton.addEventListener('click', () => {
+  themePreference = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('hh-theme', themePreference);
+  applyTheme(themePreference);
+});
+systemTheme.addEventListener('change', event => { if (!themePreference) applyTheme(event.matches ? 'dark' : 'light'); });
+applyTheme(themePreference || (systemTheme.matches ? 'dark' : 'light'));
 
-/* ---- Spiral rotor: our reimplementation of the whirl ---- */
-function buildSpiral() {
-  // 8 turns from r=1875 down to 0, arc-length parameterised like the original
-  const TURNS = 8 * Math.PI * 2;
-  const SAMPLES = 16384;
-  const MAX_R = 1875;
-  const points = [];
-  for (let a = 0; a <= SAMPLES; a++) {
-    const u = a / SAMPLES;
-    const angle = u * TURNS;
-    const r = MAX_R * (1 - u);
-    points.push({ x: r * Math.cos(angle), y: r * Math.sin(angle) });
+// -- language switcher --
+function renderLangSwitch() {
+  const existing = document.getElementById('lang-switch');
+  if (existing) return;
+  const actions = document.querySelector('.header-actions');
+  if (!actions) return;
+  const switcher = document.createElement('div');
+  switcher.id = 'lang-switch';
+  switcher.setAttribute('role', 'group');
+  switcher.setAttribute('aria-label', 'Language / 语言');
+  for (const code of ['zh', 'en']) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.dataset.lang = code;
+    btn.textContent = code === 'zh' ? '中文' : 'EN';
+    btn.addEventListener('click', () => setLang(code));
+    switcher.appendChild(btn);
   }
-  const cumulative = [0];
-  for (let i = 1; i < points.length; i++) {
-    cumulative.push(cumulative[i - 1] + Math.hypot(points[i].x - points[i - 1].x, points[i].y - points[i - 1].y));
-  }
-  const total = cumulative[SAMPLES];
-  const STEPS = 4096;
-  const lut = new Array(STEPS + 1);
-  let cursor = 0;
-  for (let c = 0; c <= STEPS; c++) {
-    const d = (c / STEPS) * total;
-    while (cursor < SAMPLES && cumulative[cursor + 1] < d) cursor++;
-    const span = cumulative[cursor + 1] - cumulative[cursor];
-    const t = span > 0 ? (d - cumulative[cursor]) / span : 0;
-    const a = points[cursor];
-    const b = points[Math.min(cursor + 1, SAMPLES)];
-    const x = a.x + (b.x - a.x) * t;
-    const y = a.y + (b.y - a.y) * t;
-    const ua = (cursor + t) / SAMPLES;
-    const angle = ua * TURNS;
-    const r = MAX_R * (1 - ua);
-    // derivative of (r·cos, r·sin) along the spiral, normalised
-    const dx = -MAX_R * Math.cos(angle) - r * Math.sin(angle) * TURNS;
-    const dy = -MAX_R * Math.sin(angle) + r * Math.cos(angle) * TURNS;
-    const len = Math.hypot(dx, dy);
-    lut[c] = { x, y, tx: len > 0 ? dx / len : 1, ty: len > 0 ? dy / len : 0 };
-  }
-  return lut;
+  actions.prepend(switcher);
 }
 
-function startWhirl() {
-  const canvas = document.querySelector('.whirl-field-canvas');
-  const host = canvas?.parentElement;               // the masked wrapper keeps the ring clear for the mascot
-  if (!host || reduced) {
-    if (canvas) canvas.style.display = 'none';
-    return;
-  }
-  canvas.style.display = 'none';                    // our rotor replaces their canvas outright
-
-  const SCREENS = heroScreens;
-  const TILE_WIDTHS = [175, 115, 85, 145];             // their tiles vary; keep them phone-thumbnail sized
-  const TILE_COUNT = 120;
-  const SPREAD = 2500;                              // their coordinate normalisation space
-
-  const lut = buildSpiral();
-  const rotor = document.createElement('div');
-  rotor.className = 'pd-whirl-rotor';
-  host.appendChild(rotor);
-
-  for (let i = 0; i < TILE_COUNT; i++) {
-    const u = (i / TILE_COUNT) % 1;
-    let edge = 1;
-    if (u < 0.08) edge = u / 0.08;
-    else if (u > 0.92) edge = (1 - u) / 0.92;
-    if (edge < 0.15) continue;
-
-    const p = lut[Math.round(u * 4096)];
-    const d = Math.hypot(p.x, p.y);
-    const expand = 1875 * Math.pow(d / 1875, 1.0526315789473684);
-    const h = d > 0 ? expand / d : 1;
-    const scale = Math.pow(Math.min(expand / 1875, 1), 0.35);
-    const angle = Math.atan2(p.ty, p.tx);
-    const src = SCREENS[i % SCREENS.length];
-    const width = TILE_WIDTHS[i % TILE_WIDTHS.length] / SPREAD * 100;
-
-    const tile = document.createElement('div');
-    tile.className = 'pd-whirl-tile';
-    tile.style.left = `${(50 + p.x * h / SPREAD * 100).toFixed(3)}%`;
-    tile.style.top = `${(50 + p.y * h / SPREAD * 100).toFixed(3)}%`;
-    tile.style.width = `${width.toFixed(3)}%`;
-    tile.style.transform = `translate(-50%, -50%) rotate(${angle.toFixed(4)}rad) scale(${scale.toFixed(4)})`;
-    tile.style.opacity = edge.toFixed(3);
-    const image = document.createElement('img');
-    image.src = src;
-    image.alt = '';
-    image.decoding = 'async';
-    image.loading = 'lazy';
-    image.draggable = false;
-    image.addEventListener('load', () => { image.style.opacity = '1'; }, { once: true });
-    tile.appendChild(image);
-    rotor.appendChild(tile);
-  }
-  requestAnimationFrame(() => { rotor.style.opacity = '1'; });
+function setLang(code) {
+  lang = code;
+  localStorage.setItem(LANG_KEY, code);
+  renderContent();
 }
-/* ---- Mobile nav: their hamburger is inert here; mirror the section links
-   into a scrollable row visible below lg. ---- */
-(function buildMobileNav() {
-  const row = document.querySelector('header nav .grid, header nav div');
-  const links = [...document.querySelectorAll('header nav div a')].filter(a => a.getAttribute('href')?.startsWith('#'));
-  if (!row || !links.length) return;
-  const mobileRow = document.createElement('div');
-  mobileRow.className = 'pd-mobile-nav';
-  for (const link of links) {
-    const clone = document.createElement('a');
-    clone.href = link.getAttribute('href');
-    clone.textContent = link.innerText.trim();
-    mobileRow.appendChild(clone);
+
+// -- render all sections from the active language pack --
+function renderContent() {
+  const c = t();
+  applyTheme(document.documentElement.dataset.theme);
+
+  document.querySelectorAll('[data-lang]').forEach(button => { button.setAttribute('aria-pressed', String(button.dataset.lang === lang)); });
+  // hero
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  document.title = lang === 'zh' ? 'HappyHands — 持续在线的 AI 产品设计师' : 'HappyHands — AI Product Designer';
+  const eyebrow = document.querySelector('.eyebrow');
+  if (eyebrow) eyebrow.innerHTML = c.hero.eyebrow.map(s => `<span>${s}</span>`).join('');
+  const h1 = document.querySelector('h1');
+  if (h1) h1.innerHTML = lang === 'zh'
+    ? `${c.hero.h1}<span>${c.hero.h1Accent}</span>${c.hero.h1Suffix}`
+    : `${c.hero.h1}<span>${c.hero.h1Accent}</span>${c.hero.h1Suffix}`;
+  const heroCopy = document.querySelector('.hero-copy');
+  if (heroCopy) heroCopy.textContent = c.hero.copy;
+  const primary = document.querySelector('.button-primary');
+  if (primary) primary.textContent = c.hero.cta;
+  const secondary = document.querySelector('.button-secondary');
+  if (secondary) secondary.innerHTML = `${c.hero.ctaSecondary} <span aria-hidden="true">↗</span>`;
+  const scrollNote = document.querySelector('.scroll-note');
+  if (scrollNote) scrollNote.innerHTML = `${c.ui.scrollNote} <span>↓</span>`;
+
+  // sections
+  const content = document.querySelector('#portal-content');
+  if (content) {
+    content.innerHTML = `
+    <section class="content-section section-apps" id="apps">
+      <div class="section-head"><div><p class="kicker">${c.sections.apps.kicker}</p><h2>${c.sections.apps.title}</h2></div><div><p>${c.sections.apps.copy}</p><a class="text-link" href="${repositories.core}">${c.sections.apps.link}</a></div></div>
+      <div class="apps-grid">${c.apps.map(appCard).join('')}</div>
+    </section>
+    <section class="content-section section-delivery" id="harness">
+      <div class="section-head"><div><p class="kicker">HARNESS / EXPERT LOOP</p><h2>${c.delivery.title}</h2></div><p>${c.delivery.copy}</p></div>
+      <dl class="delivery-list">${c.delivery.items.map(([title,copy]) => `<div><dt>${title}</dt><dd>${copy}</dd></div>`).join('')}</dl>
+      <p class="capability-note">${c.delivery.status}</p><a class="text-link" href="${repositories.core}/blob/main/docs/harness.md">${c.delivery.link}</a>
+    </section>
+    <section class="content-section section-explore" id="explore">
+      <div class="section-head"><div><p class="kicker">${c.sections.explore.kicker}</p><h2>${c.sections.explore.title}</h2></div><div><p>${c.sections.explore.copy}</p></div></div>
+      <a class="text-link" href="/apps/studio/">${lang === 'zh' ? '定制你的设计令牌 · Token Studio ↗' : 'Customize your design tokens · Token Studio ↗'}</a>
+      <div class="system-grid">${c.systems.map(systemCard).join('')}</div>
+    </section>
+    <section class="content-section section-screens" id="screens">
+      <div class="section-head"><div><p class="kicker">${c.sections.screens.kicker}</p><h2>${c.sections.screens.title}</h2></div><div><p>${lang === 'zh' ? '当前使用 Appllama 参考图展示横滑布局，非改前 / 改后证据。真实 HappyClaw 审阅请通过下方链接查看。' : 'Appllama references preview this horizontal layout, not before/after evidence. Open the real HappyClaw review below.'}</p><a class="text-link" href="/apps/designer/?case=run:06dabc2c">${c.sections.screens.link}</a></div></div>
+      <p class="review-evidence"><a class="text-link" href="/runs/06dabc2c/reviews/visual-qa-evaluator.json">${lang === 'zh' ? '查看独立视觉复核原始记录 ↗' : 'Read the original visual QA record ↗'}</a></p><div class="screen-pairs">${c.screenPairs.map(pairCard).join('')}</div>
+    </section>
+    <section class="content-section section-elements" id="elements">
+      <div class="section-head"><div><p class="kicker">${c.sections.elements.kicker}</p><h2>${c.sections.elements.title}</h2></div><div><p>${c.sections.elements.copy}</p></div></div>
+      <div class="elements-grid">${c.elements.map(elementCard).join('')}</div>
+    </section>
+    <section class="get-started" id="get-started">
+      <div class="get-started-copy"><p class="kicker">${c.sections.getStarted.kicker}</p><h2>${c.sections.getStarted.title}<br><span>${c.sections.getStarted.titleLine2}</span></h2><p>${c.sections.getStarted.copy}</p></div>
+      <div class="steps-grid">${c.steps.map(stepCard).join('')}</div>
+      <div class="command-card"><div><span>${c.sections.getStarted.quickstartLabel}</span><strong>${c.sections.getStarted.quickstartTitle}</strong></div><code>pnpm harness onboard --config examples/happyclaw-site/project.json</code><button type="button" data-copy="pnpm harness onboard --config examples/happyclaw-site/project.json">${c.sections.getStarted.copyBtn}</button></div>
+      <div class="final-actions"><a class="button button-primary" href="${repositories.core}">GitHub ↗</a><a class="button button-secondary" href="${repositories.site}">${lang === 'zh' ? '网站源码 ↗' : 'Website source ↗'}</a></div>
+    </section>`;
   }
-  row.parentElement.appendChild(mobileRow);
+
+  // footer
+  const footer = document.querySelector('footer');
+  if (footer) {
+    footer.innerHTML = `<span>${c.ui.footer.left}</span><span>${c.ui.footer.middle}</span><a href="${repositories.core}">${c.ui.footer.right}</a>`;
+  }
+
+  // re-observe sections for intersection animation
+  observeSections();
+  setupRails();
+}
+
+// Native scrolling keeps touch, trackpad and keyboard browsing available.
+let disposeRails = () => {};
+const catalogState = {};
+function setupRails() {
+  disposeRails();
+  const cleanups = [];
+  for (const [id, selector] of [['explore', '.system-grid'], ['screens', '.screen-pairs'], ['elements', '.elements-grid']]) {
+    const section = document.getElementById(id);
+    const rail = section.querySelector(selector);
+    rail.id = `${id}-rail`;
+    rail.tabIndex = 0;
+    rail.setAttribute('role', 'region');
+    rail.setAttribute('aria-label', section.querySelector('h2').textContent);
+    const toolbar = document.createElement('div');
+    toolbar.className = 'rail-toolbar';
+    const hint = lang === 'zh' ? '横向滑动浏览' : 'Swipe to explore';
+    toolbar.innerHTML = `<span>${hint}</span><div><button type="button" aria-label="${lang === 'zh' ? '上一项' : 'Previous item'}" aria-controls="${rail.id}">←</button><button type="button" aria-label="${lang === 'zh' ? '下一项' : 'Next item'}" aria-controls="${rail.id}">→</button></div>`;
+    rail.before(toolbar);
+    const [previous, next] = toolbar.querySelectorAll('button');
+    const cards = [...rail.children];
+    const state = catalogState[id] ||= { filter: 'all', view: 'row' };
+    const zh = lang === 'zh';
+    const groups = id === 'explore'
+      ? [['archive', zh ? '档案与案例' : 'Archives & cases', [0,1,2]], ['planned', zh ? '预设方向' : 'Proposed presets', [3,4,5]]]
+      : id === 'elements'
+        ? [['input', zh ? '输入与操作' : 'Input & actions', [0,1]], ['feedback', zh ? '状态与反馈' : 'Status & feedback', [2,5,6,7]], ['structure', zh ? '基础与结构' : 'Foundations & structure', [3,4,8]]]
+        : [['references', zh ? '参考占位' : 'Reference previews', [0,1]]];
+    const filters = document.createElement('div');
+    filters.className = 'catalog-filters';
+    filters.setAttribute('role', 'group');
+    filters.setAttribute('aria-label', zh ? '内容分类' : 'Content categories');
+    filters.innerHTML = [['all', zh ? '全部' : 'All'], ...groups].map(([key,label]) => `<button type="button" data-filter="${key}">${label}</button>`).join('');
+    toolbar.before(filters);
+    const views = document.createElement('div');
+    views.className = 'catalog-views';
+    views.setAttribute('role', 'group');
+    views.setAttribute('aria-label', zh ? '浏览方式' : 'View mode');
+    views.innerHTML = `<button type="button" data-view="row">${zh ? '横排' : 'Row'}</button><button type="button" data-view="grid">${zh ? '网格' : 'Grid'}</button>`;
+    toolbar.insertBefore(views, toolbar.lastElementChild);
+    const summary = toolbar.firstElementChild;
+    summary.setAttribute('role', 'status');
+    const apply = () => {
+      const indices = groups.find(([key]) => key === state.filter)?.[2];
+      cards.forEach((card,index) => { card.hidden = !!indices && !indices.includes(index); });
+      rail.dataset.view = state.view;
+      const count = cards.filter(card => !card.hidden).length;
+      const unit = zh ? (id === 'screens' ? '组参考占位' : id === 'elements' ? '类组件示意' : '项档案与预设') : (id === 'screens' ? 'reference pairs' : id === 'elements' ? 'component studies' : 'archives & presets');
+      summary.textContent = `${count} / ${cards.length} ${unit} · ${state.view === 'row' ? (zh ? '横排浏览' : 'row view') : (zh ? '网格浏览' : 'grid view')}`;
+      filters.querySelectorAll('button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === state.filter)));
+      views.querySelectorAll('button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.view === state.view)));
+      previous.parentElement.hidden = state.view === 'grid';
+      rail.scrollLeft = 0;
+      update();
+    };
+    filters.addEventListener('click', event => { const button = event.target.closest('[data-filter]'); if (button) { state.filter = button.dataset.filter; apply(); } });
+    views.addEventListener('click', event => { const button = event.target.closest('[data-view]'); if (button) { state.view = button.dataset.view; apply(); } });
+    const update = () => {
+      previous.disabled = rail.scrollLeft <= 2;
+      next.disabled = rail.scrollLeft >= rail.scrollWidth - rail.clientWidth - 2;
+    };
+    const step = direction => {
+      const card = cards.find(card => !card.hidden);
+      if (!card || state.view === 'grid') return;
+      const gap = parseFloat(getComputedStyle(rail).columnGap) || 0;
+      rail.scrollBy({left: direction * (card.getBoundingClientRect().width + gap), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
+    };
+    previous.addEventListener('click', () => step(-1));
+    next.addEventListener('click', () => step(1));
+    const onKey = event => {
+      if (event.target !== rail || !['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+      event.preventDefault();
+      step(event.key === 'ArrowRight' ? 1 : -1);
+    };
+    rail.addEventListener('keydown', onKey);
+    rail.addEventListener('scroll', update, {passive:true});
+    const resize = new ResizeObserver(update);
+    resize.observe(rail);
+    apply();
+    cleanups.push(() => { resize.disconnect(); rail.removeEventListener('scroll', update); rail.removeEventListener('keydown', onKey); });
+  }
+  disposeRails = () => cleanups.forEach(cleanup => cleanup());
+}
+
+// -- card builders (use the active language pack) --
+function appCard(item) {
+  const c = t();
+  return `<article class="app-card"><div class="card-top"><span>${item.index}</span><span class="state">${item.state}</span></div><h3>${item.title}</h3><p>${item.description}</p><ul>${item.meta.map(v => `<li>${v}</li>`).join('')}</ul><a href="${item.href || repositories.core}">${item.action} <span aria-hidden="true">↗</span></a></article>`;
+}
+
+const referenceImage = index => `/assets/hero/screen-${String(index).padStart(3, '0')}.webp`;
+const referenceLabel = () => lang === 'zh' ? 'Appllama 参考图 · 临时占位' : 'Appllama reference · Placeholder';
+function referencePreview(index, className = '') {
+  return `<div class="reference-preview ${className}"><img src="${referenceImage(index)}" alt="${referenceLabel()}" loading="lazy"><span>${referenceLabel()}</span></div>`;
+}
+function systemCard(item, index) {
+  return `<article class="system-card">${referencePreview(index + 1)}<p class="card-tag">${item.tag}</p><h3>${item.title}</h3><p>${item.description}</p><div class="chips">${item.traits.map(v => `<span>${v}</span>`).join('')}</div><a class="card-link" href="${item.href}">${item.action} ↗</a></article>`;
+}
+function pairCard(item, index) {
+  return `<article class="screen-pair"><div class="pair-head"><div><p class="card-tag">${referenceLabel()}</p><h3>${lang === 'zh' ? '页面参考' : 'Screen reference'} 0${index + 1}</h3></div></div><div class="reference-pair">${referencePreview(21 + index * 2)}${referencePreview(22 + index * 2)}</div></article>`;
+}
+function elementCard(item, index) {
+  return `<article class="element-card">${referencePreview(41 + index)}<p class="card-tag">UI ELEMENT</p><h3>${item.title}</h3><p>${item.description}</p></article>`;
+}
+
+function stepCard(item) {
+  return `<article class="step-card"><span>${item[0]}</span><h3>${item[1]}</h3><p>${item[2]}</p></article>`;
+}
+
+// -- scroll animations --
+let observer;
+function observeSections() {
+  observer?.disconnect();
+  observer = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); }), { threshold: .12 });
+  document.querySelectorAll('.content-section, .get-started').forEach(s => observer.observe(s));
+}
+
+// -- hero scroll (exact appllama motion model, smooth per-frame interpolation) --
+// Their formula: scrollYProgress from useScroll, then:
+//   opacity = map(p, [0,.35], [1,0]);  scale = map(p, [0,.35], [1,.88]);
+//   bgOpacity = map(p, [.4,.85], [1,0]);
+// We replicate with a rAF loop that lerps toward the scroll target each frame.
+const heroStage = document.querySelector('.hero-scroll-stage');
+const heroCenter = document.querySelector('.hero-center');
+const heroWhirlHost = document.querySelector('.hero-whirl-host');
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+let _raf = null;
+
+function _map(v, [a, b], [c, d]) {
+  const t = Math.min(1, Math.max(0, (v - a) / (b - a)));
+  return c + t * (d - c);
+}
+function _progress() {
+  if (!heroStage) return 0;
+  const r = heroStage.getBoundingClientRect();
+  // Progress denominator = full stage height (matches appllama's useScroll
+  // with offset ["start start", "end start"] on the parent container).
+  // Live-verified: scrollY=50 → p=50/1136=0.044; text gone at scrollY≈400.
+  return r.height <= 0 ? 0 : Math.min(1, Math.max(0, -r.top / r.height));
+}
+// Direct scroll-linked animation: opacity/scale track scroll position exactly.
+// rAF batches the style write for performance but adds zero smoothing —
+// scroll down = text fades proportionally, scroll back up = text returns.
+function _apply() {
+  _raf = null;
+  const p = _progress();
+  // 1. Text fades + shrinks over [0, 0.35]
+  if (heroCenter) {
+    heroCenter.style.opacity = _map(p, [0, .35], [1, 0]).toFixed(4);
+    heroCenter.style.transform = `scale(${_map(p, [0, .35], [1, .88]).toFixed(4)})`;
+  }
+  // 2. Whirl expands (zooms past you) + 3. fades out over [0.4, 0.85].
+  // Their CSS: scale(1 + p * 0.75) on the whirl, plus the outer fade.
+  // The expansion makes the spiral feel like it's rushing outward as you scroll.
+  const whirl = document.querySelector('.hero-whirl-host');
+  if (whirl) {
+    const scale = 1 + p * 0.75;
+    const fade = _map(p, [.4, .85], [1, 0]);
+    whirl.style.opacity = fade.toFixed(4);
+    whirl.style.transform = `translate(-50%, -50%) scale(${scale.toFixed(4)})`;
+  }
+}
+function _onScroll() {
+  if (reduceMotion.matches) return;
+  if (!_raf) _raf = requestAnimationFrame(_apply);
+}
+addEventListener('scroll', _onScroll, { passive: true });
+_apply();
+
+// -- appllama hero whirl (exact motion model, real screenshots) --
+const whirlHost = document.querySelector('.hero-whirl-host') || (() => {
+  // create the host if not in HTML
+  const hero = document.querySelector('.hero');
+  if (!hero) return null;
+  const host = document.createElement('div');
+  host.className = 'hero-whirl-host';
+  const mask = document.createElement('div');
+  mask.className = 'hero-whirl-mask';
+  mask.setAttribute('aria-hidden', 'true');
+  mask.appendChild(host);
+  hero.insertBefore(mask, hero.firstChild);
+  return host;
 })();
-
-startWhirl();
-
-/* ---- Mascot: their runtime attaches the bob class to the pilot artwork. ---- */
-const pilot = document.querySelector('[class*="HeroUfoMascot_pilotArtwork"]');
-if (pilot && !reduced) pilot.classList.add('motion-safe:animate-[llama-bob_4.5s_ease-in-out_infinite]');
-
-/* ---- Scroll choreography over the runway ---- */
-const heroInner = document.querySelector('section.sticky > .relative.z-10');
-const runway = document.querySelector('[class*="home-runway-height"]');
-if (heroInner && !reduced) {
-  let ticking = false;
-  function onScroll() {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      const span = runway?.offsetHeight || innerHeight * 0.42;
-      const progress = Math.min(Math.max(scrollY / span, 0), 1);
-      const eased = 1 - Math.pow(1 - progress, 2);
-      heroInner.style.opacity = String(1 - eased);
-      heroInner.style.transform = `translateY(${-eased * 7}vh)`;
-      const rotor = document.querySelector('.pd-whirl-rotor');
-      if (rotor) rotor.style.opacity = String(1 - eased);
-      ticking = false;
-    });
-  }
-  addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+if (whirlHost && heroScreens?.length) {
+  startWhirl(whirlHost, heroScreens);
+  _apply();
 }
 
-/* ---- Agent adapter tabs: the real argv from packages/harness-core/agents.js. ---- */
-const AGENTS = {
-  codex: {
-    label: 'codex exec',
-    argv: 'codex exec -C <worktree> -s workspace-write --json -o agent-last-message.md -',
-    note: 'Prompt 走 stdin；仓库文件一律当作数据，不当作指令。',
-    copy: 'codex exec -C <worktree> -s workspace-write --json -o agent-last-message.md -'
-  },
-  'claude-code': {
-    label: 'claude -p',
-    argv: 'claude -p --output-format stream-json --verbose --permission-mode acceptEdits \\\n  --bare --disallowed-tools "Bash(git push:*) Bash(git remote:*) Bash(git config:*) WebFetch"',
-    note: '--bare 跳过 CLAUDE.md 自动加载：被审仓库无法通过记忆文件给 agent 下指令。',
-    copy: 'claude -p --output-format stream-json --verbose --permission-mode acceptEdits --bare --disallowed-tools "Bash(git push:*) Bash(git remote:*) Bash(git config:*) WebFetch"'
-  }
-};
+// -- copy to clipboard --
+let toastTimer;
+document.addEventListener('click', async e => {
+  const btn = e.target.closest('[data-copy]');
+  if (!btn) return;
+  try {
+    await navigator.clipboard.writeText(btn.dataset.copy);
+    const toast = document.querySelector('#toast');
+    if (toast) { toast.textContent = lang === 'zh' ? '已复制' : 'Copied'; toast.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove('show'), 1800); }
+  } catch { const toast = document.querySelector('#toast'); if (toast) { toast.textContent = lang === 'zh' ? '无法复制，请手动选择上方命令。' : 'Copy unavailable. Select the command above manually.'; toast.classList.add('show'); } }
+});
 
-const argvPre = document.getElementById('agent-argv');
-const noteP = document.getElementById('agent-note');
-const labelSpan = document.getElementById('agent-label');
-const copyButton = document.getElementById('agent-copy');
-
-function selectAgent(id) {
-  const agent = AGENTS[id];
-  if (!agent || !argvPre) return;
-  labelSpan.textContent = agent.label;
-  argvPre.textContent = agent.argv;
-  noteP.textContent = agent.note;
-  copyButton.dataset.copy = agent.copy;
-}
-
-for (const tab of document.querySelectorAll('.pd-tab')) {
-  tab.addEventListener('click', () => {
-    for (const other of document.querySelectorAll('.pd-tab')) other.setAttribute('aria-selected', String(other === tab));
-    selectAgent(tab.dataset.agent);
-  });
-}
-selectAgent('codex');
-
-/* ---- Copy to clipboard ---- */
-let toastTimer = null;
-function showToast(message) {
-  const toast = document.getElementById('toast');
-  if (!toast) return;
-  document.getElementById('toast-text').textContent = message;
-  toast.style.opacity = '1';
-  toast.style.transform = 'translateY(0)';
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => {
-    toast.style.opacity = '0';
-    toast.style.transform = 'translateY(1rem)';
-  }, 1800);
-}
-
-for (const button of document.querySelectorAll('[data-copy]')) {
-  button.addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText(button.dataset.copy);
-      showToast('已复制到剪贴板');
-    } catch {
-      showToast('复制失败：浏览器拒绝了剪贴板访问');
-    }
-  });
-}
+// -- boot --
+renderLangSwitch();
+renderContent();

@@ -1,0 +1,8 @@
+@import './happyhands.css';
+/* Legacy portal names map to the same canonical values as the Studio shell. */
+:root,:root[data-theme="light"],:root[data-theme="dark"]{
+ --ink:var(--hh-bg);--paper:var(--hh-ink);--muted:var(--hh-ink-muted);--subtle:var(--hh-ink-subtle);
+ --line:var(--hh-line);--line-strong:var(--hh-line-strong);--surface:var(--hh-bg-raised);--surface-2:var(--hh-bg-sunken);
+ --brand:var(--hh-brand);--brand-text:var(--hh-brand-text);--brand-soft:var(--hh-brand-soft);--success:var(--hh-success);
+ --font-sans:var(--hh-font-sans);--font-mono:var(--hh-font-mono);
+}
