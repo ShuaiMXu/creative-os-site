@@ -2,9 +2,12 @@
 // screen-rotor: the geometry, distribution and styling parameters were read
 // out of the original site's shipped behaviour (8-turn spiral r=1875·(1−u),
 // arc-length LUT, ≤120 tiles, 90s rotor spin, 3/4 tiles at 14% radius) and
-// reimplemented from scratch — noTheir code runs here, and the tile images
-// are our own exported run captures. Also on board: the llama bob, the
-// runway scroll choreography, agent adapter tabs and copy-to-clipboard.
+// reimplemented from scratch — no their-code runs here. Tile images are the
+// crawled catalog screens (public/assets/hero, placeholder by design; swap
+// the files or the manifest to change the showcase). Also on board: the
+// llama bob, the runway scroll choreography, agent tabs, copy-to-clipboard.
+
+import heroScreens from './hero-screens.json' with { type: 'json' };
 
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -59,14 +62,8 @@ function startWhirl() {
   }
   canvas.style.display = 'none';                    // our rotor replaces their canvas outright
 
-  const SCREENS = [
-    '/runs/06dabc2c/before/desktop.png',
-    '/runs/06dabc2c/after/desktop.png',
-    '/runs/8f60c961/before/desktop.png',
-    '/runs/06dabc2c/before/mobile.png',
-    '/runs/06dabc2c/after/mobile.png',
-    '/runs/8f60c961/before/mobile.png'
-  ];
+  const SCREENS = heroScreens;
+  const TILE_WIDTHS = [330, 210, 150, 260];           // their tiles vary; cycle a spread
   const TILE_COUNT = 120;
   const SPREAD = 2500;                              // their coordinate normalisation space
 
@@ -89,8 +86,7 @@ function startWhirl() {
     const scale = Math.pow(Math.min(expand / 1875, 1), 0.35);
     const angle = Math.atan2(p.ty, p.tx);
     const src = SCREENS[i % SCREENS.length];
-    // their tile widths live in the low hundreds of the 2500-space
-    const width = (src.includes('mobile') ? 150 : 330) / SPREAD * 100;
+    const width = TILE_WIDTHS[i % TILE_WIDTHS.length] / SPREAD * 100;
 
     const tile = document.createElement('div');
     tile.className = 'pd-whirl-tile';
