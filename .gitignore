@@ -1,3 +1,8 @@
 node_modules/
 dist/
 .DS_Store
+
+# skillry.dev local mirror (2.4GB, local-only study reference) — kept out of git entirely.
+# Tools: crawl-skillry.mjs (fetch) + fix-skillry.mjs (rewrite) rebuild it from scratch.
+public/skillry-full/
+.skillry-crawl-state.json
