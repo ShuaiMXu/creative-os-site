@@ -7,25 +7,50 @@ const LANG_KEY = 'pd-lang';
 let lang = localStorage.getItem(LANG_KEY) || 'zh';
 const t = () => lang === 'zh' ? zh : en;
 
+const systemTheme = matchMedia('(prefers-color-scheme: dark)');
+let themePreference = localStorage.getItem('hh-theme');
+if (!['light', 'dark'].includes(themePreference)) themePreference = null;
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  document.documentElement.style.colorScheme = theme;
+  document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#111111' : '#f7f6f3';
+  const button = document.getElementById('theme-toggle');
+  if (button) {
+    button.textContent = theme === 'dark' ? '☀' : '☾';
+    button.setAttribute('aria-label', lang === 'zh' ? `切换到${theme === 'dark' ? '浅色' : '暗黑'}模式` : `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
+  }
+}
+const themeButton = document.createElement('button');
+themeButton.id = 'theme-toggle';
+themeButton.type = 'button';
+document.querySelector('.header-actions').prepend(themeButton);
+themeButton.addEventListener('click', () => {
+  themePreference = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('hh-theme', themePreference);
+  applyTheme(themePreference);
+});
+systemTheme.addEventListener('change', event => { if (!themePreference) applyTheme(event.matches ? 'dark' : 'light'); });
+applyTheme(themePreference || (systemTheme.matches ? 'dark' : 'light'));
+
 // -- language switcher --
 function renderLangSwitch() {
   const existing = document.getElementById('lang-switch');
   if (existing) return;
-  const nav = document.querySelector('header nav') || document.querySelector('.nav nav');
-  if (!nav) return;
+  const actions = document.querySelector('.header-actions');
+  if (!actions) return;
   const switcher = document.createElement('div');
   switcher.id = 'lang-switch';
-  switcher.style.cssText = 'display:flex;gap:2px;margin-left:12px';
+  switcher.setAttribute('role', 'group');
+  switcher.setAttribute('aria-label', 'Language / 语言');
   for (const code of ['zh', 'en']) {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.dataset.lang = code;
     btn.textContent = code === 'zh' ? '中文' : 'EN';
-    btn.style.cssText = `border:1px solid rgba(255,255,255,.15);background:${lang === code ? 'rgba(255,255,255,.12)' : 'none'};color:${lang === code ? 'inherit' : 'rgba(255,255,255,.4)'};padding:3px 10px;border-radius:6px;font:500 11px/1 inherit;cursor:pointer`;
     btn.addEventListener('click', () => setLang(code));
     switcher.appendChild(btn);
   }
-  nav.appendChild(switcher);
+  actions.prepend(switcher);
 }
 
 function setLang(code) {
@@ -37,7 +62,9 @@ function setLang(code) {
 // -- render all sections from the active language pack --
 function renderContent() {
   const c = t();
+  applyTheme(document.documentElement.dataset.theme);
 
+  document.querySelectorAll('[data-lang]').forEach(button => { button.setAttribute('aria-pressed', String(button.dataset.lang === lang)); });
   // hero
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
   document.title = lang === 'zh' ? 'HappyHands — 持续在线的 AI 产品设计师' : 'HappyHands — AI Product Designer';
@@ -64,13 +91,18 @@ function renderContent() {
       <div class="section-head"><div><p class="kicker">${c.sections.apps.kicker}</p><h2>${c.sections.apps.title}</h2></div><div><p>${c.sections.apps.copy}</p><a class="text-link" href="${repositories.core}">${c.sections.apps.link}</a></div></div>
       <div class="apps-grid">${c.apps.map(appCard).join('')}</div>
     </section>
+    <section class="content-section section-delivery" id="harness">
+      <div class="section-head"><div><p class="kicker">HARNESS / EXPERT LOOP</p><h2>${c.delivery.title}</h2></div><p>${c.delivery.copy}</p></div>
+      <dl class="delivery-list">${c.delivery.items.map(([title,copy]) => `<div><dt>${title}</dt><dd>${copy}</dd></div>`).join('')}</dl>
+      <p class="capability-note">${c.delivery.status}</p><a class="text-link" href="${repositories.core}/blob/main/docs/harness.md">${c.delivery.link}</a>
+    </section>
     <section class="content-section section-explore" id="explore">
       <div class="section-head"><div><p class="kicker">${c.sections.explore.kicker}</p><h2>${c.sections.explore.title}</h2></div><div><p>${c.sections.explore.copy}</p></div></div>
       <div class="system-grid">${c.systems.map(systemCard).join('')}</div>
     </section>
     <section class="content-section section-screens" id="screens">
-      <div class="section-head"><div><p class="kicker">${c.sections.screens.kicker}</p><h2>${c.sections.screens.title}</h2></div><div><p>${c.sections.screens.copy}</p><a class="text-link" href="/apps/designer/?case=happyclaw">${c.sections.screens.link}</a></div></div>
-      <div class="screen-pairs">${c.screenPairs.map(pairCard).join('')}</div>
+      <div class="section-head"><div><p class="kicker">${c.sections.screens.kicker}</p><h2>${c.sections.screens.title}</h2></div><div><p>${lang === 'zh' ? '当前使用 Appllama 参考图展示横滑布局，非改前 / 改后证据。真实 HappyClaw 审阅请通过下方链接查看。' : 'Appllama references preview this horizontal layout, not before/after evidence. Open the real HappyClaw review below.'}</p><a class="text-link" href="/apps/designer/?case=run:06dabc2c">${c.sections.screens.link}</a></div></div>
+      <p class="review-evidence"><a class="text-link" href="/runs/06dabc2c/reviews/visual-qa-evaluator.json">${lang === 'zh' ? '查看独立视觉复核原始记录 ↗' : 'Read the original visual QA record ↗'}</a></p><div class="screen-pairs">${c.screenPairs.map(pairCard).join('')}</div>
     </section>
     <section class="content-section section-elements" id="elements">
       <div class="section-head"><div><p class="kicker">${c.sections.elements.kicker}</p><h2>${c.sections.elements.title}</h2></div><div><p>${c.sections.elements.copy}</p></div></div>
@@ -92,6 +124,51 @@ function renderContent() {
 
   // re-observe sections for intersection animation
   observeSections();
+  setupRails();
+}
+
+// Native scrolling keeps touch, trackpad and keyboard browsing available.
+let disposeRails = () => {};
+function setupRails() {
+  disposeRails();
+  const cleanups = [];
+  for (const [id, selector] of [['explore', '.system-grid'], ['screens', '.screen-pairs'], ['elements', '.elements-grid']]) {
+    const section = document.getElementById(id);
+    const rail = section.querySelector(selector);
+    rail.id = `${id}-rail`;
+    rail.tabIndex = 0;
+    rail.setAttribute('role', 'region');
+    rail.setAttribute('aria-label', section.querySelector('h2').textContent);
+    const toolbar = document.createElement('div');
+    toolbar.className = 'rail-toolbar';
+    const hint = lang === 'zh' ? '横向滑动浏览' : 'Swipe to explore';
+    toolbar.innerHTML = `<span>${hint}</span><div><button type="button" aria-label="${lang === 'zh' ? '上一项' : 'Previous item'}" aria-controls="${rail.id}">←</button><button type="button" aria-label="${lang === 'zh' ? '下一项' : 'Next item'}" aria-controls="${rail.id}">→</button></div>`;
+    rail.before(toolbar);
+    const [previous, next] = toolbar.querySelectorAll('button');
+    const update = () => {
+      previous.disabled = rail.scrollLeft <= 2;
+      next.disabled = rail.scrollLeft >= rail.scrollWidth - rail.clientWidth - 2;
+    };
+    const step = direction => {
+      const card = rail.firstElementChild;
+      const gap = parseFloat(getComputedStyle(rail).columnGap) || 0;
+      rail.scrollBy({left: direction * (card.getBoundingClientRect().width + gap), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
+    };
+    previous.addEventListener('click', () => step(-1));
+    next.addEventListener('click', () => step(1));
+    const onKey = event => {
+      if (event.target !== rail || !['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+      event.preventDefault();
+      step(event.key === 'ArrowRight' ? 1 : -1);
+    };
+    rail.addEventListener('keydown', onKey);
+    rail.addEventListener('scroll', update, {passive:true});
+    const resize = new ResizeObserver(update);
+    resize.observe(rail);
+    update();
+    cleanups.push(() => { resize.disconnect(); rail.removeEventListener('scroll', update); rail.removeEventListener('keydown', onKey); });
+  }
+  disposeRails = () => cleanups.forEach(cleanup => cleanup());
 }
 
 // -- card builders (use the active language pack) --
@@ -100,28 +177,19 @@ function appCard(item) {
   return `<article class="app-card"><div class="card-top"><span>${item.index}</span><span class="state">${item.state}</span></div><h3>${item.title}</h3><p>${item.description}</p><ul>${item.meta.map(v => `<li>${v}</li>`).join('')}</ul><a href="${item.href || repositories.core}">${item.action} <span aria-hidden="true">↗</span></a></article>`;
 }
 
-function systemCard(item) {
-  return `<article class="system-card"><div class="system-preview">${item.values.map((v, i) => `<span style="--i:${i}">${v}</span>`).join('')}</div><p class="card-tag">${item.tag}</p><h3>${item.title}</h3><p>${item.description}</p><div class="chips">${item.traits.map(v => `<span>${v}</span>`).join('')}</div></article>`;
+const referenceImage = index => `/assets/hero/screen-${String(index).padStart(3, '0')}.webp`;
+const referenceLabel = () => lang === 'zh' ? 'Appllama 参考图 · 临时占位' : 'Appllama reference · Placeholder';
+function referencePreview(index, className = '') {
+  return `<div class="reference-preview ${className}"><img src="${referenceImage(index)}" alt="${referenceLabel()}" loading="lazy"><span>${referenceLabel()}</span></div>`;
 }
-
-function pairCard(item) {
-  return `<article class="screen-pair"><div class="pair-head"><div><p class="card-tag">${item.task}</p><h3>${item.title}</h3></div><span>${item.result}</span></div><div class="pair-images"><figure><span>${item.beforeLabel}</span><img src="${item.before.src}" alt="${item.before.caption}" loading="lazy"></figure><div class="pair-arrow" aria-hidden="true">→</div><figure><span>${item.afterLabel}</span><img src="${item.after.src}" alt="${item.after.caption}" loading="lazy"></figure></div></article>`;
+function systemCard(item, index) {
+  return `<article class="system-card">${referencePreview(index + 1)}<p class="card-tag">${item.tag}</p><h3>${item.title}</h3><p>${item.description}</p><div class="chips">${item.traits.map(v => `<span>${v}</span>`).join('')}</div><a class="card-link" href="${item.href}">${item.action} ↗</a></article>`;
 }
-
-const previews = {
-  button: `<div class="element-demo demo-buttons"><button>Run review</button><button>View evidence</button><button disabled>Publishing</button></div>`,
-  input: `<div class="element-demo demo-input"><label>Repository URL</label><div>github.com/your/product <span>READY</span></div></div>`,
-  status: `<div class="element-demo demo-status"><span>OBSERVED</span><span>CANDIDATE</span><span>APPROVED</span></div>`,
-  tokens: `<div class="element-demo demo-tokens"><i></i><i></i><i></i><i></i><i></i></div>`,
-  tabs: `<div class="element-demo demo-tabs"><span>Diagnose</span><span>Foundation</span><span>Visual QA</span></div>`,
-  progress: `<div class="element-demo demo-progress"><span></span><span></span><span></span><span></span><span></span></div>`,
-  empty: `<div class="element-demo demo-empty"><i>＋</i><strong>No reviews yet</strong><span>Connect a product to begin</span></div>`,
-  dialog: `<div class="element-demo demo-dialog"><strong>Apply this direction?</strong><p>3 screens will be updated.</p><div><button>Cancel</button><button>Apply</button></div></div>`,
-  card: `<div class="element-demo demo-card"><span>DESIGN FOUNDATION</span><strong>SaaS workspace</strong><p>12 tokens · 8 components</p><i>READY</i></div>`,
-};
-
-function elementCard(item) {
-  return `<article class="element-card">${previews[item.kind]}<p class="card-tag">UI ELEMENT</p><h3>${item.title}</h3><p>${item.description}</p></article>`;
+function pairCard(item, index) {
+  return `<article class="screen-pair"><div class="pair-head"><div><p class="card-tag">${referenceLabel()}</p><h3>${lang === 'zh' ? '页面参考' : 'Screen reference'} 0${index + 1}</h3></div></div><div class="reference-pair">${referencePreview(21 + index * 2)}${referencePreview(22 + index * 2)}</div></article>`;
+}
+function elementCard(item, index) {
+  return `<article class="element-card">${referencePreview(41 + index)}<p class="card-tag">UI ELEMENT</p><h3>${item.title}</h3><p>${item.description}</p></article>`;
 }
 
 function stepCard(item) {
@@ -195,11 +263,16 @@ const whirlHost = document.querySelector('.hero-whirl-host') || (() => {
   if (!hero) return null;
   const host = document.createElement('div');
   host.className = 'hero-whirl-host';
-  hero.insertBefore(host, hero.firstChild);
+  const mask = document.createElement('div');
+  mask.className = 'hero-whirl-mask';
+  mask.setAttribute('aria-hidden', 'true');
+  mask.appendChild(host);
+  hero.insertBefore(mask, hero.firstChild);
   return host;
 })();
 if (whirlHost && heroScreens?.length) {
   startWhirl(whirlHost, heroScreens);
+  _apply();
 }
 
 // -- copy to clipboard --
@@ -210,8 +283,8 @@ document.addEventListener('click', async e => {
   try {
     await navigator.clipboard.writeText(btn.dataset.copy);
     const toast = document.querySelector('#toast');
-    if (toast) { toast.querySelector('span').textContent = lang === 'zh' ? '已复制' : 'Copied'; toast.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove('show'), 1800); }
-  } catch { /* clipboard denied */ }
+    if (toast) { toast.textContent = lang === 'zh' ? '已复制' : 'Copied'; toast.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove('show'), 1800); }
+  } catch { const toast = document.querySelector('#toast'); if (toast) { toast.textContent = lang === 'zh' ? '无法复制，请手动选择上方命令。' : 'Copy unavailable. Select the command above manually.'; toast.classList.add('show'); } }
 });
 
 // -- boot --

@@ -1,8 +1,4 @@
-// Appllama hero whirl — exact motion model ported from their shipped code.
-// Spiral: 8 turns, r=1875*(1-u), arc-length parameterised, ≤120 tiles,
-// 90s rotor spin, 3/4 tiles at 14% radius, edge fade at 8%/92%.
-// Parameters read from static/chunks/app/(home)/page-*.js on 2026-09-27.
-
+// DOM rendering of the reference WebGL spiral motion, with the same phase and velocity model.
 function buildSpiral() {
   const TURNS = 8 * Math.PI * 2;
   const SAMPLES = 16384;
@@ -41,59 +37,72 @@ function buildSpiral() {
     const len = Math.hypot(dx, dy);
     lut[c] = { x, y, tx: len > 0 ? dx / len : 1, ty: len > 0 ? dy / len : 0 };
   }
+  lut.count = Math.ceil(total / 250);
   return lut;
 }
 
 export function startWhirl(container, images) {
   if (!container || !images.length) return;
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
   const lut = buildSpiral();
-  const SPREAD = 2500;
-  const TILE_COUNT = Math.min(120, images.length * 2);
-  const TILE_WIDTHS = [175, 115, 85, 145, 200, 130]; // cycle a spread
-
+  const count = lut.count;
+  const widths = [120, 118, 85];
   const rotor = document.createElement('div');
   rotor.className = 'pd-whirl-rotor';
+  rotor.style.animation = 'none';
   container.appendChild(rotor);
-
-  let placed = 0;
-  for (let i = 0; i < TILE_COUNT; i++) {
-    const u = (i / TILE_COUNT) % 1;
-    let edge = 1;
-    if (u < 0.08) edge = u / 0.08;
-    else if (u > 0.92) edge = (1 - u) / 0.92;
-    if (edge < 0.15) continue;
-
-    const p = lut[Math.round(u * 4096)];
-    if (!p) continue;
-    const d = Math.hypot(p.x, p.y);
-    const expand = 1875 * Math.pow(d / 1875, 1.0526315789473684);
-    const h = d > 0 ? expand / d : 1;
-    const scale = Math.pow(Math.min(expand / 1875, 1), 0.35);
-    const angle = Math.atan2(p.ty, p.tx);
-    const src = images[placed % images.length];
-    const width = TILE_WIDTHS[placed % TILE_WIDTHS.length];
-
+  const tiles = Array.from({length: count}, (_, i) => {
     const tile = document.createElement('div');
     tile.className = 'pd-whirl-tile';
-    tile.style.left = `${(50 + (p.x * h) / SPREAD * 100).toFixed(3)}%`;
-    tile.style.top = `${(50 + (p.y * h) / SPREAD * 100).toFixed(3)}%`;
-    tile.style.width = `${(width / SPREAD * 100).toFixed(3)}%`;
-    tile.style.transform = `translate(-50%, -50%) rotate(${angle.toFixed(4)}rad) scale(${scale.toFixed(4)})`;
-    tile.style.opacity = edge.toFixed(3);
-
+    tile.style.width = `${widths[i % widths.length] / 2500 * 100}%`;
     const img = document.createElement('img');
-    img.src = src;
     img.alt = '';
-    img.loading = 'lazy';
     img.decoding = 'async';
-    img.addEventListener('load', () => { img.style.opacity = '1'; }, { once: true });
+    img.addEventListener('load', () => { img.style.opacity = '1'; }, {once:true});
+    img.src = images[i % images.length];
     tile.appendChild(img);
     rotor.appendChild(tile);
-    placed++;
+    return tile;
+  });
+  let phase = 0, velocity = 0, lastScroll = window.scrollY;
+  const start = performance.now();
+  let previous = start, frame, visible = true;
+  const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; });
+  observer.observe(container);
+  function draw() {
+    tiles.forEach((tile, i) => {
+      const u = (phase + i / count) % 1;
+      const sample = u * 4096;
+      const index = Math.min(Math.floor(sample), 4095);
+      const a = lut[index], b = lut[index + 1], t = sample - index;
+      const x = a.x + (b.x - a.x) * t, y = a.y + (b.y - a.y) * t;
+      const angle = Math.atan2(a.ty + (b.ty-a.ty)*t, a.tx + (b.tx-a.tx)*t);
+      const d = Math.hypot(x,y);
+      const radius = 1875 * (d / 1875) ** 1.0526315789473684;
+      const h = d > 0 ? radius / d : 1;
+      const scale = Math.min(radius / 1875,1) ** .35;
+      tile.style.left = `${50 + x*h/2500*100}%`;
+      tile.style.top = `${50 + y*h/2500*100}%`;
+      tile.style.transform = `translate(-50%,-50%) rotate(${angle}rad) scale(${scale})`;
+      tile.style.opacity = String(u < .08 ? u/.08 : u > .92 ? (1-u)/.08 : 1);
+    });
   }
-
-  requestAnimationFrame(() => { rotor.style.opacity = '1'; });
-  return () => { rotor.remove(); };
+  function tick(now) {
+    const dt = Math.min(now - previous,150)/1000;
+    previous = now;
+    if (dt > 0 && visible && !document.hidden && !motion.matches) {
+      const speed = (window.scrollY-lastScroll)/dt;
+      velocity += (speed-velocity)*Math.min(1,dt/.22);
+      const elapsed = now-start;
+      const boost = elapsed < 1900 ? 1+23*(elapsed<600?(elapsed/600)**2:1)*(1-elapsed/1900)**2 : 1;
+      phase = (phase + .0032*(1+Math.abs(velocity)/1000*8)*boost*dt)%1;
+      draw();
+    } else { velocity = 0; }
+    lastScroll = window.scrollY;
+    frame = requestAnimationFrame(tick);
+  }
+  draw();
+  rotor.style.opacity = '1';
+  frame = requestAnimationFrame(tick);
+  return () => { cancelAnimationFrame(frame); observer.disconnect(); rotor.remove(); };
 }
