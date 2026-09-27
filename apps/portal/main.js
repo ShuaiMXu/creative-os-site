@@ -1,6 +1,7 @@
 import * as zh from './content.zh.js';
 import * as en from './content.en.js';
-import { repositories } from './content.js';
+import { repositories, heroScreens } from './content.js';
+import { startWhirl } from './whirl.js';
 
 const LANG_KEY = 'pd-lang';
 let lang = localStorage.getItem(LANG_KEY) || 'zh';
@@ -151,23 +152,18 @@ function updateHeroScroll() {
 addEventListener('scroll', () => { if (!heroFrame) heroFrame = requestAnimationFrame(updateHeroScroll); }, { passive: true });
 updateHeroScroll();
 
-// -- whirl orbit --
-const track = document.querySelector('#whirl-track');
-if (track) {
-  const count = 32;
-  for (let i = 0; i < count; i++) {
-    const angle = (i / count) * Math.PI * 2;
-    const radius = 31 + (i % 4) * 4;
-    const tile = document.createElement('span');
-    tile.className = 'whirl-tile';
-    tile.style.setProperty('--x', `${50 + Math.cos(angle) * radius}%`);
-    tile.style.setProperty('--y', `${50 + Math.sin(angle) * radius}%`);
-    tile.style.setProperty('--r', `${angle + Math.PI / 2}rad`);
-    tile.style.setProperty('--s', String(.68 + (i % 5) * .08));
-    tile.dataset.variant = String(i % 4);
-    tile.innerHTML = '<span class="placeholder-bar"></span><span class="placeholder-line"></span><span class="placeholder-line"></span>';
-    track.appendChild(tile);
-  }
+// -- appllama hero whirl (exact motion model, real screenshots) --
+const whirlHost = document.querySelector('.hero-whirl-host') || (() => {
+  // create the host if not in HTML
+  const hero = document.querySelector('.hero');
+  if (!hero) return null;
+  const host = document.createElement('div');
+  host.className = 'hero-whirl-host';
+  hero.insertBefore(host, hero.firstChild);
+  return host;
+})();
+if (whirlHost && heroScreens?.length) {
+  startWhirl(whirlHost, heroScreens);
 }
 
 // -- copy to clipboard --

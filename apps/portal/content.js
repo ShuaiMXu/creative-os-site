@@ -1,5 +1,10 @@
 export const repositories = { core: 'https://github.com/ShuaiMXu/creative-os', site: 'https://github.com/ShuaiMXu/creative-os-site', happyclaw: 'https://github.com/ShuaiMXu/happyclaw-site' };
 
+// hero whirl screenshots — from the crawled appllama screens (public/assets/hero/)
+export const heroScreens = Array.from({ length: 111 }, (_, i) =>
+  `/assets/hero/screen-${String(i + 1).padStart(3, '0')}.webp`
+);
+
 export const heroCopy = '你的应用能跑了，但看起来不像被人设计过。我们做的事很简单：看一遍真实页面，挑一个最值得改的地方，改完再截图对比。你来说好还是不好。';
 
 export const apps = [
