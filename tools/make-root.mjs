@@ -5,9 +5,10 @@
 // idempotent and re-asserted, so React re-renders cannot restore what was
 // removed.
 import { readFileSync, writeFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
-const SRC = 'C:/Users/A、/AppData/Local/Temp/appllama/site/home.html';
-const DST = 'C:/Users/A、/Documents/Codex/2026-09-14/referenced-chatgpt-conversation-this-is-an/outputs/creative-os-site/index.html';
+const SRC = fileURLToPath(new URL('./source/home.html', import.meta.url));
+const DST = fileURLToPath(new URL('../index.html', import.meta.url));
 
 const injector = `
 <script>
