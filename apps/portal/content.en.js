@@ -1,9 +1,9 @@
 // English copy — plain, direct, the way a designer would actually pitch this
 export const hero = {
   eyebrow: ['17 bounded skills', '10 contract-only', 'local-first'],
-  h1: 'AI wrote the code.\nWho owns the ',
-  h1Accent: 'experience',
-  h1Suffix: '?',
+  h1: 'Make what AI builds\nworth ',
+  h1Accent: 'showing',
+  h1Suffix: '.',
   copy: 'Automated design review of live pages: find the issue that hurts your users most, fix it, screenshot the difference, you decide.',
   cta: 'Explore capabilities',
   ctaSecondary: 'View a real review',
