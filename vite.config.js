@@ -6,6 +6,7 @@ export default defineConfig({
     home: resolve('index.html'),
     portal: resolve('apps/portal/index.html'),
     web: resolve('apps/web/index.html'),
-    designer: resolve('apps/designer/index.html')
+    designer: resolve('apps/designer/index.html'),
+    appllama: resolve('apps/appllama/index.html')
   } } }
 });
