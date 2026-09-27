@@ -32,6 +32,9 @@ export async function renderCanvas(container, run) {
     empty.className = 'pd-canvas-empty';
     empty.innerHTML = '<h3>此 run 没有可摊开的状态</h3><p>采集基线后，画布会展示全部状态截图。</p>';
     container.appendChild(empty);
+    buildSidebar([]);
+    updateInspector(null);
+    updateStatusBar(nodes.length, hasEvaluation);
     return;
   }
 
@@ -157,6 +160,7 @@ export async function renderCanvas(container, run) {
     if (selectedNode) selectedNode.el.classList.remove('pd-selected');
     selectedNode = { node, el };
     el.classList.add('pd-selected');
+    updateInspector(node);
   }
 
   function highlightEvidence(refs, nodeEls) {
@@ -208,7 +212,110 @@ export async function renderCanvas(container, run) {
     }
   });
 
-  // cleanup
+  // -- panel builders --
+  function buildSidebar(nodes) {
+    const tree = document.getElementById('pd-sidebar-tree');
+    if (!tree) return;
+    tree.replaceChildren();
+    const byState = new Map();
+    for (const node of nodes) {
+      const list = byState.get(node.entry.stateId) || [];
+      list.push(node);
+      byState.set(node.entry.stateId, list);
+    }
+    for (const [stateId, stateNodes] of byState) {
+      const group = document.createElement('div');
+      group.className = 'pd-tree-group';
+      const head = document.createElement('div');
+      head.className = 'pd-tree-group-head open';
+      head.innerHTML = `<span class="chevron"></span><span>${stateId}</span><span class="count">${stateNodes.length}</span>`;
+      const items = document.createElement('div');
+      items.className = 'pd-tree-items';
+      for (const node of stateNodes) {
+        const item = document.createElement('div');
+        item.className = 'pd-tree-item';
+        const checks = node.checks ? Object.values(node.checks) : [];
+        const allOk = checks.length > 0 && checks.every(Boolean);
+        const dotClass = node.phase === 'after' ? (allOk ? 'ok' : 'fail') : '';
+        item.innerHTML = `<span class="dot ${dotClass}"></span>${node.entry.configurationId}<span style="margin-left:auto;font-size:9px;opacity:.5">${node.phase}</span>`;
+        item.addEventListener('click', () => {
+          const el = layer.querySelector(`[data-key="${node.key}"][data-phase="${node.phase}"]`);
+          if (el) { stage.fitNode(el); selectNode(node, el); updateInspector(node); }
+        });
+        items.appendChild(item);
+      }
+      head.addEventListener('click', () => { items.hidden = !items.hidden; head.classList.toggle('open'); });
+      group.append(head, items);
+      tree.appendChild(group);
+    }
+  }
+
+  function updateInspector(node) {
+    const body = document.getElementById('pd-inspector-body');
+    if (!body) return;
+    body.replaceChildren();
+    if (!node) { body.innerHTML = '<div class="pd-insp-empty">选择一个节点查看详情</div>'; return; }
+    const rows = [
+      ['State', node.entry.stateId], ['Config', node.entry.configurationId],
+      ['Phase', node.phase], ['HTTP', node.entry.status || '—'], ['URL', node.entry.finalUrl || '—']
+    ];
+    for (const [label, value] of rows) {
+      const sec = document.createElement('div');
+      sec.className = 'pd-insp-section';
+      const l = document.createElement('span');
+      l.className = 'pd-insp-label'; l.textContent = label;
+      const v = document.createElement('span');
+      v.className = 'pd-insp-value mono'; v.textContent = value;
+      sec.append(l, v);
+      body.appendChild(sec);
+    }
+    if (node.checks) {
+      const sec = document.createElement('div');
+      sec.className = 'pd-insp-section';
+      const l = document.createElement('span');
+      l.className = 'pd-insp-label'; l.textContent = 'Checks';
+      sec.appendChild(l);
+      for (const [name, ok] of Object.entries(node.checks)) {
+        const b = document.createElement('span');
+        b.className = `pd-insp-badge ${ok ? 'ok' : 'fail'}`;
+        b.textContent = `${ok ? '✓' : '✗'} ${name}`;
+        sec.appendChild(b);
+      }
+      body.appendChild(sec);
+    }
+  }
+
+  function updateStatusBar(count, hasEval) {
+    const el = document.getElementById('pd-fs-count');
+    const ev = document.getElementById('pd-fs-eval-status');
+    if (el) el.textContent = `${count} states`;
+    if (ev) ev.textContent = hasEval ? '✓ evaluated' : '○ not evaluated';
+  }
+
+  function updateZoomLabel() {
+    const z = document.getElementById('pd-zoom-label');
+    if (z) z.textContent = Math.round(stage.scale * 100) + '%';
+  }
+
+  // zoom controls
+  document.getElementById('pd-zoom-in')?.addEventListener('click', () => {
+    stage.scale = Math.min(4, stage.scale * 1.25); stage.refresh(); updateZoomLabel();
+  });
+  document.getElementById('pd-zoom-out')?.addEventListener('click', () => {
+    stage.scale = Math.max(.25, stage.scale / 1.25); stage.refresh(); updateZoomLabel();
+  });
+  document.getElementById('pd-fs-fit')?.addEventListener('click', () => {
+    stage.fit(layoutResultCache.w, layoutResultCache.h); updateZoomLabel();
+  });
+  stage.onChange(() => updateZoomLabel());
+
+  // populate panels
+  buildSidebar(nodes);
+  updateInspector(null);
+  updateStatusBar(nodes.length, hasEvaluation);
+  updateZoomLabel();
+
+  // cleanup (returned last — panels are populated before this)
   return () => {
     document.removeEventListener('keydown', keyHandler);
     saveLayout(runId, positions);

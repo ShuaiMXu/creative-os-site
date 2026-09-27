@@ -50,16 +50,41 @@
 
   <div id="fullscreen-shell" hidden>
     <header class="pd-fs-topbar">
-      <a href="#" id="pd-back-to-review" class="pd-fs-back">← 审阅工作台</a>
-      <span id="pd-fs-run-name" class="font-mono pd-fs-run"></span>
-      <span class="pd-fs-actions">
-        <button type="button" id="pd-fs-diff" class="pd-canvas-btn">Diff (D)</button>
-        <button type="button" id="pd-fs-codediff" class="pd-canvas-btn">Code Diff</button>
-        <button type="button" id="pd-fs-reset" class="pd-canvas-btn">重置布局</button>
-      </span>
-      <span id="pd-fs-count" class="font-mono pd-canvas-count"></span>
+      <div class="pd-fs-brand"><span class="mark">pd</span><span class="name">Product Designer</span></div>
+      <div class="pd-fs-breadcrumb"><span>runs</span><span class="sep">/</span><span class="current" id="pd-fs-run-name"></span></div>
+      <div class="pd-fs-toolbar">
+        <button type="button" id="pd-fs-diff" class="pd-tool-btn" title="Diff 模式 (D)">⧉ Diff</button>
+        <span class="pd-tool-sep"></span>
+        <button type="button" id="pd-zoom-out" class="pd-tool-btn" title="缩小">−</button>
+        <span class="pd-zoom-label" id="pd-zoom-label">100%</span>
+        <button type="button" id="pd-zoom-in" class="pd-tool-btn" title="放大">+</button>
+        <button type="button" id="pd-fs-fit" class="pd-tool-btn" title="Fit 全部 (⇧F)">⤢ Fit</button>
+        <span class="pd-tool-sep"></span>
+        <button type="button" id="pd-fs-codediff" class="pd-tool-btn" title="Code Diff">⎇ Code</button>
+        <button type="button" id="pd-fs-reset" class="pd-tool-btn" title="重置布局">↺ Reset</button>
+        <span class="pd-tool-sep"></span>
+        <a href="#" id="pd-back-to-review" class="pd-tool-btn" title="返回审阅工作台">← 审阅</a>
+      </div>
     </header>
-    <div id="pd-fs-canvas" class="pd-fs-canvas"></div>
+    <div class="pd-fs-body">
+      <aside class="pd-sidebar">
+        <div class="pd-sidebar-head">States</div>
+        <div class="pd-sidebar-body" id="pd-sidebar-tree"></div>
+      </aside>
+      <div id="pd-fs-canvas" class="pd-fs-canvas"></div>
+      <aside class="pd-inspector">
+        <div class="pd-inspector-head">Inspector</div>
+        <div class="pd-inspector-body" id="pd-inspector-body">
+          <div class="pd-insp-empty">选择一个节点查看详情</div>
+        </div>
+      </aside>
+    </div>
+    <footer class="pd-fs-statusbar">
+      <span class="status-item" id="pd-fs-count"></span>
+      <span class="spacer"></span>
+      <span class="status-item" id="pd-fs-eval-status"></span>
+      <span class="status-item" id="pd-fs-last-update"></span>
+    </footer>
     <div id="pd-fs-codediff-container" class="pd-fs-codediff" hidden></div>
   </div>
   <script type="module" src="./main.js"></script>

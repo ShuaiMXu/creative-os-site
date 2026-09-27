@@ -87,5 +87,6 @@ export class Stage {
   }
 
   onChange(fn) { this.listeners.add(fn); }
+  refresh() { this.#apply(); }
   get transform() { return `translate(${this.x}px, ${this.y}px) scale(${this.scale})`; }
 }
