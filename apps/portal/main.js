@@ -63,7 +63,7 @@ function startWhirl() {
   canvas.style.display = 'none';                    // our rotor replaces their canvas outright
 
   const SCREENS = heroScreens;
-  const TILE_WIDTHS = [330, 210, 150, 260];           // their tiles vary; cycle a spread
+  const TILE_WIDTHS = [175, 115, 85, 145];             // their tiles vary; keep them phone-thumbnail sized
   const TILE_COUNT = 120;
   const SPREAD = 2500;                              // their coordinate normalisation space
 
