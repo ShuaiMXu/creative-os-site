@@ -5,7 +5,7 @@ The static website for [creative-os](https://github.com/ShuaiMXu/creative-os) �
 **给 creative-os 的静态门户站。从主仓库提取，独立迭代与部署。**
 
 ```text
-apps/portal/    中文门户 — 设计审阅闭环的入口（近黑 / 奶油强调 / 排版优先）
+apps/portal/    中文门户 — Apps / Explore / Screens / UI Elements / Get Started
 apps/web/       Product page — the English product page
 apps/designer/  Review Workbench — reads exported harness runs
 public/runs/    Run artifacts published by `pnpm harness export` in creative-os
@@ -33,7 +33,7 @@ The site is read-only for review data. Runs are produced in the
 screenshots, skill results, reviews) into `public/runs/`. Nothing here edits a
 run; judgments are recorded in the harness CLI.
 
-The portal states only what the harness actually contains: the adapter argv on
-the agent tabs is the real declaration from
-`packages/harness-core/agents.js`, and the available/in-development lists
-mirror the main repository's README.
+Portal content lives in `apps/portal/content.js`; reusable render functions live
+in `apps/portal/components.js`. The hero and Screens section use only exported
+Creative OS run captures. Product claims link back to the core repository,
+issues or Workbench evidence.

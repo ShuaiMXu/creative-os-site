@@ -1,74 +1,45 @@
-# TODO — 门户站待办
+# TODO — Creative OS website
 
-> 更新：2026-09-27（hero 完整回归之后）
->
-> **现状一句话**：站点根路径跑的是 appllama.io 的完整代码——他们的 React 应用真实
-> 水合运行，hero 是他们的全套（UFO + 羊驼吉祥物 + 旋涡画布），文案在水合后注入换成
-> 中文，首屏有 cloak 防闪；目录大区等中段内容已换成占位格。`/apps/portal/` 保留着
-> 手搭的纯静态版做备份。页面生成器在 `tools/make-root.mjs`（改注入逻辑改这里，
-> 然后重新生成根 `index.html`）。
+> Updated 2026-09-27 after the content-portal rebuild.
 
-## P0 · 公开部署的闸门（不解决不能上线）
+## Current structure
 
-- [ ] **版权与合规（最硬的一条）**：整站运行的是 appllama.io 的编译代码、设计资产、
-      吉祥物形象，且他们的画布联网时还会拉取并展示他们的应用截图。对方未开源、无许可。
-      **取得授权或换成自有实现之前，只能本地原型，不能公开部署或商用。**
-      三选一决策：联系授权 / 自研替换 / 仅内部使用。
-- [x] **Hero 旋涡（/apps/portal/）：已换成我们自己的实现**。从他们 7163/8902 之外真正的实现处
-      （app/(home)/page chunk）提取了完整参数并重写：8 圈螺旋 r=1875(1−u)、弧长查表、≤120 贴片、
-      90s whirl-spin、3/4 圆角 14% 暗色描边、端部淡出——纯我们的代码，图片源是 `public/runs/`。
-      根路径运行壳仍用他们的原版（联网时画他们的屏幕），两版并存对照。
-- [ ] **吉祥物替换**：hero 现在完整使用他们的 UFO + 羊驼（`/branding/art/llama-peek.webp`）。
-      需要自己的角色资产后替换（SVG 结构分层：后层/舱口贴图/穹顶/前层，贴图是独立 webp，
-      只换图不动结构即可起步）。
+- **Apps**: the three product entry points—review, foundation extraction and continuous quality.
+- **Explore**: governed Design and Brand Foundations from real projects and documented studies.
+- **Screens**: replayable before/after evidence exported by the Harness.
+- **UI Elements**: a component-oriented view of states, semantic tokens and review patterns.
+- **Get Started**: local quickstart and GitHub entry points.
 
-## P1 · 素材与内容替换（「留出占位」的兑现）
+The root URL redirects to `/apps/portal/`. The portal is an original static implementation. Third-party compiled bundles, brand assets, catalog screenshots and crawler scripts have been removed.
 
-- [ ] **目录大区**：现在是 7 个「案例截图 占位」虚线格。换成我们自己的案例：
-      HappyClaw run 已有 4 张真实截图，Workbench 可以导出更多 run。
-- [ ] **结尾 CTA 区的漂浮应用砖与 Trusted-by 品牌墙**：已隐藏；有了自己的案例后
-      可以按同样式恢复成我们的内容。
-- [ ] **页脚巨型字标**：占位框在位，需要我们的字标设计。
-- [ ] **Logo / favicon**：导航已是 `creative os PORTAL` 文字字标；需要正式 Logo 与
-      favicon 资产。
+## P0 · Before public launch
 
-## P2 · 工程收尾
+- [ ] Replace the temporary geometric mark with the approved Creative OS identity and favicon.
+- [ ] Confirm the public product name and domain.
+- [ ] Add deployment configuration and verify all GitHub links in the deployed environment.
+- [ ] Run accessibility, mobile and performance checks against the production build.
 
-- [ ] **文案注入正式化**：现在是水合后注入 + 1.2s 轮询重申（`tools/make-root.mjs`）。
-      已知约束：他们的应用在水合回落后约 t+2s 会整页强刷一次，注入器对前后两个文档
-      各自独立生效。长期方案：静态改写他们的 RSC 载荷（文案在载荷里是转义形态，
-      DOM 直改会触发 React #418 回退）。
-- [x] **Hero 素材体积**：已压缩（tools/compress-assets.mjs）——hero 69 MB→1.9 MB（900px/72q），
-      browse 12 MB→0.6 MB（700px/72q），素材总量 2.8 MB，贴片最大 188px 下视觉无损。
-- [ ] **贴片逐图宽度**：当前四档循环近似，可改为读取每张图真实宽高逐张对应。
-- [x] **移动端验收（门户页）**：390 视口实测零溢出、hero 正常；原站汉堡菜单在静态壳里失效，已补 lg 以下显示的横向滚动导航行（镜像桌面锚点），桌面端自动隐藏。
-- [ ] **性能基线**：根页 HTML ~520 KB + chunks 2.5 MB + CSS 41 KB(gzip) + 字体；
-      跑一次 Lighthouse 再决定是否裁剪。
-- [ ] **离线降级**：断网时他们的画布为空、目录图片全不可见——恢复自绘画布可顺带解决。
+## P1 · Content system
 
-## P3 · 仓库与流程
+- [ ] Add the next user-provided real cases to `apps/portal/content.js` after review.
+- [ ] Export a governed foundation artifact for each project shown under Explore.
+- [ ] Add component detail pages when the extraction schema and state coverage are stable.
+- [ ] Add case filters only when enough real projects exist; do not populate the portal with placeholder catalog data.
+- [ ] Replace the SwiftUI planned card with evidence when the native pipeline is implemented.
 
-- [ ] **creative-os PR #27**：门户已提取到本仓库；决定关闭还是合并，
-      并在主仓库 README 把前端指向本仓库。
-- [ ] **creative-os 的 `apps/` 副本去留**：避免两处分叉；建议主仓库只留 CLI 与核心包。
-- [ ] **部署**：`npm run build` 产物 dist ~5 MB；GitHub Pages 或 Vercel。
-      注意 P0 未解决前**不部署**。
-- [ ] **README 更新**：说明根路径是运行壳、`/apps/portal/` 是静态版、
-      生成器用法（`node tools/make-root.mjs`）、数据流向不变。
+## P2 · Product connection
 
-## 已完成（供回溯）
+- [ ] Read release/maturity data from a generated core-repository manifest instead of maintaining counts manually.
+- [ ] Publish exported run metadata through the allow-listed `public/runs/` format.
+- [ ] Add a guided repository intake when the Harness has a stable remote onboarding boundary.
+- [ ] Keep Experience Score hidden until its evaluator and regression cases are calibrated.
 
-- [x] 首屏闪英文 —— 解析期 cloak，DCL 首轮替换后揭开，4.5s 保险
-- [x] Hero 完整回归 —— 样式表 `!important` 压过他们组件的内联 `display:none`
-      （内联非 important 必输给样式表 important；JS 层对抗会因 React 重写而输）
-- [x] 可见层的 appllama 文字清零；导航收敛为字标 + Workbench；页脚链接映射
-- [x] 目录区对方 CDN 图全部不可见 + 占位格
-- [x] 前端提取独立建仓（ShuaiMXu/creative-os-site），随带 experience-core 校验、
-      workflow 状态机、示例 spec、两个已导出 run
+## Completed in this rebuild
 
-## 环境备忘（本机）
-
-- `127.0.0.1:4173` — 本仓库 dev 服务器（根路径 = 运行壳）
-- `127.0.0.1:4180` — appllama 镜像（临时参考，可关）
-- 镜像源文件在 `%TEMP%\appllama\`（重启会清；生成器已入库不依赖它，
-  但 `make-root.mjs` 的 SRC 指向那里——清理前把 `site/home.html` 挪进仓库或改路径）
+- [x] Component-oriented content model (`content.js` + `components.js`).
+- [x] Apps, Explore, Screens, UI Elements and Get Started navigation.
+- [x] GitHub links for the core, website and referenced project repositories.
+- [x] Hero rotor rebuilt with Creative OS run captures.
+- [x] Real HappyClaw before/after evidence in the Screens section.
+- [x] Removal of third-party application catalog, trust claims, compiled code and visual assets.
+- [x] Root route points to the maintained portal.
