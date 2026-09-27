@@ -79,3 +79,18 @@
 .pd-view-btn.active { background: rgb(var(--color-accent)); color: rgb(var(--color-accent-ink)); border-color: transparent; font-weight: 600; }
 .pd-view-btn:hover:not(.active) { color: rgb(var(--color-label-primary)); }
 #canvas-view, #codediff-view { display: flex; flex-direction: column; min-height: 400px; }
+
+/* ===== Fullscreen canvas/codediff shell ===== */
+#fullscreen-shell { position: fixed; inset: 0; z-index: 200; display: flex; flex-direction: column; background: rgb(var(--color-ink)); }
+.pd-fs-topbar { display: flex; align-items: center; gap: 16px; padding: 10px 20px; border-bottom: 1px solid rgb(var(--color-sep) / var(--color-sep-alpha)); background: rgb(var(--color-surface)); flex: none; }
+.pd-fs-back { color: rgb(var(--color-label-secondary)); text-decoration: none; font-size: 13px; transition: color .2s; white-space: nowrap; }
+.pd-fs-back:hover { color: rgb(var(--color-label-primary)); }
+.pd-fs-run { font-size: 11px; color: rgb(var(--color-label-quaternary)); letter-spacing: .06em; }
+.pd-fs-actions { display: flex; gap: 6px; margin-left: auto; }
+.pd-fs-canvas { flex: 1; position: relative; overflow: hidden; }
+.pd-fs-codediff { flex: 1; overflow-y: auto; padding: 0; }
+
+/* In the run panel, the jump buttons look like CTAs */
+.pd-view-jump { display: inline-flex; align-items: center; gap: 4px; border: 1px solid rgb(var(--color-sep) / var(--color-sep-alpha)); background: none; color: rgb(var(--color-label-secondary)); border-radius: 999px; padding: 5px 14px; font: 500 12px/1 inherit; cursor: pointer; transition: all .2s; }
+.pd-view-jump:hover { color: rgb(var(--color-accent)); border-color: rgb(var(--color-accent) / .4); }
+#fullscreen-shell[hidden] { display: none !important; }
