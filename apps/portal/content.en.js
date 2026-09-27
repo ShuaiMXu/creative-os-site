@@ -1,4 +1,4 @@
-// English copy — plain, direct, no jargon
+// English copy — plain, direct, the way a designer would actually pitch this
 export const hero = {
   eyebrow: ['17 bounded skills', '10 contract-only', 'local-first'],
   h1: 'It works.\nBut does it feel ',
@@ -12,31 +12,31 @@ export const hero = {
 export const sections = {
   apps: {
     kicker: '01 / APPS',
-    title: 'Design work after the first build',
-    copy: 'Review existing products, extract design systems, and run incremental checks after code changes.',
+    title: 'After the build',
+    copy: 'Three things: review what exists, clean up scattered styles, and check only what changed after each edit.',
     link: 'View source on GitHub ↗',
   },
   explore: {
     kicker: '02 / DESIGN SYSTEMS',
-    title: 'Build the system before the page',
-    copy: 'Our design system and project archives from completed review loops.',
+    title: 'Design system archive',
+    copy: 'Our own design system, plus project records from completed review cycles.',
   },
   screens: {
-    kicker: '03 / SCREENS',
-    title: 'Same state, before and after',
-    copy: 'Every screenshot maps to a reproducible page state and viewport.',
+    kicker: '03 / BEFORE & AFTER',
+    title: 'See what changed',
+    copy: 'Same page, same viewport, before and after side by side.',
     link: 'Open the full review ↗',
   },
   elements: {
     kicker: '04 / UI ELEMENTS',
-    title: 'Components ready for production',
-    copy: 'Each component documents its use cases, state definitions, and boundaries.',
+    title: 'Common components',
+    copy: 'Each one says when to use it and when not to.',
   },
   getStarted: {
     kicker: '05 / GET STARTED',
-    title: 'Connect one real product',
-    titleLine2: 'Complete a full design loop',
-    copy: 'Runs locally, no signup required. One command, first review in five minutes.',
+    title: 'Try a real product',
+    titleLine2: 'Five minutes to results',
+    copy: 'Runs locally, no signup. One command, first review in five minutes.',
     quickstartLabel: 'QUICKSTART',
     quickstartTitle: 'Five-minute local proof',
     copyBtn: 'Copy command',
@@ -44,45 +44,45 @@ export const sections = {
 };
 
 export const apps = [
-  { index: '01', state: 'AVAILABLE', title: 'Review an existing app', description: 'Start from real pages, not spec documents. A running app is the best evidence you\'ll get.', meta: ['SOURCE + RENDER', 'HAPPYCLAW CASE'], action: 'See a real review' },
-  { index: '02', state: 'IN PROGRESS', title: 'Pull scattered styles into a system', description: 'Colors and spacing scattered across the codebase, and nobody can say which one is right. We sort that out.', meta: ['TOKENS', 'COMPONENTS', 'BRAND'], action: 'Track this work' },
-  { index: '03', state: 'PLANNED', title: 'After a code change, only check what broke', description: 'No full-site rechecks every time. Git tells us which files changed; we only look at those pages.', meta: ['GIT DIFF', 'INCREMENTAL'], action: 'View roadmap' },
+  { index: '01', state: 'AVAILABLE', title: 'Review a live product', description: 'Look at your pages, not your docs. Which button users can\'t find, which copy they don\'t understand — a screenshot tells you.', meta: ['SOURCE + RENDER', 'HAPPYCLAW CASE'], action: 'See a review' },
+  { index: '02', state: 'IN PROGRESS', title: 'Clean up the design system', description: 'Colors and spacing scattered across the codebase, and nobody can say which one is right. We pull it into one maintainable system.', meta: ['TOKENS', 'COMPONENTS', 'BRAND'], action: 'Track progress' },
+  { index: '03', state: 'PLANNED', title: 'Check only what changed', description: 'Git knows which files moved. We only re-review those pages, not the whole site every time.', meta: ['GIT DIFF', 'INCREMENTAL'], action: 'View roadmap' },
 ];
 
 export const systems = [
-  { tag: 'SYSTEM / 01', title: 'HappyHands Design System', description: 'Dark surfaces, one warm accent used sparingly. Nothing flashy, everything deliberate.', values: ['#111111', '#F7F6F3', '#F57F28', '#96918A'], traits: ['Professional', 'Calm', 'Friendly'], link: 'View system ↗' },
-  { tag: 'CASE / 02', title: 'HappyClaw', description: 'The first real project to complete the full loop. What changed, what it looked like before and after, what the verdict was — all here.', values: ['BEFORE', 'AFTER', 'VERDICT'], traits: ['Web', 'Review', 'Evidence'], link: 'View case ↗' },
-  { tag: 'STUDY / 03', title: 'Firefly UI Kit', description: 'System first, pages second. Want to know if that path works? Look at this.', values: ['TOKENS', 'STATES', 'PATTERNS'], traits: ['System-first', 'Archive'], link: 'View study ↗' },
-  { tag: 'TEMPLATE / 04', title: 'SaaS Product Foundation', description: 'Base kit for dashboards and workbenches. Sidebar, tables, forms, empty states — ready to use.', values: ['SHELL', 'DATA', 'FORMS'], traits: ['SaaS', 'Desktop', 'Template'], link: 'View template ↗' },
-  { tag: 'TEMPLATE / 05', title: 'Consumer App Foundation', description: 'Presets for mobile products. Navigation, content cards, paywalls — the core scenarios.', values: ['NAV', 'CONTENT', 'PAYWALL'], traits: ['Mobile', 'Consumer', 'Template'], link: 'View template ↗' },
-  { tag: 'TRACK / 06', title: 'SwiftUI Foundation', description: 'The native app path isn\'t proven yet. Noted, not promised.', values: ['COLOR', 'TYPE', 'MOTION'], traits: ['SwiftUI', 'Planned'], link: 'View plan ↗' },
+  { tag: 'SYSTEM / 01', title: 'HappyHands Design System', description: 'Dark surfaces, one warm accent used sparingly, and every decision has a reason behind it.', values: ['#111111', '#F7F6F3', '#F57F28', '#96918A'], traits: ['Professional', 'Calm', 'Friendly'], link: 'View ↗' },
+  { tag: 'CASE / 02', title: 'HappyClaw', description: 'The first real project to go end to end. What changed, what it looked like before and after, and the final verdict — all here.', values: ['BEFORE', 'AFTER', 'VERDICT'], traits: ['Web', 'Review', 'Evidence'], link: 'View ↗' },
+  { tag: 'STUDY / 03', title: 'Firefly UI Kit', description: 'An attempt to build the system before drawing any pages. Want to know if that works? Look at this.', values: ['TOKENS', 'STATES', 'PATTERNS'], traits: ['System-first', 'Archive'], link: 'View ↗' },
+  { tag: 'TEMPLATE / 04', title: 'SaaS Starter Kit', description: 'The foundation for dashboards and workbenches. Sidebar, tables, forms, empty states — ready to go.', values: ['SHELL', 'DATA', 'FORMS'], traits: ['SaaS', 'Desktop', 'Template'], link: 'View ↗' },
+  { tag: 'TEMPLATE / 05', title: 'Mobile Starter Kit', description: 'The common set for phone products. Navigation, content cards, paywalls — the core scenarios covered.', values: ['NAV', 'CONTENT', 'PAYWALL'], traits: ['Mobile', 'Consumer', 'Template'], link: 'View ↗' },
+  { tag: 'TRACK / 06', title: 'SwiftUI', description: 'The native path isn\'t proven yet. Noted, not promised.', values: ['COLOR', 'TYPE', 'MOTION'], traits: ['SwiftUI', 'Planned'], link: 'View ↗' },
 ];
 
 export const screenPairs = [
-  { title: 'Homepage · Desktop', task: 'Information hierarchy', beforeLabel: 'BEFORE', afterLabel: 'AFTER', before: { src: '/runs/06dabc2c/before/desktop.png', caption: 'Homepage before the change' }, after: { src: '/runs/06dabc2c/after/desktop.png', caption: 'Same viewport after' }, result: 'Aligned' },
-  { title: 'Homepage · Mobile', task: 'Task continuity', beforeLabel: 'BEFORE', afterLabel: 'AFTER', before: { src: '/runs/06dabc2c/before/mobile.png', caption: 'Mobile baseline' }, after: { src: '/runs/06dabc2c/after/mobile.png', caption: 'Same state after' }, result: 'Path intact' },
+  { title: 'Homepage · Desktop', task: 'Hierarchy', beforeLabel: 'BEFORE', afterLabel: 'AFTER', before: { src: '/runs/06dabc2c/before/desktop.png', caption: 'Homepage before the change' }, after: { src: '/runs/06dabc2c/after/desktop.png', caption: 'Same viewport after' }, result: 'Clearer' },
+  { title: 'Homepage · Mobile', task: 'Task flow', beforeLabel: 'BEFORE', afterLabel: 'AFTER', before: { src: '/runs/06dabc2c/before/mobile.png', caption: 'Mobile baseline' }, after: { src: '/runs/06dabc2c/after/mobile.png', caption: 'Same state after' }, result: 'Intact' },
 ];
 
 export const elements = [
   { kind: 'button', title: 'Button', description: 'Primary action gets solid ink, never brand orange. One per screen.' },
-  { kind: 'input', title: 'Prompt Box', description: 'Typing, generating, error — every stage visible.' },
-  { kind: 'status', title: 'AI Label & Badge', description: 'AI-assisted content is identifiable. Approved vs pending is clear.' },
+  { kind: 'input', title: 'Input', description: 'Typing, generating, error — every stage visible to the user.' },
+  { kind: 'status', title: 'AI Label', description: 'AI-assisted content is identifiable. Approved and pending never look the same.' },
   { kind: 'tokens', title: 'Semantic Tokens', description: 'Don\'t hardcode hex values. Use variables. Change once, update everywhere.' },
-  { kind: 'tabs', title: 'Tabs', description: 'Diagnosis, design system, and visual QA share one navigation. No reinvention.' },
-  { kind: 'progress', title: 'Agent Step', description: 'Where you are, what\'s blocking, what to do next — visible at a glance.' },
-  { kind: 'empty', title: 'Empty State', description: 'When there\'s nothing to show, tell the user what to do. Don\'t just put up an icon.' },
+  { kind: 'tabs', title: 'Tabs', description: 'Diagnosis, design system, and visual QA share one navigation. No duplicates.' },
+  { kind: 'progress', title: 'Step Indicator', description: 'Where you are, what\'s blocking, what comes next — visible at a glance.' },
+  { kind: 'empty', title: 'Empty State', description: 'When there\'s nothing to show, tell users what to do. An icon alone isn\'t enough.' },
   { kind: 'dialog', title: 'Confirm Dialog', description: 'Destructive actions explain consequences and offer a way back.' },
-  { kind: 'card', title: 'Content Card', description: 'Title, status, evidence, action — one card, one story.' },
+  { kind: 'card', title: 'Content Card', description: 'Title, status, evidence, action — one card tells one story.' },
 ];
 
 export const steps = [
   ['01', 'Connect', 'Give me a repo URL and a running preview.'],
-  ['02', 'Capture', 'I screenshot your pages, desktop and mobile.'],
-  ['03', 'Review', 'You confirm which problem matters most. I handle the rest.'],
+  ['02', 'Capture', 'I screenshot your pages — desktop and mobile.'],
+  ['03', 'Review', 'You pick which problem matters most. I handle the rest.'],
 ];
 
 export const ui = {
-  scrollNote: 'SCROLL TO EXPLORE',
+  scrollNote: 'SCROLL',
   githubLink: 'GitHub ↗',
   footer: { left: 'CREATIVE OS · PRODUCT DESIGNER', middle: 'Evidence before claims', right: 'View source ↗' },
 };
