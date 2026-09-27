@@ -13,7 +13,7 @@ export const sections = {
   apps: {
     kicker: '01 / APPS',
     title: 'After the build',
-    copy: 'Three things: review what exists, clean up scattered styles, and check only what changed after each edit.',
+    copy: 'Review the pages, systematize the foundation, fix within constraints, optimize visual and experience — each step\'s output feeds the next.',
     link: 'View source on GitHub ↗',
   },
   explore: {
@@ -44,9 +44,10 @@ export const sections = {
 };
 
 export const apps = [
-  { index: '01', state: 'AVAILABLE', title: 'Review a live product', description: 'Look at your pages, not your docs. Which button users can\'t find, which copy they don\'t understand — a screenshot tells you.', meta: ['SOURCE + RENDER', 'HAPPYCLAW CASE'], action: 'See a review' },
-  { index: '02', state: 'IN PROGRESS', title: 'Clean up the design system', description: 'Colors and spacing scattered across the codebase, and nobody can say which one is right. We pull it into one maintainable system.', meta: ['TOKENS', 'COMPONENTS', 'BRAND'], action: 'Track progress' },
-  { index: '03', state: 'PLANNED', title: 'Check only what changed', description: 'Git knows which files moved. We only re-review those pages, not the whole site every time.', meta: ['GIT DIFF', 'INCREMENTAL'], action: 'View roadmap' },
+  { index: '01', state: 'AVAILABLE', title: 'Review', description: 'Start from live pages. Screenshot, diagnose, rank — find the one issue worth fixing first.', meta: ['SOURCE + RENDER', 'HAPPYCLAW CASE'], action: 'See a review' },
+  { index: '02', state: 'IN PROGRESS', title: 'Systematize', description: 'Pull scattered colors, type, spacing and components into a maintainable Design Foundation that constrains future changes.', meta: ['TOKENS', 'COMPONENTS', 'BRAND'], action: 'Track progress' },
+  { index: '03', state: 'PLANNED', title: 'Fix', description: 'Scoped changes within system constraints. Isolated worktree, no push, same-state before/after screenshots.', meta: ['GIT DIFF', 'BEFORE/AFTER'], action: 'View roadmap' },
+  { index: '04', state: 'PLANNED', title: 'Optimize', description: 'Visual: hierarchy, spacing, consistency. Experience: task paths, information architecture, error recovery. Both tracks in parallel.', meta: ['VISUAL', 'UX', 'INCREMENTAL'], action: 'View roadmap' },
 ];
 
 export const systems = [

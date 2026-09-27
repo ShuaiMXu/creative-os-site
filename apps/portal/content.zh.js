@@ -13,7 +13,7 @@ export const sections = {
   apps: {
     kicker: '01 / 应用',
     title: '产品做完之后',
-    copy: '三件事：看看哪里不好用、把散落的样式理清楚、改了代码只查受影响的部分。',
+    copy: '审阅、整理设计系统、修正问题、体验优化——每一步的产出，都是下一步的输入。',
     link: '在 GitHub 查看源码 ↗',
   },
   explore: {
@@ -44,9 +44,10 @@ export const sections = {
 };
 
 export const apps = [
-  { index: '01', state: '可用', title: '审阅现有产品', description: '看你的页面，不是看文档。哪个按钮用户找不到、哪段文案看不懂，截个图就知道。', meta: ['源码 + 渲染', 'HappyClaw 案例'], action: '看一次审阅' },
-  { index: '02', state: '在建', title: '理清设计系统', description: '代码里到处都是颜色和间距，但没人说得清哪个是对的。帮你收拢成一份可维护的系统。', meta: ['令牌', '组件', '品牌'], action: '跟进进度' },
-  { index: '03', state: '规划中', title: '改了代码，只查受影响的', description: 'Git 知道哪些文件变了，我们只复查那些页面。不用每次全站过一遍。', meta: ['Git 差异', '增量复查'], action: '看路线图' },
+  { index: '01', state: '可用', title: '审阅产品', description: '从真实页面出发，定位影响用户任务的体验问题。截图、诊断、排序，找出最值得先改的那一个。', meta: ['源码 + 渲染', 'HappyClaw 案例'], action: '看一次审阅' },
+  { index: '02', state: '在建', title: '整理设计系统', description: '把散落在代码里的颜色、字体、间距、组件收拢成一份可维护的 Design Foundation，为后续修改建立约束。', meta: ['令牌', '组件', '品牌'], action: '跟进进度' },
+  { index: '03', state: '规划中', title: '修正问题', description: '在系统约束下执行限定范围的修改。隔离 worktree，不 push 不部署，改后同状态截图对比。', meta: ['Git 差异', '前后对比'], action: '看路线图' },
+  { index: '04', state: '规划中', title: '体验优化', description: '视觉层面：层级、间距、一致性。体验层面：任务路径、信息架构、错误恢复。两条线同步推进。', meta: ['视觉', '体验', '增量'], action: '看路线图' },
 ];
 
 export const systems = [
