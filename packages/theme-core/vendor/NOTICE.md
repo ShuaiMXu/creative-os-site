@@ -9,3 +9,5 @@ Adapted files retain their upstream directory names. Changes: remove Drizzle The
 Additional shadow adaptation: multiply the source color's alpha into shadow opacity and clamp combined opacity. HappyHands' export adapter supplies Tailwind 3 shadow utilities and normalizes `letter-spacing: normal` for arithmetic tracking output.
 
 HappyHands editor UI, project persistence, history reducer, AST CSS importer, proposal/approval adapter and preview protocol are new implementations around this core. This is a source integration, not an unmodified full-app fork. Upstream update procedure: compare each listed file against the pinned revision, record adaptations, then run core, export and browser tests before advancing the revision.
+
+Review fixes: preserve imported mode-specific spacing/tracking in Tailwind output and apply tracking even when only the dark theme changes it.

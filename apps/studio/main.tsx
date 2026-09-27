@@ -220,6 +220,8 @@ function App() {
   const styles = h.present,
     values = styles[mode],
     changes = differences(draft.baseline, styles);
+  const liveImportTarget = useRef({ id: draft.id, styles });
+  liveImportTarget.current = { id: draft.id, styles };
   useEffect(() => setConfirmed(false), [styles, draft.foundation]);
   function current(): Draft {
     return { ...draft, styles, revision: saved.current };
@@ -663,6 +665,13 @@ function App() {
                             .text()
                             .then((text) =>
                               guard(() => {
+                                if (
+                                  liveImportTarget.current.id !== draft.id ||
+                                  liveImportTarget.current.styles !== styles
+                                )
+                                  throw Error(
+                                    "文件读取期间项目或主题已变化，请重新导入 Foundation",
+                                  );
                                 const attached = attachFoundation(
                                   current(),
                                   JSON.parse(text),

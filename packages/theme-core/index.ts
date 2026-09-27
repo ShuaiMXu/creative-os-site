@@ -227,7 +227,11 @@ export function exportTheme(input: ThemeStyles, kind: ExportKind): string {
     for (const mode of ["light", "dark"] as const)
       if (styles[mode]["letter-spacing"] === "normal")
         styles[mode]["letter-spacing"] = "0em";
-  if (kind === "tailwind3") return generateThemeCode(state, "rgb", "3");
+  if (kind === "tailwind3")
+    return generateThemeCode(state, "rgb", "3").replace(
+      "@apply bg-background text-foreground;",
+      "@apply bg-background text-foreground;\n    letter-spacing: var(--tracking-normal);",
+    );
   if (kind === "tailwind3-config")
     return generateTailwindConfigCode(state, "rgb", "3").replace(
       "extend: {",

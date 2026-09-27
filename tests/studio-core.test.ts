@@ -191,3 +191,41 @@ test("CSS import preserves important precedence and recognizes upstream shadow a
   assert.equal(r.styles.light["shadow-offset-x"], "4px");
   assert.equal(r.styles.light["letter-spacing"], "0.02em");
 });
+
+test("approval compares prerelease numeric components without permitting downgrades", () => {
+  const d = newDraft("versions", "Versions");
+  d.foundation = approve(d, "1.2.10", "Reviewer", "Base");
+  d.foundation.foundationVersion = "1.2.10-beta.1";
+  assert.throws(() =>
+    approve(d, "1.2.9", "Reviewer", "Downgrade", "1.2.10-beta.1"),
+  );
+  assert.equal(
+    approve(d, "1.2.10", "Reviewer", "Release", "1.2.10-beta.1")
+      .foundationVersion,
+    "1.2.10",
+  );
+});
+test("deleting a saved draft cannot be silently undone by a stale tab", () => {
+  const storage = {
+    getItem: () => null,
+    setItem: () => assert.fail("must not recreate deleted project"),
+  };
+  assert.throws(
+    () => saveDraft(storage, newDraft("deleted", "Deleted"), 4),
+    /已被删除/,
+  );
+});
+
+test("Tailwind exports retain imported dark-only spacing and tracking", () => {
+  const styles = presetStyles("default");
+  styles.light["letter-spacing"] = "0em";
+  styles.dark["letter-spacing"] = "0.04em";
+  styles.dark.spacing = "0.5rem";
+  for (const kind of ["tailwind3", "tailwind4"] as const) {
+    const css = exportTheme(styles, kind);
+    const dark = css.match(/\.dark\s*\{([^}]+)\}/)?.[1] || "";
+    assert.match(dark, /--spacing: 0.5rem/);
+    assert.match(dark, /--tracking-normal: 0.04em/);
+    assert.match(css, /letter-spacing: var\(--tracking-normal\)/);
+  }
+});

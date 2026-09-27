@@ -184,16 +184,17 @@ export function approve(
   if (!/^\d+\.\d+\.\d+$/.test(version) || !name.trim() || !reason.trim())
     throw Error("请填写语义版本、审核人和批准理由");
   if (currentVersion) {
-    const a = version.split(".").map(Number),
-      b = currentVersion.split(".").map(Number);
+    const a = version.split(".").map(BigInt),
+      b = currentVersion.split("-")[0].split(".").map(BigInt);
     let cmp = 0;
     for (let i = 0; i < 3; i++) {
       if (a[i] !== b[i]) {
-        cmp = a[i] - b[i];
+        cmp = a[i] > b[i] ? 1 : -1;
         break;
       }
     }
-    if (cmp <= 0) throw Error("新版本必须大于基础版本");
+    if (cmp < 0 || (cmp === 0 && !currentVersion.includes("-")))
+      throw Error("新版本必须大于基础版本");
   }
   const styles = validateStyles(draft.styles);
   const f = structuredClone(
@@ -246,6 +247,8 @@ export function saveDraft(
 ): Draft {
   const key = `hh-studio:${draft.id}`;
   const stored = storage.getItem(key);
+  if (!stored && expected !== 0)
+    throw Error("项目草稿已被删除，请重新载入或导出备份");
   if (stored && validateDraft(JSON.parse(stored)).revision !== expected)
     throw Error("另一个窗口修改了该项目。请先导出备份，再重新载入，避免覆盖。");
   const next = validateDraft({ ...draft, revision: expected + 1 });

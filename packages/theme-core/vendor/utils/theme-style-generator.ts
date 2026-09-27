@@ -108,16 +108,9 @@ const generateThemeVariables = (
     getShadowMap({ styles: themeStyles, currentMode: mode })
   );
   const rawShadowVars = generateRawShadowVariables(themeStyles, mode);
-  const spacingVar =
-    mode === "light"
-      ? `\n  --spacing: ${themeStyles["light"].spacing ?? defaultLightThemeStyles.spacing};`
-      : "";
-
-  const trackingVars =
-    mode === "light"
-      ? `\n  --tracking-normal: ${themeStyles["light"]["letter-spacing"] ?? defaultLightThemeStyles["letter-spacing"]};`
-      : "";
-
+  // Preserve mode-specific imported values, even though ordinary UI edits share these tokens.
+  const spacingVar = `\n  --spacing: ${themeStyles[mode].spacing ?? defaultLightThemeStyles.spacing};`;
+  const trackingVars = `\n  --tracking-normal: ${themeStyles[mode]["letter-spacing"] ?? defaultLightThemeStyles["letter-spacing"]};`;
   return (
     selector +
     " {" +
@@ -296,10 +289,7 @@ export const generateThemeCode = (
   if (tailwindVersion === "4") {
     const tailwindV4Theme = generateTailwindV4ThemeInline(themeStyles);
 
-    const bodyLetterSpacing =
-      themeStyles["light"]["letter-spacing"] !== "0em"
-        ? "\n    letter-spacing: var(--tracking-normal);"
-        : "";
+    const bodyLetterSpacing = "\n    letter-spacing: var(--tracking-normal);";
 
     return `@import "tailwindcss";
 
@@ -358,3 +348,4 @@ export const generateTailwindConfigCode = (
   const themeStyles = themeEditorState.styles as ThemeStyles;
   return generateTailwindV3Config(themeStyles, colorFormat);
 };
+

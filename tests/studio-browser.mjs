@@ -147,6 +147,46 @@ try {
       .getByRole("textbox", { name: "primary", exact: true })
       .isVisible(),
   );
+  await page.setViewportSize({ width: 1440, height: 1100 });
+  const foundation = await page.evaluate(
+    () => JSON.parse(localStorage.getItem("hh-studio:browser-test")).foundation,
+  );
+  await page.evaluate(() => {
+    const original = File.prototype.text;
+    File.prototype.text = function () {
+      const file = this;
+      return new Promise((resolve) => {
+        window.finishImport = async () => {
+          File.prototype.text = original;
+          resolve(await original.call(file));
+        };
+      });
+    };
+  });
+  await page.getByRole("button", { name: /审核变更/ }).click();
+  await page
+    .locator(".review-grid input[type=file]")
+    .setInputFiles({
+      name: "foundation.json",
+      mimeType: "application/json",
+      buffer: Buffer.from(JSON.stringify(foundation)),
+    });
+  page.once("dialog", (dialog) => dialog.accept("review-race"));
+  await page.getByRole("button", { name: "＋", exact: true }).click();
+  await page.evaluate(() => window.finishImport());
+  await page
+    .getByRole("alert")
+    .filter({ hasText: "文件读取期间项目或主题已变化" })
+    .waitFor();
+  assert.equal(await page.getByLabel("选择项目").inputValue(), "review-race");
+  await page.getByRole("button", { name: "保存", exact: true }).click();
+  assert.equal(
+    await page.evaluate(
+      () =>
+        JSON.parse(localStorage.getItem("hh-studio:review-race")).foundation,
+    ),
+    undefined,
+  );
   assert.deepEqual(errors, []);
   console.log(
     "PASS: edit, undo/redo, mode isolation, persistence, CSS warnings, JSON download, 5 scenes, compare, inspector, preview bridge, approval, mobile, no page errors",
