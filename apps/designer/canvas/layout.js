@@ -11,16 +11,16 @@ export function autoLayout(entries, { hasAfter = false } = {}) {
     if (!states.includes(e.stateId)) states.push(e.stateId);
     if (!configs.includes(e.configurationId)) configs.push(e.configurationId);
   }
-  const COLUMN_GAP = 40;
-  const PAIR_GAP = 28; // gap between before and after within a pair
-  const ROW_GAP = 56;
-  const GUTTER = 120;
+  const COLUMN_GAP = 48;
+  const PAIR_GAP = 28;
+  const ROW_GAP = 72; // generous breathing room between state rows
+  const GUTTER = 140;
 
-  // column widths: each config column fits before + (after if hasAfter) + pair gap
+  // column widths: desktop 240, mobile 144 — same-height rows via uniform max
   const baseWidths = configs.map(c => {
     const sample = entries.find(e => e.configurationId === c);
     const aspect = sample ? sample.width / sample.height : 1;
-    return aspect < 0.75 ? 132 : 220;
+    return aspect < 0.75 ? 144 : 240;
   });
   // total column width accounts for the after node
   const colWidths = baseWidths.map(w => hasAfter ? w * 2 + PAIR_GAP : w);

@@ -6,6 +6,7 @@ import { buildNodes, renderNode, renderConnection } from './nodes.js';
 import { buildPins, renderPin } from './pins.js';
 import { autoLayout, loadLayout, saveLayout, clearLayout } from './layout.js';
 import { renderCodeDiff } from './codediff.js';
+import { workflowState } from '../../../packages/harness-core/workflow.js';
 
 export async function renderCanvas(container, run) {
   container.replaceChildren();
@@ -148,6 +149,8 @@ export async function renderCanvas(container, run) {
       pinEl.addEventListener('click', e => {
         e.stopPropagation();
         highlightEvidence(pin.evidenceRefs, nodeEls);
+        // show finding details in inspector
+        showFindingInInspector(pin);
       });
       nodeEl.appendChild(pinEl);
     }
@@ -267,6 +270,8 @@ export async function renderCanvas(container, run) {
     if (!body) return;
     body.replaceChildren();
     if (!node) { body.innerHTML = '<div class="pd-insp-empty">选择一个节点查看详情</div>'; return; }
+
+    // -- detail rows --
     const rows = [
       ['State', node.entry.stateId], ['Config', node.entry.configurationId],
       ['Phase', node.phase], ['HTTP', node.entry.status || '—'], ['URL', node.entry.finalUrl || '—']
@@ -281,6 +286,8 @@ export async function renderCanvas(container, run) {
       sec.append(l, v);
       body.appendChild(sec);
     }
+
+    // -- checks --
     if (node.checks) {
       const sec = document.createElement('div');
       sec.className = 'pd-insp-section';
@@ -295,6 +302,39 @@ export async function renderCanvas(container, run) {
       }
       body.appendChild(sec);
     }
+
+    // -- finding pins on this node --
+    const nodePins = pins.filter(p => p.nodeKey === node.key);
+    if (nodePins.length) {
+      const sec = document.createElement('div');
+      sec.className = 'pd-insp-section';
+      const l = document.createElement('span');
+      l.className = 'pd-insp-label'; l.textContent = `Findings (${nodePins.length})`;
+      sec.appendChild(l);
+      for (const pin of nodePins) {
+        const v = document.createElement('div');
+        v.className = 'pd-insp-value';
+        v.style.cssText = 'display:flex;align-items:center;gap:6px;padding:4px 8px;border-radius:6px;background:rgb(var(--color-accent)/.08);cursor:pointer';
+        v.innerHTML = `<span class="font-mono" style="font-size:10px;font-weight:700;color:rgb(var(--color-accent))">${pin.priority.toFixed(1)}</span><span style="font-size:12px;color:rgb(var(--color-label-secondary))">${pin.title}</span>`;
+        v.title = `${pin.findingId} · ${pin.verificationStatus}`;
+        sec.appendChild(v);
+      }
+      body.appendChild(sec);
+    }
+
+    // -- diff status --
+    if (node.phase === 'after') {
+      const sec = document.createElement('div');
+      sec.className = 'pd-insp-section';
+      const l = document.createElement('span');
+      l.className = 'pd-insp-label'; l.textContent = 'Diff';
+      sec.appendChild(l);
+      const v = document.createElement('span');
+      v.className = `pd-insp-badge ${node.changed ? 'fail' : 'ok'}`;
+      v.textContent = node.changed ? '↻ changed' : '= unchanged';
+      sec.appendChild(v);
+      body.appendChild(sec);
+    }
   }
 
   function updateStatusBar(count, hasEval) {
@@ -307,6 +347,95 @@ export async function renderCanvas(container, run) {
   function updateZoomLabel() {
     const z = document.getElementById('pd-zoom-label');
     if (z) z.textContent = Math.round(stage.scale * 100) + '%';
+  }
+
+  // -- stage card (B10.2): workflow state → title + command --
+  function updateStageCard() {
+    const title = document.getElementById('pd-stage-title');
+    const badge = document.getElementById('pd-stage-badge');
+    const desc = document.getElementById('pd-stage-desc');
+    const cmdText = document.getElementById('pd-stage-cmd-text');
+    const cmdBox = document.getElementById('pd-stage-cmd');
+    if (!title) return;
+
+    const state = workflowState(run.manifest);
+    const stage = state.stage;
+    const blocked = state.blocked;
+    const runDir = `.harness/runs/${run.manifest.id}`;
+
+    const card = STAGE_CARDS[stage] || STAGE_CARDS.default;
+    title.textContent = card.title;
+    badge.textContent = blocked ? 'blocked' : 'next';
+    badge.className = `pd-stage-badge ${blocked ? 'blocked' : 'ok'}`;
+    desc.textContent = state.reason || card.desc || '';
+    if (card.cmd) {
+      cmdBox.style.display = '';
+      cmdText.textContent = card.cmd.replace('{dir}', runDir);
+      document.getElementById('pd-stage-copy')?.addEventListener('click', () => {
+        navigator.clipboard.writeText(cmdText.textContent).catch(() => {});
+      }, { once: true });
+    } else {
+      cmdBox.style.display = 'none';
+    }
+  }
+
+  const STAGE_CARDS = {
+    'needs-baseline': { title: '采集基线', desc: '采集 before 截图后，画布会展示全部状态。', cmd: 'pnpm harness capture --run {dir} --phase before --url ‹预览地址›' },
+    'needs-diagnosis': { title: '诊断证据', desc: '运行 skills + diagnose 生成证据图。', cmd: 'pnpm harness diagnose --run {dir}' },
+    'awaiting-confirmation': { title: '等人确认', desc: '看截图后确认一条 finding。', cmd: 'pnpm harness confirm --run {dir} --finding ‹ID› --verdict supported --note ‹理由›' },
+    'finding-stale': { title: 'Finding 已过期', desc: '此 finding 与基线不匹配，需重新诊断。', cmd: 'pnpm harness diagnose --run {dir}' },
+    'needs-plan': { title: '规划修改', desc: '生成限定范围的 agent brief。', cmd: 'pnpm harness plan --run {dir} --finding ‹ID›' },
+    'needs-execution': { title: '隔离执行', desc: '在 worktree 中让 agent 修改。', cmd: 'pnpm harness execute --run {dir} --repo ‹仓库› --agent codex' },
+    'execution-failed': { title: '执行失败', desc: '检查 worktree 与日志。', cmd: 'pnpm harness status --run {dir}' },
+    'boundary-breached': { title: '边界被破坏', desc: 'agent 动了宿主仓库。', cmd: '' },
+    'needs-after-capture': { title: '采集整改后', desc: '起 worktree 预览后采集 after。', cmd: 'pnpm harness capture --run {dir} --phase after --url ‹预览地址›' },
+    'needs-structural-evaluation': { title: '结构评估', desc: '对比前后结构检查。', cmd: 'pnpm harness evaluate --run {dir}' },
+    'needs-visual-qa': { title: '独立视觉复核', desc: '撰写 Visual QA 证明。', cmd: 'pnpm harness attest --run {dir} --input visual-qa.json' },
+    'visual-qa-needs-evidence': { title: '视觉复核需证据', desc: '补充缺失的状态截图。', cmd: '' },
+    'visual-qa-failed': { title: '复核未过', desc: '只允许拒绝。', cmd: 'pnpm harness judge --run {dir} --decision reject --reason ‹理由›' },
+    'awaiting-judgment': { title: '等人判定', desc: '做出最终判定。', cmd: 'pnpm harness judge --run {dir} --decision ‹accept/reject› --reason ‹理由›' },
+    'complete': { title: '已判定', desc: '本 run 闭环完成。', cmd: 'pnpm harness skill --run {dir} --skill judgment-distiller' },
+    'onboarding-failed': { title: '接入失败', desc: '修复预览后重新开始。', cmd: '' },
+    'default': { title: '—', desc: '', cmd: '' }
+  };
+
+  function showFindingInInspector(pin) {
+    const body = document.getElementById('pd-inspector-body');
+    if (!body) return;
+    body.replaceChildren();
+    const sections = [
+      ['Finding', pin.findingId],
+      ['Priority', `P${pin.priority.toFixed(1)} (impact × confidence ÷ effort)`],
+      ['Status', pin.verificationStatus],
+      ['Pinned to', pin.nodeKey]
+    ];
+    for (const [label, value] of sections) {
+      const sec = document.createElement('div');
+      sec.className = 'pd-insp-section';
+      const l = document.createElement('span');
+      l.className = 'pd-insp-label'; l.textContent = label;
+      const v = document.createElement('span');
+      v.className = 'pd-insp-value mono'; v.textContent = value;
+      sec.append(l, v);
+      body.appendChild(sec);
+    }
+    const titleSec = document.createElement('div');
+    titleSec.className = 'pd-insp-section';
+    titleSec.innerHTML = `<span class="pd-insp-label">Title</span><span class="pd-insp-value" style="font-size:13px">${pin.title}</span>`;
+    body.appendChild(titleSec);
+    if (pin.evidenceRefs.length > 1) {
+      const evSec = document.createElement('div');
+      evSec.className = 'pd-insp-section';
+      evSec.innerHTML = `<span class="pd-insp-label">Evidence (${pin.evidenceRefs.length})</span>`;
+      for (const ref of pin.evidenceRefs.slice(0, 5)) {
+        const v = document.createElement('span');
+        v.className = 'pd-insp-value mono';
+        v.style.cssText = 'font-size:10px;color:rgb(var(--color-label-quaternary))';
+        v.textContent = ref;
+        evSec.appendChild(v);
+      }
+      body.appendChild(evSec);
+    }
   }
 
   // zoom controls
@@ -326,6 +455,7 @@ export async function renderCanvas(container, run) {
   updateInspector(null);
   updateStatusBar(nodes.length, hasEvaluation);
   updateZoomLabel();
+  updateStageCard();
 
   // cleanup (returned last — panels are populated before this)
   return () => {
