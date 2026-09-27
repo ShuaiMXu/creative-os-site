@@ -1,139 +1,123 @@
-// Portal behaviour — everything here replicates what appllama.io's app JS
-// does to the same markup: the whirl particle field behind the mascot, the
-// llama bob (their runtime adds the same animate class), the scroll
-// choreography over the runway, agent adapter tabs and copy-to-clipboard.
+// Portal behaviour. The hero whirl is OUR OWN implementation of the spiral
+// screen-rotor: the geometry, distribution and styling parameters were read
+// out of the original site's shipped behaviour (8-turn spiral r=1875·(1−u),
+// arc-length LUT, ≤120 tiles, 90s rotor spin, 3/4 tiles at 14% radius) and
+// reimplemented from scratch — noTheir code runs here, and the tile images
+// are our own exported run captures. Also on board: the llama bob, the
+// runway scroll choreography, agent adapter tabs and copy-to-clipboard.
 
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-let whirlOn = false;
 
-/* ---- Whirl field: app screens orbit the mascot on a ring band, with cream
-   particles drifting between them — the screens are runtime-fed canvas
-   drawing on the original site too (no DOM, no CSS; the API data arrives
-   with their app JS). Their radial mask keeps the centre clear for the UFO;
-   this canvas layer sits behind it, which is what makes the screens read as
-   "orbiting behind". Placeholder art: our own exported HappyClaw captures. ---- */
-const canvas = document.querySelector('.whirl-field-canvas');
-if (canvas && !reduced) {
-  const ctx = canvas.getContext('2d');
-  const box = canvas.parentElement?.parentElement;
-  const DPR = Math.min(devicePixelRatio || 1, 2);
-  let width = 0;
-  let height = 0;
-  const particles = [];
-  const tiles = [];
-
-  // The exported HappyClaw run: real before/after captures at both viewports.
-  const SCREENS = [
-    { src: '/runs/06dabc2c/before/desktop.png', w: 150, h: 94 },
-    { src: '/runs/06dabc2c/after/desktop.png', w: 150, h: 94 },
-    { src: '/runs/06dabc2c/before/mobile.png', w: 64, h: 138 },
-    { src: '/runs/06dabc2c/after/mobile.png', w: 64, h: 138 }
-  ];
-  const images = SCREENS.map(screen => {
-    const image = new Image();
-    image.src = screen.src;
-    return { image, ...screen };
-  });
-
-  for (let i = 0; i < 14; i++) {
-    const screen = SCREENS[i % SCREENS.length];
-    tiles.push({
-      image: images[i % images.length],
-      angle: (i / 14) * Math.PI * 2 + Math.random() * 0.3,
-      radius: 0.34 + Math.random() * 0.26,
-      speed: (0.00008 + Math.random() * 0.00022) * (i % 2 ? 1 : -1),
-      scale: 0.8 + Math.random() * 0.5,
-      tilt: (Math.random() - 0.5) * 0.22,
-      alpha: 0.45 + Math.random() * 0.4
-    });
+/* ---- Spiral rotor: our reimplementation of the whirl ---- */
+function buildSpiral() {
+  // 8 turns from r=1875 down to 0, arc-length parameterised like the original
+  const TURNS = 8 * Math.PI * 2;
+  const SAMPLES = 16384;
+  const MAX_R = 1875;
+  const points = [];
+  for (let a = 0; a <= SAMPLES; a++) {
+    const u = a / SAMPLES;
+    const angle = u * TURNS;
+    const r = MAX_R * (1 - u);
+    points.push({ x: r * Math.cos(angle), y: r * Math.sin(angle) });
   }
-
-  function resize() {
-    width = box?.clientWidth || innerWidth;
-    height = box?.clientHeight || innerHeight;
-    canvas.width = width * DPR;
-    canvas.height = height * DPR;
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  const cumulative = [0];
+  for (let i = 1; i < points.length; i++) {
+    cumulative.push(cumulative[i - 1] + Math.hypot(points[i].x - points[i - 1].x, points[i].y - points[i - 1].y));
   }
-  resize();
-  addEventListener('resize', resize);
-
-  for (let i = 0; i < 260; i++) {
-    particles.push({
-      radius: 0.30 + Math.random() * 0.62,          // outside their 50% clear centre
-      angle: Math.random() * Math.PI * 2,
-      speed: (0.00016 + Math.random() * 0.0006) * (Math.random() < 0.5 ? 1 : -1),
-      size: 0.6 + Math.random() * 1.8,
-      alpha: 0.08 + Math.random() * 0.3,
-      drift: Math.random() * Math.PI * 2,
-      driftSpeed: 0.002 + Math.random() * 0.004
-    });
+  const total = cumulative[SAMPLES];
+  const STEPS = 4096;
+  const lut = new Array(STEPS + 1);
+  let cursor = 0;
+  for (let c = 0; c <= STEPS; c++) {
+    const d = (c / STEPS) * total;
+    while (cursor < SAMPLES && cumulative[cursor + 1] < d) cursor++;
+    const span = cumulative[cursor + 1] - cumulative[cursor];
+    const t = span > 0 ? (d - cumulative[cursor]) / span : 0;
+    const a = points[cursor];
+    const b = points[Math.min(cursor + 1, SAMPLES)];
+    const x = a.x + (b.x - a.x) * t;
+    const y = a.y + (b.y - a.y) * t;
+    const ua = (cursor + t) / SAMPLES;
+    const angle = ua * TURNS;
+    const r = MAX_R * (1 - ua);
+    // derivative of (r·cos, r·sin) along the spiral, normalised
+    const dx = -MAX_R * Math.cos(angle) - r * Math.sin(angle) * TURNS;
+    const dy = -MAX_R * Math.sin(angle) + r * Math.cos(angle) * TURNS;
+    const len = Math.hypot(dx, dy);
+    lut[c] = { x, y, tx: len > 0 ? dx / len : 1, ty: len > 0 ? dy / len : 0 };
   }
-
-  function drawTile(tile, rMax) {
-    if (!tile.image.image.complete || tile.image.image.naturalWidth === 0) return;
-    const r = tile.radius * rMax;
-    const x = width / 2 + Math.cos(tile.angle) * r;
-    const y = height / 2 + Math.sin(tile.angle) * r * 0.72; // slight ellipse, matches the mask
-    const w = tile.image.w * tile.scale;
-    const h = tile.image.h * tile.scale;
-    ctx.save();
-    ctx.globalAlpha = tile.alpha;
-    ctx.translate(x, y);
-    ctx.rotate(tile.tilt + Math.sin(tile.angle) * 0.06);
-    ctx.beginPath();
-    ctx.roundRect(-w / 2, -h / 2, w, h, 10);
-    ctx.closePath();
-    ctx.fill();
-    ctx.clip();
-    ctx.drawImage(tile.image.image, -w / 2, -h / 2, w, h);
-    ctx.restore();
-    ctx.save();
-    ctx.globalAlpha = tile.alpha * 0.5;
-    ctx.strokeStyle = 'rgba(240, 220, 200, 0.55)';
-    ctx.lineWidth = 1;
-    ctx.translate(x, y);
-    ctx.rotate(tile.tilt + Math.sin(tile.angle) * 0.06);
-    ctx.beginPath();
-    ctx.roundRect(-w / 2, -h / 2, w, h, 10);
-    ctx.stroke();
-    ctx.restore();
-  }
-
-  function frame() {
-    if (!whirlOn) {
-      whirlOn = true;
-      canvas.style.opacity = '1'; // their 1.5s ease-out transition does the fade
-    }
-    ctx.clearRect(0, 0, width, height);
-    const cx = width / 2;
-    const cy = height / 2;
-    const rMax = Math.max(width, height) / 2;
-    for (const p of particles) {
-      p.angle += p.speed * 16;
-      p.drift += p.driftSpeed;
-      const r = p.radius * rMax * (1 + Math.sin(p.drift) * 0.04);
-      ctx.fillStyle = `rgba(240, 220, 200, ${p.alpha})`;
-      ctx.beginPath();
-      ctx.arc(cx + Math.cos(p.angle) * r, cy + Math.sin(p.angle) * r, p.size, 0, Math.PI * 2);
-      ctx.fill();
-    }
-    for (const tile of tiles) {
-      tile.angle += tile.speed * 16;
-      drawTile(tile, rMax);
-    }
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
+  return lut;
 }
+
+function startWhirl() {
+  const canvas = document.querySelector('.whirl-field-canvas');
+  const host = canvas?.parentElement;               // the masked wrapper keeps the ring clear for the mascot
+  if (!host || reduced) {
+    if (canvas) canvas.style.display = 'none';
+    return;
+  }
+  canvas.style.display = 'none';                    // our rotor replaces their canvas outright
+
+  const SCREENS = [
+    '/runs/06dabc2c/before/desktop.png',
+    '/runs/06dabc2c/after/desktop.png',
+    '/runs/8f60c961/before/desktop.png',
+    '/runs/06dabc2c/before/mobile.png',
+    '/runs/06dabc2c/after/mobile.png',
+    '/runs/8f60c961/before/mobile.png'
+  ];
+  const TILE_COUNT = 120;
+  const SPREAD = 2500;                              // their coordinate normalisation space
+
+  const lut = buildSpiral();
+  const rotor = document.createElement('div');
+  rotor.className = 'pd-whirl-rotor';
+  host.appendChild(rotor);
+
+  for (let i = 0; i < TILE_COUNT; i++) {
+    const u = (i / TILE_COUNT) % 1;
+    let edge = 1;
+    if (u < 0.08) edge = u / 0.08;
+    else if (u > 0.92) edge = (1 - u) / 0.92;
+    if (edge < 0.15) continue;
+
+    const p = lut[Math.round(u * 4096)];
+    const d = Math.hypot(p.x, p.y);
+    const expand = 1875 * Math.pow(d / 1875, 1.0526315789473684);
+    const h = d > 0 ? expand / d : 1;
+    const scale = Math.pow(Math.min(expand / 1875, 1), 0.35);
+    const angle = Math.atan2(p.ty, p.tx);
+    const src = SCREENS[i % SCREENS.length];
+    // their tile widths live in the low hundreds of the 2500-space
+    const width = (src.includes('mobile') ? 150 : 330) / SPREAD * 100;
+
+    const tile = document.createElement('div');
+    tile.className = 'pd-whirl-tile';
+    tile.style.left = `${(50 + p.x * h / SPREAD * 100).toFixed(3)}%`;
+    tile.style.top = `${(50 + p.y * h / SPREAD * 100).toFixed(3)}%`;
+    tile.style.width = `${width.toFixed(3)}%`;
+    tile.style.transform = `translate(-50%, -50%) rotate(${angle.toFixed(4)}rad) scale(${scale.toFixed(4)})`;
+    tile.style.opacity = edge.toFixed(3);
+    const image = document.createElement('img');
+    image.src = src;
+    image.alt = '';
+    image.decoding = 'async';
+    image.loading = 'lazy';
+    image.draggable = false;
+    image.addEventListener('load', () => { image.style.opacity = '1'; }, { once: true });
+    tile.appendChild(image);
+    rotor.appendChild(tile);
+  }
+  requestAnimationFrame(() => { rotor.style.opacity = '1'; });
+}
+startWhirl();
 
 /* ---- Mascot: their runtime attaches the bob class to the pilot artwork. ---- */
 const pilot = document.querySelector('.HeroUfoMascot_pilotArtwork__D3UOD');
 if (pilot && !reduced) pilot.classList.add('motion-safe:animate-[llama-bob_4.5s_ease-in-out_infinite]');
 
-/* ---- Scroll choreography: the hero stays sticky for its own height plus a
-   42svh runway; during the runway their JS fades the content out and lifts
-   it, so the catalog slides over a quiet stage instead of a hard cut. ---- */
+/* ---- Scroll choreography over the runway ---- */
 const heroInner = document.querySelector('section.sticky > .relative.z-10');
 const runway = document.querySelector('[class*="home-runway-height"]');
 if (heroInner && !reduced) {
@@ -147,7 +131,8 @@ if (heroInner && !reduced) {
       const eased = 1 - Math.pow(1 - progress, 2);
       heroInner.style.opacity = String(1 - eased);
       heroInner.style.transform = `translateY(${-eased * 7}vh)`;
-      if (canvas && whirlOn) canvas.style.opacity = String(1 - eased);
+      const rotor = document.querySelector('.pd-whirl-rotor');
+      if (rotor) rotor.style.opacity = String(1 - eased);
       ticking = false;
     });
   }
@@ -193,7 +178,7 @@ for (const tab of document.querySelectorAll('.pd-tab')) {
 }
 selectAgent('codex');
 
-/* ---- Copy to clipboard with their button treatment as the toast. ---- */
+/* ---- Copy to clipboard ---- */
 let toastTimer = null;
 function showToast(message) {
   const toast = document.getElementById('toast');
