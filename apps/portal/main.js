@@ -136,21 +136,49 @@ function observeSections() {
   document.querySelectorAll('.content-section, .get-started').forEach(s => observer.observe(s));
 }
 
-// -- hero scroll --
+// -- hero scroll (exact appllama motion model, smooth per-frame interpolation) --
+// Their formula: scrollYProgress from useScroll, then:
+//   opacity = map(p, [0,.35], [1,0]);  scale = map(p, [0,.35], [1,.88]);
+//   bgOpacity = map(p, [.4,.85], [1,0]);
+// We replicate with a rAF loop that lerps toward the scroll target each frame.
 const heroStage = document.querySelector('.hero-scroll-stage');
-const heroEl = document.querySelector('.hero');
+const heroCenter = document.querySelector('.hero-center');
+const heroWhirlHost = document.querySelector('.hero-whirl-host');
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
-let heroFrame = 0;
-function updateHeroScroll() {
-  heroFrame = 0;
-  if (!heroEl || !heroStage || reduceMotion.matches) { heroEl?.style.setProperty('--hero-progress', 0); return; }
-  const travel = Math.max(1, heroStage.offsetHeight - innerHeight);
-  const p = Math.min(1, Math.max(0, -heroStage.getBoundingClientRect().top / travel));
-  const eased = 1 - Math.pow(1 - p, 3);
-  heroEl.style.setProperty('--hero-progress', eased.toFixed(3));
+let _p = 0, _target = 0, _raf = null;
+
+function _map(v, [a, b], [c, d]) {
+  const t = Math.min(1, Math.max(0, (v - a) / (b - a)));
+  return c + t * (d - c);
 }
-addEventListener('scroll', () => { if (!heroFrame) heroFrame = requestAnimationFrame(updateHeroScroll); }, { passive: true });
-updateHeroScroll();
+function _progress() {
+  if (!heroStage) return 0;
+  const r = heroStage.getBoundingClientRect();
+  const travel = r.height - innerHeight;
+  return travel <= 0 ? 0 : Math.min(1, Math.max(0, -r.top / travel));
+}
+function _tick() {
+  _p += (_target - _p) * 0.08;
+  if (Math.abs(_target - _p) < 0.001) _p = _target;
+  if (heroCenter) {
+    heroCenter.style.opacity = _map(_p, [0, .35], [1, 0]).toFixed(4);
+    heroCenter.style.transform = `scale(${_map(_p, [0, .35], [1, .88]).toFixed(4)})`;
+  }
+  if (heroWhirlHost) heroWhirlHost.style.opacity = _map(_p, [.4, .85], [1, 0]).toFixed(4);
+  if (Math.abs(_target - _p) >= 0.001) _raf = requestAnimationFrame(_tick);
+  else _raf = null;
+}
+function _onScroll() {
+  _target = _progress();
+  if (reduceMotion.matches) {
+    if (heroCenter) { heroCenter.style.opacity = '1'; heroCenter.style.transform = 'none'; }
+    if (heroWhirlHost) heroWhirlHost.style.opacity = '0.5';
+    return;
+  }
+  if (!_raf) _raf = requestAnimationFrame(_tick);
+}
+addEventListener('scroll', _onScroll, { passive: true });
+_onScroll();
 
 // -- appllama hero whirl (exact motion model, real screenshots) --
 const whirlHost = document.querySelector('.hero-whirl-host') || (() => {
