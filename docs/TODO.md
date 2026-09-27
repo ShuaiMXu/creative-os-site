@@ -1,4 +1,4 @@
-# TODO — Creative OS website
+# TODO — HappyHands website
 
 > Updated 2026-09-27 after the content-portal rebuild.
 
@@ -14,7 +14,7 @@ The root URL redirects to `/apps/portal/`. The portal is an original static impl
 
 ## P0 · Before public launch
 
-- [ ] Replace the temporary geometric mark with the approved Creative OS identity and favicon.
+- [x] Replace the temporary geometric mark with the approved HappyHands logo and mark.
 - [ ] Confirm the public product name and domain.
 - [ ] Add deployment configuration and verify all GitHub links in the deployed environment.
 - [ ] Run accessibility, mobile and performance checks against the production build.
@@ -39,7 +39,7 @@ The root URL redirects to `/apps/portal/`. The portal is an original static impl
 - [x] Component-oriented content model (`content.js` + `components.js`).
 - [x] Apps, Explore, Screens, UI Elements and Get Started navigation.
 - [x] GitHub links for the core, website and referenced project repositories.
-- [x] Hero rotor rebuilt with Creative OS run captures.
+- [x] Hero rotor rebuilt with creative-os run captures.
 - [x] Real HappyClaw before/after evidence in the Screens section.
 - [x] Removal of third-party application catalog, trust claims, compiled code and visual assets.
 - [x] Root route points to the maintained portal.

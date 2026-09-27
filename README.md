@@ -1,8 +1,8 @@
-# Creative OS Site
+# HappyHands
 
-The static website for [creative-os](https://github.com/ShuaiMXu/creative-os) — the AI Product Designer harness for apps built with coding agents. Extracted from the main repository so the site can iterate and deploy on its own.
+The HappyHands website for [creative-os](https://github.com/ShuaiMXu/creative-os) — the AI Product Designer harness for apps built with coding agents. The site is extracted from the main repository so the product story, design system and evidence can iterate and deploy independently.
 
-**给 creative-os 的静态门户站。从主仓库提取，独立迭代与部署。**
+**HappyHands 是 creative-os 的产品与内容门户。从主仓库提取，独立迭代与部署。**
 
 ```text
 apps/portal/    中文门户 — Apps / Explore / Screens / UI Elements / Get Started
@@ -35,5 +35,13 @@ run; judgments are recorded in the harness CLI.
 
 Portal content lives in `apps/portal/content.js`; reusable render functions live
 in `apps/portal/components.js`. The hero and Screens section use only exported
-Creative OS run captures. Product claims link back to the core repository,
+creative-os run captures. Product claims link back to the core repository,
 issues or Workbench evidence.
+
+## Brand foundation
+
+The portal uses the HappyHands identity and design-system semantics: ink and
+paper establish hierarchy, brand orange is reserved for a small point of
+emphasis, and product actions remain neutral. Chinese and Latin copy share a
+PingFang-first sans-serif stack; the site contains no serif typeface. The
+official dark-background logo and mark live in `public/brand/`.
