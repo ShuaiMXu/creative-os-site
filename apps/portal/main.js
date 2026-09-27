@@ -27,18 +27,27 @@ content.innerHTML = `
   </section>`;
 
 const track = document.querySelector('#whirl-track');
-const count = 32;
+const count = 44;
+const radiusBands = [29, 40, 49];
+const seeded = index => {
+  const value = Math.sin(index * 91.733 + 17.17) * 43758.5453;
+  return value - Math.floor(value);
+};
 for (let index = 0; index < count; index++) {
-  const angle = (index / count) * Math.PI * 2;
-  const radius = 31 + (index % 4) * 4;
+  const angle = (index / count) * Math.PI * 2 + (seeded(index) - .5) * .22;
+  const layer = index % radiusBands.length;
+  const radius = radiusBands[layer] + (seeded(index + 4) - .5) * 5;
   const tile = document.createElement('span');
   tile.className = 'whirl-tile';
   tile.style.setProperty('--x', `${50 + Math.cos(angle) * radius}%`);
-  tile.style.setProperty('--y', `${50 + Math.sin(angle) * radius}%`);
-  tile.style.setProperty('--r', `${angle + Math.PI / 2}rad`);
-  tile.style.setProperty('--s', String(.68 + (index % 5) * .08));
-  tile.dataset.variant = String(index % 4);
-  tile.innerHTML = '<span class="placeholder-bar"></span><span class="placeholder-line"></span><span class="placeholder-line"></span>';
+  tile.style.setProperty('--y', `${50 + Math.sin(angle) * radius * .78}%`);
+  tile.style.setProperty('--r', `${angle + Math.PI / 2 + (seeded(index + 9) - .5) * .75}rad`);
+  tile.style.setProperty('--s', String(.72 + seeded(index + 15) * .75));
+  tile.style.setProperty('--tile-opacity', String(.28 + layer * .18 + seeded(index + 21) * .22));
+  tile.style.setProperty('--tile-blur', `${Math.max(0, 1.4 - layer * .65).toFixed(2)}px`);
+  tile.style.setProperty('--tile-shift', String(.62 + layer * .2));
+  tile.dataset.variant = String((index + layer) % 5);
+  tile.innerHTML = '<span class="placeholder-top"><i></i><i></i></span><span class="placeholder-panel"></span><span class="placeholder-line"></span><span class="placeholder-line"></span>';
   track.appendChild(tile);
 }
 
