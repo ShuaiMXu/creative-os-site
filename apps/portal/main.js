@@ -107,6 +107,23 @@ function startWhirl() {
   }
   requestAnimationFrame(() => { rotor.style.opacity = '1'; });
 }
+/* ---- Mobile nav: their hamburger is inert here; mirror the section links
+   into a scrollable row visible below lg. ---- */
+(function buildMobileNav() {
+  const row = document.querySelector('header nav .grid, header nav div');
+  const links = [...document.querySelectorAll('header nav div a')].filter(a => a.getAttribute('href')?.startsWith('#'));
+  if (!row || !links.length) return;
+  const mobileRow = document.createElement('div');
+  mobileRow.className = 'pd-mobile-nav';
+  for (const link of links) {
+    const clone = document.createElement('a');
+    clone.href = link.getAttribute('href');
+    clone.textContent = link.innerText.trim();
+    mobileRow.appendChild(clone);
+  }
+  row.parentElement.appendChild(mobileRow);
+})();
+
 startWhirl();
 
 /* ---- Mascot: their runtime attaches the bob class to the pilot artwork. ---- */
