@@ -19,7 +19,8 @@ console.log('cdn-cgi urls:', wrappers.size);
 const targets = new Map(); // wrapper -> { target, local }
 for (const wrapper of wrappers) {
   const rest = wrapper.replace(/^https:\/\/appllama\.io\/cdn-cgi\/image\/[^/]+\//, '');
-  const target = decodeURIComponent(rest);
+  let target;
+  try { target = decodeURIComponent(rest); } catch { target = rest; }
   targets.set(wrapper, target);
 }
 

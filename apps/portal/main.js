@@ -110,7 +110,7 @@ function startWhirl() {
 startWhirl();
 
 /* ---- Mascot: their runtime attaches the bob class to the pilot artwork. ---- */
-const pilot = document.querySelector('.HeroUfoMascot_pilotArtwork__D3UOD');
+const pilot = document.querySelector('[class*="HeroUfoMascot_pilotArtwork"]');
 if (pilot && !reduced) pilot.classList.add('motion-safe:animate-[llama-bob_4.5s_ease-in-out_infinite]');
 
 /* ---- Scroll choreography over the runway ---- */
