@@ -4,7 +4,7 @@ import { sectionHead, appCard, systemCard, screenCard, elementCard, stepCard } f
 const content = document.querySelector('#portal-content');
 content.innerHTML = `
   <section class="content-section section-apps" id="apps">
-    ${sectionHead('01 / APPS', 'What Creative OS does after the first build.', '三个入口对应同一个目标：让独立开发者得到持续、可验证、能沉淀的产品设计能力。', `<a class="text-link" href="${repositories.core}">View source on GitHub ↗</a>`)}
+    ${sectionHead('01 / APPS', 'What HappyHands does after the first build.', '三个入口对应同一个目标：让独立开发者得到持续、可验证、能沉淀的产品设计能力。', `<a class="text-link" href="${repositories.core}">View source on GitHub ↗</a>`)}
     <div class="apps-grid">${apps.map(appCard).join('')}</div>
   </section>
   <section class="content-section section-explore" id="explore">

@@ -2,6 +2,7 @@ import happyclaw from '../../examples/happyclaw-site/experience.json' with { typ
 import sample from '../../examples/vibe-coded-app/experience.json' with { type: 'json' };
 import { assertExperienceSpec, rankedFindings, priority, codexBrief, recordJudgment } from '../../packages/experience-core/index.js';
 import { workflowState } from '../../packages/harness-core/workflow.js';
+import { renderCanvas, renderCodeDiff } from './canvas/index.js';
 
 const $ = id => document.getElementById(id);
 const cases = { happyclaw, sample };
@@ -513,7 +514,32 @@ async function select(id) {
   selected = normalisedFindings(spec, run?.diagnosis)[0]?.id ?? null;
   history.replaceState(null, '', `?case=${encodeURIComponent(id)}`);
   render();
+  applyView(params.get('view') || 'list');
 }
+
+// B5 view switch: list / canvas / codediff, URL `?view=`
+let currentView = 'list';
+async function applyView(view) {
+  currentView = view;
+  params.set('view', view);
+  history.replaceState(null, '', `?${params.toString()}`);
+  const listView = document.getElementById('run-list-view');
+  const canvasView = document.getElementById('canvas-view');
+  const codediffView = document.getElementById('codediff-view');
+  listView.hidden = view !== 'list';
+  canvasView.hidden = view !== 'canvas';
+  codediffView.hidden = view !== 'codediff';
+  document.querySelectorAll('.pd-view-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.view === view));
+  if (view === 'canvas' && run) {
+    await renderCanvas(canvasView, run);
+  } else if (view === 'codediff' && run) {
+    renderCodeDiff(codediffView, run, run.base);
+  }
+}
+
+document.querySelectorAll('.pd-view-btn').forEach(btn => {
+  btn.addEventListener('click', () => applyView(btn.dataset.view));
+});
 
 $('case-select').addEventListener('change', async event => {
   const next = event.target.value;
