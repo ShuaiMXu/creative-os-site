@@ -145,7 +145,7 @@ const heroStage = document.querySelector('.hero-scroll-stage');
 const heroCenter = document.querySelector('.hero-center');
 const heroWhirlHost = document.querySelector('.hero-whirl-host');
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
-let _p = 0, _target = 0, _raf = null;
+let _raf = null;
 
 function _map(v, [a, b], [c, d]) {
   const t = Math.min(1, Math.max(0, (v - a) / (b - a)));
@@ -157,28 +157,24 @@ function _progress() {
   const travel = r.height - innerHeight;
   return travel <= 0 ? 0 : Math.min(1, Math.max(0, -r.top / travel));
 }
-function _tick() {
-  _p += (_target - _p) * 0.05;
-  if (Math.abs(_target - _p) < 0.001) _p = _target;
+// Direct scroll-linked animation: opacity/scale track scroll position exactly.
+// rAF batches the style write for performance but adds zero smoothing —
+// scroll down = text fades proportionally, scroll back up = text returns.
+function _apply() {
+  _raf = null;
+  const p = _progress();
   if (heroCenter) {
-    heroCenter.style.opacity = _map(_p, [0, .35], [1, 0]).toFixed(4);
-    heroCenter.style.transform = `scale(${_map(_p, [0, .35], [1, .88]).toFixed(4)})`;
+    heroCenter.style.opacity = _map(p, [0, .35], [1, 0]).toFixed(4);
+    heroCenter.style.transform = `scale(${_map(p, [0, .35], [1, .88]).toFixed(4)})`;
   }
-  if (heroWhirlHost) heroWhirlHost.style.opacity = _map(_p, [.4, .85], [1, 0]).toFixed(4);
-  if (Math.abs(_target - _p) >= 0.001) _raf = requestAnimationFrame(_tick);
-  else _raf = null;
+  if (heroWhirlHost) heroWhirlHost.style.opacity = _map(p, [.4, .85], [1, 0]).toFixed(4);
 }
 function _onScroll() {
-  _target = _progress();
-  if (reduceMotion.matches) {
-    if (heroCenter) { heroCenter.style.opacity = '1'; heroCenter.style.transform = 'none'; }
-    if (heroWhirlHost) heroWhirlHost.style.opacity = '0.5';
-    return;
-  }
-  if (!_raf) _raf = requestAnimationFrame(_tick);
+  if (reduceMotion.matches) return;
+  if (!_raf) _raf = requestAnimationFrame(_apply);
 }
 addEventListener('scroll', _onScroll, { passive: true });
-_onScroll();
+_apply();
 
 // -- appllama hero whirl (exact motion model, real screenshots) --
 const whirlHost = document.querySelector('.hero-whirl-host') || (() => {
