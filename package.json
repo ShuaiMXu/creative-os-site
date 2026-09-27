@@ -10,7 +10,9 @@
     "typecheck": "tsc --noEmit",
     "test:studio": "node --import tsx --test tests/studio-core.test.ts tests/studio-bridge.test.mjs",
     "test:studio:browser": "node tests/studio-browser.mjs",
-    "test:studio:harness": "node --import tsx tests/studio-harness.ts"
+    "test:studio:harness": "node --import tsx tests/studio-harness.ts",
+    "tokens:build": "node scripts/brand-tokens.mjs",
+    "test:studio:brand": "node tests/studio-brand-browser.mjs"
   },
   "dependencies": {
     "ajv": "8.20.0",

@@ -229,3 +229,28 @@ test("Tailwind exports retain imported dark-only spacing and tracking", () => {
     assert.match(css, /letter-spacing: var\(--tracking-normal\)/);
   }
 });
+
+test("HappyHands profile enforces neutral actions and reports brand drift without changing the draft", async () => {
+  const { checkStandards } =
+    await import("../packages/theme-core/standards.ts");
+  const styles = presetStyles("happyhands");
+  assert.equal(styles.light.primary, "#161616");
+  assert.equal(styles.dark.primary, "#F7F6F3");
+  assert.ok(
+    !checkStandards(styles, "happyhands").some((c) => c.status === "attention"),
+  );
+  const changed = setToken(styles, "light", "primary", "#F57F28");
+  const snapshot = JSON.stringify(changed);
+  assert.equal(
+    checkStandards(changed, "happyhands").find(
+      (c) => c.id === "light:primary-role",
+    )?.status,
+    "attention",
+  );
+  assert.ok(
+    !checkStandards(changed, "general").some((c) =>
+      c.id.includes("primary-role"),
+    ),
+  );
+  assert.equal(JSON.stringify(changed), snapshot);
+});

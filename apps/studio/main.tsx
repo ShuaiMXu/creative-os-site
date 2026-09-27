@@ -35,7 +35,12 @@ import {
 } from "../../packages/theme-core/project";
 import { Preview } from "./Preview";
 import { ConnectedPreview } from "./ConnectedPreview";
+import { Button } from "../../packages/ui";
+import { StandardsPanel } from "./StandardsPanel";
+import { useShellTheme } from "./useShellTheme";
+import "../../packages/design-tokens/happyhands.css";
 import "./studio.css";
+import "../../packages/ui/components.css";
 
 function download(name: string, text: string) {
   const url = URL.createObjectURL(
@@ -185,6 +190,7 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 function App() {
+  const shell = useShellTheme();
   const [panelWidth, setPanelWidth] = useState(320);
   const [draft, setDraft] = useState(boot.draft),
     [h, setH] = useState(() => history(boot.draft.styles));
@@ -395,7 +401,11 @@ function App() {
     <>
       <header className="studio-header">
         <a className="wordmark" href="/apps/portal/">
-          HappyHands<span> / Studio</span>
+          <img
+            src={`/brand/happyhands-logo-${shell.theme === "dark" ? "paper" : "ink"}.png`}
+            alt="HappyHands"
+          />
+          <span>Studio</span>
         </a>
         <div className="project-select">
           <select
@@ -407,32 +417,47 @@ function App() {
               <option key={id}>{id}</option>
             ))}
           </select>
-          <button
+          <Button
             onClick={() => {
               const id = prompt("新项目 ID（英文、数字和短横线）");
               if (id && /^[\w-]{1,80}$/.test(id)) switchProject(id);
             }}
           >
             ＋
-          </button>
+          </Button>
         </div>
-        <a href="/apps/designer/">Review 工作台 ↗</a>
+        <a className="review-link" href="/apps/designer/">
+          审阅工作台 ↗
+        </a>
+        <Button
+          className="shell-theme-toggle"
+          variant="ghost"
+          onClick={shell.toggle}
+          aria-label="切换工作台外观"
+        >
+          {shell.theme === "dark" ? "浅色外观" : "深色外观"}
+        </Button>
       </header>
       <main className="studio-shell">
         <div className="studio-title">
           <div>
-            <p className="eyebrow">DESIGN SYSTEM / THEME STUDIO</p>
-            <h1>把设计语言，变成你的。</h1>
-            <p>从主题到组件，再到真实页面。每一次调整，都可以被验证。</p>
+            <p className="eyebrow">设计系统 / 主题编辑</p>
+            <h1>项目设计系统</h1>
+            <p>调整主题、检查组件状态，再将设计约束交给你的项目。</p>
           </div>
           <div className="toolbar">
-            <button disabled={!h.past.length} onClick={() => setH(undo)}>
+            <Button
+              onClick={() => setPanel(panel === "standards" ? "" : "standards")}
+            >
+              设计规范
+            </Button>
+            <Button disabled={!h.past.length} onClick={() => setH(undo)}>
               ↶ 撤销
-            </button>
-            <button disabled={!h.future.length} onClick={() => setH(redo)}>
+            </Button>
+            <Button disabled={!h.future.length} onClick={() => setH(redo)}>
               ↷ 重做
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() =>
                 guard(() => {
                   persist();
@@ -440,26 +465,26 @@ function App() {
               }
             >
               保存
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => setPanel(panel === "import" ? "" : "import")}
             >
               导入
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => setPanel(panel === "export" ? "" : "export")}
             >
               导出
-            </button>
-            <button
-              className="primary-action"
+            </Button>
+            <Button
+              variant={panel ? "secondary" : "primary"}
               onClick={() => {
                 setConfirmed(false);
                 setPanel(panel === "review" ? "" : "review");
               }}
             >
               审核变更 {changes.length || ""}
-            </button>
+            </Button>
           </div>
         </div>
         <div className="status-line">
@@ -474,7 +499,7 @@ function App() {
         {error && (
           <div className="error" role="alert">
             {error}
-            <button
+            <Button
               onClick={() =>
                 download(
                   "recovery-draft.json",
@@ -483,39 +508,55 @@ function App() {
               }
             >
               导出备份
-            </button>
-            <button onClick={() => location.reload()}>重新载入</button>
+            </Button>
+            <Button onClick={() => location.reload()}>重新载入</Button>
           </div>
         )}
         <div className="mobile-tabs">
-          <button
+          <Button
             aria-pressed={mobile === "edit"}
             onClick={() => setMobile("edit")}
           >
             编辑
-          </button>
-          <button
+          </Button>
+          <Button
             aria-pressed={mobile === "preview"}
             onClick={() => setMobile("preview")}
           >
             预览
-          </button>
+          </Button>
         </div>
         {panel && (
           <section className="utility-panel" aria-label={panel}>
             <div className="panel-title">
               <h2>
-                {panel === "import"
-                  ? "导入主题"
-                  : panel === "export"
-                    ? "导出到你的工程"
-                    : "审核与 Foundation"}
+                {panel === "standards"
+                  ? "设计规范"
+                  : panel === "import"
+                    ? "导入主题"
+                    : panel === "export"
+                      ? "导出到你的工程"
+                      : "审核与 Foundation"}
               </h2>
-              <button onClick={() => setPanel("")} aria-label="关闭面板">
+              <Button onClick={() => setPanel("")} aria-label="关闭面板">
                 ×
-              </button>
+              </Button>
             </div>
-            {panel === "import" ? (
+            {panel === "standards" ? (
+              <StandardsPanel
+                styles={styles}
+                foundation={draft.foundation}
+                onApply={() => {
+                  replace(presetStyles("happyhands"));
+                  setDraft((d) => ({
+                    ...d,
+                    provenance: { revision, source: "happyhands" },
+                  }));
+                  setNotice("已应用 HappyHands 设计语言，可撤销；尚未批准。");
+                }}
+                onExport={(text) => download("design-checks.json", text)}
+              />
+            ) : panel === "import" ? (
               <>
                 <p>
                   支持 :root / .dark CSS，或 Studio 草稿
@@ -551,14 +592,14 @@ function App() {
                   placeholder=":root { --primary: #f57f28; }"
                 />
                 <div className="toolbar">
-                  <button
+                  <Button
                     onClick={() =>
                       guard(() => setPending(importCSS(source, styles)))
                     }
                   >
                     解析 CSS
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     onClick={() =>
                       guard(() => {
                         importDraft(source);
@@ -567,7 +608,7 @@ function App() {
                     }
                   >
                     导入草稿 JSON
-                  </button>
+                  </Button>
                 </div>
                 {pending && (
                   <>
@@ -577,9 +618,9 @@ function App() {
                         <li key={w}>{w}</li>
                       ))}
                     </ul>
-                    <button className="primary-action" onClick={applyImport}>
+                    <Button variant="primary" onClick={applyImport}>
                       应用已识别值（可撤销）
-                    </button>
+                    </Button>
                   </>
                 )}
               </>
@@ -597,7 +638,7 @@ function App() {
                     <option value="tailwind3-config">Tailwind 3 config</option>
                     <option value="registry">shadcn registry</option>
                   </select>
-                  <button
+                  <Button
                     onClick={() =>
                       download(
                         format === "registry"
@@ -610,8 +651,8 @@ function App() {
                     }
                   >
                     下载代码
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     onClick={() =>
                       download(
                         "theme.draft.json",
@@ -620,8 +661,8 @@ function App() {
                     }
                   >
                     下载草稿 JSON
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     onClick={() =>
                       guard(() => {
                         navigator.clipboard
@@ -632,7 +673,7 @@ function App() {
                     }
                   >
                     复制
-                  </button>
+                  </Button>
                 </div>
                 <pre>{exportTheme(styles, format)}</pre>
                 <p>
@@ -705,7 +746,7 @@ function App() {
                         <p>相对本地基线暂无修改。</p>
                       )}
                     </div>
-                    <button
+                    <Button
                       onClick={() =>
                         download(
                           "theme-proposal.json",
@@ -714,7 +755,7 @@ function App() {
                       }
                     >
                       导出提案（未批准）
-                    </button>
+                    </Button>
                   </div>
                   <div>
                     <h3>3. 人工批准</h3>
@@ -759,18 +800,15 @@ function App() {
                       />
                       我已审阅当前变更与双模式预览
                     </label>
-                    <button
-                      className="primary-action"
-                      onClick={approveAndExport}
-                    >
+                    <Button variant="primary" onClick={approveAndExport}>
                       批准并导出 Harness 文件
-                    </button>
+                    </Button>
                     <p>
                       映射使用 theme.light.* / theme.dark.*
                       名称，值保持字符串。下载后交给 Harness 的新 bootstrap run
                       导入；已开始规划的运行不能覆盖版本。
                     </p>
-                    <button
+                    <Button
                       onClick={() => {
                         setReason("");
                         setConfirmed(false);
@@ -779,7 +817,7 @@ function App() {
                       }}
                     >
                       暂不批准，保留草稿
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </>
@@ -831,7 +869,7 @@ function App() {
                   ))}
                 </select>
               </label>
-              <button
+              <Button
                 onClick={() => {
                   replace(presetStyles(preset));
                   setDraft((d) => ({
@@ -842,20 +880,20 @@ function App() {
                 }}
               >
                 应用
-              </button>
+              </Button>
             </div>
             <p className="micro">
               替换双模式值，可撤销。默认使用苹方优先的无衬线字体。
             </p>
             <div className="segmented">
               {(["light", "dark"] as const).map((m) => (
-                <button
+                <Button
                   key={m}
                   aria-pressed={mode === m}
                   onClick={() => setMode(m)}
                 >
                   {m === "light" ? "☀ 浅色" : "☾ 深色"}
-                </button>
+                </Button>
               ))}
             </div>
             <div className="control-tabs">
@@ -864,13 +902,13 @@ function App() {
                 ["type", "字体"],
                 ["layout", "细节"],
               ].map(([id, name]) => (
-                <button
+                <Button
                   aria-pressed={tab === id}
                   key={id}
                   onClick={() => setTab(id)}
                 >
                   {name}
-                </button>
+                </Button>
               ))}
             </div>
             {tab === "colors" ? (
@@ -932,7 +970,7 @@ function App() {
                       onChange={(e) => setLightness(+e.target.value)}
                     />
                   </label>
-                  <button
+                  <Button
                     onClick={() => {
                       replace(
                         adjustHsl(styles, mode, hue, saturation, lightness),
@@ -943,7 +981,7 @@ function App() {
                     }}
                   >
                     应用到当前模式
-                  </button>
+                  </Button>
                 </Section>
               </>
             ) : tab === "type" ? (
@@ -1010,6 +1048,7 @@ function App() {
                   "Marketing",
                   "Mail",
                   "Typography",
+                  "States",
                   "Connected page",
                 ].map((s) => (
                   <option key={s}>{s}</option>
@@ -1025,19 +1064,19 @@ function App() {
                   <option value="tablet">平板 · 768</option>
                   <option value="mobile">手机 · 390</option>
                 </select>
-                <button
+                <Button
                   aria-pressed={compare}
                   onClick={() => setCompare(!compare)}
                 >
                   前后对比
-                </button>
-                <button
+                </Button>
+                <Button
                   aria-pressed={inspector}
                   onClick={() => setInspector(!inspector)}
                 >
                   检查 token
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={() =>
                     guard(() => {
                       document
@@ -1048,14 +1087,14 @@ function App() {
                   }
                 >
                   全屏
-                </button>
+                </Button>
               </div>
             </div>
             {inspector && (
               <div className="inspector-bar">
                 <b>{selected}</b>
                 <code>{values[selected]}</code>
-                <button onClick={() => focusToken(selected)}>定位编辑</button>
+                <Button onClick={() => focusToken(selected)}>定位编辑</Button>
                 <span>点击组件查看绑定的语义 token</span>
               </div>
             )}

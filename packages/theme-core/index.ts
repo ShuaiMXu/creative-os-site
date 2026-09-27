@@ -8,6 +8,7 @@ import {
 } from "./vendor/utils/theme-style-generator";
 import { getShadowMap } from "./vendor/utils/shadows";
 import type { ThemeStyles, ThemeStyleProps } from "./vendor/types/theme";
+import brandTokens from "../design-tokens/happyhands.json";
 export type { ThemeStyles };
 export type Mode = "light" | "dark";
 export type Key = keyof ThemeStyleProps;
@@ -28,12 +29,53 @@ export function presetStyles(id: string): ThemeStyles {
     Object.assign(styles[mode], preset?.styles.light, preset?.styles[mode]);
     // Project UI always defaults to the requested sans-serif stack; fonts remain editable.
     styles[mode]["font-sans"] = fontStack;
-    if (id === "happyhands")
+    if (id === "happyhands") {
+      const b = brandTokens[mode];
       Object.assign(styles[mode], {
-        primary: "#f57f28",
-        "primary-foreground": "#171614",
-        ring: "#f57f28",
+        background: b.bg,
+        foreground: b.ink,
+        card: b["bg-raised"],
+        "card-foreground": b.ink,
+        popover: b["bg-raised"],
+        "popover-foreground": b.ink,
+        primary: b.primary,
+        "primary-foreground": b["on-primary"],
+        secondary: b["bg-sunken"],
+        "secondary-foreground": b["ink-2"],
+        muted: b["bg-sunken"],
+        "muted-foreground": b["ink-muted"],
+        accent: b["brand-soft"],
+        "accent-foreground": b["brand-text"],
+        destructive: b.danger,
+        "destructive-foreground": b.bg,
+        border: b.line,
+        input: b["line-strong"],
+        ring: b.ring,
+        sidebar: b.bg,
+        "sidebar-foreground": b.ink,
+        "sidebar-primary": b.primary,
+        "sidebar-primary-foreground": b["on-primary"],
+        "sidebar-accent": b["bg-hover"],
+        "sidebar-accent-foreground": b.ink,
+        "sidebar-border": b.line,
+        "sidebar-ring": b.ring,
+        "font-sans": b["font-sans"],
+        "font-mono": b["font-mono"],
+        radius: "0.625rem",
+        spacing: "0.25rem",
+        "letter-spacing": "0em",
+        "shadow-opacity": "0",
+        "shadow-offset-x": "0px",
+        "shadow-offset-y": "0px",
+        "shadow-blur": "0px",
+        "shadow-spread": "0px",
+        "chart-1": b["chart-1"],
+        "chart-2": b["chart-2"],
+        "chart-3": b["chart-3"],
+        "chart-4": b["chart-4"],
+        "chart-5": b["chart-5"],
       });
+    }
   }
   return styles;
 }

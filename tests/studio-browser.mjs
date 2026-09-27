@@ -16,7 +16,7 @@ try {
   await page.goto(
     `${process.env.STUDIO_URL || "http://127.0.0.1:4173/apps/studio/"}?project=browser-test`,
   );
-  await page.getByRole("heading", { name: "把设计语言，变成你的。" }).waitFor();
+  await page.getByRole("heading", { name: "项目设计系统" }).waitFor();
   const shell = await page
     .locator(".studio-header")
     .evaluate((el) => getComputedStyle(el).backgroundColor);
@@ -56,7 +56,7 @@ try {
   await page.getByRole("button", { name: "☀ 浅色", exact: true }).click();
   await page.getByRole("button", { name: "保存", exact: true }).click();
   await page.reload();
-  await page.getByRole("heading", { name: "把设计语言，变成你的。" }).waitFor();
+  await page.getByRole("heading", { name: "项目设计系统" }).waitFor();
   assert.equal(
     await page
       .getByRole("textbox", { name: "primary", exact: true })

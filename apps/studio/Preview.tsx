@@ -20,10 +20,11 @@ export function Preview({
 }) {
   const [tab, setTab] = useState("全部");
   const [checked, setChecked] = useState(false);
+  const [componentState, setComponentState] = useState("empty");
   return (
     <div
       className={`theme-preview ${inspect ? "inspecting" : ""}`}
-      style={variables(styles, mode) as CSSProperties}
+      style={{ ...variables(styles, mode), colorScheme: mode } as CSSProperties}
       onClickCapture={(e) => {
         if (!inspect) return;
         const node = (e.target as HTMLElement).closest(
@@ -43,9 +44,98 @@ export function Preview({
           A
         </span>
       </div>
-      {scene === "Marketing" ? (
+      {scene === "States" ? (
+        <div className="sample-content state-gallery">
+          <h2>组件状态</h2>
+          <p>
+            在同一套主题下，检查操作的反馈与恢复路径。此处仅演示交互，不会调用服务。
+          </p>
+          <div className="sample-tabs" role="group" aria-label="组件状态">
+            {[
+              ["empty", "空态"],
+              ["loading", "加载"],
+              ["error", "错误"],
+              ["disabled", "禁用"],
+              ["ready", "完成"],
+            ].map(([value, label]) => (
+              <button
+                key={value}
+                className={componentState === value ? "" : "secondary"}
+                onClick={() => setComponentState(value)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          <article
+            className="state-example"
+            aria-busy={componentState === "loading"}
+          >
+            {componentState === "empty" ? (
+              <>
+                <h3>还没有设计审阅</h3>
+                <p>选择一个页面，开始记录你的第一轮设计判断。</p>
+                <button onClick={() => setComponentState("loading")}>
+                  新建审阅示例
+                </button>
+              </>
+            ) : componentState === "loading" ? (
+              <>
+                <div role="status">
+                  <span className="hh-spinner" aria-hidden="true" />{" "}
+                  正在整理页面信息…
+                </div>
+                <div className="sample-skeleton" aria-hidden="true" />
+                <p>示例状态。可以取消，或切换到「完成」检查结果。</p>
+                <button
+                  className="secondary"
+                  onClick={() => setComponentState("empty")}
+                >
+                  取消示例
+                </button>
+              </>
+            ) : componentState === "error" ? (
+              <>
+                <div role="alert">
+                  <h3>未能连接预览页面</h3>
+                  <p>页面没有返回内容。请检查地址，或重新尝试。</p>
+                </div>
+                <button onClick={() => setComponentState("ready")}>
+                  重试示例
+                </button>
+                <button
+                  className="secondary"
+                  onClick={() => setComponentState("empty")}
+                >
+                  返回选择
+                </button>
+              </>
+            ) : componentState === "disabled" ? (
+              <>
+                <h3>请先选择一个页面</h3>
+                <p>完成选择后才能开始审阅。禁用操作始终附有原因。</p>
+                <button disabled>开始审阅</button>
+              </>
+            ) : (
+              <>
+                <h3>示例审阅已完成</h3>
+                <p>
+                  结果已经可以查看。真实项目仍需检查证据后，才能判断是否通过。
+                </p>
+                <button onClick={() => setComponentState("empty")}>
+                  开始下一轮示例
+                </button>
+              </>
+            )}
+          </article>
+          <p className="focus-help">
+            键盘检查：按 Tab 移动到按钮，确认焦点环清晰；按 Enter
+            或空格执行操作。
+          </p>
+        </div>
+      ) : scene === "Marketing" ? (
         <div className="sample-hero">
-          <small>MAKE ROOM FOR YOUR NEXT IDEA</small>
+          <small>让下一个想法发生</small>
           <h1>
             Good work.
             <br />
@@ -72,7 +162,7 @@ export function Preview({
         </div>
       ) : scene === "Typography" ? (
         <div className="sample-content">
-          <small>TYPE SPECIMEN</small>
+          <small>字体预览</small>
           <h1>让好设计成为日常。</h1>
           <h2>Design with intention.</h2>
           <p>
@@ -115,7 +205,7 @@ export function Preview({
           <div className="sample-main">
             <div className="sample-heading">
               <div>
-                <small>YOUR WORK, IN FOCUS</small>
+                <small>项目进展</small>
                 <h2>
                   {scene === "Mail"
                     ? "收件箱"
@@ -165,11 +255,11 @@ export function Preview({
                     <div className="sample-chart">
                       {[48, 75, 58, 92, 68].map((n, i) => (
                         <div
-                          data-token={`chart-${i + 1}`}
+                          data-token={`chart-${[1, 2, 3, 4, 2][i]}`}
                           key={i}
                           style={{
                             height: `${n}%`,
-                            background: `var(--chart-${i + 1})`,
+                            background: `var(--chart-${[1, 2, 3, 4, 2][i]})`,
                           }}
                         />
                       ))}
