@@ -154,8 +154,10 @@ function _map(v, [a, b], [c, d]) {
 function _progress() {
   if (!heroStage) return 0;
   const r = heroStage.getBoundingClientRect();
-  const travel = r.height - innerHeight;
-  return travel <= 0 ? 0 : Math.min(1, Math.max(0, -r.top / travel));
+  // Progress denominator = full stage height (matches appllama's useScroll
+  // with offset ["start start", "end start"] on the parent container).
+  // Live-verified: scrollY=50 → p=50/1136=0.044; text gone at scrollY≈400.
+  return r.height <= 0 ? 0 : Math.min(1, Math.max(0, -r.top / r.height));
 }
 // Direct scroll-linked animation: opacity/scale track scroll position exactly.
 // rAF batches the style write for performance but adds zero smoothing —
