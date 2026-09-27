@@ -129,6 +129,7 @@ function renderContent() {
 
 // Native scrolling keeps touch, trackpad and keyboard browsing available.
 let disposeRails = () => {};
+const catalogState = {};
 function setupRails() {
   disposeRails();
   const cleanups = [];
@@ -145,12 +146,50 @@ function setupRails() {
     toolbar.innerHTML = `<span>${hint}</span><div><button type="button" aria-label="${lang === 'zh' ? '上一项' : 'Previous item'}" aria-controls="${rail.id}">←</button><button type="button" aria-label="${lang === 'zh' ? '下一项' : 'Next item'}" aria-controls="${rail.id}">→</button></div>`;
     rail.before(toolbar);
     const [previous, next] = toolbar.querySelectorAll('button');
+    const cards = [...rail.children];
+    const state = catalogState[id] ||= { filter: 'all', view: 'row' };
+    const zh = lang === 'zh';
+    const groups = id === 'explore'
+      ? [['archive', zh ? '档案与案例' : 'Archives & cases', [0,1,2]], ['planned', zh ? '预设方向' : 'Proposed presets', [3,4,5]]]
+      : id === 'elements'
+        ? [['input', zh ? '输入与操作' : 'Input & actions', [0,1]], ['feedback', zh ? '状态与反馈' : 'Status & feedback', [2,5,6,7]], ['structure', zh ? '基础与结构' : 'Foundations & structure', [3,4,8]]]
+        : [['references', zh ? '参考占位' : 'Reference previews', [0,1]]];
+    const filters = document.createElement('div');
+    filters.className = 'catalog-filters';
+    filters.setAttribute('role', 'group');
+    filters.setAttribute('aria-label', zh ? '内容分类' : 'Content categories');
+    filters.innerHTML = [['all', zh ? '全部' : 'All'], ...groups].map(([key,label]) => `<button type="button" data-filter="${key}">${label}</button>`).join('');
+    toolbar.before(filters);
+    const views = document.createElement('div');
+    views.className = 'catalog-views';
+    views.setAttribute('role', 'group');
+    views.setAttribute('aria-label', zh ? '浏览方式' : 'View mode');
+    views.innerHTML = `<button type="button" data-view="row">${zh ? '横排' : 'Row'}</button><button type="button" data-view="grid">${zh ? '网格' : 'Grid'}</button>`;
+    toolbar.insertBefore(views, toolbar.lastElementChild);
+    const summary = toolbar.firstElementChild;
+    summary.setAttribute('role', 'status');
+    const apply = () => {
+      const indices = groups.find(([key]) => key === state.filter)?.[2];
+      cards.forEach((card,index) => { card.hidden = !!indices && !indices.includes(index); });
+      rail.dataset.view = state.view;
+      const count = cards.filter(card => !card.hidden).length;
+      const unit = zh ? (id === 'screens' ? '组参考占位' : id === 'elements' ? '类组件示意' : '项档案与预设') : (id === 'screens' ? 'reference pairs' : id === 'elements' ? 'component studies' : 'archives & presets');
+      summary.textContent = `${count} / ${cards.length} ${unit} · ${state.view === 'row' ? (zh ? '横排浏览' : 'row view') : (zh ? '网格浏览' : 'grid view')}`;
+      filters.querySelectorAll('button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === state.filter)));
+      views.querySelectorAll('button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.view === state.view)));
+      previous.parentElement.hidden = state.view === 'grid';
+      rail.scrollLeft = 0;
+      update();
+    };
+    filters.addEventListener('click', event => { const button = event.target.closest('[data-filter]'); if (button) { state.filter = button.dataset.filter; apply(); } });
+    views.addEventListener('click', event => { const button = event.target.closest('[data-view]'); if (button) { state.view = button.dataset.view; apply(); } });
     const update = () => {
       previous.disabled = rail.scrollLeft <= 2;
       next.disabled = rail.scrollLeft >= rail.scrollWidth - rail.clientWidth - 2;
     };
     const step = direction => {
-      const card = rail.firstElementChild;
+      const card = cards.find(card => !card.hidden);
+      if (!card || state.view === 'grid') return;
       const gap = parseFloat(getComputedStyle(rail).columnGap) || 0;
       rail.scrollBy({left: direction * (card.getBoundingClientRect().width + gap), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
     };
@@ -165,7 +204,7 @@ function setupRails() {
     rail.addEventListener('scroll', update, {passive:true});
     const resize = new ResizeObserver(update);
     resize.observe(rail);
-    update();
+    apply();
     cleanups.push(() => { resize.disconnect(); rail.removeEventListener('scroll', update); rail.removeEventListener('keydown', onKey); });
   }
   disposeRails = () => cleanups.forEach(cleanup => cleanup());
