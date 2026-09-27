@@ -1,10 +1,10 @@
 // English copy — plain, direct, no jargon
 export const hero = {
   eyebrow: ['17 bounded skills', '10 contract-only', 'local-first'],
-  h1: 'Your app works.\nMake it feel ',
+  h1: 'It works.\nBut does it feel ',
   h1Accent: 'designed',
-  h1Suffix: '.',
-  copy: 'Identify the experience problem that matters most, execute a verified change, and compare the result with same-state screenshots.',
+  h1Suffix: '?',
+  copy: 'Automated design review of live pages: find the issue that hurts your users most, fix it, screenshot the difference, you decide.',
   cta: 'Explore capabilities',
   ctaSecondary: 'View a real review',
 };
