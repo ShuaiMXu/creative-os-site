@@ -158,7 +158,7 @@ function _progress() {
   return travel <= 0 ? 0 : Math.min(1, Math.max(0, -r.top / travel));
 }
 function _tick() {
-  _p += (_target - _p) * 0.08;
+  _p += (_target - _p) * 0.05;
   if (Math.abs(_target - _p) < 0.001) _p = _target;
   if (heroCenter) {
     heroCenter.style.opacity = _map(_p, [0, .35], [1, 0]).toFixed(4);
