@@ -50,12 +50,12 @@ export const apps = [
 ];
 
 export const systems = [
-  { tag: '系统 / 01', title: 'HappyHands 设计系统', description: '深色打底，品牌橙只用在关键处，每个设计决策都有出处。', values: ['#111111', '#F7F6H3', '#F57F28', '#96918A'], traits: ['专业', '克制', '亲和'], link: '查看 ↗' },
-  { tag: '案例 / 02', title: 'HappyClaw', description: '第一个从头走到尾的真实项目。改了什么、改前长什么样、最后怎么判的，全都在这里。', values: ['改前', '改后', '判定'], traits: ['网页', '审阅', '证据'], link: '查看 ↗' },
-  { tag: '研究 / 03', title: '萤火虫组件库', description: '先把系统建好再画页面的尝试。想知道这条路走不走得通，看看这个。', values: ['令牌', '状态', '模式'], traits: ['系统先行', '存档'], link: '查看 ↗' },
-  { tag: '模板 / 04', title: 'SaaS 基础套件', description: '仪表盘和工作台的底子。侧栏、表格、表单、空状态，拿来就能用。', values: ['框架', '数据', '表单'], traits: ['SaaS', '桌面', '模板'], link: '查看 ↗' },
-  { tag: '模板 / 05', title: '移动端基础套件', description: '手机产品常用的一套。导航、内容卡片、付费页，几个核心场景都覆盖了。', values: ['导航', '内容', '付费'], traits: ['移动', '消费', '模板'], link: '查看 ↗' },
-  { tag: '方向 / 06', title: 'SwiftUI', description: '原生 App 这条路还没走通，先记下来，做了再说。', values: ['颜色', '字体', '动效'], traits: ['SwiftUI', '规划中'], link: '查看 ↗' },
+  { tag: '设计系统', title: 'HappyHands', description: '深色打底，品牌橙只用在关键处。', values: ['#111111', '#F7F6F3', '#F57F28', '#96918A'], traits: ['专业', '克制', '亲和'] },
+  { tag: '审阅案例', title: 'HappyClaw', description: '第一个从头走到尾的真实项目。改了什么、改前长什么样、最后怎么判的，全都在。', values: ['改前', '改后', '判定'], traits: ['网页', '审阅', '证据'] },
+  { tag: '设计系统', title: '萤火虫', description: '先把系统建好再画页面的尝试。', values: ['令牌', '状态', '模式'], traits: ['系统先行', '存档'] },
+  { tag: '模板', title: 'SaaS 基础', description: '仪表盘和工作台的底子。侧栏、表格、表单、空状态。', values: ['框架', '数据', '表单'], traits: ['SaaS', '桌面', '模板'] },
+  { tag: '模板', title: '移动端基础', description: '手机产品常用的一套。导航、内容卡片、付费页。', values: ['导航', '内容', '付费'], traits: ['移动', '消费', '模板'] },
+  { tag: '规划', title: 'SwiftUI', description: '原生 App 这条路还没走通，先记下来。', values: ['颜色', '字体', '动效'], traits: ['SwiftUI', '规划中'] },
 ];
 
 export const screenPairs = [

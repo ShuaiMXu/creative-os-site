@@ -50,12 +50,12 @@ export const apps = [
 ];
 
 export const systems = [
-  { tag: 'SYSTEM / 01', title: 'HappyHands Design System', description: 'Dark surfaces, one warm accent used sparingly, and every decision has a reason behind it.', values: ['#111111', '#F7F6F3', '#F57F28', '#96918A'], traits: ['Professional', 'Calm', 'Friendly'], link: 'View ↗' },
-  { tag: 'CASE / 02', title: 'HappyClaw', description: 'The first real project to go end to end. What changed, what it looked like before and after, and the final verdict — all here.', values: ['BEFORE', 'AFTER', 'VERDICT'], traits: ['Web', 'Review', 'Evidence'], link: 'View ↗' },
-  { tag: 'STUDY / 03', title: 'Firefly UI Kit', description: 'An attempt to build the system before drawing any pages. Want to know if that works? Look at this.', values: ['TOKENS', 'STATES', 'PATTERNS'], traits: ['System-first', 'Archive'], link: 'View ↗' },
-  { tag: 'TEMPLATE / 04', title: 'SaaS Starter Kit', description: 'The foundation for dashboards and workbenches. Sidebar, tables, forms, empty states — ready to go.', values: ['SHELL', 'DATA', 'FORMS'], traits: ['SaaS', 'Desktop', 'Template'], link: 'View ↗' },
-  { tag: 'TEMPLATE / 05', title: 'Mobile Starter Kit', description: 'The common set for phone products. Navigation, content cards, paywalls — the core scenarios covered.', values: ['NAV', 'CONTENT', 'PAYWALL'], traits: ['Mobile', 'Consumer', 'Template'], link: 'View ↗' },
-  { tag: 'TRACK / 06', title: 'SwiftUI', description: 'The native path isn\'t proven yet. Noted, not promised.', values: ['COLOR', 'TYPE', 'MOTION'], traits: ['SwiftUI', 'Planned'], link: 'View ↗' },
+  { tag: 'Design System', title: 'HappyHands', description: 'Dark surfaces, one warm accent used sparingly.', values: ['#111111', '#F7F6F3', '#F57F28', '#96918A'], traits: ['Professional', 'Calm', 'Friendly'] },
+  { tag: 'Case Study', title: 'HappyClaw', description: 'First real project end to end. What changed, before and after, final verdict.', values: ['BEFORE', 'AFTER', 'VERDICT'], traits: ['Web', 'Review', 'Evidence'] },
+  { tag: 'Design System', title: 'Firefly', description: 'System first, pages second — an attempt worth studying.', values: ['TOKENS', 'STATES', 'PATTERNS'], traits: ['System-first', 'Archive'] },
+  { tag: 'Template', title: 'SaaS Starter', description: 'Dashboard and workbench foundation. Sidebar, tables, forms, empty states.', values: ['SHELL', 'DATA', 'FORMS'], traits: ['SaaS', 'Desktop', 'Template'] },
+  { tag: 'Template', title: 'Mobile Starter', description: 'Common set for phone products. Navigation, cards, paywalls.', values: ['NAV', 'CONTENT', 'PAYWALL'], traits: ['Mobile', 'Consumer', 'Template'] },
+  { tag: 'Planned', title: 'SwiftUI', description: 'Native path not proven yet. Noted, not promised.', values: ['COLOR', 'TYPE', 'MOTION'], traits: ['SwiftUI', 'Planned'] },
 ];
 
 export const screenPairs = [

@@ -101,7 +101,7 @@ function appCard(item) {
 }
 
 function systemCard(item) {
-  return `<article class="system-card"><div class="system-preview">${item.values.map((v, i) => `<span style="--i:${i}">${v}</span>`).join('')}</div><p class="card-tag">${item.tag}</p><h3>${item.title}</h3><p>${item.description}</p><div class="chips">${item.traits.map(v => `<span>${v}</span>`).join('')}</div><a class="card-link" href="${item.href || repositories.core}">${item.link || 'View ↗'}</a></article>`;
+  return `<article class="system-card"><div class="system-preview">${item.values.map((v, i) => `<span style="--i:${i}">${v}</span>`).join('')}</div><p class="card-tag">${item.tag}</p><h3>${item.title}</h3><p>${item.description}</p><div class="chips">${item.traits.map(v => `<span>${v}</span>`).join('')}</div></article>`;
 }
 
 function pairCard(item) {
@@ -169,7 +169,9 @@ function _apply() {
     heroCenter.style.opacity = _map(p, [0, .35], [1, 0]).toFixed(4);
     heroCenter.style.transform = `scale(${_map(p, [0, .35], [1, .88]).toFixed(4)})`;
   }
-  if (heroWhirlHost) heroWhirlHost.style.opacity = _map(p, [.4, .85], [1, 0]).toFixed(4);
+  // Re-query: the whirl host may be created after this module loads
+  const whirl = document.querySelector('.hero-whirl-host');
+  if (whirl) whirl.style.opacity = _map(p, [.4, .85], [1, 0]).toFixed(4);
 }
 function _onScroll() {
   if (reduceMotion.matches) return;
