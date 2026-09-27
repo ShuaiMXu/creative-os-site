@@ -152,3 +152,131 @@
 
 /* Canvas stage with the panels around it */
 .pd-fs-canvas { flex: 1; position: relative; overflow: hidden; background: rgb(var(--color-ink)); }
+
+/* ===== Canvas visual overhaul: dot grid, node hierarchy, connections ===== */
+.pd-fs-canvas {
+  background: rgb(var(--color-ink));
+  background-image: radial-gradient(circle, rgb(var(--color-label-quaternary) / .12) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Node card: proper visual hierarchy */
+.pd-node {
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-sep) / var(--color-sep-alpha));
+  border-radius: 12px;
+  overflow: visible;
+  box-shadow: 0 4px 12px rgb(0 0 0 / .25), 0 1px 3px rgb(0 0 0 / .2);
+  transition: box-shadow .25s, border-color .25s, opacity .3s;
+  cursor: pointer;
+}
+.pd-node:hover {
+  border-color: rgb(var(--color-accent) / .4);
+  box-shadow: 0 8px 24px rgb(0 0 0 / .35), 0 2px 6px rgb(0 0 0 / .25);
+}
+.pd-node.pd-selected {
+  border-color: rgb(var(--color-accent));
+  border-width: 2px;
+  box-shadow: 0 0 0 3px rgb(var(--color-accent) / .2), 0 8px 24px rgb(0 0 0 / .35);
+}
+.pd-node img {
+  display: block; width: 100%; height: auto;
+  border-radius: 0 0 11px 11px;
+}
+
+/* Node caption: more prominent */
+.pd-node-caption {
+  padding: 8px 12px;
+  font-size: 10px;
+  font-weight: 500;
+  color: rgb(var(--color-label-tertiary));
+  border-bottom: 1px solid rgb(var(--color-sep) / var(--color-sep-alpha));
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  display: flex; align-items: center; gap: 6px;
+  background: rgb(var(--color-bg-raised) / .5);
+}
+.pd-node-caption .phase-tag {
+  display: inline-flex; align-items: center;
+  padding: 1px 6px; border-radius: 3px;
+  font-size: 8px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  flex: none;
+}
+.pd-node-caption .phase-tag.before { background: rgb(129 140 248 / .15); color: #818cf8; }
+.pd-node-caption .phase-tag.after { background: rgb(var(--color-accent) / .15); color: rgb(var(--color-accent)); }
+
+/* Connection line between before/after */
+.pd-connection {
+  position: absolute;
+  height: 2px;
+  background: linear-gradient(90deg, rgb(129 140 248 / .4), rgb(var(--color-accent) / .4));
+  border-radius: 1px;
+  pointer-events: none;
+}
+.pd-connection::after {
+  content: '';
+  position: absolute;
+  right: -1px; top: -3px;
+  width: 0; height: 0;
+  border-left: 5px solid rgb(var(--color-accent) / .4);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+
+/* Better node spacing */
+.pd-node-error {
+  padding: 32px 16px;
+  color: rgb(var(--color-label-tertiary));
+  font-size: 12px;
+  text-align: center;
+  min-height: 100px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 0 0 11px 11px;
+}
+
+/* Jump tab styling */
+.pd-jump-tab {
+  position: absolute;
+  bottom: -24px; right: 8px;
+  font-size: 9px;
+  font-weight: 600;
+  color: rgb(var(--color-accent));
+  cursor: pointer;
+  letter-spacing: .04em;
+  opacity: 0;
+  transition: opacity .2s;
+  padding: 2px 8px;
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-sep) / var(--color-sep-alpha));
+  border-radius: 6px;
+}
+.pd-node:hover .pd-jump-tab { opacity: 1; }
+.pd-jump-tab:hover { border-color: rgb(var(--color-accent) / .5); }
+
+/* Pin: more prominent */
+.pd-pin {
+  position: absolute;
+  top: -10px; right: -8px;
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgb(var(--color-accent));
+  color: rgb(var(--color-accent-ink));
+  border-radius: 8px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgb(0 0 0 / .35);
+  z-index: 2;
+  max-width: 240px;
+  transition: transform .2s, box-shadow .2s;
+}
+.pd-pin:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgb(0 0 0 / .4);
+}
+
+/* Fix: dot grid must come after the base background */
+.pd-fs-canvas {
+  background: rgb(var(--color-ink)) !important;
+  background-image: radial-gradient(circle, rgb(255 255 255 / .06) 1px, transparent 1px) !important;
+  background-size: 24px 24px !important;
+}

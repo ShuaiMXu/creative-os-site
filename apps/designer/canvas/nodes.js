@@ -67,10 +67,21 @@ export function renderNode(node, base) {
 
   const cap = document.createElement('div');
   cap.className = 'pd-node-caption font-mono';
+
+  // phase tag: BEFORE / AFTER
+  const phaseTag = document.createElement('span');
+  phaseTag.className = `phase-tag ${node.phase}`;
+  phaseTag.textContent = node.phase;
+
   const state = node.entry.stateId || 'page';
   const config = node.entry.configurationId || 'unknown';
-  const http = node.entry.status ? ` · HTTP ${node.entry.status}` : '';
-  cap.textContent = `${state} · ${config}${http}`;
+  const http = node.entry.status ? ` · ${node.entry.status}` : '';
+  const nameSpan = document.createElement('span');
+  nameSpan.textContent = `${state} / ${config}${http}`;
+  nameSpan.style.overflow = 'hidden';
+  nameSpan.style.textOverflow = 'ellipsis';
+
+  cap.append(phaseTag, nameSpan);
 
   if (node.entry.reached === false) {
     const err = document.createElement('div');
@@ -103,10 +114,20 @@ export function renderNode(node, base) {
   if (node.after && node.phase === 'before') {
     const tab = document.createElement('div');
     tab.className = 'pd-jump-tab font-mono';
-    tab.textContent = '整改后 ↗';
+    tab.textContent = '→ after';
     tab.title = 'Jump to the after state';
     el.appendChild(tab);
   }
 
+  return el;
+}
+
+// Connection line element between before and after nodes
+export function renderConnection(x1, y, x2) {
+  const el = document.createElement('div');
+  el.className = 'pd-connection';
+  el.style.left = `${x1}px`;
+  el.style.top = `${y}px`;
+  el.style.width = `${x2 - x1}px`;
   return el;
 }

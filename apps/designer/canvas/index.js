@@ -2,7 +2,7 @@
 // Entry: renderCanvas(container, run) — builds the full canvas from an exported run.
 
 import { Stage } from './stage.js';
-import { buildNodes, renderNode } from './nodes.js';
+import { buildNodes, renderNode, renderConnection } from './nodes.js';
 import { buildPins, renderPin } from './pins.js';
 import { autoLayout, loadLayout, saveLayout, clearLayout } from './layout.js';
 import { renderCodeDiff } from './codediff.js';
@@ -84,8 +84,8 @@ export async function renderCanvas(container, run) {
   function buildCanvas(fit) {
     layer.replaceChildren();
 
-    // auto layout
-    const layoutResult = autoLayout(nodes.map(n => n.entry));
+    // auto layout: pass before-only entries + hasAfter flag for pair spacing
+    const layoutResult = autoLayout(nodes.filter(n => n.phase === 'before').map(n => n.entry), { hasAfter });
     const saved = loadLayout(runId);
     const positions = saved || layoutResult.positions;
 
@@ -94,7 +94,7 @@ export async function renderCanvas(container, run) {
       const label = document.createElement('div');
       label.className = 'font-mono pd-row-label';
       label.textContent = state;
-      label.style.top = `${i * 48}px`;
+      label.style.top = `${i * 56}px`;
       layer.appendChild(label);
     }
 
@@ -123,15 +123,20 @@ export async function renderCanvas(container, run) {
 
       // after node for pairing
       if (node.after && node.phase === 'before') {
-        const afterPos = { x: pos.x + pos.w + 8, y: pos.y, w: pos.w };
+        const afterX = pos.afterX || (pos.x + pos.w + 28);
         const afterEl = renderNode({ ...node, phase: 'after', entry: node.after }, run.base);
-        afterEl.style.left = `${afterPos.x}px`;
-        afterEl.style.top = `${afterPos.y}px`;
-        afterEl.style.width = `${afterPos.w}px`;
+        afterEl.style.left = `${afterX}px`;
+        afterEl.style.top = `${pos.y}px`;
+        afterEl.style.width = `${pos.afterW || pos.w}px`;
         if (diffMode && !node.changed) afterEl.classList.add('pd-dim');
         afterEl.addEventListener('click', e => { e.stopPropagation(); selectNode(node, afterEl); });
         layer.appendChild(afterEl);
         nodeEls.set(node.key + ':after', afterEl);
+
+        // connection line between before and after
+        const conn = renderConnection(pos.x + pos.w, pos.y + (pos.h || 100) / 2, afterX);
+        if (diffMode && !node.changed) conn.style.opacity = '0.15';
+        layer.appendChild(conn);
       }
     }
 
@@ -147,7 +152,14 @@ export async function renderCanvas(container, run) {
       nodeEl.appendChild(pinEl);
     }
 
-    if (fit) stage.fit(layoutResult.totalWidth + 200, layoutResult.totalHeight + 100);
+    if (fit) {
+      // initial view: 100% zoom, centered on the content — don't auto-fit-shrink
+      stage.scale = 1;
+      const rect = stageEl.getBoundingClientRect();
+      stage.x = rect.width / 2 - (layoutResult.totalWidth / 2);
+      stage.y = Math.max(20, rect.height / 3 - layoutResult.totalHeight / 2);
+      stage.refresh();
+    }
   }
 
   function toggleDiff() {

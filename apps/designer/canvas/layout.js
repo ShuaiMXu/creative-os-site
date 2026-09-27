@@ -3,26 +3,29 @@
 
 const KEY_PREFIX = 'pd-canvas-';
 
-export function autoLayout(entries) {
-  // entries: [{stateId, configurationId, ...}] — the flat list of nodes
+export function autoLayout(entries, { hasAfter = false } = {}) {
+  // entries: [{stateId, configurationId, ...}] — the flat list of before nodes
   const states = [];
   const configs = [];
   for (const e of entries) {
     if (!states.includes(e.stateId)) states.push(e.stateId);
     if (!configs.includes(e.configurationId)) configs.push(e.configurationId);
   }
-  const COLUMN_GAP = 32;
-  const ROW_GAP = 48;
+  const COLUMN_GAP = 40;
+  const PAIR_GAP = 28; // gap between before and after within a pair
+  const ROW_GAP = 56;
   const GUTTER = 120;
 
-  // column widths: narrow (3:4+) = 132, wide = 220
-  const colWidths = configs.map(c => {
+  // column widths: each config column fits before + (after if hasAfter) + pair gap
+  const baseWidths = configs.map(c => {
     const sample = entries.find(e => e.configurationId === c);
     const aspect = sample ? sample.width / sample.height : 1;
     return aspect < 0.75 ? 132 : 220;
   });
+  // total column width accounts for the after node
+  const colWidths = baseWidths.map(w => hasAfter ? w * 2 + PAIR_GAP : w);
 
-  const positions = new Map(); // key: stateId--configId -> {x, y, w}
+  const positions = new Map(); // key: stateId--configId -> {x, y, w, pairX}
   const colOffsets = [];
   let acc = GUTTER;
   for (let i = 0; i < configs.length; i++) {
@@ -35,13 +38,16 @@ export function autoLayout(entries) {
       const entry = entries.find(e => e.stateId === stateId && e.configurationId === configId);
       if (!entry) return;
       const key = `${stateId}--${configId}`;
-      const w = colWidths[col];
+      const w = baseWidths[col];
       const h = w / (entry.width / entry.height);
+      const x = colOffsets[col];
+      const y = row * ROW_GAP;
       positions.set(key, {
-        x: colOffsets[col],
-        y: row * ROW_GAP,
-        w,
-        h: Math.min(h, w * 2.2) // cap absurdly tall screenshots
+        x, y, w,
+        h: Math.min(h, w * 2.2),
+        // after node position (right of before + pair gap)
+        afterX: hasAfter ? x + w + PAIR_GAP : null,
+        afterW: hasAfter ? w : null
       });
     });
   });
