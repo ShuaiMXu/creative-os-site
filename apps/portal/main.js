@@ -165,13 +165,21 @@ function _progress() {
 function _apply() {
   _raf = null;
   const p = _progress();
+  // 1. Text fades + shrinks over [0, 0.35]
   if (heroCenter) {
     heroCenter.style.opacity = _map(p, [0, .35], [1, 0]).toFixed(4);
     heroCenter.style.transform = `scale(${_map(p, [0, .35], [1, .88]).toFixed(4)})`;
   }
-  // Re-query: the whirl host may be created after this module loads
+  // 2. Whirl expands (zooms past you) + 3. fades out over [0.4, 0.85].
+  // Their CSS: scale(1 + p * 0.75) on the whirl, plus the outer fade.
+  // The expansion makes the spiral feel like it's rushing outward as you scroll.
   const whirl = document.querySelector('.hero-whirl-host');
-  if (whirl) whirl.style.opacity = _map(p, [.4, .85], [1, 0]).toFixed(4);
+  if (whirl) {
+    const scale = 1 + p * 0.75;
+    const fade = _map(p, [.4, .85], [1, 0]);
+    whirl.style.opacity = fade.toFixed(4);
+    whirl.style.transform = `translate(-50%, -50%) scale(${scale.toFixed(4)})`;
+  }
 }
 function _onScroll() {
   if (reduceMotion.matches) return;
