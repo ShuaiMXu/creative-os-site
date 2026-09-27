@@ -1,30 +1,48 @@
 export const repositories = { core: 'https://github.com/ShuaiMXu/creative-os', site: 'https://github.com/ShuaiMXu/creative-os-site', happyclaw: 'https://github.com/ShuaiMXu/happyclaw-site' };
+
+export const heroCopy = '你的应用能跑了，但看起来不像被人设计过。我们做的事很简单：看一遍真实页面，挑一个最值得改的地方，改完再截图对比。你来说好还是不好。';
+
 export const apps = [
-  { index: '01', state: 'AVAILABLE', title: 'Review an existing app', description: '从代码和实际页面建立基线，找出影响关键任务的体验问题，再生成一条可验证的修改路径。', meta: ['SOURCE + RENDER', 'HAPPYCLAW CASE'], href: '/apps/designer/?case=happyclaw', action: 'Open Workbench' },
-  { index: '02', state: 'FOUNDATION', title: 'Extract its design system', description: '把散落在代码里的颜色、字体、间距、组件、状态与品牌资产整理成项目可以持续使用的 Design Foundation。', meta: ['TOKENS', 'COMPONENTS', 'BRAND'], href: `${repositories.core}/issues/29`, action: 'Track foundation work' },
-  { index: '03', state: 'IN PROGRESS', title: 'Keep design quality online', description: '每次产品变化后，只复查受影响的页面和任务，保留 Before / After、人的判定和项目级经验。', meta: ['GIT DIFF', 'INCREMENTAL REVIEW'], href: `${repositories.core}/issues`, action: 'View roadmap' }
+  { index: '01', state: '可用', title: '审阅一个现有产品', description: '从真实页面出发，不是从需求文档出发。跑起来的应用就是最好的证据。', meta: ['SOURCE + RENDER', 'HAPPYCLAW CASE'], href: '/apps/designer/?case=happyclaw', action: '看一次真实审阅' },
+  { index: '02', state: '在建', title: '把散落的样式收拢成系统', description: '代码里到处都是颜色值和间距，但没人说得清哪个是对的。我们帮你理清楚。', meta: ['TOKENS', 'COMPONENTS', 'BRAND'], href: `${repositories.core}/issues/29`, action: '跟进这项工作' },
+  { index: '03', state: '规划中', title: '改了代码之后，只查受影响的部分', description: '不需要每次都全站复查。Git 告诉我们哪些文件变了，我们只看那些页面。', meta: ['GIT DIFF', 'INCREMENTAL REVIEW'], href: `${repositories.core}/issues`, action: '看路线图' }
 ];
+
 export const systems = [
-  { tag: 'SYSTEM / 01', title: 'HappyHands Design System', description: '来自 HappyHands 品牌书的深色产品语言：墨黑与纸白建立层级，品牌橙只用于关键提示和入口。', values: ['#111111', '#F7F6F3', '#F57F28', '#96918A'], traits: ['Professional', 'Calm', 'Friendly'], href: repositories.core },
-  { tag: 'CASE / 02', title: 'HappyClaw', description: '首个真实审阅案例。保存产品基线、诊断、限定修改和相同状态下的视觉复核。', values: ['BEFORE', 'AFTER', 'VERDICT'], traits: ['Web', 'Review', 'Evidence'], href: '/apps/designer/?case=happyclaw' },
-  { tag: 'STUDY / 03', title: 'Firefly UI Kit', description: '先建立系统再设计页面的代表性研究，覆盖 Token、组件清单、状态和一致性治理。', values: ['TOKENS', 'STATES', 'PATTERNS'], traits: ['System-first', 'Archive'], href: `${repositories.core}/blob/main/docs/firefly-ui-kit-case.md` },
-  { tag: 'TEMPLATE / 04', title: 'SaaS Product Foundation', description: '为仪表盘与工作台预设的基础系统，覆盖侧栏、数据密度、表单、反馈与空状态。', values: ['SHELL', 'DATA', 'FORMS'], traits: ['SaaS', 'Desktop', 'Template'], href: `${repositories.core}/issues` },
-  { tag: 'TEMPLATE / 05', title: 'Consumer App Foundation', description: '面向移动产品的预设系统，覆盖导航、内容卡片、付费节点和关键任务连续性。', values: ['NAV', 'CONTENT', 'PAYWALL'], traits: ['Mobile', 'Consumer', 'Template'], href: `${repositories.core}/issues` },
-  { tag: 'TRACK / 06', title: 'SwiftUI Foundation', description: '为原生 App 预留的设计系统提取路径；目前作为待验证方向公开记录，不把计划写成已交付能力。', values: ['COLOR', 'TYPE', 'MOTION'], traits: ['SwiftUI', 'Planned'], href: `${repositories.core}/issues` }
+  { tag: 'SYSTEM / 01', title: 'HappyHands Design System', description: '深色为主，品牌橙只用在关键处。不花哨，但每处都有理由。', values: ['#111111', '#F7F6F3', '#F57F28', '#96918A'], traits: ['Professional', 'Calm', 'Friendly'], href: repositories.core },
+  { tag: 'CASE / 02', title: 'HappyClaw', description: '第一个完整走完闭环的真实项目。改了什么、前后长什么样、最后判了什么，全都在。', values: ['BEFORE', 'AFTER', 'VERDICT'], traits: ['Web', 'Review', 'Evidence'], href: '/apps/designer/?case=happyclaw' },
+  { tag: 'STUDY / 03', title: 'Firefly UI Kit', description: '先有系统，再设计页面的做法。想知道这条路走不走得通，看看这个。', values: ['TOKENS', 'STATES', 'PATTERNS'], traits: ['System-first', 'Archive'], href: `${repositories.core}/blob/main/docs/firefly-ui-kit-case.md` },
+  { tag: 'TEMPLATE / 04', title: 'SaaS Product Foundation', description: '仪表盘和工作台的基础套件。侧栏、表格、表单、空状态，拿来就能用。', values: ['SHELL', 'DATA', 'FORMS'], traits: ['SaaS', 'Desktop', 'Template'], href: `${repositories.core}/issues` },
+  { tag: 'TEMPLATE / 05', title: 'Consumer App Foundation', description: '移动端产品的预设。导航、内容卡片、付费页，覆盖最核心的几个场景。', values: ['NAV', 'CONTENT', 'PAYWALL'], traits: ['Mobile', 'Consumer', 'Template'], href: `${repositories.core}/issues` },
+  { tag: 'TRACK / 06', title: 'SwiftUI Foundation', description: '原生 App 的路还没走通，先记下来。做了再说，不提前画饼。', values: ['COLOR', 'TYPE', 'MOTION'], traits: ['SwiftUI', 'Planned'], href: `${repositories.core}/issues` }
 ];
+
 export const screens = [
-  { label: 'BEFORE · DESKTOP', src: '/runs/06dabc2c/before/desktop.png', caption: '初始产品页面与原始信息层级' }, { label: 'AFTER · DESKTOP', src: '/runs/06dabc2c/after/desktop.png', caption: '限定范围修改后的同视口结果' },
-  { label: 'BEFORE · MOBILE', src: '/runs/06dabc2c/before/mobile.png', caption: '移动端基线与任务连续性' }, { label: 'AFTER · MOBILE', src: '/runs/06dabc2c/after/mobile.png', caption: '相同状态下的复核证据' }
+  { label: 'BEFORE · DESKTOP', src: '/runs/06dabc2c/before/desktop.png', caption: '改之前的首页，信息层级有问题' },
+  { label: 'AFTER · DESKTOP', src: '/runs/06dabc2c/after/desktop.png', caption: '改之后，同一视口' },
+  { label: 'BEFORE · MOBILE', src: '/runs/06dabc2c/before/mobile.png', caption: '移动端基线' },
+  { label: 'AFTER · MOBILE', src: '/runs/06dabc2c/after/mobile.png', caption: '同一状态，改后' }
 ];
+
 export const screenPairs = [
-  { title: 'Homepage · Desktop', task: 'Information hierarchy', before: screens[0], after: screens[1], result: 'Hierarchy aligned' },
-  { title: 'Homepage · Mobile', task: 'Responsive continuity', before: screens[2], after: screens[3], result: 'Task path preserved' }
+  { title: '首页 · 桌面端', task: '信息层级', before: screens[0], after: screens[1], result: '层级对齐了' },
+  { title: '首页 · 移动端', task: '任务连贯性', before: screens[2], after: screens[3], result: '路径没断' }
 ];
+
 export const elements = [
-  { kind: 'button', title: 'Button', description: 'Primary、secondary 与 disabled 使用统一的动作层级；品牌橙不作为按钮底色。' }, { kind: 'input', title: 'PromptBox', description: '输入、焦点、生成中、成功与错误状态都进入组件档案。' },
-  { kind: 'status', title: 'AI Label & Badge', description: 'Observed、candidate、approved 与 AI 生成内容拥有稳定、透明的状态标识。' }, { kind: 'tokens', title: 'Semantic tokens', description: '品牌原始值映射到 surface、text、brand 和 feedback，跨页面保持一致。' },
-  { kind: 'tabs', title: 'Tabs', description: '诊断、Design System 和 Visual QA 复用同一套导航与可见状态。' }, { kind: 'progress', title: 'AgentStep', description: 'Expert Loop 每一步显示当前位置、阻塞原因和下一项可执行动作。' },
-  { kind: 'empty', title: 'Empty State', description: '用一个明确的下一步替代无内容页面，覆盖首次进入、筛选为空和加载失败。' }, { kind: 'dialog', title: 'Confirm Dialog', description: '为高影响操作提供结果说明、主次动作和可撤销边界。' },
-  { kind: 'card', title: 'Content Card', description: '把标题、状态、证据与动作组合成可复用的内容模板。' }
+  { kind: 'button', title: 'Button', description: '主操作用墨色实底，不用品牌橙。一屏只放一个。' },
+  { kind: 'input', title: 'PromptBox', description: '输入、生成中、出错，每个阶段都得看得见。' },
+  { kind: 'status', title: 'AI Label & Badge', description: 'AI 参与的内容要能认出来，已批准和待审核要有区分。' },
+  { kind: 'tokens', title: 'Semantic tokens', description: '不直接写 #F57F28，写 var(--brand)。一处改，处处改。' },
+  { kind: 'tabs', title: 'Tabs', description: '诊断、设计系统、视觉复核共用一套导航，不另起炉灶。' },
+  { kind: 'progress', title: 'AgentStep', description: '走到哪一步、卡在哪里、下一步做什么，一眼能看出来。' },
+  { kind: 'empty', title: 'Empty State', description: '没有内容的时候，告诉用户该做什么，不是摆一个图标。' },
+  { kind: 'dialog', title: 'Confirm Dialog', description: '危险操作要说清楚后果，给用户反悔的机会。' },
+  { kind: 'card', title: 'Content Card', description: '标题、状态、证据、动作，一张卡片说完一件事。' }
 ];
-export const steps = [['01', 'Connect', '提供仓库和可运行的预览入口。'], ['02', 'Capture', '采集关键任务、页面状态和双视口基线。'], ['03', 'Review', '确认一条问题，再让 Harness 执行完整闭环。']];
+
+export const steps = [
+  ['01', 'Connect', '给我一个仓库地址和一个能跑的预览。'],
+  ['02', 'Capture', '我先把你的页面截图，桌面和手机各来一遍。'],
+  ['03', 'Review', '你确认哪个问题最值得改，剩下的交给我。']
+];
