@@ -26,7 +26,6 @@ content.innerHTML = `
     <div class="final-actions"><a class="button button-primary" href="${repositories.core}">Open GitHub ↗</a><a class="button button-secondary" href="${repositories.site}">Website source ↗</a></div>
   </section>`;
 
-const images = screens.map(item => item.src);
 const track = document.querySelector('#whirl-track');
 const count = 32;
 for (let index = 0; index < count; index++) {
@@ -38,7 +37,8 @@ for (let index = 0; index < count; index++) {
   tile.style.setProperty('--y', `${50 + Math.sin(angle) * radius}%`);
   tile.style.setProperty('--r', `${angle + Math.PI / 2}rad`);
   tile.style.setProperty('--s', String(.68 + (index % 5) * .08));
-  tile.innerHTML = `<img src="${images[index % images.length]}" alt="">`;
+  tile.dataset.variant = String(index % 4);
+  tile.innerHTML = '<span class="placeholder-bar"></span><span class="placeholder-line"></span><span class="placeholder-line"></span>';
   track.appendChild(tile);
 }
 
@@ -59,16 +59,20 @@ const hero = document.querySelector('.hero');
 const heroStage = document.querySelector('.hero-scroll-stage');
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 let heroFrame = 0;
+let orbitAnimation;
 function updateHeroScroll() {
   heroFrame = 0;
   if (!hero || !heroStage || reduceMotion.matches) {
     hero?.style.setProperty('--hero-progress', '0');
+    if (orbitAnimation) orbitAnimation.playbackRate = 0;
     return;
   }
   const travel = Math.max(1, heroStage.offsetHeight - window.innerHeight);
   const progress = Math.min(1, Math.max(0, -heroStage.getBoundingClientRect().top / travel));
   const easedProgress = 1 - Math.pow(1 - progress, 3);
   hero.style.setProperty('--hero-progress', easedProgress.toFixed(3));
+  orbitAnimation ||= track?.getAnimations()[0];
+  if (orbitAnimation) orbitAnimation.playbackRate = 1 + easedProgress * 7;
 }
 function requestHeroScroll() {
   if (!heroFrame) heroFrame = requestAnimationFrame(updateHeroScroll);
