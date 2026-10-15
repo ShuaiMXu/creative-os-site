@@ -120,7 +120,6 @@
 :root[data-theme="light"] .section-apps { box-shadow:none; }
 :root[data-theme="light"] .command-card { background:#e9e4db; color:var(--paper); }
 :root[data-theme="light"] .command-card code,:root[data-theme="light"] .command-card span { color:var(--muted); }
-:root[data-theme="light"] .command-card button { color:var(--ink); }
 :root[data-theme="light"] .get-started { background:#f0eae2; color:var(--paper); }
 :root[data-theme="light"] .get-started .button-primary { background:var(--paper); color:var(--ink); }
 :root[data-theme="light"] .get-started .button-secondary { color:var(--paper); }
