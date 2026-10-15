@@ -149,7 +149,7 @@ export const sections = {
   "explore": {
     "kicker": "02 / DESIGN SYSTEMS",
     "title": "Design system archive",
-    "copy": "Brand references, real review cases and proposed presets, with their status made explicit. Previews are not installable libraries."
+    "copy": "Explore design systems and their official components, then choose an approach for your project. You can also keep your existing brand and document its rules first."
   },
   "screens": {
     "kicker": "03 / BEFORE & AFTER",
@@ -207,8 +207,8 @@ export const systems = [
       "Calm",
       "Friendly"
     ],
-    "href": "/brand/happyhands-logo-paper.png",
-    "action": "View brand mark"
+    "href": "/systems/happyhands/",
+    "action": "Explore design system"
   },
   {
     "tag": "Case Study",

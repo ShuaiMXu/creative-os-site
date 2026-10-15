@@ -149,7 +149,7 @@ export const sections = {
   "explore": {
     "kicker": "02 / 设计系统",
     "title": "设计系统档案",
-    "copy": "品牌档案、真实审阅案例与预设方向分别标注状态；示意内容不代表可安装的组件库。"
+    "copy": "了解设计系统，查看官方组件，再选择适合项目的接入方式。也可以保留已有品牌，从整理自己的规范开始。"
   },
   "screens": {
     "kicker": "03 / 前后对比",
@@ -207,8 +207,8 @@ export const systems = [
       "克制",
       "亲和"
     ],
-    "href": "/brand/happyhands-logo-paper.png",
-    "action": "查看品牌标识"
+    "href": "/systems/happyhands/",
+    "action": "探索设计系统"
   },
   {
     "tag": "审阅案例",

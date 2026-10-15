@@ -1,4 +1,8 @@
 import * as zh from './content.zh.js';
+import {siteNavigation} from '../../packages/ui/site-navigation.ts';
+import '../../packages/ui/site-shell.css';
+import { designSystemsMarkup } from './design-systems.js';
+import { connectMarkup, setupConnect } from './connect.js';
 import * as en from './content.en.js';
 import { repositories, heroScreens } from './content.js';
 import { startWhirl } from './whirl.js';
@@ -6,6 +10,8 @@ import { startWhirl } from './whirl.js';
 const LANG_KEY = 'pd-lang';
 let lang = localStorage.getItem(LANG_KEY) || 'zh';
 const t = () => lang === 'zh' ? zh : en;
+document.querySelector('.site-header').classList.add('hh-site-header');
+document.querySelector('.header-cta')?.remove();
 
 const systemTheme = matchMedia('(prefers-color-scheme: dark)');
 let themePreference = localStorage.getItem('hh-theme');
@@ -62,6 +68,7 @@ function setLang(code) {
 // -- render all sections from the active language pack --
 function renderContent() {
   const c = t();
+  document.querySelector('.desktop-nav').innerHTML=siteNavigation.map(item=>`<a href="${item.href}">${lang==='zh'?item.zh:item.en}</a>`).join('');
   applyTheme(document.documentElement.dataset.theme);
 
   document.querySelectorAll('[data-lang]').forEach(button => { button.setAttribute('aria-pressed', String(button.dataset.lang === lang)); });
@@ -99,16 +106,11 @@ function renderContent() {
     <section class="content-section section-explore" id="explore">
       <div class="section-head"><div><p class="kicker">${c.sections.explore.kicker}</p><h2>${c.sections.explore.title}</h2></div><div><p>${c.sections.explore.copy}</p></div></div>
       <a class="text-link" href="/apps/studio/">${lang === 'zh' ? '定制你的设计令牌 · Token Studio ↗' : 'Customize your design tokens · Token Studio ↗'}</a>
+      ${designSystemsMarkup(lang)}
       <div class="system-grid">${c.systems.map(systemCard).join('')}</div>
     </section>
-    <section class="content-section section-screens" id="screens">
-      <div class="section-head"><div><p class="kicker">${c.sections.screens.kicker}</p><h2>${c.sections.screens.title}</h2></div><div><p>${lang === 'zh' ? '当前使用 Appllama 参考图展示横滑布局，非改前 / 改后证据。真实 HappyClaw 审阅请通过下方链接查看。' : 'Appllama references preview this horizontal layout, not before/after evidence. Open the real HappyClaw review below.'}</p><a class="text-link" href="/apps/designer/?case=run:06dabc2c">${c.sections.screens.link}</a></div></div>
-      <p class="review-evidence"><a class="text-link" href="/runs/06dabc2c/reviews/visual-qa-evaluator.json">${lang === 'zh' ? '查看独立视觉复核原始记录 ↗' : 'Read the original visual QA record ↗'}</a></p><div class="screen-pairs">${c.screenPairs.map(pairCard).join('')}</div>
-    </section>
-    <section class="content-section section-elements" id="elements">
-      <div class="section-head"><div><p class="kicker">${c.sections.elements.kicker}</p><h2>${c.sections.elements.title}</h2></div><div><p>${c.sections.elements.copy}</p></div></div>
-      <div class="elements-grid">${c.elements.map(elementCard).join('')}</div>
-    </section>
+    <section class="content-section" id="screens"><div class="section-head"><div><p class="kicker">${lang === 'zh' ? '案例与组件' : 'CASES & COMPONENTS'}</p><h2>${lang === 'zh' ? '继续了解实际应用' : 'Explore real applications'}</h2></div><div><p>${lang === 'zh' ? '查看有来源的审阅记录，或在设计系统页面试用组件状态。' : 'Read documented review evidence or try component states in the design system.'}</p><a class="text-link" href="https://github.com/ShuaiMXu/creative-os/blob/main/docs/happyclaw-case.md">HappyClaw · ${lang === 'zh' ? '审阅案例' : 'Review case'}</a><a class="text-link" href="/systems/happyhands/#components">HappyHands · ${lang === 'zh' ? '组件与状态' : 'Components & states'}</a></div></div></section>
+    ${connectMarkup(lang)}
     <section class="get-started" id="get-started">
       <div class="get-started-copy"><p class="kicker">${c.sections.getStarted.kicker}</p><h2>${c.sections.getStarted.title}<br><span>${c.sections.getStarted.titleLine2}</span></h2><p>${c.sections.getStarted.copy}</p></div>
       <div class="steps-grid">${c.steps.map(stepCard).join('')}</div>
@@ -126,6 +128,7 @@ function renderContent() {
   // re-observe sections for intersection animation
   observeSections();
   setupRails();
+  setupConnect(lang);
 }
 
 // Native scrolling keeps touch, trackpad and keyboard browsing available.
@@ -136,7 +139,8 @@ function setupRails() {
   const cleanups = [];
   for (const [id, selector] of [['explore', '.system-grid'], ['screens', '.screen-pairs'], ['elements', '.elements-grid']]) {
     const section = document.getElementById(id);
-    const rail = section.querySelector(selector);
+    const rail = section?.querySelector(selector);
+    if (!rail) continue;
     rail.id = `${id}-rail`;
     rail.tabIndex = 0;
     rail.setAttribute('role', 'region');
@@ -223,7 +227,7 @@ function referencePreview(index, className = '') {
   return `<div class="reference-preview ${className}"><img src="${referenceImage(index)}" alt="${referenceLabel()}" loading="lazy"><span>${referenceLabel()}</span></div>`;
 }
 function systemCard(item, index) {
-  return `<article class="system-card">${referencePreview(index + 1)}<p class="card-tag">${item.tag}</p><h3>${item.title}</h3><p>${item.description}</p><div class="chips">${item.traits.map(v => `<span>${v}</span>`).join('')}</div><a class="card-link" href="${item.href}">${item.action} ↗</a></article>`;
+  return `<article class="system-card"><p class="card-tag">${item.tag}</p><h3>${item.title}</h3><p>${item.description}</p><div class="chips">${item.traits.map(v => `<span>${v}</span>`).join('')}</div><a class="card-link" href="${item.href}">${item.action} ↗</a></article>`;
 }
 function pairCard(item, index) {
   return `<article class="screen-pair"><div class="pair-head"><div><p class="card-tag">${referenceLabel()}</p><h3>${lang === 'zh' ? '页面参考' : 'Screen reference'} 0${index + 1}</h3></div></div><div class="reference-pair">${referencePreview(21 + index * 2)}${referencePreview(22 + index * 2)}</div></article>`;
