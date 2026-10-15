@@ -1,5 +1,4 @@
 /* Shared page grid. Hero geometry and motion stay in portal.css / whirl.js. */
-:root { --page-width:1280px; --page-gutter:clamp(20px,4vw,64px); --page-inset:max(var(--page-gutter),calc((100% - var(--page-width))/2)); --grid-gap:24px; --section-space:clamp(56px,6vw,88px); }
 .site-header { padding-inline:var(--page-inset); }
 .content-section,.get-started { padding:var(--section-space) var(--page-inset); }
 .content-section *, .get-started *, .site-footer>* { min-width:0; }

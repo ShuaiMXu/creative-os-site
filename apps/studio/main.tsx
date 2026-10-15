@@ -1,3 +1,4 @@
+import { t, sceneLabel } from "./i18n";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { createRoot } from "react-dom/client";
 import {
@@ -37,7 +38,8 @@ import { Preview } from "./Preview";
 import { ConnectedPreview } from "./ConnectedPreview";
 import { Button } from "../../packages/ui";
 import { StandardsPanel } from "./StandardsPanel";
-import { useShellTheme } from "./useShellTheme";
+import { useSitePreferences } from "../../packages/ui/useSitePreferences";
+import { SiteHeader } from "../../packages/ui/SiteHeader";
 import "../../packages/design-tokens/happyhands.css";
 import "./studio.css";
 import "../../packages/ui/components.css";
@@ -141,22 +143,22 @@ function TokenInput({
           : 3;
   useEffect(() => setText(value), [value]);
   return (
-    <label className="token-row" id={`token-${name}`}>
+    <label className="token-row" id={`token-${t(name)}`}>
       <span>
-        {labels[name] || name}
-        <small>{name}</small>
+        {t(labels[name] || name)}
+        <small>{t(name)}</small>
       </span>
       <div className="token-input-fields">
         {colorKeys.includes(name) && (
           <input
             type="color"
-            aria-label={`${name} picker`}
+            aria-label={`${t(name)} picker`}
             value={hex(value)}
             onChange={(e) => onChange(e.target.value)}
           />
         )}
         <input
-          aria-label={name}
+          aria-label={t(name)}
           value={text}
           onChange={(e) => setText(e.target.value)}
           onBlur={() => {
@@ -169,7 +171,7 @@ function TokenInput({
         {numeric && (
           <input
             type="range"
-            aria-label={`${name} slider`}
+            aria-label={`${t(name)} slider`}
             min={negative ? -maximum : 0}
             max={maximum}
             step={unit === "px" ? 1 : 0.01}
@@ -190,7 +192,11 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 function App() {
-  const shell = useShellTheme();
+  const { lang, dark, toggleLanguage, toggleTheme } = useSitePreferences();
+  useEffect(() => {
+    document.title =
+      lang === "zh" ? "主题工作室 · HappyHands" : "Theme Studio · HappyHands";
+  }, [lang]);
   const [panelWidth, setPanelWidth] = useState(320);
   const [draft, setDraft] = useState(boot.draft),
     [h, setH] = useState(() => history(boot.draft.styles));
@@ -399,17 +405,18 @@ function App() {
   if (!projectIds.includes(draft.id)) projectIds.push(draft.id);
   return (
     <>
-      <header className="studio-header">
-        <a className="wordmark" href="/apps/portal/">
-          <img
-            src={`/brand/happyhands-logo-${shell.theme === "dark" ? "paper" : "ink"}.png`}
-            alt="HappyHands"
-          />
-          <span>Studio</span>
-        </a>
+      <SiteHeader
+        lang={lang}
+        dark={dark}
+        onLanguage={toggleLanguage}
+        onTheme={toggleTheme}
+        active="/apps/studio/"
+      />
+      <div className="studio-project-bar">
+        <span>{lang === "zh" ? "主题工作室" : "Theme Studio"}</span>
         <div className="project-select">
           <select
-            aria-label="选择项目"
+            aria-label={t("选择项目")}
             value={draft.id}
             onChange={(e) => switchProject(e.target.value)}
           >
@@ -419,43 +426,35 @@ function App() {
           </select>
           <Button
             onClick={() => {
-              const id = prompt("新项目 ID（英文、数字和短横线）");
+              const id = prompt(t("新项目 ID（英文、数字和短横线）"));
               if (id && /^[\w-]{1,80}$/.test(id)) switchProject(id);
             }}
           >
             ＋
           </Button>
         </div>
-        <a className="review-link" href="/apps/designer/">
-          审阅工作台 ↗
+        <a className="review-link" href="/apps/portal/#connect-agent">
+          {lang === "zh" ? "接入本地工作台 →" : "Connect local workbench →"}
         </a>
-        <Button
-          className="shell-theme-toggle"
-          variant="ghost"
-          onClick={shell.toggle}
-          aria-label="切换工作台外观"
-        >
-          {shell.theme === "dark" ? "浅色外观" : "深色外观"}
-        </Button>
-      </header>
+      </div>
       <main className="studio-shell">
         <div className="studio-title">
           <div>
-            <p className="eyebrow">设计系统 / 主题编辑</p>
-            <h1>项目设计系统</h1>
-            <p>调整主题、检查组件状态，再将设计约束交给你的项目。</p>
+            <p className="eyebrow">{t("设计系统 / 主题编辑")}</p>
+            <h1>{t("项目设计系统")}</h1>
+            <p>{t("调整主题、检查组件状态，再将设计约束交给你的项目。")}</p>
           </div>
           <div className="toolbar">
             <Button
               onClick={() => setPanel(panel === "standards" ? "" : "standards")}
             >
-              设计规范
+              {t("设计规范")}
             </Button>
             <Button disabled={!h.past.length} onClick={() => setH(undo)}>
-              ↶ 撤销
+              {t("↶ 撤销")}
             </Button>
             <Button disabled={!h.future.length} onClick={() => setH(redo)}>
-              ↷ 重做
+              {t("↷ 重做")}
             </Button>
             <Button
               onClick={() =>
@@ -464,17 +463,17 @@ function App() {
                 })
               }
             >
-              保存
+              {t("保存")}
             </Button>
             <Button
               onClick={() => setPanel(panel === "import" ? "" : "import")}
             >
-              导入
+              {t("导入")}
             </Button>
             <Button
               onClick={() => setPanel(panel === "export" ? "" : "export")}
             >
-              导出
+              {t("导出")}
             </Button>
             <Button
               variant={panel ? "secondary" : "primary"}
@@ -483,22 +482,23 @@ function App() {
                 setPanel(panel === "review" ? "" : "review");
               }}
             >
-              审核变更 {changes.length || ""}
+              {t("审核变更")} {changes.length || ""}
             </Button>
           </div>
         </div>
         <div className="status-line">
-          <span role="status">{notice}</span>
+          <span role="status">{t(notice)}</span>
           <span>
-            {Object.keys(presets).length} 预设 · {keys.length} 变量 × 2 模式 ·{" "}
+            {Object.keys(presets).length} {t("预设 ·")} {keys.length}{" "}
+            {t("变量 × 2 模式 ·")}{" "}
             {draft.foundation
               ? `Foundation ${draft.foundation.foundationVersion}`
-              : "尚无批准版本"}
+              : t("尚无批准版本")}
           </span>
         </div>
         {error && (
           <div className="error" role="alert">
-            {error}
+            {t(error)}
             <Button
               onClick={() =>
                 download(
@@ -507,9 +507,9 @@ function App() {
                 )
               }
             >
-              导出备份
+              {t("导出备份")}
             </Button>
-            <Button onClick={() => location.reload()}>重新载入</Button>
+            <Button onClick={() => location.reload()}>{t("重新载入")}</Button>
           </div>
         )}
         <div className="mobile-tabs">
@@ -517,13 +517,13 @@ function App() {
             aria-pressed={mobile === "edit"}
             onClick={() => setMobile("edit")}
           >
-            编辑
+            {t("编辑")}
           </Button>
           <Button
             aria-pressed={mobile === "preview"}
             onClick={() => setMobile("preview")}
           >
-            预览
+            {t("预览")}
           </Button>
         </div>
         {panel && (
@@ -531,14 +531,14 @@ function App() {
             <div className="panel-title">
               <h2>
                 {panel === "standards"
-                  ? "设计规范"
+                  ? t("设计规范")
                   : panel === "import"
-                    ? "导入主题"
+                    ? t("导入主题")
                     : panel === "export"
-                      ? "导出到你的工程"
-                      : "审核与 Foundation"}
+                      ? t("导出到你的工程")
+                      : t("审核与 Foundation")}
               </h2>
-              <Button onClick={() => setPanel("")} aria-label="关闭面板">
+              <Button onClick={() => setPanel("")} aria-label={t("关闭面板")}>
                 ×
               </Button>
             </div>
@@ -552,18 +552,21 @@ function App() {
                     ...d,
                     provenance: { revision, source: "happyhands" },
                   }));
-                  setNotice("已应用 HappyHands 设计语言，可撤销；尚未批准。");
+                  setNotice(
+                    t("已应用 HappyHands 设计语言，可撤销；尚未批准。"),
+                  );
                 }}
                 onExport={(text) => download("design-checks.json", text)}
               />
             ) : panel === "import" ? (
               <>
                 <p>
-                  支持 :root / .dark CSS，或 Studio 草稿
-                  JSON。导入前会展示无法应用的内容。
+                  {t(
+                    "支持 :root / .dark CSS，或 Studio 草稿 JSON。导入前会展示无法应用的内容。",
+                  )}
                 </p>
                 <input
-                  aria-label="导入主题文件"
+                  aria-label={t("导入主题文件")}
                   type="file"
                   accept=".css,.json"
                   onChange={(e) =>
@@ -571,7 +574,7 @@ function App() {
                       const file = e.target.files?.[0];
                       if (!file) return;
                       if (file.size > 250000)
-                        throw Error("文件不能超过 250 KB");
+                        throw Error(t("文件不能超过 250 KB"));
                       file
                         .text()
                         .then((text) => {
@@ -583,7 +586,7 @@ function App() {
                   }
                 />
                 <textarea
-                  aria-label="导入源代码"
+                  aria-label={t("导入源代码")}
                   value={source}
                   onChange={(e) => {
                     setSource(e.target.value);
@@ -597,7 +600,7 @@ function App() {
                       guard(() => setPending(importCSS(source, styles)))
                     }
                   >
-                    解析 CSS
+                    {t("解析 CSS")}
                   </Button>
                   <Button
                     onClick={() =>
@@ -607,19 +610,23 @@ function App() {
                       })
                     }
                   >
-                    导入草稿 JSON
+                    {t("导入草稿 JSON")}
                   </Button>
                 </div>
                 {pending && (
                   <>
-                    <p>识别 {pending.count} 个变量，待确认应用。</p>
+                    <p>
+                      {t("识别")}
+                      {pending.count}
+                      {t("个变量，待确认应用。")}
+                    </p>
                     <ul>
                       {pending.warnings.map((w) => (
-                        <li key={w}>{w}</li>
+                        <li key={t(w)}>{t(w)}</li>
                       ))}
                     </ul>
                     <Button variant="primary" onClick={applyImport}>
-                      应用已识别值（可撤销）
+                      {t("应用已识别值（可撤销）")}
                     </Button>
                   </>
                 )}
@@ -628,7 +635,7 @@ function App() {
               <>
                 <div className="toolbar">
                   <select
-                    aria-label="导出格式"
+                    aria-label={t("导出格式")}
                     value={format}
                     onChange={(e) => setFormat(e.target.value as ExportKind)}
                   >
@@ -650,7 +657,7 @@ function App() {
                       )
                     }
                   >
-                    下载代码
+                    {t("下载代码")}
                   </Button>
                   <Button
                     onClick={() =>
@@ -660,38 +667,46 @@ function App() {
                       )
                     }
                   >
-                    下载草稿 JSON
+                    {t("下载草稿 JSON")}
                   </Button>
                   <Button
                     onClick={() =>
                       guard(() => {
                         navigator.clipboard
                           .writeText(exportTheme(styles, format))
-                          .then(() => setNotice("代码已复制"))
-                          .catch(() => setError("无法访问剪贴板，请下载代码"));
+                          .then(() => setNotice(t("代码已复制")))
+                          .catch(() =>
+                            setError(t("无法访问剪贴板，请下载代码")),
+                          );
                       })
                     }
                   >
-                    复制
+                    {t("复制")}
                   </Button>
                 </div>
                 <pre>{exportTheme(styles, format)}</pre>
                 <p>
-                  Tailwind 3 需要同时导出 CSS 与 config。导出不会更改批准版本。
+                  {t(
+                    "Tailwind 3 需要同时导出 CSS 与 config。导出不会更改批准版本。",
+                  )}
                 </p>
               </>
             ) : (
               <>
                 <div className="review-grid">
                   <div>
-                    <h3>1. 项目基础</h3>
+                    <h3>{t("1. 项目基础")}</h3>
                     <p>
                       {draft.foundation
-                        ? `基于 ${draft.foundation.foundationVersion}；品牌、组件与模式将完整保留。`
-                        : "没有导入基础版本时，将创建仅含主题 token 的初始 Foundation，品牌与组件为空。"}
+                        ? t(
+                            `基于 ${draft.foundation.foundationVersion}；品牌、组件与模式将完整保留。`,
+                          )
+                        : t(
+                            "没有导入基础版本时，将创建仅含主题 token 的初始 Foundation，品牌与组件为空。",
+                          )}
                     </p>
                     <label>
-                      导入现有 foundation-approval.json
+                      {t("导入现有 foundation-approval.json")}
                       <input
                         type="file"
                         accept=".json"
@@ -699,7 +714,7 @@ function App() {
                           const file = e.target.files?.[0];
                           if (!file) return;
                           if (file.size > 1000000) {
-                            setError("Foundation 文件不能超过 1 MB");
+                            setError(t("Foundation 文件不能超过 1 MB"));
                             return;
                           }
                           file
@@ -711,7 +726,9 @@ function App() {
                                   liveImportTarget.current.styles !== styles
                                 )
                                   throw Error(
-                                    "文件读取期间项目或主题已变化，请重新导入 Foundation",
+                                    t(
+                                      "文件读取期间项目或主题已变化，请重新导入 Foundation",
+                                    ),
                                   );
                                 const attached = attachFoundation(
                                   current(),
@@ -730,7 +747,10 @@ function App() {
                         }}
                       />
                     </label>
-                    <h3>2. 变更明细 · {changes.length}</h3>
+                    <h3>
+                      {t("2. 变更明细 ·")}
+                      {changes.length}
+                    </h3>
                     <div className="diff-list">
                       {changes.length ? (
                         changes.map((c) => (
@@ -743,7 +763,7 @@ function App() {
                           </div>
                         ))
                       ) : (
-                        <p>相对本地基线暂无修改。</p>
+                        <p>{t("相对本地基线暂无修改。")}</p>
                       )}
                     </div>
                     <Button
@@ -754,40 +774,44 @@ function App() {
                         )
                       }
                     >
-                      导出提案（未批准）
+                      {t("导出提案（未批准）")}
                     </Button>
                   </div>
                   <div>
-                    <h3>3. 人工批准</h3>
-                    <p>对比度只是局部检查。请同时审阅浅色、深色及页面状态。</p>
+                    <h3>{t("3. 人工批准")}</h3>
+                    <p>
+                      {t(
+                        "对比度只是局部检查。请同时审阅浅色、深色及页面状态。",
+                      )}
+                    </p>
                     {contrastChecks(styles, mode).map((c) => (
                       <p key={c.bg}>
                         {c.bg} / {c.fg}：
                         {c.ratio === null
-                          ? "含透明度，需检查实际背景"
-                          : `${c.ratio.toFixed(2)}:1 ${c.ratio >= 4.5 ? "✓" : "需关注"}`}
+                          ? t("含透明度，需检查实际背景")
+                          : `${c.ratio.toFixed(2)}:1 ${c.ratio >= 4.5 ? "✓" : t("需关注")}`}
                       </p>
                     ))}
                     <label>
-                      新版本
+                      {t("新版本")}
                       <input
-                        aria-label="Foundation 版本"
+                        aria-label={t("Foundation 版本")}
                         value={version}
                         onChange={(e) => setVersion(e.target.value)}
                       />
                     </label>
                     <label>
-                      审核人
+                      {t("审核人")}
                       <input
-                        aria-label="审核人"
+                        aria-label={t("审核人")}
                         value={reviewer}
                         onChange={(e) => setReviewer(e.target.value)}
                       />
                     </label>
                     <label>
-                      批准理由
+                      {t("批准理由")}
                       <textarea
-                        aria-label="批准理由"
+                        aria-label={t("批准理由")}
                         value={reason}
                         onChange={(e) => setReason(e.target.value)}
                       />
@@ -798,25 +822,25 @@ function App() {
                         checked={confirmed}
                         onChange={(e) => setConfirmed(e.target.checked)}
                       />
-                      我已审阅当前变更与双模式预览
+                      {t("我已审阅当前变更与双模式预览")}
                     </label>
                     <Button variant="primary" onClick={approveAndExport}>
-                      批准并导出 Harness 文件
+                      {t("批准并导出 Harness 文件")}
                     </Button>
                     <p>
-                      映射使用 theme.light.* / theme.dark.*
-                      名称，值保持字符串。下载后交给 Harness 的新 bootstrap run
-                      导入；已开始规划的运行不能覆盖版本。
+                      {t(
+                        "映射使用 theme.light.* / theme.dark.* 名称，值保持字符串。下载后交给 Harness 的新 bootstrap run 导入；已开始规划的运行不能覆盖版本。",
+                      )}
                     </p>
                     <Button
                       onClick={() => {
                         setReason("");
                         setConfirmed(false);
                         setPanel("");
-                        setNotice("未批准；当前草稿保留，基础版本不变。");
+                        setNotice(t("未批准；当前草稿保留，基础版本不变。"));
                       }}
                     >
-                      暂不批准，保留草稿
+                      {t("暂不批准，保留草稿")}
                     </Button>
                   </div>
                 </div>
@@ -834,10 +858,10 @@ function App() {
         >
           <aside className="controls">
             <details className="panel-settings">
-              <summary>面板宽度</summary>
+              <summary>{t("面板宽度")}</summary>
               <input
                 type="range"
-                aria-label="面板宽度"
+                aria-label={t("面板宽度")}
                 min="260"
                 max="460"
                 value={panelWidth}
@@ -845,7 +869,7 @@ function App() {
               />
             </details>
             <label className="project-name">
-              项目名称
+              {t("项目名称")}
               <input
                 value={draft.project}
                 maxLength={200}
@@ -856,9 +880,9 @@ function App() {
             </label>
             <div className="preset-bar">
               <label>
-                起始预设
+                {t("起始预设")}
                 <select
-                  aria-label="主题预设"
+                  aria-label={t("主题预设")}
                   value={preset}
                   onChange={(e) => setPreset(e.target.value)}
                 >
@@ -879,11 +903,11 @@ function App() {
                   setConfirmed(false);
                 }}
               >
-                应用
+                {t("应用")}
               </Button>
             </div>
             <p className="micro">
-              替换双模式值，可撤销。默认使用苹方优先的无衬线字体。
+              {t("替换双模式值，可撤销。默认使用苹方优先的无衬线字体。")}
             </p>
             <div className="segmented">
               {(["light", "dark"] as const).map((m) => (
@@ -892,7 +916,7 @@ function App() {
                   aria-pressed={mode === m}
                   onClick={() => setMode(m)}
                 >
-                  {m === "light" ? "☀ 浅色" : "☾ 深色"}
+                  {m === "light" ? t("☀ 浅色") : t("☾ 深色")}
                 </Button>
               ))}
             </div>
@@ -907,7 +931,7 @@ function App() {
                   key={id}
                   onClick={() => setTab(id)}
                 >
-                  {name}
+                  {t(name)}
                 </Button>
               ))}
             </div>
@@ -915,12 +939,12 @@ function App() {
               <>
                 <input
                   className="token-search"
-                  aria-label="搜索 token"
-                  placeholder="搜索 token…"
+                  aria-label={t("搜索 token")}
+                  placeholder={t("搜索 token…")}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
-                <Section title="语义颜色">
+                <Section title={t("语义颜色")}>
                   {colorKeys
                     .filter(
                       (k) =>
@@ -936,11 +960,11 @@ function App() {
                       />
                     ))}
                 </Section>
-                <Section title="整体色彩调整">
+                <Section title={t("整体色彩调整")}>
                   <label>
-                    色相偏移 {hue}°
+                    {t("色相偏移")} {hue}°
                     <input
-                      aria-label="色相偏移"
+                      aria-label={t("色相偏移")}
                       type="range"
                       min="-180"
                       max="180"
@@ -949,7 +973,7 @@ function App() {
                     />
                   </label>
                   <label>
-                    饱和度 × {saturation}
+                    {t("饱和度 ×")} {saturation}
                     <input
                       type="range"
                       min="0"
@@ -960,7 +984,7 @@ function App() {
                     />
                   </label>
                   <label>
-                    明度 × {lightness}
+                    {t("明度 ×")} {lightness}
                     <input
                       type="range"
                       min="0"
@@ -980,12 +1004,12 @@ function App() {
                       setLightness(1);
                     }}
                   >
-                    应用到当前模式
+                    {t("应用到当前模式")}
                   </Button>
                 </Section>
               </>
             ) : tab === "type" ? (
-              <Section title="字体与阅读节奏">
+              <Section title={t("字体与阅读节奏")}>
                 {(
                   [
                     "font-sans",
@@ -1002,12 +1026,14 @@ function App() {
                   />
                 ))}
                 <p className="micro">
-                  字体需已安装或由项目加载。苹方不可用时使用备用字体；官网不会因预设切换为衬线字体。
+                  {t(
+                    "字体需已安装或由项目加载。苹方不可用时使用备用字体；官网不会因预设切换为衬线字体。",
+                  )}
                 </p>
               </Section>
             ) : (
               <>
-                <Section title="尺寸与间距">
+                <Section title={t("尺寸与间距")}>
                   {(["radius", "spacing"] as Key[]).map((k) => (
                     <TokenInput
                       key={k}
@@ -1017,7 +1043,7 @@ function App() {
                     />
                   ))}
                 </Section>
-                <Section title="阴影">
+                <Section title={t("阴影")}>
                   {keys
                     .filter((k) => k.startsWith("shadow-"))
                     .map((k) => (
@@ -1030,7 +1056,9 @@ function App() {
                     ))}
                 </Section>
                 <p className="micro">
-                  字体、圆角、间距与阴影尺寸同步明暗模式；阴影颜色分别编辑。
+                  {t(
+                    "字体、圆角、间距与阴影尺寸同步明暗模式；阴影颜色分别编辑。",
+                  )}
                 </p>
               </>
             )}
@@ -1038,8 +1066,8 @@ function App() {
           <section className="preview-workspace">
             <div className="preview-toolbar">
               <select
-                aria-label="预览场景"
-                value={scene}
+                aria-label={t("预览场景")}
+                value={sceneLabel(scene)}
                 onChange={(e) => setScene(e.target.value)}
               >
                 {[
@@ -1051,30 +1079,32 @@ function App() {
                   "States",
                   "Connected page",
                 ].map((s) => (
-                  <option key={s}>{s}</option>
+                  <option key={s} value={s}>
+                    {sceneLabel(s)}
+                  </option>
                 ))}
               </select>
               <div className="toolbar">
                 <select
-                  aria-label="预览宽度"
+                  aria-label={t("预览宽度")}
                   value={viewport}
                   onChange={(e) => setViewport(e.target.value)}
                 >
-                  <option value="desktop">桌面</option>
-                  <option value="tablet">平板 · 768</option>
-                  <option value="mobile">手机 · 390</option>
+                  <option value="desktop">{t("桌面")}</option>
+                  <option value="tablet">{t("平板 · 768")}</option>
+                  <option value="mobile">{t("手机 · 390")}</option>
                 </select>
                 <Button
                   aria-pressed={compare}
                   onClick={() => setCompare(!compare)}
                 >
-                  前后对比
+                  {t("前后对比")}
                 </Button>
                 <Button
                   aria-pressed={inspector}
                   onClick={() => setInspector(!inspector)}
                 >
-                  检查 token
+                  {t("检查 token")}
                 </Button>
                 <Button
                   onClick={() =>
@@ -1082,11 +1112,11 @@ function App() {
                       document
                         .querySelector(".preview-workspace")
                         ?.requestFullscreen()
-                        .catch(() => setError("浏览器不支持全屏"));
+                        .catch(() => setError(t("浏览器不支持全屏")));
                     })
                   }
                 >
-                  全屏
+                  {t("全屏")}
                 </Button>
               </div>
             </div>
@@ -1094,8 +1124,10 @@ function App() {
               <div className="inspector-bar">
                 <b>{selected}</b>
                 <code>{values[selected]}</code>
-                <Button onClick={() => focusToken(selected)}>定位编辑</Button>
-                <span>点击组件查看绑定的语义 token</span>
+                <Button onClick={() => focusToken(selected)}>
+                  {t("定位编辑")}
+                </Button>
+                <span>{t("点击组件查看绑定的语义 token")}</span>
               </div>
             )}
             <div className={`preview-stage viewport-${viewport}`}>
@@ -1104,7 +1136,9 @@ function App() {
               ) : (
                 <>
                   {compare && (
-                    <div className="comparison-label">修改前 · 本地基线</div>
+                    <div className="comparison-label">
+                      {t("修改前 · 本地基线")}
+                    </div>
                   )}
                   {compare && (
                     <Preview
@@ -1115,7 +1149,9 @@ function App() {
                       onInspect={() => {}}
                     />
                   )}
-                  {compare && <div className="comparison-label">当前草稿</div>}
+                  {compare && (
+                    <div className="comparison-label">{t("当前草稿")}</div>
+                  )}
                   <Preview
                     styles={styles}
                     mode={mode}
@@ -1128,15 +1164,15 @@ function App() {
             </div>
             <div className="preview-footer">
               <span>
-                {mode === "light" ? "浅色" : "深色"} · {scene} ·
-                样式仅作用于预览
+                {mode === "light" ? t("浅色") : t("深色")} · {sceneLabel(scene)}{" "}
+                {t("· 样式仅作用于预览")}
               </span>
               <a
                 href={`https://github.com/jnsahaj/tweakcn/tree/${revision}`}
                 target="_blank"
                 rel="noreferrer"
               >
-                Theme engine adapted from tweakcn ↗
+                {t("主题引擎改编自 tweakcn ↗")}
               </a>
             </div>
           </section>
