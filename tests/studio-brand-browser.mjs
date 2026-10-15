@@ -1,3 +1,4 @@
+import { formatHex } from "culori";
 import { chromium } from "playwright-core";
 import assert from "node:assert/strict";
 import { mkdir } from "node:fs/promises";
@@ -13,7 +14,9 @@ const page = await context.newPage();
 const errors = [];
 page.on("pageerror", (e) => errors.push(e.message));
 try {
-  await page.goto(`${process.env.STUDIO_URL || "http://127.0.0.1:4173/apps/studio/"}?project=brand-check`);
+  await page.goto(
+    `${process.env.STUDIO_URL || "http://127.0.0.1:4173/apps/studio/"}?project=brand-check`,
+  );
   await page
     .getByRole("heading", { name: "项目设计系统", exact: true })
     .waitFor();
@@ -117,15 +120,20 @@ try {
   });
   const portal = await context.newPage();
   portal.on("pageerror", (e) => errors.push(e.message));
-  await portal.goto(new URL("/apps/portal/", process.env.STUDIO_URL || "http://127.0.0.1:4173").href);
+  await portal.goto(
+    new URL("/apps/portal/", process.env.STUDIO_URL || "http://127.0.0.1:4173")
+      .href,
+  );
   await portal.waitForFunction(
     () => document.documentElement.dataset.theme === "dark",
   );
   assert.equal(
-    await portal.evaluate(() =>
-      getComputedStyle(document.documentElement)
-        .getPropertyValue("--hh-bg")
-        .trim(),
+    formatHex(
+      await portal.evaluate(() =>
+        getComputedStyle(document.documentElement)
+          .getPropertyValue("--hh-bg")
+          .trim(),
+      ),
     ),
     "#111111",
   );
@@ -134,12 +142,14 @@ try {
     () => document.documentElement.dataset.hhTheme === "light",
   );
   assert.equal(
-    await portal.evaluate(() =>
-      getComputedStyle(document.documentElement)
-        .getPropertyValue("--hh-bg")
-        .trim(),
+    formatHex(
+      await portal.evaluate(() =>
+        getComputedStyle(document.documentElement)
+          .getPropertyValue("--hh-bg")
+          .trim(),
+      ),
     ),
-    "#F7F6F3",
+    "#f7f6f3",
   );
   assert.deepEqual(errors, []);
   console.log(
