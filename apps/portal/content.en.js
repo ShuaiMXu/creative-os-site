@@ -149,7 +149,7 @@ export const sections = {
   "explore": {
     "kicker": "02 / DESIGN SYSTEMS",
     "title": "Design system archive",
-    "copy": "Explore design systems and their official components, then choose an approach for your project. You can also keep your existing brand and document its rules first."
+    "copy": "Start with HappyHands rules and components, then choose a foundation for your project. Keep your existing brand and document its rules first if you prefer."
   },
   "screens": {
     "kicker": "03 / BEFORE & AFTER",

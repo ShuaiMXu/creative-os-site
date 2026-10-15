@@ -18,7 +18,7 @@ try {
   );
   await page.getByRole("heading", { name: "项目设计系统" }).waitFor();
   const shell = await page
-    .locator(".studio-header")
+    .locator(".hh-site-header")
     .evaluate((el) => getComputedStyle(el).backgroundColor);
   await page
     .getByRole("textbox", { name: "primary", exact: true })
@@ -49,7 +49,7 @@ try {
   );
   assert.equal(
     await page
-      .locator(".studio-header")
+      .locator(".hh-site-header")
       .evaluate((el) => getComputedStyle(el).backgroundColor),
     shell,
   );

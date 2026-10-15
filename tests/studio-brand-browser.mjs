@@ -18,7 +18,7 @@ try {
     .getByRole("heading", { name: "项目设计系统", exact: true })
     .waitFor();
   assert.equal(
-    await page.locator(".wordmark img").getAttribute("src"),
+    await page.locator(".hh-site-header img").getAttribute("src"),
     "/brand/happyhands-logo-ink.png",
   );
   assert.equal(
@@ -81,7 +81,7 @@ try {
   const before = await page
     .locator(".theme-preview")
     .evaluate((el) => el.style.getPropertyValue("--primary"));
-  await page.getByLabel("切换工作台外观").click();
+  await page.getByLabel("切换到深色模式").click();
   await page.waitForFunction(
     () => document.documentElement.dataset.hhTheme === "dark",
   );
@@ -93,7 +93,7 @@ try {
   );
   assert.equal(
     await page
-      .locator(".studio-header")
+      .locator(".hh-site-header")
       .evaluate((el) => getComputedStyle(el).backgroundColor),
     "rgb(22, 22, 22)",
   );

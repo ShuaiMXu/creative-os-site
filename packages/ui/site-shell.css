@@ -1,3 +1,77 @@
-.hh-site-header{position:relative;inset:auto;z-index:20;display:flex;align-items:center;gap:24px;min-height:80px;padding:16px max(20px,calc((100% - 1280px)/2));background:var(--hh-bg-raised);color:var(--hh-ink);border-bottom:1px solid var(--hh-line);width:100%;transform:none;backdrop-filter:none}
-.hh-site-header img{display:block;width:128px;height:auto}.hh-site-header nav{position:static;display:flex;align-items:center;gap:8px;padding:0;margin:0 auto;overflow:visible;white-space:nowrap;border:0}.hh-site-header nav a{display:block;min-height:44px;padding:10px 12px;border-radius:var(--hh-radius-md);text-decoration:none;color:var(--hh-ink-muted);font-size:14px}.hh-site-header nav a:hover,.hh-site-header nav a[aria-current=page]{background:var(--hh-bg-sunken);color:var(--hh-ink)}.hh-site-tools,.hh-site-header .header-actions{display:flex;align-items:center;gap:8px;margin:0}.hh-site-header button{min-height:44px;padding:8px 12px;background:var(--hh-bg-raised);border:1px solid var(--hh-line);border-radius:var(--hh-radius-md);color:var(--hh-ink);font:inherit;cursor:pointer}.hh-site-header :is(a,button):focus-visible{outline:2px solid var(--hh-ring);outline-offset:3px}
-@media(max-width:1000px){.hh-site-header{flex-wrap:wrap;gap:12px;padding:12px 20px}.hh-site-header nav{order:3;width:100%;overflow-x:auto;margin:0;justify-content:flex-start}.hh-site-header .hh-site-tools,.hh-site-header .header-actions{margin-left:auto}.hh-site-header nav a{flex:none}}
+header.hh-site-header {
+  position: relative;
+  inset: auto;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  height: auto;
+  min-height: 80px;
+  padding: 16px max(20px, calc((100% - 1280px) / 2));
+  background: var(--hh-bg-raised);
+  color: var(--hh-ink);
+  border-bottom: 1px solid var(--hh-line);
+  transform: none;
+  backdrop-filter: none;
+}
+.hh-site-header > a { justify-self: start; }
+header.hh-site-header img,
+header.hh-site-header .wordmark img { display: block; width: 128px; max-width: none; height: auto; }
+header.hh-site-header nav {
+  position: static;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  white-space: nowrap;
+  font: 500 14px/1.5 var(--hh-font-sans);
+}
+header.hh-site-header nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  min-height: 44px;
+  padding: 8px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--hh-ink-muted);
+  font: inherit;
+  text-transform: none;
+  letter-spacing: normal;
+  text-decoration: none;
+}
+header.hh-site-header nav a:hover,
+header.hh-site-header nav a[aria-current="page"] { background: transparent; color: var(--hh-ink); }
+header.hh-site-header nav a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 8px; }
+header.hh-site-header .hh-site-tools,
+header.hh-site-header .header-actions { display: flex; align-items: center; justify-self: end; gap: 8px; margin: 0; }
+header.hh-site-header button,
+header.hh-site-header #theme-toggle,
+header.hh-site-header #lang-switch button {
+  width: auto;
+  min-height: 44px;
+  padding: 8px 12px;
+  background: var(--hh-bg-raised);
+  border: 1px solid var(--hh-line);
+  border-radius: var(--hh-radius-md);
+  color: var(--hh-ink);
+  font: 500 14px/1.5 var(--hh-font-sans);
+  cursor: pointer;
+}
+header.hh-site-header #lang-switch { display: flex; padding: 0; border: 0; background: none; }
+.hh-site-header :is(a,button):focus-visible { outline: 2px solid var(--hh-ring); outline-offset: 3px; }
+@media (max-width: 1000px) {
+  header.hh-site-header { grid-template-columns: minmax(0, 1fr) auto; gap: 8px 12px; padding: 12px 20px; }
+  header.hh-site-header nav { grid-column: 1 / -1; grid-row: 2; min-width: 0; width: 100%; justify-content: safe center; overflow-x: auto; gap: 20px; }
+  header.hh-site-header .hh-site-tools,
+  header.hh-site-header .header-actions { grid-column: 2; grid-row: 1; }
+}

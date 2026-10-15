@@ -1,3 +1,5 @@
+import '../../packages/ui/site-layout.css';
+import {readLanguage, readTheme, savePreference} from '../../packages/ui/site-preferences.ts';
 import * as zh from './content.zh.js';
 import {siteNavigation} from '../../packages/ui/site-navigation.ts';
 import '../../packages/ui/site-shell.css';
@@ -7,23 +9,21 @@ import * as en from './content.en.js';
 import { repositories, heroScreens } from './content.js';
 import { startWhirl } from './whirl.js';
 
-const LANG_KEY = 'pd-lang';
-let lang = localStorage.getItem(LANG_KEY) || 'zh';
+let lang = readLanguage();
 const t = () => lang === 'zh' ? zh : en;
 document.querySelector('.site-header').classList.add('hh-site-header');
 document.querySelector('.header-cta')?.remove();
 
 const systemTheme = matchMedia('(prefers-color-scheme: dark)');
-let themePreference = localStorage.getItem('hh-theme');
-if (!['light', 'dark'].includes(themePreference)) themePreference = null;
+
 function applyTheme(theme) {
   document.documentElement.dataset.theme = theme;
   document.documentElement.style.colorScheme = theme;
   document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#111111' : '#f7f6f3';
   const button = document.getElementById('theme-toggle');
   if (button) {
-    button.textContent = theme === 'dark' ? '☀' : '☾';
-    button.setAttribute('aria-label', lang === 'zh' ? `切换到${theme === 'dark' ? '浅色' : '暗黑'}模式` : `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
+    button.textContent = lang === 'zh' ? (theme === 'dark' ? '浅色' : '深色') : (theme === 'dark' ? 'Light' : 'Dark');
+    button.setAttribute('aria-label', lang === 'zh' ? `切换到${theme === 'dark' ? '浅色' : '深色'}模式` : `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
   }
 }
 const themeButton = document.createElement('button');
@@ -31,12 +31,16 @@ themeButton.id = 'theme-toggle';
 themeButton.type = 'button';
 document.querySelector('.header-actions').prepend(themeButton);
 themeButton.addEventListener('click', () => {
-  themePreference = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-  localStorage.setItem('hh-theme', themePreference);
-  applyTheme(themePreference);
+  const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  savePreference('hh-theme', next);
+  applyTheme(next);
 });
-systemTheme.addEventListener('change', event => { if (!themePreference) applyTheme(event.matches ? 'dark' : 'light'); });
-applyTheme(themePreference || (systemTheme.matches ? 'dark' : 'light'));
+systemTheme.addEventListener('change', () => applyTheme(readTheme()));
+window.addEventListener('storage', event => {
+  if (event.key === 'hh-theme' || event.key === null) applyTheme(readTheme());
+  if (event.key === 'pd-lang' || event.key === null) {lang = readLanguage(); renderContent();}
+});
+applyTheme(readTheme());
 
 // -- language switcher --
 function renderLangSwitch() {
@@ -48,30 +52,38 @@ function renderLangSwitch() {
   switcher.id = 'lang-switch';
   switcher.setAttribute('role', 'group');
   switcher.setAttribute('aria-label', 'Language / 语言');
-  for (const code of ['zh', 'en']) {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.dataset.lang = code;
-    btn.textContent = code === 'zh' ? '中文' : 'EN';
-    btn.addEventListener('click', () => setLang(code));
-    switcher.appendChild(btn);
-  }
-  actions.prepend(switcher);
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.addEventListener('click', () => setLang(lang === 'zh' ? 'en' : 'zh'));
+  switcher.appendChild(btn);
+  actions.appendChild(switcher);
 }
 
 function setLang(code) {
   lang = code;
-  localStorage.setItem(LANG_KEY, code);
+  savePreference('pd-lang', code);
   renderContent();
 }
+
+function updateNavigation() {
+  document.querySelectorAll('.desktop-nav a').forEach(link => {
+    if (location.hash && new URL(link.href).pathname === location.pathname && new URL(link.href).hash === location.hash) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
+  });
+}
+window.addEventListener('hashchange', updateNavigation);
 
 // -- render all sections from the active language pack --
 function renderContent() {
   const c = t();
+  document.querySelector('.skip-link').textContent=lang==='zh'?'跳到主要内容':'Skip to content';
+  document.querySelector('.desktop-nav').setAttribute('aria-label',lang==='zh'?'主要导航':'Main navigation');
+  document.querySelector('.wordmark').setAttribute('aria-label','HappyHands');
   document.querySelector('.desktop-nav').innerHTML=siteNavigation.map(item=>`<a href="${item.href}">${lang==='zh'?item.zh:item.en}</a>`).join('');
+  updateNavigation();
   applyTheme(document.documentElement.dataset.theme);
 
-  document.querySelectorAll('[data-lang]').forEach(button => { button.setAttribute('aria-pressed', String(button.dataset.lang === lang)); });
+  document.querySelector('#lang-switch button').textContent = lang === 'zh' ? 'English' : '中文';
   // hero
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
   document.title = lang === 'zh' ? 'HappyHands — 持续在线的 AI 产品设计师' : 'HappyHands — AI Product Designer';
@@ -105,9 +117,8 @@ function renderContent() {
     </section>
     <section class="content-section section-explore" id="explore">
       <div class="section-head"><div><p class="kicker">${c.sections.explore.kicker}</p><h2>${c.sections.explore.title}</h2></div><div><p>${c.sections.explore.copy}</p></div></div>
-      <a class="text-link" href="/apps/studio/">${lang === 'zh' ? '定制你的设计令牌 · Token Studio ↗' : 'Customize your design tokens · Token Studio ↗'}</a>
       ${designSystemsMarkup(lang)}
-      <div class="system-grid">${c.systems.map(systemCard).join('')}</div>
+      <details class="system-archives"><summary>${lang === 'zh' ? '更多案例与探索记录' : 'More cases and explorations'}</summary><div class="system-archive-grid">${c.systems.filter(item => item.title !== 'HappyHands').map(systemCard).join('')}</div></details>
     </section>
     <section class="content-section" id="screens"><div class="section-head"><div><p class="kicker">${lang === 'zh' ? '案例与组件' : 'CASES & COMPONENTS'}</p><h2>${lang === 'zh' ? '继续了解实际应用' : 'Explore real applications'}</h2></div><div><p>${lang === 'zh' ? '查看有来源的审阅记录，或在设计系统页面试用组件状态。' : 'Read documented review evidence or try component states in the design system.'}</p><a class="text-link" href="https://github.com/ShuaiMXu/creative-os/blob/main/docs/happyclaw-case.md">HappyClaw · ${lang === 'zh' ? '审阅案例' : 'Review case'}</a><a class="text-link" href="/systems/happyhands/#components">HappyHands · ${lang === 'zh' ? '组件与状态' : 'Components & states'}</a></div></div></section>
     ${connectMarkup(lang)}
@@ -127,115 +138,22 @@ function renderContent() {
 
   // re-observe sections for intersection animation
   observeSections();
-  setupRails();
   setupConnect(lang);
 }
 
-// Native scrolling keeps touch, trackpad and keyboard browsing available.
-let disposeRails = () => {};
-const catalogState = {};
-function setupRails() {
-  disposeRails();
-  const cleanups = [];
-  for (const [id, selector] of [['explore', '.system-grid'], ['screens', '.screen-pairs'], ['elements', '.elements-grid']]) {
-    const section = document.getElementById(id);
-    const rail = section?.querySelector(selector);
-    if (!rail) continue;
-    rail.id = `${id}-rail`;
-    rail.tabIndex = 0;
-    rail.setAttribute('role', 'region');
-    rail.setAttribute('aria-label', section.querySelector('h2').textContent);
-    const toolbar = document.createElement('div');
-    toolbar.className = 'rail-toolbar';
-    const hint = lang === 'zh' ? '横向滑动浏览' : 'Swipe to explore';
-    toolbar.innerHTML = `<span>${hint}</span><div><button type="button" aria-label="${lang === 'zh' ? '上一项' : 'Previous item'}" aria-controls="${rail.id}">←</button><button type="button" aria-label="${lang === 'zh' ? '下一项' : 'Next item'}" aria-controls="${rail.id}">→</button></div>`;
-    rail.before(toolbar);
-    const [previous, next] = toolbar.querySelectorAll('button');
-    const cards = [...rail.children];
-    const state = catalogState[id] ||= { filter: 'all', view: 'row' };
-    const zh = lang === 'zh';
-    const groups = id === 'explore'
-      ? [['archive', zh ? '档案与案例' : 'Archives & cases', [0,1,2]], ['planned', zh ? '预设方向' : 'Proposed presets', [3,4,5]]]
-      : id === 'elements'
-        ? [['input', zh ? '输入与操作' : 'Input & actions', [0,1]], ['feedback', zh ? '状态与反馈' : 'Status & feedback', [2,5,6,7]], ['structure', zh ? '基础与结构' : 'Foundations & structure', [3,4,8]]]
-        : [['references', zh ? '参考占位' : 'Reference previews', [0,1]]];
-    const filters = document.createElement('div');
-    filters.className = 'catalog-filters';
-    filters.setAttribute('role', 'group');
-    filters.setAttribute('aria-label', zh ? '内容分类' : 'Content categories');
-    filters.innerHTML = [['all', zh ? '全部' : 'All'], ...groups].map(([key,label]) => `<button type="button" data-filter="${key}">${label}</button>`).join('');
-    toolbar.before(filters);
-    const views = document.createElement('div');
-    views.className = 'catalog-views';
-    views.setAttribute('role', 'group');
-    views.setAttribute('aria-label', zh ? '浏览方式' : 'View mode');
-    views.innerHTML = `<button type="button" data-view="row">${zh ? '横排' : 'Row'}</button><button type="button" data-view="grid">${zh ? '网格' : 'Grid'}</button>`;
-    toolbar.insertBefore(views, toolbar.lastElementChild);
-    const summary = toolbar.firstElementChild;
-    summary.setAttribute('role', 'status');
-    const apply = () => {
-      const indices = groups.find(([key]) => key === state.filter)?.[2];
-      cards.forEach((card,index) => { card.hidden = !!indices && !indices.includes(index); });
-      rail.dataset.view = state.view;
-      const count = cards.filter(card => !card.hidden).length;
-      const unit = zh ? (id === 'screens' ? '组参考占位' : id === 'elements' ? '类组件示意' : '项档案与预设') : (id === 'screens' ? 'reference pairs' : id === 'elements' ? 'component studies' : 'archives & presets');
-      summary.textContent = `${count} / ${cards.length} ${unit} · ${state.view === 'row' ? (zh ? '横排浏览' : 'row view') : (zh ? '网格浏览' : 'grid view')}`;
-      filters.querySelectorAll('button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === state.filter)));
-      views.querySelectorAll('button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.view === state.view)));
-      previous.parentElement.hidden = state.view === 'grid';
-      rail.scrollLeft = 0;
-      update();
-    };
-    filters.addEventListener('click', event => { const button = event.target.closest('[data-filter]'); if (button) { state.filter = button.dataset.filter; apply(); } });
-    views.addEventListener('click', event => { const button = event.target.closest('[data-view]'); if (button) { state.view = button.dataset.view; apply(); } });
-    const update = () => {
-      previous.disabled = rail.scrollLeft <= 2;
-      next.disabled = rail.scrollLeft >= rail.scrollWidth - rail.clientWidth - 2;
-    };
-    const step = direction => {
-      const card = cards.find(card => !card.hidden);
-      if (!card || state.view === 'grid') return;
-      const gap = parseFloat(getComputedStyle(rail).columnGap) || 0;
-      rail.scrollBy({left: direction * (card.getBoundingClientRect().width + gap), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
-    };
-    previous.addEventListener('click', () => step(-1));
-    next.addEventListener('click', () => step(1));
-    const onKey = event => {
-      if (event.target !== rail || !['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
-      event.preventDefault();
-      step(event.key === 'ArrowRight' ? 1 : -1);
-    };
-    rail.addEventListener('keydown', onKey);
-    rail.addEventListener('scroll', update, {passive:true});
-    const resize = new ResizeObserver(update);
-    resize.observe(rail);
-    apply();
-    cleanups.push(() => { resize.disconnect(); rail.removeEventListener('scroll', update); rail.removeEventListener('keydown', onKey); });
-  }
-  disposeRails = () => cleanups.forEach(cleanup => cleanup());
-}
-
-// -- card builders (use the active language pack) --
 function appCard(item) {
   const c = t();
+  document.querySelector('.skip-link').textContent=lang==='zh'?'跳到主要内容':'Skip to content';
+  document.querySelector('.desktop-nav').setAttribute('aria-label',lang==='zh'?'主要导航':'Main navigation');
+  document.querySelector('.wordmark').setAttribute('aria-label','HappyHands');
   return `<article class="app-card"><div class="card-top"><span>${item.index}</span><span class="state">${item.state}</span></div><h3>${item.title}</h3><p>${item.description}</p><ul>${item.meta.map(v => `<li>${v}</li>`).join('')}</ul><a href="${item.href || repositories.core}">${item.action} <span aria-hidden="true">↗</span></a></article>`;
 }
 
 const referenceImage = index => `/assets/hero/screen-${String(index).padStart(3, '0')}.webp`;
 const referenceLabel = () => lang === 'zh' ? 'Appllama 参考图 · 临时占位' : 'Appllama reference · Placeholder';
-function referencePreview(index, className = '') {
-  return `<div class="reference-preview ${className}"><img src="${referenceImage(index)}" alt="${referenceLabel()}" loading="lazy"><span>${referenceLabel()}</span></div>`;
-}
-function systemCard(item, index) {
+function systemCard(item) {
   return `<article class="system-card"><p class="card-tag">${item.tag}</p><h3>${item.title}</h3><p>${item.description}</p><div class="chips">${item.traits.map(v => `<span>${v}</span>`).join('')}</div><a class="card-link" href="${item.href}">${item.action} ↗</a></article>`;
 }
-function pairCard(item, index) {
-  return `<article class="screen-pair"><div class="pair-head"><div><p class="card-tag">${referenceLabel()}</p><h3>${lang === 'zh' ? '页面参考' : 'Screen reference'} 0${index + 1}</h3></div></div><div class="reference-pair">${referencePreview(21 + index * 2)}${referencePreview(22 + index * 2)}</div></article>`;
-}
-function elementCard(item, index) {
-  return `<article class="element-card">${referencePreview(41 + index)}<p class="card-tag">UI ELEMENT</p><h3>${item.title}</h3><p>${item.description}</p></article>`;
-}
-
 function stepCard(item) {
   return `<article class="step-card"><span>${item[0]}</span><h3>${item[1]}</h3><p>${item[2]}</p></article>`;
 }

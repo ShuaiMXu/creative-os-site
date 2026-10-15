@@ -1,3 +1,4 @@
+import { t, sceneLabel } from "./i18n";
 import { useEffect, useRef, useState } from "react";
 import {
   variables,
@@ -95,35 +96,36 @@ export function ConnectedPreview({
             setUrl(next.href);
             setLoad((n) => n + 1);
           } catch {
-            setStatus("请输入不含凭据的 HTTP(S) 预览地址");
+            setStatus(t("请输入不含凭据的 HTTP(S) 预览地址"));
           }
         }}
       >
         <input
-          aria-label="项目预览地址"
+          aria-label={t("项目预览地址")}
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-        <button>连接</button>
+        <button>{t("连接")}</button>
       </form>
-      <p role="status">{status}</p>
+      <p role="status">{t(status)}</p>
       <iframe
         ref={frame}
-        title="受控项目页面"
+        title={t("受控项目页面")}
         src={url}
         onLoad={() => setLoad((n) => n + 1)}
         sandbox="allow-scripts allow-same-origin"
         referrerPolicy="no-referrer"
       />
       <details>
-        <summary>如何接入自己的页面</summary>
+        <summary>{t("如何接入自己的页面")}</summary>
         <p>
-          仅用于你控制的开发预览。安装脚本后，将 data-studio-origin 设置为当前
-          Studio 来源。页面还需允许被该来源嵌入。
+          {t(
+            "仅用于你控制的开发预览。安装脚本后，将 data-studio-origin 设置为当前 Studio 来源。页面还需允许被该来源嵌入。",
+          )}
         </p>
         <pre>{`<script src="/happyhands-preview.js" data-studio-origin="${location.origin}"></script>`}</pre>
         <a href="/happyhands-preview.js" download>
-          下载桥接脚本
+          {t("下载桥接脚本")}
         </a>
       </details>
     </div>

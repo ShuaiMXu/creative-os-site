@@ -1,6 +1,5 @@
 import './design-systems.css';
 
-const escape = value => value.replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 
 export function quartzPrompt(language, existing) {
   const zh = language === 'zh';
@@ -25,15 +24,13 @@ export function quartzPrompt(language, existing) {
 }
 
 export function designSystemsMarkup(language) {
-  const zh = language === 'zh';
-  const text = (cn,en) => zh ? cn : en;
-  const prompts = [false,true].map(existing => {
-    const title = existing ? text('已有项目 · 逐页迁移','Existing project · migrate a screen') : text('新项目 · 从首屏开始','New project · start with one screen');
-    const prompt = escape(quartzPrompt(language, existing));
-    return `<details class="system-prompt"><summary>${title}</summary><p>${text('复制给你的编程助手。指令会先检查兼容性，再实施约定范围。','Copy this to your coding assistant. It checks compatibility before changing the agreed scope.')}</p><pre tabindex="0">${prompt}</pre><button type="button" class="button button-secondary" data-copy="${prompt}">${text('复制接入指令','Copy setup prompt')}</button></details>`;
-  }).join('');
-  return `<article class="system-feature" id="quartz" aria-labelledby="quartz-title">
-    <div class="system-feature-intro"><p class="kicker">${text('外部设计系统 · design.how','External design system · design.how')}</p><h3 id="quartz-title">Quartz</h3><p>${text('为 AI 产品与代理工作台准备的组件、页面模板和设计规则。先看真实组件，再决定是否适合你的项目。','Components, screen blocks and design rules for AI products and agent consoles. Explore the real components before choosing it for your project.')}</p><div class="system-feature-actions"><a class="button button-primary" href="/systems/quartz/">${text('探索 Quartz','Explore Quartz')}</a><a class="text-link" href="/systems/quartz/#components">${text('组件目录','Component registry')}</a></div><p class="system-source">${text('来源：design.how · 资料核对：2026-10-16。这里只收录说明与接入指令；组件版本、许可及使用条款以官方为准。','Source: design.how · checked 2026-10-16. This listing provides guidance and setup prompts; component versions, licenses and terms are maintained upstream.')}</p></div>
-    <div class="system-feature-guide"><dl><div><dt>${text('适合','Best for')}</dt><dd>${text('代理会话、工具审批、运行记录与管理界面','Agent sessions, tool approvals, run traces and admin interfaces')}</dd></div><div><dt>${text('技术基础','Stack')}</dt><dd>React · Tailwind CSS · shadcn</dd></div><div><dt>${text('已有品牌','Existing brand')}</dt><dd>${text('保留你的设计规范，先确认迁移范围；不默认替换整个产品。','Keep approved design rules and agree on scope before migration.')}</dd></div></dl>${prompts}<p class="system-next">${text('修改完成后，可按本地工作台指引接入项目，采集页面并核对修改结果。','After implementation, follow the local workbench guide to connect your project and review captured results.')} <a href="https://github.com/ShuaiMXu/creative-os/blob/main/docs/local-workbench.md">${text('查看启动指引','Read the startup guide')}</a></p></div>
-  </article>`;
+  const t = (zh,en) => language === 'zh' ? zh : en;
+  return `<div class="system-collection">
+    <article class="system-feature system-feature-primary" id="happyhands" aria-labelledby="happyhands-title">
+      <div><p class="kicker">${t('我们的设计系统','Our design system')}</p><h3 id="happyhands-title">HappyHands</h3><p>${t('从品牌、语义颜色到组件状态，让每个页面遵循同一套规则。官网与主题工作室正在使用的设计基础。','From brand and semantic colors to component states: shared rules for every screen. The foundation used by this website and Theme Studio.')}</p><div class="system-feature-actions"><a class="button button-primary" href="/systems/happyhands/">${t('探索 HappyHands','Explore HappyHands')}</a><a class="text-link" href="/systems/happyhands/#components">${t('试用组件','Try components')}</a></div></div>
+      <div class="system-specimen" aria-hidden="true"><span>HappyHands</span><strong>${t('清楚、克制、亲和。','Clear. Considered. Human.')}</strong><div class="specimen-colors"><i></i><i></i><i></i><i></i></div><p>${t('品牌规范 · 双模式主题 · 组件状态','Brand rules · Light & dark · Component states')}</p></div>
+    </article>
+    <article class="system-feature system-feature-secondary" id="quartz" aria-labelledby="quartz-title"><div><p class="kicker">${t('外部设计系统 · design.how','External system · design.how')}</p><h3 id="quartz-title">Quartz</h3><p>${t('面向 AI 产品和代理工作流。查看组件目录、页面模板与接入说明，再判断是否适合你的项目。','For AI products and agent workflows. Explore its component catalog, screen blocks and setup guidance to see whether it fits your project.')}</p></div><a class="button button-secondary" href="/systems/quartz/">${t('了解 Quartz','Explore Quartz')}</a></article>
+    <div class="system-studio-link"><div><h3>${t('把规范用到你的项目','Apply the rules to your project')}</h3><p>${t('调整主题，查看组件状态，再导出经过确认的设计变量。','Edit the theme, inspect component states, then export the tokens you have reviewed.')}</p></div><a class="text-link" href="/apps/studio/">${t('打开主题工作室','Open Theme Studio')} →</a></div>
+  </div>`;
 }
