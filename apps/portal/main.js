@@ -1,5 +1,6 @@
 import * as zh from './content.zh.js';
 import { designSystemsMarkup } from './design-systems.js';
+import { connectMarkup, setupConnect } from './connect.js';
 import * as en from './content.en.js';
 import { repositories, heroScreens } from './content.js';
 import { startWhirl } from './whirl.js';
@@ -111,6 +112,7 @@ function renderContent() {
       <div class="section-head"><div><p class="kicker">${c.sections.elements.kicker}</p><h2>${c.sections.elements.title}</h2></div><div><p>${c.sections.elements.copy}</p></div></div>
       <div class="elements-grid">${c.elements.map(elementCard).join('')}</div>
     </section>
+    ${connectMarkup(lang)}
     <section class="get-started" id="get-started">
       <div class="get-started-copy"><p class="kicker">${c.sections.getStarted.kicker}</p><h2>${c.sections.getStarted.title}<br><span>${c.sections.getStarted.titleLine2}</span></h2><p>${c.sections.getStarted.copy}</p></div>
       <div class="steps-grid">${c.steps.map(stepCard).join('')}</div>
@@ -128,6 +130,7 @@ function renderContent() {
   // re-observe sections for intersection animation
   observeSections();
   setupRails();
+  setupConnect(lang);
 }
 
 // Native scrolling keeps touch, trackpad and keyboard browsing available.
