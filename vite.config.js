@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-import { resolve, dirname, join } from 'node:path';
+import { resolve, dirname, join, relative, isAbsolute } from 'node:path';
 import { existsSync, statSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
@@ -9,8 +9,12 @@ const root = dirname(fileURLToPath(import.meta.url));
 // Vite's public middleware only serves exact file paths, so directory requests
 // would fall through to the SPA fallback. Serve their index.html directly.
 function mirrorIndex(urlPath) {
-  const rel = decodeURIComponent(urlPath.replace(/^\/skillry-full\/?/, '').replace(/\/+$/, ''));
-  const base = join(root, 'public', 'skillry-full', rel);
+  let rel;
+  try { rel = decodeURIComponent(urlPath.replace(/^\/skillry-full\/?/, '').replace(/\/+$/, '')); } catch { return null; }
+  const allowed = resolve(root, 'public', 'skillry-full');
+  const base = resolve(allowed, rel);
+  const inside = relative(allowed, base);
+  if (inside.startsWith('..') || isAbsolute(inside)) return null;
   const idx = join(base, 'index.html');
   try {
     if (statSync(base).isDirectory() && existsSync(idx)) return idx;

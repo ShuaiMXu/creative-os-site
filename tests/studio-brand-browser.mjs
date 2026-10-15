@@ -13,7 +13,7 @@ const page = await context.newPage();
 const errors = [];
 page.on("pageerror", (e) => errors.push(e.message));
 try {
-  await page.goto("http://127.0.0.1:4173/apps/studio/?project=brand-check");
+  await page.goto(`${process.env.STUDIO_URL || "http://127.0.0.1:4173/apps/studio/"}?project=brand-check`);
   await page
     .getByRole("heading", { name: "项目设计系统", exact: true })
     .waitFor();
@@ -117,7 +117,7 @@ try {
   });
   const portal = await context.newPage();
   portal.on("pageerror", (e) => errors.push(e.message));
-  await portal.goto("http://127.0.0.1:4173/apps/portal/");
+  await portal.goto(new URL("/apps/portal/", process.env.STUDIO_URL || "http://127.0.0.1:4173").href);
   await portal.waitForFunction(
     () => document.documentElement.dataset.theme === "dark",
   );
