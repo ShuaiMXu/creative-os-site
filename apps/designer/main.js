@@ -2,6 +2,7 @@ import happyclaw from '../../examples/happyclaw-site/experience.json' with { typ
 import sample from '../../examples/vibe-coded-app/experience.json' with { type: 'json' };
 import { assertExperienceSpec, rankedFindings, priority, codexBrief, recordJudgment } from '../../packages/experience-core/index.js';
 import { workflowState } from '../../packages/harness-core/workflow.js';
+import { renderCanvas, renderCodeDiff } from './canvas/index.js';
 
 const $ = id => document.getElementById(id);
 const cases = { happyclaw, sample };
@@ -513,7 +514,56 @@ async function select(id) {
   selected = normalisedFindings(spec, run?.diagnosis)[0]?.id ?? null;
   history.replaceState(null, '', `?case=${encodeURIComponent(id)}`);
   render();
+  applyView(params.get('view') || 'list');
 }
+
+// B5 view switch: list stays in the workbench; canvas/codediff go fullscreen
+let currentView = 'list';
+async function applyView(view) {
+  currentView = view;
+  params.set('view', view);
+  history.replaceState(null, '', `?${params.toString()}`);
+
+  const workbench = document.getElementById('workbench-shell');
+  const fullscreen = document.getElementById('fullscreen-shell');
+  const fsCanvas = document.getElementById('pd-fs-canvas');
+  const fsCodediff = document.getElementById('pd-fs-codediff-container');
+
+  if (view === 'list') {
+    workbench.hidden = false;
+    fullscreen.hidden = true;
+    document.body.style.overflow = '';
+    return;
+  }
+
+  // canvas / codediff: fullscreen takeover
+  workbench.hidden = true;
+  fullscreen.hidden = false;
+  document.body.style.overflow = 'hidden';
+
+  const runName = document.getElementById('pd-fs-run-name');
+  if (runName) runName.textContent = run ? `run:${run.manifest.id}` : caseId;
+
+  if (view === 'canvas' && run) {
+    fsCanvas.hidden = false;
+    fsCodediff.hidden = true;
+    await renderCanvas(fsCanvas, run);
+  } else if (view === 'codediff' && run) {
+    fsCanvas.hidden = true;
+    fsCodediff.hidden = false;
+    await renderCodeDiff(fsCodediff, run, run.base);
+  }
+}
+
+// fullscreen topbar buttons
+document.getElementById('pd-back-to-review')?.addEventListener('click', e => {
+  e.preventDefault();
+  applyView('list');
+});
+document.querySelector('button#pd-fs-codediff')?.addEventListener('click', () => applyView('codediff'));
+document.querySelectorAll('.pd-view-jump').forEach(btn => {
+  btn.addEventListener('click', () => applyView(btn.dataset.view));
+});
 
 $('case-select').addEventListener('change', async event => {
   const next = event.target.value;

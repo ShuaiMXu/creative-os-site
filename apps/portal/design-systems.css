@@ -1,0 +1,20 @@
+.system-feature { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.2fr); gap:var(--hh-space-12); margin:var(--hh-space-8) 0; padding:var(--hh-space-8); background:var(--hh-bg-raised); color:var(--hh-ink); border:1px solid var(--hh-line); border-radius:var(--hh-radius-xl); scroll-margin-top:100px; }
+.system-feature h3 { margin:var(--hh-space-4) 0; font-size:40px; letter-spacing:-.035em; line-height:1.15; }
+.system-feature p { line-height:1.8; }
+.system-feature .kicker,.system-feature .system-source { color:var(--hh-ink-muted); }
+.system-feature .system-source { margin-top:var(--hh-space-8); font-size:12px; }
+.system-feature-actions { display:flex; gap:var(--hh-space-4); align-items:center; flex-wrap:wrap; margin-top:var(--hh-space-6); }
+.system-feature .text-link { margin:0; }
+.section-explore .system-feature .button-primary { background:var(--hh-primary); color:var(--hh-on-primary); }
+.section-explore .system-feature .button-secondary { background:var(--hh-bg-sunken); color:var(--hh-ink); border:1px solid var(--hh-line-strong); }
+.system-feature-guide { min-width:0; }
+.system-feature dl { margin:0 0 var(--hh-space-6); }
+.system-feature dl>div { display:grid; grid-template-columns:100px minmax(0,1fr); gap:var(--hh-space-4); padding:var(--hh-space-3) 0; border-bottom:1px solid var(--hh-line); }
+.system-feature dt { color:var(--hh-ink-muted); }.system-feature dd { margin:0; line-height:1.6; }
+.system-prompt { border-bottom:1px solid var(--hh-line); }
+.system-prompt summary { cursor:pointer; padding:var(--hh-space-4) 0; min-height:44px; font-weight:600; }
+.system-prompt pre { white-space:pre-wrap; overflow-wrap:anywhere; max-height:320px; overflow:auto; padding:var(--hh-space-4); background:var(--hh-bg-sunken); border-radius:var(--hh-radius-md); font:13px/1.8 var(--hh-font-mono); }
+.system-prompt button { margin-bottom:var(--hh-space-4); }
+.system-feature :is(a,button,summary,pre):focus-visible { outline:2px solid var(--hh-ring); outline-offset:4px; }
+.system-next { margin-top:var(--hh-space-6); font-size:13px; color:var(--hh-ink-muted); }.system-next a { text-decoration:underline; text-underline-offset:3px; }
+@media(max-width:899px) { .system-feature { grid-template-columns:1fr; gap:var(--hh-space-6); padding:var(--hh-space-5); }.system-feature dl>div { grid-template-columns:80px minmax(0,1fr); } }

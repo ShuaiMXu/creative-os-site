@@ -1,0 +1,1 @@
+{"name":"@happyhands/theme-core","private":true,"version":"0.1.0","type":"module","exports":{".":"./index.ts","./project":"./project.ts"},"dependencies":{"@happyhands/contracts":"*","ajv":"8.20.0","culori":"^4.0.2","postcss":"^8.5.28","zod":"^3.25.76"}}
