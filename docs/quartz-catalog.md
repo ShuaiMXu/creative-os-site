@@ -1,6 +1,6 @@
 # Quartz catalog entry
 
-The portal Design Systems section lists Quartz as an external system from design.how. The entry links to the official preview and registry and offers separate Chinese/English setup prompts for new and existing projects. It retains HappyHands tokens and does not install Quartz or change the design of reviewed products.
+The portal Design Systems section lists Quartz as an external system from design.how. The primary entry and component link now lead to our own `/systems/quartz/` page. Upstream links remain in source documentation and setup instructions. The page offers separate Chinese/English setup prompts for new and existing projects. It retains HappyHands tokens and does not install Quartz or change the design of reviewed products.
 
 Source checked on 2026-10-16: https://design.how/r/quartz/skill.json, theme.json, registry.json, lint.json and project-home.json. The registry supplies React/TSX components and a Tailwind theme. The prompt checks compatibility first, scopes migration, includes the portal provider, preserves approved rules and asks the executing agent to record adopted versions. This is a dated documentation check, not a pinned upstream release or license certification. No upstream component code, fonts or screenshots are redistributed.
 

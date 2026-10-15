@@ -207,8 +207,8 @@ export const systems = [
       "Calm",
       "Friendly"
     ],
-    "href": "/brand/happyhands-logo-paper.png",
-    "action": "View brand mark"
+    "href": "/systems/happyhands/",
+    "action": "Explore design system"
   },
   {
     "tag": "Case Study",

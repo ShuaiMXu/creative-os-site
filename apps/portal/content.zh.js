@@ -207,8 +207,8 @@ export const systems = [
       "克制",
       "亲和"
     ],
-    "href": "/brand/happyhands-logo-paper.png",
-    "action": "查看品牌标识"
+    "href": "/systems/happyhands/",
+    "action": "探索设计系统"
   },
   {
     "tag": "审阅案例",

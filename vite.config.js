@@ -36,6 +36,8 @@ export default defineConfig({
   }],
   build: { rollupOptions: { input: {
     home: resolve('index.html'),
+    happyhands: resolve('systems/happyhands/index.html'),
+    quartz: resolve('systems/quartz/index.html'),
     portal: resolve('apps/portal/index.html'),
     studio: resolve('apps/studio/index.html'),
     web: resolve('apps/web/index.html'),
