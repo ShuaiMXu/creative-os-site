@@ -2,7 +2,9 @@
 
 ## Vercel migration
 
-The selected production host is now Vercel. `vercel.json` defines an npm build with `dist` output, preserves directory URLs, and uses static multi-page routing rather than an SPA catch-all. Account authentication and the first Vercel deployment are pending. Once authenticated, deploy with `npx vercel --prod` from the application checkout. Do not commit `.vercel` credentials or local project state.
+The production host is Vercel: https://happyhands-design.vercel.app . Project: `shakaka/happyhands-design`, linked to `ShuaiMXu/creative-os-site` on GitHub. The first production deployment on 2026-10-17 (Asia/Shanghai), `dpl_9yvRoow3PzyfHwZybwNPLCPLu15D`, reached `READY`.
+
+`vercel.json` defines an npm build with `dist` output, preserves directory URLs, and uses static multi-page routing rather than an SPA catch-all. Deploy with `vercel --prod` from the application checkout. Do not commit `.vercel` credentials or local project state. Anonymous HTTP checks passed for the homepage, portal, HappyHands, Quartz and Studio paths. Studio brand browser checks also passed against the Vercel production URL.
 
 ## Earlier Sites deployment
 
