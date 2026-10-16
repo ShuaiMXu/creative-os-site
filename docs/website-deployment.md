@@ -1,5 +1,13 @@
 # Website deployment
 
+## Vercel migration
+
+The selected production host is now Vercel. `vercel.json` defines an npm build with `dist` output, preserves directory URLs, and uses static multi-page routing rather than an SPA catch-all. Account authentication and the first Vercel deployment are pending. Once authenticated, deploy with `npx vercel --prod` from the application checkout. Do not commit `.vercel` credentials or local project state.
+
+## Earlier Sites deployment
+
+The deployment below is historical and is not the selected production host. Retain its identity to manage the existing deployment without creating duplicates.
+
 - Public URL: https://happyhands-design.quietmole14.chatgpt.site
 - Hosting: Sites, public access (no account required).
 - Site identity: `.openai/hosting.json`. Reuse this ID for future releases.
