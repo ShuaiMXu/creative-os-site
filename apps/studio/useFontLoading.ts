@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { fontsInStack, type OpenFont } from "../../packages/font-library";
+import {
+  fontsInStack,
+  previewFontFamily,
+  type OpenFont,
+} from "../../packages/font-library";
 
 const requests = new Map<string, Promise<void>>();
 function loadFont(font: OpenFont): Promise<void> {
@@ -7,7 +11,7 @@ function loadFont(font: OpenFont): Promise<void> {
   if (existing) return existing;
   const link = document.createElement("link");
   link.rel = "stylesheet";
-  link.href = font.stylesheet;
+  link.href = font.stylesheet.replace("/index.css", "/preview.css");
   link.dataset.openFont = font.id;
   const request = new Promise<void>((resolve, reject) => {
     const timeout = setTimeout(
@@ -22,7 +26,7 @@ function loadFont(font: OpenFont): Promise<void> {
       Promise.all(
         [400, 700].map((weight) =>
           document.fonts.load(
-            `${weight} 16px "${font.family}"`,
+            `${weight} 16px "${previewFontFamily(font)}"`,
             "设计 Aa 0123456789",
           ),
         ),

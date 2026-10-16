@@ -114,11 +114,16 @@ async function vendor([id, family, zh, category]) {
   if (!assets.length) throw Error(`No font assets: ${id}`);
   for (const asset of assets)
     await copyFile(path.join(source, asset), path.join(destination, asset));
-  await writeFile(
-    path.join(destination, "index.css"),
-    `/* ${family}; ${packageName}@${metadata.version}; OFL-1.1. See LICENSE.txt. */\n${css}`,
-  );
+  const stylesheet = `/* ${family}; ${packageName}@${metadata.version}; OFL-1.1. See LICENSE.txt. */\n${css}`;
+  await writeFile(path.join(destination, "index.css"), stylesheet);
   await writeFile(path.join(destination, "LICENSE.txt"), license);
+  await writeFile(
+    path.join(destination, "preview.css"),
+    stylesheet.replace(
+      /font-family:[^;]+;/g,
+      `font-family: ${JSON.stringify(`HH Preview ${family}`)};`,
+    ),
+  );
   const font = {
     id,
     family,

@@ -2,6 +2,34 @@ import catalog from "./catalog.json";
 
 export type OpenFont = (typeof catalog)[number];
 export const openFonts = catalog;
+export function previewFontFamily(font: OpenFont): string {
+  return `HH Preview ${font.family}`;
+}
+export function previewFontStack(stack: string): string {
+  const active = fontsInStack(stack);
+  if (!active.length) return stack;
+  return stack
+    .split(",")
+    .map((family) => {
+      const name = family
+        .trim()
+        .replace(/^['"]|['"]$/g, "")
+        .toLowerCase();
+      const font = active.find((item) => item.family.toLowerCase() === name);
+      return font ? `"${previewFontFamily(font)}"` : family.trim();
+    })
+    .join(", ");
+}
+export function previewFontVariables(
+  values: Record<string, string>,
+): Record<string, string> {
+  return Object.fromEntries(
+    Object.entries(values).map(([key, value]) => [
+      key,
+      key.startsWith("--font-") ? previewFontStack(value) : value,
+    ]),
+  );
+}
 export function fontStack(font: OpenFont): string {
   const fallback =
     font.category === "serif" ||

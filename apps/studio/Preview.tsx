@@ -1,4 +1,5 @@
 import { t, sceneLabel } from "./i18n";
+import { previewFontVariables } from "../../packages/font-library";
 import { useState, type CSSProperties } from "react";
 import {
   variables,
@@ -28,7 +29,12 @@ export function Preview({
   return (
     <div
       className={`theme-preview ${inspect ? "inspecting" : ""}`}
-      style={{ ...variables(styles, mode), colorScheme: mode } as CSSProperties}
+      style={
+        {
+          ...previewFontVariables(variables(styles, mode)),
+          colorScheme: mode,
+        } as CSSProperties
+      }
       onClickCapture={(e) => {
         if (!inspect) return;
         const node = (e.target as HTMLElement).closest(
