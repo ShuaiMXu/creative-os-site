@@ -7,12 +7,14 @@ import {
   type Key,
 } from "../../packages/theme-core";
 export function Preview({
+  project,
   styles,
   mode,
   scene,
   inspect,
   onInspect,
 }: {
+  project: string;
   styles: ThemeStyles;
   mode: Mode;
   scene: string;
@@ -22,6 +24,7 @@ export function Preview({
   const [tab, setTab] = useState("全部");
   const [checked, setChecked] = useState(false);
   const [componentState, setComponentState] = useState("empty");
+  const projectLabel = project.trim() || t("我的产品");
   return (
     <div
       className={`theme-preview ${inspect ? "inspecting" : ""}`}
@@ -39,12 +42,12 @@ export function Preview({
       }}
     >
       <div className="sample-nav" data-token="border">
-        <b>Acme Studio</b>
+        <b title={projectLabel}>{projectLabel}</b>
         <span>
           {t("工作空间")} / {sceneLabel(scene)}
         </span>
         <span className="avatar" data-token="primary">
-          A
+          {Array.from(projectLabel)[0].toLocaleUpperCase()}
         </span>
       </div>
       {scene === "States" ? (

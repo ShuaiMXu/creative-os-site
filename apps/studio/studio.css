@@ -266,11 +266,22 @@ p {
   padding: 7px;
 }
 .token-row input[type="color"] {
-  padding: 1px;
-  width: 27px;
+  padding: 3px;
+  width: 29px;
   height: 29px;
   flex-shrink: 0;
   cursor: pointer;
+}
+.token-row input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+.token-row input[type="color"]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--hh-radius-sm) - 4px);
+}
+.token-row input[type="color"]::-moz-color-swatch {
+  border: 0;
+  border-radius: calc(var(--hh-radius-sm) - 4px);
 }
 .control-section > label:not(.token-row) {
   margin-bottom: 14px;
@@ -524,6 +535,15 @@ p {
   align-items: center;
   padding: 18px 26px;
   border-bottom: 1px solid var(--border);
+}
+.sample-nav > b {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sample-nav > span {
+  flex-shrink: 0;
 }
 .sample-nav > span:not(.avatar) {
   font-size: 11px;

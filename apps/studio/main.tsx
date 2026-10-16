@@ -1142,6 +1142,7 @@ function App() {
                   )}
                   {compare && (
                     <Preview
+                      project={draft.project}
                       styles={draft.baseline}
                       mode={mode}
                       scene={scene}
@@ -1153,6 +1154,7 @@ function App() {
                     <div className="comparison-label">{t("当前草稿")}</div>
                   )}
                   <Preview
+                    project={draft.project}
                     styles={styles}
                     mode={mode}
                     scene={scene}
