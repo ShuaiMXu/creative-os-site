@@ -13,6 +13,7 @@
     "test:studio:harness": "node --import tsx tests/studio-harness.ts",
     "tokens:build": "node scripts/brand-tokens.mjs",
     "test:studio:brand": "node tests/studio-brand-browser.mjs",
+    "test:studio:fonts": "node tests/studio-font-browser.mjs",
     "test:site:browser": "node tests/site-flow-browser.mjs"
   },
   "dependencies": {
