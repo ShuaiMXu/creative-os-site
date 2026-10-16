@@ -101,6 +101,12 @@ try {
       );
       if (width < 700)
         await page.getByRole("button", { name: "Edit", exact: true }).click();
+      // Project names are user content and must not be translated with the UI.
+      await page.locator(".project-name input").fill("Review project");
+      assert.equal(
+        await page.locator(".sample-nav > b").innerText(),
+        "Review project",
+      );
       await page
         .getByRole("textbox", { name: "primary", exact: true })
         .fill("#336699");
