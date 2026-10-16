@@ -6,6 +6,7 @@ import {
   fontsInStack,
   fontStack,
   openFonts,
+  previewFontStack,
 } from "../../packages/font-library";
 import { useFontLoading } from "./useFontLoading";
 
@@ -234,7 +235,7 @@ export function FontInput({
       )}
       <div
         className="font-specimen"
-        style={{ fontFamily: value }}
+        style={{ fontFamily: previewFontStack(value) }}
         aria-label={t("字体预览")}
       >
         <span>{t("让设计有据可依。")}</span>

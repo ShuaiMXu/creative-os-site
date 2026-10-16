@@ -77,7 +77,7 @@ try {
         (family) =>
           [...document.fonts].some(
             (face) =>
-              face.family.replaceAll(/["']/g, "") === family &&
+              face.family.replaceAll(/["']/g, "") === `HH Preview ${family}` &&
               face.status === "loaded",
           ),
         font.family,
@@ -94,6 +94,15 @@ try {
     );
   }
   await page.getByRole("button", { name: "保存", exact: true }).click();
+  assert.equal(
+    await page.evaluate(() =>
+      [...document.fonts].some(
+        (face) => face.family.replaceAll(/["']/g, "") === "Noto Sans SC",
+      ),
+    ),
+    false,
+    "preview fonts must not register the shell's fallback family",
+  );
   await page.reload();
   // Reload starts on the colors tab; saved fonts must load without opening typography.
   await page.waitForFunction(() =>
