@@ -259,5 +259,19 @@
   "认真做好每一步。": "Good work.",
   "让协作自然发生。": "Beautifully connected.",
   "让设计有据可依。": "Design with intention.",
-  "细节决定质感。": "Details shape how a product feels."
+  "细节决定质感。": "Details shape how a product feels.",
+  "HappyHands · 苹方优先": "HappyHands · PingFang first",
+  "系统无衬线": "System sans-serif",
+  "微软雅黑": "Microsoft YaHei",
+  "系统衬线": "System serif",
+  "宋体": "Songti / SimSun",
+  "HappyHands · 等宽": "HappyHands · Monospace",
+  "系统等宽": "System monospace",
+  "正文字体": "Body font",
+  "衬线字体": "Serif font",
+  "等宽字体": "Monospace font",
+  "自定义字体": "Custom font",
+  "字体与备用字体": "Font family and fallbacks",
+  "请输入有效的字体名称与备用字体；预览保留上一个有效值。": "Enter a valid font family and fallbacks. The preview keeps the last valid value.",
+  "可直接编辑；字体需已安装或由项目加载，否则使用备用字体。": "Edit directly. Fonts must be installed or loaded by the project; otherwise fallbacks apply."
 }

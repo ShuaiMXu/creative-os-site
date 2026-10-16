@@ -883,6 +883,50 @@ p {
 .token-input-fields {
   flex-wrap: wrap;
 }
+.font-control {
+  display: grid;
+  gap: var(--hh-space-2);
+  padding: var(--hh-space-4) 0;
+  border-bottom: 1px solid var(--hh-line);
+  scroll-margin: var(--hh-space-4);
+}
+.font-control label {
+  gap: var(--hh-space-1);
+}
+.font-control small,
+.font-stack-label {
+  font-size: 11px;
+  color: var(--hh-ink-muted);
+}
+.font-control select,
+.font-control textarea {
+  width: 100%;
+}
+.font-control textarea {
+  min-height: 64px;
+  font: 11px/1.5 var(--hh-font-mono);
+  overflow-wrap: anywhere;
+}
+.font-control textarea[aria-invalid="true"] {
+  border-color: var(--hh-danger);
+}
+.font-control .micro {
+  margin: 0;
+}
+.font-control [role="alert"] {
+  color: var(--hh-danger);
+}
+.font-specimen {
+  display: grid;
+  gap: var(--hh-space-1);
+  padding: var(--hh-space-3);
+  border-radius: var(--hh-radius-sm);
+  background: var(--hh-bg-sunken);
+  color: var(--hh-ink);
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
 .token-input-fields input:not([type="color"]):not([type="range"]) {
   flex: 1;
   min-width: 0;
@@ -1171,6 +1215,38 @@ button[aria-pressed="true"] {
     flex-wrap: wrap;
   }
 }
-.studio-project-bar{display:flex;align-items:center;gap:20px;padding:12px 30px;border-bottom:1px solid var(--hh-line);font-size:14px;background:var(--hh-bg)}
-.studio-project-bar>.project-select{margin-left:auto}.studio-project-bar .review-link{font-size:13px}.studio-project-bar select{max-width:220px;min-height:40px}
-@media(max-width:700px){.studio-project-bar{padding:12px 20px;flex-wrap:wrap;gap:12px}.studio-project-bar>.project-select{margin-left:auto}.studio-project-bar .review-link{width:100%}.studio-title{gap:16px}}
+.studio-project-bar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 30px;
+  border-bottom: 1px solid var(--hh-line);
+  font-size: 14px;
+  background: var(--hh-bg);
+}
+.studio-project-bar > .project-select {
+  margin-left: auto;
+}
+.studio-project-bar .review-link {
+  font-size: 13px;
+}
+.studio-project-bar select {
+  max-width: 220px;
+  min-height: 40px;
+}
+@media (max-width: 700px) {
+  .studio-project-bar {
+    padding: 12px 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .studio-project-bar > .project-select {
+    margin-left: auto;
+  }
+  .studio-project-bar .review-link {
+    width: 100%;
+  }
+  .studio-title {
+    gap: 16px;
+  }
+}

@@ -35,6 +35,7 @@ import {
   type Draft,
 } from "../../packages/theme-core/project";
 import { Preview } from "./Preview";
+import { FontInput } from "./FontInput";
 import { ConnectedPreview } from "./ConnectedPreview";
 import { Button } from "../../packages/ui";
 import { StandardsPanel } from "./StandardsPanel";
@@ -1010,21 +1011,21 @@ function App() {
               </>
             ) : tab === "type" ? (
               <Section title={t("字体与阅读节奏")}>
-                {(
-                  [
-                    "font-sans",
-                    "font-serif",
-                    "font-mono",
-                    "letter-spacing",
-                  ] as Key[]
-                ).map((k) => (
-                  <TokenInput
-                    key={k}
-                    name={k}
-                    value={values[k]!}
-                    onChange={(v) => change(k, v)}
-                  />
-                ))}
+                {(["font-sans", "font-serif", "font-mono"] as const).map(
+                  (k) => (
+                    <FontInput
+                      key={k}
+                      name={k}
+                      value={values[k]!}
+                      onChange={(v) => change(k, v)}
+                    />
+                  ),
+                )}
+                <TokenInput
+                  name="letter-spacing"
+                  value={values["letter-spacing"]!}
+                  onChange={(v) => change("letter-spacing", v)}
+                />
                 <p className="micro">
                   {t(
                     "字体需已安装或由项目加载。苹方不可用时使用备用字体；官网不会因预设切换为衬线字体。",
