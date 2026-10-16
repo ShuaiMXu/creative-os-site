@@ -8,3 +8,4 @@ public/skillry-full/
 .skillry-crawl-state.json
 
 test-results/
+.vercel/
