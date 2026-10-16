@@ -36,6 +36,7 @@ import {
 } from "../../packages/theme-core/project";
 import { Preview } from "./Preview";
 import { FontInput } from "./FontInput";
+import { useFontLoading } from "./useFontLoading";
 import { ConnectedPreview } from "./ConnectedPreview";
 import { Button } from "../../packages/ui";
 import { StandardsPanel } from "./StandardsPanel";
@@ -234,6 +235,12 @@ function App() {
     values = styles[mode],
     changes = differences(draft.baseline, styles);
   const liveImportTarget = useRef({ id: draft.id, styles });
+  const previewFonts = useFontLoading(
+    (["font-sans", "font-serif", "font-mono"] as const).flatMap((key) => [
+      values[key],
+      ...(compare ? [draft.baseline[mode][key]] : []),
+    ]),
+  );
   liveImportTarget.current = { id: draft.id, styles };
   useEffect(() => setConfirmed(false), [styles, draft.foundation]);
   function current(): Draft {
@@ -1011,6 +1018,11 @@ function App() {
               </>
             ) : tab === "type" ? (
               <Section title={t("字体与阅读节奏")}>
+                <p className="micro">
+                  {t(
+                    "21 款开源字体：中文、无衬线、衬线与等宽。选择后自动加载，支持商业项目，按各字体 OFL-1.1 许可证使用。",
+                  )}
+                </p>
                 {(["font-sans", "font-serif", "font-mono"] as const).map(
                   (k) => (
                     <FontInput
@@ -1166,6 +1178,16 @@ function App() {
               )}
             </div>
             <div className="preview-footer">
+              {(previewFonts.status === "loading" ||
+                previewFonts.status === "error") && (
+                <span role="status">
+                  {t(
+                    previewFonts.status === "loading"
+                      ? "正在加载开源字体…"
+                      : "字体加载失败，当前显示备用字体。",
+                  )}
+                </span>
+              )}
               <span>
                 {mode === "light" ? t("浅色") : t("深色")} · {sceneLabel(scene)}{" "}
                 {t("· 样式仅作用于预览")}

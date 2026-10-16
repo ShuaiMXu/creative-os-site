@@ -1,6 +1,6 @@
 # HappyHands design-language alignment
 
-Source: user-supplied HappyHands brand/design-system package (`design-system/tokens.css`, `tokens.json`, README, Button specification and evaluator rules), reviewed 2026-09-28. The user's explicit instruction to use PingFang-first sans-serif for Chinese and English overrides the package's serif display-heading recommendation. No bundled font files are redistributed.
+Source: user-supplied HappyHands brand/design-system package (`design-system/tokens.css`, `tokens.json`, README, Button specification and evaluator rules), reviewed 2026-09-28. The user's explicit instruction to use PingFang-first sans-serif for Chinese and English overrides the package's serif display-heading recommendation. The shell keeps this default. The optional Studio font library redistributes OFL-1.1 fonts for project previews; see `docs/open-font-library.md`.
 
 ## Shared foundation
 

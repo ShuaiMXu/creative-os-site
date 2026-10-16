@@ -14,6 +14,8 @@
     "tokens:build": "node scripts/brand-tokens.mjs",
     "test:studio:brand": "node tests/studio-brand-browser.mjs",
     "test:studio:fonts": "node tests/studio-font-browser.mjs",
+    "test:studio:open-fonts": "node tests/studio-open-font-browser.mjs",
+    "fonts:vendor": "node scripts/vendor-open-fonts.mjs",
     "test:site:browser": "node tests/site-flow-browser.mjs"
   },
   "dependencies": {

@@ -927,6 +927,36 @@ p {
   line-height: 1.6;
   overflow-wrap: anywhere;
 }
+.font-load-status {
+  display: flex;
+  gap: var(--hh-space-2);
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 11px;
+  color: var(--hh-ink-muted);
+}
+.font-load-status[data-font-state="error"] {
+  color: var(--hh-danger);
+}
+.font-install {
+  font-size: 11px;
+  color: var(--hh-ink-muted);
+}
+.font-install summary {
+  cursor: pointer;
+  padding: var(--hh-space-2) 0;
+}
+.font-install a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.font-install p,
+.font-install textarea {
+  margin: var(--hh-space-2) 0;
+}
+.font-install textarea {
+  min-height: 96px;
+}
 .token-input-fields input:not([type="color"]):not([type="range"]) {
   flex: 1;
   min-width: 0;
