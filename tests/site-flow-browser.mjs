@@ -41,7 +41,10 @@ try {
       }
       await page.goto(base + "/apps/portal/", { waitUntil: "networkidle" });
       await check("home");
-      assert.equal(await page.locator('header a[aria-current="page"]').count(),0);
+      assert.equal(
+        await page.locator('header a[aria-current="page"]').count(),
+        0,
+      );
       await follow('header a[href="/apps/portal/#explore"]');
       assert.deepEqual(
         await page.locator(".system-collection article h3").allTextContents(),
@@ -52,7 +55,33 @@ try {
         0,
       );
       await check("catalog");
+      const catalogLeft = (await page.locator("#happyhands").boundingBox()).x;
+      const headerLeft = (
+        await page.locator('header a[aria-label="HappyHands"]').boundingBox()
+      ).x;
       await follow('#happyhands a[href="/systems/happyhands/"]');
+      assert.equal(await page.locator("h1").innerText(), "HappyHands");
+      const detailLeft = (
+        await page.locator(".system-breadcrumb").boundingBox()
+      ).x;
+      assert.ok(
+        Math.abs(detailLeft - catalogLeft) < 1,
+        "detail and parent catalog share the same content grid",
+      );
+      assert.ok(
+        Math.abs(
+          (
+            await page
+              .locator('header a[aria-label="HappyHands"]')
+              .boundingBox()
+          ).x - headerLeft,
+        ) < 1,
+        "header must not shift when entering the detail page",
+      );
+      assert.ok(
+        (await page.locator("h1").boundingBox()).height < 100,
+        "the system name must not break into orphan lines",
+      );
       assert.equal(
         await page.evaluate(() => localStorage.getItem("hh-theme")),
         null,
@@ -70,19 +99,32 @@ try {
         true,
       );
       await follow('.system-directory a[href="#components"]');
-      const dialogButton = page.getByRole('button', {name:'打开确认弹窗', exact:true});
+      await page.waitForFunction(
+        () =>
+          document
+            .querySelector('.system-directory a[href="#components"]')
+            .getAttribute("aria-current") === "location",
+      );
+      const dialogButton = page.getByRole("button", {
+        name: "打开确认弹窗",
+        exact: true,
+      });
       await dialogButton.focus();
-      await page.keyboard.press('Enter');
-      assert.equal(await page.getByRole('dialog').isVisible(), true);
-      await page.keyboard.press('Escape');
-      assert.equal(await page.getByRole('dialog').isVisible(), false);
-      assert.equal(await dialogButton.evaluate(el=>el===document.activeElement), true);
+      await page.keyboard.press("Enter");
+      assert.equal(await page.getByRole("dialog").isVisible(), true);
+      await page.keyboard.press("Escape");
+      assert.equal(await page.getByRole("dialog").isVisible(), false);
+      assert.equal(
+        await dialogButton.evaluate((el) => el === document.activeElement),
+        true,
+      );
 
       await follow('.system-directory a[href="#overview"]');
       await check("happyhands");
       await page.getByRole("button", { name: "English", exact: true }).click();
       assert.equal(await page.locator("html").getAttribute("lang"), "en");
-      await follow('header a[href="/apps/portal/#explore"]');
+      await follow('.system-breadcrumb a[href="/apps/portal/#explore"]');
+      assert.equal(await page.locator("#happyhands").isVisible(), true);
       assert.equal(await page.locator("html").getAttribute("lang"), "en");
       await follow('#quartz a[href="/systems/quartz/"]');
       await check("quartz-en");

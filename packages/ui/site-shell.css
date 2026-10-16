@@ -9,16 +9,23 @@ header.hh-site-header {
   width: 100%;
   height: auto;
   min-height: 80px;
-  padding: 16px max(20px, calc((100% - 1280px) / 2));
+  padding: 16px var(--page-inset, max(20px, calc((100% - 1280px) / 2)));
   background: var(--hh-bg-raised);
   color: var(--hh-ink);
   border-bottom: 1px solid var(--hh-line);
   transform: none;
   backdrop-filter: none;
 }
-.hh-site-header > a { justify-self: start; }
+.hh-site-header > a {
+  justify-self: start;
+}
 header.hh-site-header img,
-header.hh-site-header .wordmark img { display: block; width: 128px; max-width: none; height: auto; }
+header.hh-site-header .wordmark img {
+  display: block;
+  width: 128px;
+  max-width: none;
+  height: auto;
+}
 header.hh-site-header nav {
   position: static;
   display: flex;
@@ -50,10 +57,23 @@ header.hh-site-header nav a {
   text-decoration: none;
 }
 header.hh-site-header nav a:hover,
-header.hh-site-header nav a[aria-current="page"] { background: transparent; color: var(--hh-ink); }
-header.hh-site-header nav a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 8px; }
+header.hh-site-header nav a[aria-current="page"] {
+  background: transparent;
+  color: var(--hh-ink);
+}
+header.hh-site-header nav a[aria-current="page"] {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 8px;
+}
 header.hh-site-header .hh-site-tools,
-header.hh-site-header .header-actions { display: flex; align-items: center; justify-self: end; gap: 8px; margin: 0; }
+header.hh-site-header .header-actions {
+  display: flex;
+  align-items: center;
+  justify-self: end;
+  gap: 8px;
+  margin: 0;
+}
 header.hh-site-header button,
 header.hh-site-header #theme-toggle,
 header.hh-site-header #lang-switch button {
@@ -67,11 +87,34 @@ header.hh-site-header #lang-switch button {
   font: 500 14px/1.5 var(--hh-font-sans);
   cursor: pointer;
 }
-header.hh-site-header #lang-switch { display: flex; padding: 0; border: 0; background: none; }
-.hh-site-header :is(a,button):focus-visible { outline: 2px solid var(--hh-ring); outline-offset: 3px; }
+header.hh-site-header #lang-switch {
+  display: flex;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+.hh-site-header :is(a, button):focus-visible {
+  outline: 2px solid var(--hh-ring);
+  outline-offset: 3px;
+}
 @media (max-width: 1000px) {
-  header.hh-site-header { grid-template-columns: minmax(0, 1fr) auto; gap: 8px 12px; padding: 12px 20px; }
-  header.hh-site-header nav { grid-column: 1 / -1; grid-row: 2; min-width: 0; width: 100%; justify-content: safe center; overflow-x: auto; gap: 20px; }
+  header.hh-site-header {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px 12px;
+    padding: 12px var(--page-inset, 20px);
+  }
+  header.hh-site-header nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    min-width: 0;
+    width: 100%;
+    justify-content: safe center;
+    overflow-x: auto;
+    gap: 20px;
+  }
   header.hh-site-header .hh-site-tools,
-  header.hh-site-header .header-actions { grid-column: 2; grid-row: 1; }
+  header.hh-site-header .header-actions {
+    grid-column: 2;
+    grid-row: 1;
+  }
 }

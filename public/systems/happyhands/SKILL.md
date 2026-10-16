@@ -13,6 +13,8 @@ In creative-os-site, read `packages/design-tokens/happyhands.json` (canonical va
 
 The local workbench in creative-os currently uses `--ff-*` rather than `--hh-*`. Inspect its shared rules before adapting; do not silently claim the two libraries have already been unified.
 
+Public website detail pages use `packages/ui/site-layout.css`, `system-page.css`, `SiteHeader`, `SystemBreadcrumb` and `SystemDirectory`. HappyHands and Quartz are the real consumers. Preserve the shared content grid, parent-catalog return path, language/theme preference and responsive directory. Do not import one app's page stylesheet as another app's base, or add broad `header`/`nav` rules that override the shared shell.
+
 ## Design decisions
 
 - Warm neutral surfaces, ink primary actions, orange used sparingly for brand emphasis. Use role tokens, including light/dark pairs; no copied raw values in component styles.

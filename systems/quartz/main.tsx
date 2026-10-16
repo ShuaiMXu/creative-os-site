@@ -1,31 +1,329 @@
-import {SystemDirectory} from '../../packages/ui/SystemDirectory';
-import {useSitePreferences} from '../../packages/ui/useSitePreferences';
-import {SiteHeader} from '../../packages/ui/SiteHeader';
-import React,{useState} from 'react';
-import {createRoot} from 'react-dom/client';
-import '../../packages/design-tokens/happyhands.css';
-import '../happyhands/style.css';
-import '../../packages/ui/site-layout.css';
-import './style.css';
+import { SystemDirectory } from "../../packages/ui/SystemDirectory";
+import { useSitePreferences } from "../../packages/ui/useSitePreferences";
+import { SiteHeader } from "../../packages/ui/SiteHeader";
+import { SystemBreadcrumb } from "../../packages/ui/SystemBreadcrumb";
+import React, { useState } from "react";
+import { createRoot } from "react-dom/client";
+import "../../packages/design-tokens/happyhands.css";
+import "../../packages/ui/site-layout.css";
+import "../../packages/ui/system-page.css";
 // @ts-ignore The catalog prompt is shared with the plain-JS portal.
-import {quartzPrompt} from '../../apps/portal/design-systems.js';
+import { quartzPrompt } from "../../apps/portal/design-systems.js";
 
-function App(){
- const {lang,dark,toggleLanguage,toggleTheme}=useSitePreferences();const [existing,setExisting]=useState(true);const [status,setStatus]=useState('');
- React.useEffect(()=>{document.title=lang==='zh'?'Quartz · 设计系统':'Quartz · Design system';},[lang]);
- const t=(cn:string,en:string)=>lang==='zh'?cn:en;
+function App() {
+  const { lang, dark, toggleLanguage, toggleTheme } = useSitePreferences();
+  const [existing, setExisting] = useState(true);
+  const [status, setStatus] = useState("");
+  React.useEffect(() => {
+    document.title =
+      lang === "zh" ? "Quartz · 设计系统" : "Quartz · Design system";
+  }, [lang]);
+  const t = (cn: string, en: string) => (lang === "zh" ? cn : en);
 
-
- const prompt=quartzPrompt(lang,existing);
- const groups=[['操作与输入','Actions & inputs','Button · Field · Input · Select · Checkbox'],['反馈与浮层','Feedback & overlays','Status · Alert · Empty state · Dialog · Toast'],['导航与数据','Navigation & data','Tabs · Filter bar · Table · Data grid'],['AI 工作流','AI workflows','Conversation · Prompt input · Tool call · Run trace']];
- return <><SiteHeader lang={lang} dark={dark} onTheme={toggleTheme} onLanguage={toggleLanguage}/><div className="system-landing"><main><div className="system-breadcrumb"><a href="/apps/portal/#explore">{t('设计系统','Design systems')}</a><span aria-hidden="true">/</span><span aria-current="page">Quartz</span></div>
- <section id="overview" className="system-introduction"><div><p className="eyebrow">{t('外部设计系统 · design.how','External design system · design.how')}</p><h1>Quartz</h1><p className="lead">{t('面向 AI 产品和代理工作流。查看组件目录、页面模板与接入说明，再判断是否适合你的项目。','For AI products and agent workflows. Explore its component catalog, screen blocks and setup guidance to see whether it fits your project.')}</p><div className="actions"><a className="action" href="#components">{t('浏览组件目录','Browse components')}</a><a href="#adopt">{t('查看接入方式','View setup options')}</a></div></div><aside className="system-facts" aria-label={t('系统概况','System overview')}><dl><div><dt>{t('适用场景','Best for')}</dt><dd>{t('代理会话、工具审批、运行追踪','Agent sessions, tool approvals and run traces')}</dd></div><div><dt>{t('技术基础','Stack')}</dt><dd>React · Tailwind CSS · shadcn</dd></div><div><dt>{t('收录内容','In this catalog')}</dt><dd>{t('设计原则、组件目录与接入指令','Principles, component catalog and setup prompts')}</dd></div></dl><p className="note">{t('由 HappyHands 整理。组件目录是资料说明，尚未在本站安装 Quartz 交互组件。','Curated by HappyHands. The catalog describes the system; Quartz interactive components are not installed on this site.')}</p></aside></section>
- <SystemDirectory label={t('本页目录','On this page')}><nav aria-label={t('目录','Contents')}>{[['overview','概览','Overview'],['foundations','设计原则','Principles'],['components','组件目录','Components'],['patterns','页面模板','Screen blocks'],['adopt','接入项目','Setup']].map(([id,cn,en])=><a key={id} href={'#'+id}>{t(cn,en)}</a>)}</nav></SystemDirectory>
- <section id="foundations"><p className="eyebrow">01 / PRINCIPLES</p><h2>{t('视觉规则服务于操作','Visual rules support the task')}</h2><div className="rules"><article><h3>{t('中性框架','Neutral structure')}</h3><p>{t('黑白框架承载内容，类别通过文字识别；暖色保留给警告与失败。','A neutral structure carries content, kinds are named in words, and warm colors are reserved for warnings and failures.')}</p></article><article><h3>{t('按角色使用变量','Role-based tokens')}</h3><p>{t('组件使用语义变量，不在页面临时拼颜色、字号与阴影。','Components use role tokens rather than ad hoc colors, sizes and shadows.')}</p></article><article><h3>{t('组件优先','Components first')}</h3><p>{t('先选已有组件，再组合页面；保留键盘、焦点、加载与错误反馈。','Compose screens from existing components while preserving keyboard, focus, loading and error behavior.')}</p></article></div></section>
- <section id="components"><p className="eyebrow">02 / COMPONENTS</p><h2>{t('从任务找到组件','Find components by task')}</h2><p>{t('目录说明，非本地已安装组件。接入后需按官方 API 与项目实际行为验收。','Catalog descriptions, not locally installed components. Verify upstream APIs and real project behavior after setup.')}</p><div className="rules">{groups.map(([cn,en,list])=><article key={en}><h3>{t(cn,en)}</h3><p>{list}</p></article>)}</div></section>
- <section id="patterns"><p className="eyebrow">03 / BLOCKS</p><h2>{t('整屏从实际任务开始','Start screens from real tasks')}</h2><div className="rules">{[['项目首页','Workspace home','项目概况与待处理事项','Project overview and pending work'],['代理会话','Agent session','输入、回复与工具调用','Input, responses and tool calls'],['工具审批','Tool approval','查看操作范围并做出决定','Inspect scope and make a decision'],['运行追踪','Run trace','查看执行过程与结果','Inspect execution and results'],['实时活动','Live activity','浏览持续产生的事件','Browse ongoing events'],['密钥与发布','Keys & releases','管理访问与发布信息','Manage access and release information']].map(([cn,en,desc,eng])=><article key={en}><h3>{t(cn,en)}</h3><p>{t(desc,eng)}</p></article>)}</div></section>
- <section id="adopt"><p className="eyebrow">04 / ADOPT</p><h2>{t('带回你的项目','Bring it to your project')}</h2><p>{t('需要 React、Tailwind 和兼容的 shadcn 配置。先检查技术栈与已有品牌，再逐页迁移。复制指令不会安装或执行命令。','Requires React, Tailwind and compatible shadcn configuration. Check the stack and existing brand before migrating screen by screen. Copying does not install or execute anything.')}</p><label>{t('接入方式','Setup mode')}<select value={existing?'existing':'new'} onChange={e=>setExisting(e.target.value==='existing')}><option value="existing">{t('已有项目','Existing project')}</option><option value="new">{t('新项目','New project')}</option></select></label><textarea aria-label={t('接入指令','Setup prompt')} value={prompt} readOnly rows={12}/><div className="actions"><button className="action" onClick={async()=>{try{await navigator.clipboard.writeText(prompt);setStatus(t('已复制','Copied'));}catch{setStatus(t('复制失败，请手动选择指令。','Copy unavailable. Select the prompt manually.'));}}}>{t('复制接入指令','Copy setup prompt')}</button><a href="https://github.com/ShuaiMXu/creative-os/blob/main/docs/local-workbench.md">{t('本地工作台指引','Local workbench guide')}</a></div></section>
- <footer><div className="system-related"><div><p className="eyebrow">{t('我们的设计系统','Our design system')}</p><h2>HappyHands</h2><p>{t('也可以从官网正在使用的规范与组件开始。','Explore the rules and components used by this website.')}</p></div><a className="action secondary" href="/systems/happyhands/">{t('探索 HappyHands','Explore HappyHands')} →</a></div><details><summary>{t('来源、版本与许可','Sources, versions & licensing')}</summary><p>{t('资料核对于 2026-10-16，未锁定上游发布版本。未转载组件源码、字体和官方截图。使用时请核对上游许可、依赖及锁文件。','Documentation checked on 2026-10-16; no upstream release is pinned. Component source, fonts and screenshots are not redistributed. Check upstream licenses, dependencies and lockfiles before adoption.')}</p><a href="https://design.how/systems/quartz">{t('原始设计系统文档（外部）','Original documentation (external)')}</a> · <a href="https://design.how/r/quartz/registry.json">{t('上游组件注册表（外部）','Upstream registry (external)')}</a></details></footer>
- </main></div><output className="notice" aria-live="polite">{status}</output></>;
+  const prompt = quartzPrompt(lang, existing);
+  const groups = [
+    [
+      "操作与输入",
+      "Actions & inputs",
+      "Button · Field · Input · Select · Checkbox",
+    ],
+    [
+      "反馈与浮层",
+      "Feedback & overlays",
+      "Status · Alert · Empty state · Dialog · Toast",
+    ],
+    [
+      "导航与数据",
+      "Navigation & data",
+      "Tabs · Filter bar · Table · Data grid",
+    ],
+    [
+      "AI 工作流",
+      "AI workflows",
+      "Conversation · Prompt input · Tool call · Run trace",
+    ],
+  ];
+  return (
+    <>
+      <SiteHeader
+        lang={lang}
+        dark={dark}
+        onTheme={toggleTheme}
+        onLanguage={toggleLanguage}
+      />
+      <div className="system-landing">
+        <main>
+          <SystemBreadcrumb current="Quartz" lang={lang} />
+          <section id="overview" className="system-introduction">
+            <div>
+              <p className="eyebrow">
+                {t(
+                  "外部设计系统 · design.how",
+                  "External design system · design.how",
+                )}
+              </p>
+              <h1>Quartz</h1>
+              <p className="lead">
+                {t(
+                  "面向 AI 产品和代理工作流。查看组件目录、页面模板与接入说明，再判断是否适合你的项目。",
+                  "For AI products and agent workflows. Explore its component catalog, screen blocks and setup guidance to see whether it fits your project.",
+                )}
+              </p>
+              <div className="actions">
+                <a className="action" href="#components">
+                  {t("浏览组件目录", "Browse components")}
+                </a>
+                <a href="#adopt">{t("查看接入方式", "View setup options")}</a>
+              </div>
+            </div>
+            <aside
+              className="system-facts"
+              aria-label={t("系统概况", "System overview")}
+            >
+              <dl>
+                <div>
+                  <dt>{t("适用场景", "Best for")}</dt>
+                  <dd>
+                    {t(
+                      "代理会话、工具审批、运行追踪",
+                      "Agent sessions, tool approvals and run traces",
+                    )}
+                  </dd>
+                </div>
+                <div>
+                  <dt>{t("技术基础", "Stack")}</dt>
+                  <dd>React · Tailwind CSS · shadcn</dd>
+                </div>
+                <div>
+                  <dt>{t("收录内容", "In this catalog")}</dt>
+                  <dd>
+                    {t(
+                      "设计原则、组件目录与接入指令",
+                      "Principles, component catalog and setup prompts",
+                    )}
+                  </dd>
+                </div>
+              </dl>
+              <p className="note">
+                {t(
+                  "由 HappyHands 整理。组件目录是资料说明，尚未在本站安装 Quartz 交互组件。",
+                  "Curated by HappyHands. The catalog describes the system; Quartz interactive components are not installed on this site.",
+                )}
+              </p>
+            </aside>
+          </section>
+          <SystemDirectory label={t("本页目录", "On this page")}>
+            <nav aria-label={t("目录", "Contents")}>
+              {[
+                ["overview", "概览", "Overview"],
+                ["foundations", "设计原则", "Principles"],
+                ["components", "组件目录", "Components"],
+                ["patterns", "页面模板", "Screen blocks"],
+                ["adopt", "接入项目", "Setup"],
+              ].map(([id, cn, en]) => (
+                <a key={id} href={"#" + id}>
+                  {t(cn, en)}
+                </a>
+              ))}
+            </nav>
+          </SystemDirectory>
+          <section id="foundations">
+            <p className="eyebrow">01 / PRINCIPLES</p>
+            <h2>{t("视觉规则服务于操作", "Visual rules support the task")}</h2>
+            <div className="rules">
+              <article>
+                <h3>{t("中性框架", "Neutral structure")}</h3>
+                <p>
+                  {t(
+                    "黑白框架承载内容，类别通过文字识别；暖色保留给警告与失败。",
+                    "A neutral structure carries content, kinds are named in words, and warm colors are reserved for warnings and failures.",
+                  )}
+                </p>
+              </article>
+              <article>
+                <h3>{t("按角色使用变量", "Role-based tokens")}</h3>
+                <p>
+                  {t(
+                    "组件使用语义变量，不在页面临时拼颜色、字号与阴影。",
+                    "Components use role tokens rather than ad hoc colors, sizes and shadows.",
+                  )}
+                </p>
+              </article>
+              <article>
+                <h3>{t("组件优先", "Components first")}</h3>
+                <p>
+                  {t(
+                    "先选已有组件，再组合页面；保留键盘、焦点、加载与错误反馈。",
+                    "Compose screens from existing components while preserving keyboard, focus, loading and error behavior.",
+                  )}
+                </p>
+              </article>
+            </div>
+          </section>
+          <section id="components">
+            <p className="eyebrow">02 / COMPONENTS</p>
+            <h2>{t("从任务找到组件", "Find components by task")}</h2>
+            <p>
+              {t(
+                "目录说明，非本地已安装组件。接入后需按官方 API 与项目实际行为验收。",
+                "Catalog descriptions, not locally installed components. Verify upstream APIs and real project behavior after setup.",
+              )}
+            </p>
+            <div className="rules">
+              {groups.map(([cn, en, list]) => (
+                <article key={en}>
+                  <h3>{t(cn, en)}</h3>
+                  <p>{list}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+          <section id="patterns">
+            <p className="eyebrow">03 / BLOCKS</p>
+            <h2>{t("整屏从实际任务开始", "Start screens from real tasks")}</h2>
+            <div className="rules">
+              {[
+                [
+                  "项目首页",
+                  "Workspace home",
+                  "项目概况与待处理事项",
+                  "Project overview and pending work",
+                ],
+                [
+                  "代理会话",
+                  "Agent session",
+                  "输入、回复与工具调用",
+                  "Input, responses and tool calls",
+                ],
+                [
+                  "工具审批",
+                  "Tool approval",
+                  "查看操作范围并做出决定",
+                  "Inspect scope and make a decision",
+                ],
+                [
+                  "运行追踪",
+                  "Run trace",
+                  "查看执行过程与结果",
+                  "Inspect execution and results",
+                ],
+                [
+                  "实时活动",
+                  "Live activity",
+                  "浏览持续产生的事件",
+                  "Browse ongoing events",
+                ],
+                [
+                  "密钥与发布",
+                  "Keys & releases",
+                  "管理访问与发布信息",
+                  "Manage access and release information",
+                ],
+              ].map(([cn, en, desc, eng]) => (
+                <article key={en}>
+                  <h3>{t(cn, en)}</h3>
+                  <p>{t(desc, eng)}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+          <section id="adopt">
+            <p className="eyebrow">04 / ADOPT</p>
+            <h2>{t("带回你的项目", "Bring it to your project")}</h2>
+            <p>
+              {t(
+                "需要 React、Tailwind 和兼容的 shadcn 配置。先检查技术栈与已有品牌，再逐页迁移。复制指令不会安装或执行命令。",
+                "Requires React, Tailwind and compatible shadcn configuration. Check the stack and existing brand before migrating screen by screen. Copying does not install or execute anything.",
+              )}
+            </p>
+            <label>
+              {t("接入方式", "Setup mode")}
+              <select
+                value={existing ? "existing" : "new"}
+                onChange={(e) => setExisting(e.target.value === "existing")}
+              >
+                <option value="existing">
+                  {t("已有项目", "Existing project")}
+                </option>
+                <option value="new">{t("新项目", "New project")}</option>
+              </select>
+            </label>
+            <textarea
+              aria-label={t("接入指令", "Setup prompt")}
+              value={prompt}
+              readOnly
+              rows={12}
+            />
+            <div className="actions">
+              <button
+                className="action"
+                onClick={async () => {
+                  try {
+                    await navigator.clipboard.writeText(prompt);
+                    setStatus(t("已复制", "Copied"));
+                  } catch {
+                    setStatus(
+                      t(
+                        "复制失败，请手动选择指令。",
+                        "Copy unavailable. Select the prompt manually.",
+                      ),
+                    );
+                  }
+                }}
+              >
+                {t("复制接入指令", "Copy setup prompt")}
+              </button>
+              <a href="https://github.com/ShuaiMXu/creative-os/blob/main/docs/local-workbench.md">
+                {t("本地工作台指引", "Local workbench guide")}
+              </a>
+            </div>
+          </section>
+          <footer>
+            <div className="system-related">
+              <div>
+                <p className="eyebrow">
+                  {t("我们的设计系统", "Our design system")}
+                </p>
+                <h2>HappyHands</h2>
+                <p>
+                  {t(
+                    "也可以从官网正在使用的规范与组件开始。",
+                    "Explore the rules and components used by this website.",
+                  )}
+                </p>
+              </div>
+              <a className="action secondary" href="/systems/happyhands/">
+                {t("探索 HappyHands", "Explore HappyHands")} →
+              </a>
+            </div>
+            <details>
+              <summary>
+                {t("来源、版本与许可", "Sources, versions & licensing")}
+              </summary>
+              <p>
+                {t(
+                  "资料核对于 2026-10-16，未锁定上游发布版本。未转载组件源码、字体和官方截图。使用时请核对上游许可、依赖及锁文件。",
+                  "Documentation checked on 2026-10-16; no upstream release is pinned. Component source, fonts and screenshots are not redistributed. Check upstream licenses, dependencies and lockfiles before adoption.",
+                )}
+              </p>
+              <a href="https://design.how/systems/quartz">
+                {t(
+                  "原始设计系统文档（外部）",
+                  "Original documentation (external)",
+                )}
+              </a>{" "}
+              ·{" "}
+              <a href="https://design.how/r/quartz/registry.json">
+                {t("上游组件注册表（外部）", "Upstream registry (external)")}
+              </a>
+            </details>
+          </footer>
+        </main>
+      </div>
+      <output className="notice" aria-live="polite">
+        {status}
+      </output>
+    </>
+  );
 }
-createRoot(document.getElementById('root')!).render(<App/>);
+createRoot(document.getElementById("root")!).render(<App />);
