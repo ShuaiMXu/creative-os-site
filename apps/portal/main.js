@@ -88,7 +88,7 @@ function renderContent() {
   document.querySelector('#lang-switch button').innerHTML = iconMarkup('globe') + (lang === 'zh' ? 'English' : '中文');
   // hero
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-  document.title = lang === 'zh' ? 'HappyHands — 产品设计工具' : 'HappyHands — AI Product Designer';
+  document.title = lang === 'zh' ? 'HappyHands · 产品体验优化' : 'HappyHands · Product experience optimization';
   const eyebrow = document.querySelector('.eyebrow');
   if (eyebrow) eyebrow.innerHTML = c.hero.eyebrow.map(s => `<span>${s}</span>`).join('');
   const h1 = document.querySelector('h1');
