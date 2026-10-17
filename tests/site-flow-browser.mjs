@@ -1,3 +1,4 @@
+import { openStudioActions } from "./studio-ui-helpers.mjs";
 import { chromium } from "playwright-core";
 import assert from "node:assert/strict";
 import { mkdir } from "node:fs/promises";
@@ -16,6 +17,7 @@ try {
         reducedMotion: "reduce",
       });
       const page = await context.newPage();
+      page.setDefaultTimeout(15000);
       const errors = [];
       page.on("pageerror", (e) => errors.push(e.message));
       async function check(name) {
@@ -128,9 +130,51 @@ try {
       assert.equal(await page.locator("html").getAttribute("lang"), "en");
       await follow('#quartz a[href="/systems/quartz/"]');
       await check("quartz-en");
+      const componentGroup = page
+        .locator(".component-directory details")
+        .filter({ hasText: "Actions & inputs" });
+      await componentGroup.locator("summary").focus();
+      await page.keyboard.press("Enter");
+      assert.ok(
+        await componentGroup
+          .getByText("For forms, use Field", { exact: false })
+          .isVisible(),
+      );
       assert.equal(await page.locator("html").getAttribute("lang"), "en");
       await follow('header a[href="/apps/studio/"]');
       await check("studio-en");
+      assert.equal(
+        await page.locator(".studio-more").evaluate((el) => el.open),
+        false,
+      );
+      assert.equal(
+        await page
+          .locator(".studio-actions > [data-variant=primary]")
+          .innerText(),
+        "Export",
+      );
+      assert.equal(await page.getByText("92%", { exact: true }).count(), 0);
+      if (width === 390) {
+        assert.ok(
+          (await page.locator(".theme-preview").boundingBox()).y < 620,
+          "Phone preview should appear within the first screen",
+        );
+        assert.ok(
+          await page
+            .locator("header nav")
+            .evaluate((el) => el.scrollWidth <= el.clientWidth),
+          "All navigation labels should fit without horizontal scrolling",
+        );
+      }
+      await page
+        .getByRole("button", { name: "Save example", exact: true })
+        .click();
+      assert.ok(
+        await page
+          .getByRole("status")
+          .filter({ hasText: "Example saved" })
+          .isVisible(),
+      );
       assert.equal(
         await page
           .getByRole("heading", { name: "Project design system", exact: true })
@@ -164,12 +208,20 @@ try {
         "language switch must retain edits",
       );
       await page.getByRole("button", { name: "English", exact: true }).click();
+      await openStudioActions(page);
+      await page.locator(".studio-more > summary").focus();
+      await page.keyboard.press("Escape");
+      assert.equal(
+        await page.locator(".studio-more").evaluate((el) => el.open),
+        false,
+      );
       for (const label of [
         "Design standards",
         "Import",
         "Export",
         "Review changes",
       ]) {
+        if (label !== "Export") await openStudioActions(page);
         await page
           .getByRole("button", {
             name: label === "Review changes" ? /^Review changes/ : label,
@@ -180,9 +232,19 @@ try {
         assert.equal(
           /[\u3400-\u9fff]/.test(text),
           false,
-          `${label} contains untranslated UI`,
+          `${label} contains untranslated UI: ${text.match(/[^\n]*[\u3400-\u9fff][^\n]*/g)?.join("; ")}`,
         );
         await page.getByRole("button", { name: "Close panel" }).click();
+        await page.waitForFunction(
+          (fromExport) =>
+            document.activeElement ===
+            document.querySelector(
+              fromExport
+                ? ".studio-actions > button[data-variant=primary]"
+                : ".studio-more > summary",
+            ),
+          label === "Export",
+        );
       }
       await page
         .getByRole("button", {

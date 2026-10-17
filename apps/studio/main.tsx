@@ -201,6 +201,10 @@ function App() {
       lang === "zh" ? "主题工作室 · HappyHands" : "Theme Studio · HappyHands";
   }, [lang]);
   const [panelWidth, setPanelWidth] = useState(320);
+  const moreDetails = useRef<HTMLDetailsElement>(null);
+  const moreTrigger = useRef<HTMLElement>(null);
+  const exportTrigger = useRef<HTMLButtonElement>(null);
+  const panelOrigin = useRef<HTMLElement | null>(null);
   const [draft, setDraft] = useState(boot.draft),
     [h, setH] = useState(() => history(boot.draft.styles));
   const saved = useRef(boot.draft.revision);
@@ -216,6 +220,16 @@ function App() {
     [selected, setSelected] = useState<Key>("primary"),
     [compare, setCompare] = useState(false),
     [panel, setPanel] = useState("");
+  useEffect(() => {
+    if (panel) document.querySelector<HTMLElement>(".panel-title h2")?.focus();
+    else panelOrigin.current?.focus();
+  }, [panel]);
+  function openPanel(next: string) {
+    panelOrigin.current =
+      next === "export" ? exportTrigger.current : moreTrigger.current;
+    if (moreDetails.current) moreDetails.current.open = false;
+    setPanel(panel === next ? "" : next);
+  }
   const [source, setSource] = useState(""),
     [pending, setPending] = useState<{
       styles: ThemeStyles;
@@ -443,9 +457,6 @@ function App() {
             <Icon name="plus" />
           </Button>
         </div>
-        <a className="review-link" href="/apps/portal/#connect-agent">
-          {lang === "zh" ? "设置本地工作台" : "Set up local workbench"}
-        </a>
       </div>
       <main className="studio-shell">
         <div className="studio-title">
@@ -454,12 +465,7 @@ function App() {
             <h1>{t("项目设计系统")}</h1>
             <p>{t("选择颜色和字体，预览效果，再导出到你的项目。")}</p>
           </div>
-          <div className="toolbar">
-            <Button
-              onClick={() => setPanel(panel === "standards" ? "" : "standards")}
-            >
-              {t("设计规范")}
-            </Button>
+          <div className="toolbar studio-actions">
             <Button disabled={!h.past.length} onClick={() => setH(undo)}>
               <Icon name="undo" />
               {t("撤销")}
@@ -469,44 +475,71 @@ function App() {
               {t("重做")}
             </Button>
             <Button
-              onClick={() =>
-                guard(() => {
-                  persist();
-                })
-              }
-            >
-              {t("保存")}
-            </Button>
-            <Button
-              onClick={() => setPanel(panel === "import" ? "" : "import")}
-            >
-              {t("导入")}
-            </Button>
-            <Button
-              onClick={() => setPanel(panel === "export" ? "" : "export")}
+              ref={exportTrigger}
+              variant={panel ? "secondary" : "primary"}
+              onClick={() => openPanel("export")}
             >
               {t("导出")}
             </Button>
-            <Button
-              variant={panel ? "secondary" : "primary"}
-              onClick={() => {
-                setConfirmed(false);
-                setPanel(panel === "review" ? "" : "review");
+            <details
+              className="studio-more"
+              ref={moreDetails}
+              onKeyDown={(e) => {
+                if (e.key === "Escape") {
+                  if (moreDetails.current) moreDetails.current.open = false;
+                  moreTrigger.current?.focus();
+                }
               }}
             >
-              {t("审核变更")} {changes.length || ""}
-            </Button>
+              <summary ref={moreTrigger}>
+                {t("更多操作")} <Icon name="down" />
+              </summary>
+              <div className="studio-more-content">
+                <Button onClick={() => openPanel("standards")}>
+                  {t("设计规范")}
+                </Button>
+                <Button
+                  onClick={() =>
+                    guard(() => {
+                      persist();
+                      if (moreDetails.current) moreDetails.current.open = false;
+                      moreTrigger.current?.focus();
+                    })
+                  }
+                >
+                  {t("保存")}
+                </Button>
+                <Button onClick={() => openPanel("import")}>{t("导入")}</Button>
+                <div className="studio-advanced">
+                  <p>{t("接入本地项目")}</p>
+                  <Button
+                    onClick={() => {
+                      setConfirmed(false);
+                      openPanel("review");
+                    }}
+                  >
+                    {t("审核变更")} {changes.length || ""}
+                  </Button>
+                  <p className="micro">
+                    {t("将主题交给本地工作台前，核对变更并导出批准文件。")}
+                  </p>
+                  <a className="review-link" href="/apps/portal/#connect-agent">
+                    {t("设置本地工作台")}
+                  </a>
+                  <p className="micro">
+                    {Object.keys(presets).length} {t("预设 ·")} {keys.length}{" "}
+                    {t("变量 × 2 模式 ·")}{" "}
+                    {draft.foundation
+                      ? `Foundation ${draft.foundation.foundationVersion}`
+                      : t("尚无批准版本")}
+                  </p>
+                </div>
+              </div>
+            </details>
           </div>
         </div>
         <div className="status-line">
           <span role="status">{t(notice)}</span>
-          <span>
-            {Object.keys(presets).length} {t("预设 ·")} {keys.length}{" "}
-            {t("变量 × 2 模式 ·")}{" "}
-            {draft.foundation
-              ? `Foundation ${draft.foundation.foundationVersion}`
-              : t("尚无批准版本")}
-          </span>
         </div>
         {error && (
           <div className="error" role="alert">
@@ -541,17 +574,17 @@ function App() {
         {panel && (
           <section className="utility-panel" aria-label={panel}>
             <div className="panel-title">
-              <h2>
+              <h2 tabIndex={-1}>
                 {panel === "standards"
                   ? t("设计规范")
                   : panel === "import"
                     ? t("导入主题")
                     : panel === "export"
                       ? t("导出到你的工程")
-                      : t("审核与 Foundation")}
+                      : t("审核并接入本地项目")}
               </h2>
               <Button onClick={() => setPanel("")} aria-label={t("关闭面板")}>
-                ×
+                <Icon name="close" />
               </Button>
             </div>
             {panel === "standards" ? (
@@ -1087,7 +1120,7 @@ function App() {
             <div className="preview-toolbar">
               <select
                 aria-label={t("预览场景")}
-                value={sceneLabel(scene)}
+                value={scene}
                 onChange={(e) => setScene(e.target.value)}
               >
                 {[
@@ -1104,41 +1137,54 @@ function App() {
                   </option>
                 ))}
               </select>
-              <div className="toolbar">
-                <select
-                  aria-label={t("预览宽度")}
-                  value={viewport}
-                  onChange={(e) => setViewport(e.target.value)}
-                >
-                  <option value="desktop">{t("桌面")}</option>
-                  <option value="tablet">{t("平板 · 768")}</option>
-                  <option value="mobile">{t("手机 · 390")}</option>
-                </select>
-                <Button
-                  aria-pressed={compare}
-                  onClick={() => setCompare(!compare)}
-                >
-                  {t("前后对比")}
-                </Button>
-                <Button
-                  aria-pressed={inspector}
-                  onClick={() => setInspector(!inspector)}
-                >
-                  {t("查看设计变量")}
-                </Button>
-                <Button
-                  onClick={() =>
-                    guard(() => {
-                      document
-                        .querySelector(".preview-workspace")
-                        ?.requestFullscreen()
-                        .catch(() => setError(t("浏览器不支持全屏")));
-                    })
+              <Button
+                aria-pressed={compare}
+                onClick={() => setCompare(!compare)}
+              >
+                {t("前后对比")}
+              </Button>
+              <details
+                className="preview-options"
+                onKeyDown={(e) => {
+                  if (e.key === "Escape") {
+                    e.currentTarget.open = false;
+                    e.currentTarget.querySelector("summary")?.focus();
                   }
-                >
-                  {t("全屏")}
-                </Button>
-              </div>
+                }}
+              >
+                <summary>
+                  {t("预览设置")} <Icon name="down" />
+                </summary>
+                <div className="toolbar">
+                  <select
+                    aria-label={t("预览宽度")}
+                    value={viewport}
+                    onChange={(e) => setViewport(e.target.value)}
+                  >
+                    <option value="desktop">{t("桌面")}</option>
+                    <option value="tablet">{t("平板 · 768")}</option>
+                    <option value="mobile">{t("手机 · 390")}</option>
+                  </select>
+                  <Button
+                    aria-pressed={inspector}
+                    onClick={() => setInspector(!inspector)}
+                  >
+                    {t("查看设计变量")}
+                  </Button>
+                  <Button
+                    onClick={() =>
+                      guard(() => {
+                        document
+                          .querySelector(".preview-workspace")
+                          ?.requestFullscreen()
+                          .catch(() => setError(t("浏览器不支持全屏")));
+                      })
+                    }
+                  >
+                    {t("全屏")}
+                  </Button>
+                </div>
+              </details>
             </div>
             {inspector && (
               <div className="inspector-bar">

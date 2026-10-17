@@ -115,7 +115,7 @@ p {
 }
 .toolbar {
   display: flex;
-  gap: 7px;
+  gap: var(--hh-space-2);
   align-items: center;
   flex-wrap: wrap;
 }
@@ -187,10 +187,10 @@ p {
 .segmented {
   display: flex;
   background: var(--hh-bg-sunken);
-  padding: 3px;
-  border-radius: 8px;
-  gap: 3px;
-  margin: 18px 0;
+  padding: var(--hh-space-1);
+  border-radius: var(--hh-radius-sm);
+  gap: var(--hh-space-1);
+  margin: var(--hh-space-4) 0;
 }
 .segmented button {
   flex: 1;
@@ -814,7 +814,7 @@ p {
     font-size: 24px;
   }
   .toolbar {
-    gap: 5px;
+    gap: var(--hh-space-2);
   }
   .toolbar button {
     padding: 7px 9px;
@@ -1280,3 +1280,170 @@ button[aria-pressed="true"] {
     gap: 16px;
   }
 }
+
+.studio-actions {
+  position: relative;
+}
+.studio-more > summary,
+.preview-options > summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--hh-space-2);
+  min-height: 40px;
+  padding: var(--hh-space-2) var(--hh-space-3);
+  border: 1px solid var(--hh-line-strong);
+  border-radius: var(--hh-radius-md);
+  font-size: 12px;
+  cursor: pointer;
+  list-style: none;
+  white-space: nowrap;
+}
+.studio-more > summary::-webkit-details-marker,
+.preview-options > summary::-webkit-details-marker {
+  display: none;
+}
+.studio-more > summary:focus-visible,
+.preview-options > summary:focus-visible {
+  outline: 2px solid var(--hh-ring);
+  outline-offset: 3px;
+}
+.studio-more[open] > summary .hh-icon,
+.preview-options[open] > summary .hh-icon {
+  transform: rotate(180deg);
+}
+.studio-more-content {
+  position: absolute;
+  right: 0;
+  top: calc(100% + var(--hh-space-2));
+  z-index: var(--hh-z-overlay);
+  width: min(300px, calc(100vw - 32px));
+  padding: var(--hh-space-4);
+  background: var(--hh-bg-raised);
+  border: 1px solid var(--hh-line);
+  border-radius: var(--hh-radius-xl);
+  box-shadow: var(--hh-shadow-float);
+}
+.studio-more-content > button {
+  display: flex;
+  width: 100%;
+  margin-bottom: var(--hh-space-2);
+  justify-content: start;
+}
+.studio-advanced {
+  margin-top: var(--hh-space-3);
+  padding-top: var(--hh-space-3);
+  border-top: 1px solid var(--hh-line);
+}
+.studio-advanced > p:first-child {
+  margin-top: 0;
+  font-size: 12px;
+  color: var(--hh-ink-muted);
+}
+.studio-advanced a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: underline;
+}
+.preview-options {
+  position: relative;
+  margin-left: auto;
+}
+.preview-options > .toolbar {
+  position: absolute;
+  right: 0;
+  top: calc(100% + var(--hh-space-2));
+  z-index: var(--hh-z-overlay);
+  width: min(300px, calc(100vw - 64px));
+  padding: var(--hh-space-3);
+  background: var(--hh-bg-raised);
+  border: 1px solid var(--hh-line);
+  border-radius: var(--hh-radius-xl);
+  box-shadow: var(--hh-shadow-float);
+}
+.sample-disclaimer {
+  margin: 0;
+  padding: var(--hh-space-2) var(--hh-space-4);
+  background: var(--muted);
+  color: var(--muted-foreground);
+  font-size: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.component-specimen > h2 {
+  margin-top: 0;
+}
+.component-specimen > p {
+  color: var(--muted-foreground);
+}
+.component-specimen .sample-actions {
+  flex-wrap: wrap;
+}
+.theme-preview .sample-check {
+  display: flex;
+  align-items: center;
+  gap: var(--hh-space-2);
+}
+.theme-preview .sample-check input {
+  width: auto;
+}
+@media (max-width: 720px) {
+  .studio-title {
+    gap: var(--hh-space-2);
+  }
+  .studio-title .eyebrow,
+  .studio-title > div > p:not(.eyebrow) {
+    display: none;
+  }
+  .studio-title h1 {
+    font-size: 24px;
+    line-height: 32px;
+  }
+  .studio-actions {
+    width: 100%;
+  }
+  .studio-actions > .hh-button,
+  .studio-actions summary {
+    min-height: 44px;
+  }
+  .studio-more {
+    margin-left: auto;
+  }
+  .status-line {
+    margin: var(--hh-space-2) 0;
+  }
+  .mobile-tabs {
+    margin: var(--hh-space-2) 0;
+  }
+  .mobile-tabs button {
+    min-height: 44px;
+  }
+  .preview-toolbar {
+    gap: var(--hh-space-2);
+    padding: var(--hh-space-2);
+  }
+  .preview-toolbar > select,
+  .preview-toolbar > button {
+    flex: 1;
+    min-width: 0;
+    min-height: 44px;
+  }
+  .preview-options > summary {
+    min-height: 44px;
+    padding-inline: var(--hh-space-2);
+  }
+  .preview-options {
+    margin-left: 0;
+  }
+  .preview-options > .toolbar {
+    max-width: calc(100vw - 48px);
+  }
+  .component-specimen {
+    padding: var(--hh-space-4);
+  }
+  .component-specimen > h2 {
+    font-size: 20px;
+  }
+}
+
+.preview-toolbar > .hh-button { font-size: 12px; }

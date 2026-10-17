@@ -2,10 +2,10 @@ export const apps = [
   {
     "index": "01",
     "state": "Runs locally",
-    "title": "Review",
-    "description": "Check desktop and mobile pages, find usability issues and choose what to improve first.",
+    "title": "A list of issues",
+    "description": "Each finding includes its page, screenshot and impact so you can decide what to fix first.",
     "meta": [
-      "Screenshots · Findings"
+      "Screenshots · Issues · Priorities"
     ],
     "action": "Read capture guide",
     "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md"
@@ -13,10 +13,10 @@ export const apps = [
   {
     "index": "02",
     "state": "Review required",
-    "title": "Organize your design system",
-    "description": "Collect colors, fonts and components from your project. Review them before using the same rules across pages.",
+    "title": "Your design rules",
+    "description": "A record of existing colors, fonts and components, with rules that still need your review.",
     "meta": [
-      "BRAND · COMPONENTS"
+      "Brand · Components · Rules"
     ],
     "action": "Read Foundation guide",
     "href": "https://github.com/ShuaiMXu/creative-os/blob/main/README.md#design-a-new-surface"
@@ -24,10 +24,10 @@ export const apps = [
   {
     "index": "03",
     "state": "Runs locally",
-    "title": "Fix",
-    "description": "Let your coding assistant make the changes you choose in a separate working copy. Compare the results before keeping them.",
+    "title": "Changes you can inspect",
+    "description": "A separate working copy and code diff show exactly what changed.",
     "meta": [
-      "Working copy · Changes"
+      "Working copy · Code diff"
     ],
     "action": "Read execution guide",
     "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md#choosing-a-coding-agent"
@@ -35,10 +35,10 @@ export const apps = [
   {
     "index": "04",
     "state": "Review required",
-    "title": "Check changes",
-    "description": "Compare the same page sizes and states. Check how they work, then choose which changes to keep.",
+    "title": "Before-and-after records",
+    "description": "Matched page sizes and states help you compare results and record why you keep or reject a change.",
     "meta": [
-      "Comparison · Feedback"
+      "Comparison · Review notes"
     ],
     "action": "Read review guide",
     "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md#screenshot-aware-visual-review"
@@ -141,9 +141,9 @@ export const screenPairs = [
 
 export const sections = {
   "apps": {
-    "kicker": "01 / APPS",
-    "title": "After the build",
-    "copy": "Review pages, organize design rules and check changes in one workflow.",
+    "kicker": "01 / What you get",
+    "title": "A record of every review",
+    "copy": "Keep the findings, design rules, code changes and review results together.",
     "link": "View source on GitHub"
   },
   "explore": {
