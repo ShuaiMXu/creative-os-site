@@ -10,6 +10,7 @@ Follow the clarity, consistency, action labels and contextual guidance in [Apple
 - Describe the next action with a verb: copy, save, export, choose. Do not substitute “continue” for a specific action.
 - Keep English in sentence case. Translate labels and placeholders together. Do not translate project names or user content.
 - Use direct statements for section headings and descriptions. Prefer “每次审阅都有记录” to “每次审阅，会留下什么”; avoid rhetorical question-and-answer copy and claims such as “一目了然”. Keep genuine questions in the FAQ.
+- State the product positioning as “产品体验优化”. Explain concrete work on layouts, user flows and component consistency, with AI-assisted changes and human review. Avoid reducing the positioning to vague claims such as “更好用” or implying an always-online service.
 - Keep actual CLI names, commands, adapters, file formats and agent prompt constraints accurate. Codex and Claude Code remain named in setup because they are actual supported tools.
 - Preserve limits: local setup is required, unfinished services are unavailable, demonstrations are examples, and automated checks do not establish acceptance.
 
