@@ -180,16 +180,16 @@ function App() {
             <p className="eyebrow">{t("效果预览", "See it in use")}</p>
             <h2>
               {t(
-                "先看文件，再决定是否允许",
-                "Review the files before allowing an action",
+                "文件修改确认",
+                "File change approval",
               )}
             </h2>
             <div className="system-example-layout">
               <div>
                 <p>
                   {t(
-                    "冷色背景、清晰的列表、一个主要操作。切换外观、勾选文件，看看选择和确认后的反馈。",
-                    "A cool surface, a clear list and one primary action. Switch appearance and select files to try the feedback.",
+                    "通过文件列表与主要操作呈现修改范围。切换外观、选择文件，预览选择与确认状态。",
+                    "A file list and primary action define the scope. Switch appearance and select files to preview selection and confirmation states.",
                   )}
                 </p>
                 <p className="micro">

@@ -98,10 +98,10 @@ export const hero = {
     "FOR INDEPENDENT BUILDERS",
     "OPEN SOURCE · LOCAL"
   ],
-  "h1": "Improve your ",
-  "h1Accent": "product experience",
+  "h1": "Make your product ",
+  "h1Accent": "more professional",
   "h1Suffix": ".",
-  "copy": "Review page layouts, user flows and component consistency to identify improvements. Let AI help make changes, then compare the pages and review the results.",
+  "copy": "Improve page layouts, interaction flows and component consistency through AI-assisted changes and review.",
   "cta": "Explore capabilities",
   "ctaSecondary": "View a real review"
 };
@@ -142,8 +142,8 @@ export const screenPairs = [
 export const sections = {
   "apps": {
     "kicker": "01 / Review records",
-    "title": "A record of every review",
-    "copy": "Keep the findings, design rules, code changes and review results together.",
+    "title": "A complete design review",
+    "copy": "Cover experience assessment, design guidelines, code changes and outcome review, with results available at each stage.",
     "link": "View source on GitHub"
   },
   "explore": {
@@ -164,8 +164,8 @@ export const sections = {
   },
   "getStarted": {
     "kicker": "05 / GET STARTED",
-    "title": "Try a real product",
-    "titleLine2": "Start with one page",
+    "title": "Start a product experience review",
+    "titleLine2": "Select the first page to review",
     "copy": "Install the core repository dependencies with Node.js 22.15+, pnpm 11.19+ and Chrome or Edge. Configure your target repository and preview using the guide. A first capture is the beginning of a review.",
     "quickstartLabel": "QUICKSTART",
     "quickstartTitle": "After setup, capture the baseline",
@@ -306,8 +306,8 @@ export const ui = {
 };
 
 export const delivery = {
-  "title": "Look back at every change",
-  "copy": "The tools collect pages and suggestions. Your coding assistant makes the changes you approve. Review the original pages, changes and check results whenever you need.",
+  "title": "Change and review workflow",
+  "copy": "Develop recommendations from page evidence and let AI implement the approved scope. Review original pages, code differences and evaluation results.",
   "items": [
     [
       "Understand the project",
@@ -322,8 +322,8 @@ export const delivery = {
       "View the change summary, code differences, before-and-after pages and check results."
     ],
     [
-      "Choose what to keep",
-      "Keep the changes you like and record what needs more work. Use your approved design rules for new pages."
+      "Confirm the outcome",
+      "Accept or reject changes based on review results and record unresolved issues. Apply approved design rules to new pages."
     ]
   ],
   "status": "Installation and local setup are required. Automatic monitoring, learning and subscriptions are not available yet. See the development guide for implementation details.",
