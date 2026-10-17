@@ -368,3 +368,16 @@ body {
     padding: var(--hh-space-5);
   }
 }
+
+.system-example-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  gap: var(--hh-space-8);
+  align-items: start;
+  margin-top: var(--hh-space-6);
+}
+@media (max-width: 900px) {
+  .system-example-layout {
+    grid-template-columns: 1fr;
+  }
+}

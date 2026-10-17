@@ -16,7 +16,8 @@
     "test:studio:fonts": "node tests/studio-font-browser.mjs",
     "test:studio:open-fonts": "node tests/studio-open-font-browser.mjs",
     "fonts:vendor": "node scripts/vendor-open-fonts.mjs",
-    "test:site:browser": "node tests/site-flow-browser.mjs"
+    "test:site:browser": "node tests/site-flow-browser.mjs",
+    "test:site:examples": "node tests/site-examples-export-browser.mjs"
   },
   "dependencies": {
     "ajv": "8.20.0",

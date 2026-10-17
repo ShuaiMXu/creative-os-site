@@ -1446,4 +1446,25 @@ button[aria-pressed="true"] {
   }
 }
 
-.preview-toolbar > .hh-button { font-size: 12px; }
+.preview-toolbar > .hh-button {
+  font-size: 12px;
+}
+
+.export-fonts {
+  border: 1px solid var(--hh-line);
+  border-radius: var(--hh-radius-md);
+  padding: var(--hh-space-4);
+  margin: var(--hh-space-4) 0;
+}
+.export-fonts h3 {
+  margin-top: 0;
+}
+.export-fonts p {
+  font-size: 13px;
+}
+.export-fonts ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hh-space-2) var(--hh-space-6);
+  padding-left: var(--hh-space-4);
+}

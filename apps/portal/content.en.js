@@ -18,7 +18,7 @@ export const apps = [
     "meta": [
       "Brand · Components · Rules"
     ],
-    "action": "Read Foundation guide",
+    "action": "Read design rules guide",
     "href": "https://github.com/ShuaiMXu/creative-os/blob/main/README.md#design-a-new-surface"
   },
   {
@@ -99,7 +99,7 @@ export const hero = {
     "OPEN SOURCE · LOCAL"
   ],
   "h1": "Make your product ",
-  "h1Accent": "professional",
+  "h1Accent": "easier to use",
   "h1Suffix": ".",
   "copy": "Find interface issues, organize your design rules and let AI help make changes. Compare the pages and choose what to keep.",
   "cta": "Explore capabilities",

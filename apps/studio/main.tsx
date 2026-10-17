@@ -13,7 +13,6 @@ import {
   contrastChecks,
   differences,
   importCSS,
-  exportTheme,
   validateStyles,
   revision,
   type Key,
@@ -35,6 +34,7 @@ import {
   createProposal,
   type Draft,
 } from "../../packages/theme-core/project";
+import { themeExport, fontAssetOrigin } from "./theme-export";
 import { Preview } from "./Preview";
 import { FontInput } from "./FontInput";
 import { useFontLoading } from "./useFontLoading";
@@ -426,6 +426,7 @@ function App() {
     /* Export remains available when storage is blocked. */
   }
   if (!projectIds.includes(draft.id)) projectIds.push(draft.id);
+  const exported = themeExport(styles, format);
   return (
     <>
       <SiteHeader
@@ -531,7 +532,7 @@ function App() {
                     {t("变量 × 2 模式 ·")}{" "}
                     {draft.foundation
                       ? `Foundation ${draft.foundation.foundationVersion}`
-                      : t("尚无批准版本")}
+                      : t("尚未确认用于本地项目")}
                   </p>
                 </div>
               </div>
@@ -580,7 +581,7 @@ function App() {
                   : panel === "import"
                     ? t("导入主题")
                     : panel === "export"
-                      ? t("导出到你的工程")
+                      ? t("导出主题")
                       : t("审核并接入本地项目")}
               </h2>
               <Button onClick={() => setPanel("")} aria-label={t("关闭面板")}>
@@ -698,7 +699,7 @@ function App() {
                           : format === "tailwind3-config"
                             ? "tailwind.config.cjs"
                             : "theme.css",
-                        exportTheme(styles, format),
+                        exported.code,
                       )
                     }
                   >
@@ -718,7 +719,7 @@ function App() {
                     onClick={() =>
                       guard(() => {
                         navigator.clipboard
-                          .writeText(exportTheme(styles, format))
+                          .writeText(exported.code)
                           .then(() => setNotice(t("代码已复制")))
                           .catch(() =>
                             setError(t("无法访问剪贴板，请下载代码")),
@@ -729,10 +730,50 @@ function App() {
                     {t("复制")}
                   </Button>
                 </div>
-                <pre>{exportTheme(styles, format)}</pre>
+                {exported.fonts.length > 0 && (
+                  <aside className="export-fonts" aria-label={t("所选字体")}>
+                    <h3>{t("所选字体")}</h3>
+                    <p>
+                      {exported.includesFonts
+                        ? t(
+                            "字体加载代码已包含在导出文件顶部。使用时需要联网。",
+                          )
+                        : t(
+                            "这个格式不加载字体。请同时下载字体 CSS，并在项目全局 CSS 顶部引入。",
+                          )}
+                    </p>
+                    <ul>
+                      {exported.fonts.map((font) => (
+                        <li key={font.id}>
+                          {font.family} ·{" "}
+                          <a
+                            href={fontAssetOrigin + font.licenseUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            OFL-1.1
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                    {!exported.includesFonts && (
+                      <Button
+                        onClick={() => download("fonts.css", exported.fontCss)}
+                      >
+                        {t("下载字体 CSS")}
+                      </Button>
+                    )}
+                    <p>
+                      {t(
+                        "字体由 HappyHands 托管。自行托管时，请一并保留字体文件与许可证。自定义字体需由你的项目加载。",
+                      )}
+                    </p>
+                  </aside>
+                )}
+                <pre>{exported.code}</pre>
                 <p>
                   {t(
-                    "Tailwind 3 需要同时导出 CSS 与 config。导出不会更改批准版本。",
+                    "Tailwind 3 需要同时导出 CSS 和配置文件。导出仅生成文件，不会修改项目。",
                   )}
                 </p>
               </>
@@ -992,7 +1033,7 @@ function App() {
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
-                <Section title={t("语义颜色")}>
+                <Section title={t("界面颜色")}>
                   {colorKeys
                     .filter(
                       (k) =>
