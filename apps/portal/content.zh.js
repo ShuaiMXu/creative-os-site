@@ -25,7 +25,7 @@ export const apps = [
     "index": "03",
     "state": "本地可用",
     "title": "可检查的修改",
-    "description": "保留独立工作副本与代码差异，能查看具体改了什么。",
+    "description": "保留独立工作副本与代码差异，方便核对每处修改。",
     "meta": [
       "工作副本 · 代码差异"
     ],
@@ -74,7 +74,7 @@ export const elements = [
   {
     "kind": "progress",
     "title": "步骤指示",
-    "description": "现在走到哪、卡在哪、下一步做什么，扫一眼就知道。"
+    "description": "查看当前进度、阻塞原因和下一步操作。"
   },
   {
     "kind": "empty",
@@ -142,7 +142,7 @@ export const screenPairs = [
 export const sections = {
   "apps": {
     "kicker": "01 / 应用",
-    "title": "每次审阅，会留下什么",
+    "title": "每次审阅都有记录",
     "copy": "问题、设计规范、代码改动和复核结果，都有记录可查。",
     "link": "在 GitHub 查看源码"
   },
@@ -153,7 +153,7 @@ export const sections = {
   },
   "screens": {
     "kicker": "03 / 前后对比",
-    "title": "改了什么，一目了然",
+    "title": "对照修改前后的页面",
     "copy": "HappyClaw 仓库基线的历史审阅，桌面 1280×800、移动 390×844。独立视觉复核未通过：桌面品牌标识被裁切，仍需修复与重拍。不是线上部署效果或转化验证。",
     "link": "查看完整审阅"
   },
