@@ -1,3 +1,4 @@
+import { Icon } from "../../packages/ui/Icon";
 import { t, sceneLabel } from "./i18n";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { createRoot } from "react-dom/client";
@@ -433,16 +434,17 @@ function App() {
             ))}
           </select>
           <Button
+            aria-label={t("新建项目")}
             onClick={() => {
               const id = prompt(t("新项目 ID（英文、数字和短横线）"));
               if (id && /^[\w-]{1,80}$/.test(id)) switchProject(id);
             }}
           >
-            ＋
+            <Icon name="plus" />
           </Button>
         </div>
         <a className="review-link" href="/apps/portal/#connect-agent">
-          {lang === "zh" ? "接入本地工作台 →" : "Connect local workbench →"}
+          {lang === "zh" ? "设置本地工作台" : "Set up local workbench"}
         </a>
       </div>
       <main className="studio-shell">
@@ -450,7 +452,7 @@ function App() {
           <div>
             <p className="eyebrow">{t("设计系统 / 主题编辑")}</p>
             <h1>{t("项目设计系统")}</h1>
-            <p>{t("调整主题、检查组件状态，再将设计约束交给你的项目。")}</p>
+            <p>{t("选择颜色和字体，预览效果，再导出到你的项目。")}</p>
           </div>
           <div className="toolbar">
             <Button
@@ -459,10 +461,12 @@ function App() {
               {t("设计规范")}
             </Button>
             <Button disabled={!h.past.length} onClick={() => setH(undo)}>
-              {t("↶ 撤销")}
+              <Icon name="undo" />
+              {t("撤销")}
             </Button>
             <Button disabled={!h.future.length} onClick={() => setH(redo)}>
-              {t("↷ 重做")}
+              <Icon name="redo" />
+              {t("重做")}
             </Button>
             <Button
               onClick={() =>
@@ -767,7 +771,9 @@ function App() {
                               {c.mode} / {c.key}
                             </b>
                             <del>{c.before}</del>
-                            <span>→ {c.after}</span>
+                            <span>
+                              <Icon name="right" /> {c.after}
+                            </span>
                           </div>
                         ))
                       ) : (
@@ -924,7 +930,8 @@ function App() {
                   aria-pressed={mode === m}
                   onClick={() => setMode(m)}
                 >
-                  {m === "light" ? t("☀ 浅色") : t("☾ 深色")}
+                  <Icon name={m === "light" ? "sun" : "moon"} />
+                  {m === "light" ? t("浅色") : t("深色")}
                 </Button>
               ))}
             </div>
@@ -947,8 +954,8 @@ function App() {
               <>
                 <input
                   className="token-search"
-                  aria-label={t("搜索 token")}
-                  placeholder={t("搜索 token…")}
+                  aria-label={t("搜索设计变量")}
+                  placeholder={t("搜索设计变量…")}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
@@ -1117,7 +1124,7 @@ function App() {
                   aria-pressed={inspector}
                   onClick={() => setInspector(!inspector)}
                 >
-                  {t("检查 token")}
+                  {t("查看设计变量")}
                 </Button>
                 <Button
                   onClick={() =>
@@ -1140,7 +1147,7 @@ function App() {
                 <Button onClick={() => focusToken(selected)}>
                   {t("定位编辑")}
                 </Button>
-                <span>{t("点击组件查看绑定的语义 token")}</span>
+                <span>{t("选择组件，查看对应的设计变量")}</span>
               </div>
             )}
             <div className={`preview-stage viewport-${viewport}`}>
@@ -1197,7 +1204,7 @@ function App() {
                 target="_blank"
                 rel="noreferrer"
               >
-                {t("主题引擎改编自 tweakcn ↗")}
+                {t("主题工具基于 tweakcn")} <Icon name="external" />
               </a>
             </div>
           </section>

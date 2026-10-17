@@ -1,3 +1,4 @@
+import {iconMarkup} from '../../packages/ui/icons.ts';
 import './design-systems.css';
 
 
@@ -31,6 +32,6 @@ export function designSystemsMarkup(language) {
       <div class="system-specimen" aria-hidden="true"><span>HappyHands</span><strong>${t('清楚、克制、亲和。','Clear. Considered. Human.')}</strong><div class="specimen-colors"><i></i><i></i><i></i><i></i></div><p>${t('品牌规范 · 双模式主题 · 组件状态','Brand rules · Light & dark · Component states')}</p></div>
     </article>
     <article class="system-feature system-feature-secondary" id="quartz" aria-labelledby="quartz-title"><div><p class="kicker">${t('外部设计系统 · design.how','External system · design.how')}</p><h3 id="quartz-title">Quartz</h3><p>${t('面向 AI 产品和代理工作流。查看组件目录、页面模板与接入说明，再判断是否适合你的项目。','For AI products and agent workflows. Explore its component catalog, screen blocks and setup guidance to see whether it fits your project.')}</p></div><a class="button button-secondary" href="/systems/quartz/">${t('了解 Quartz','Explore Quartz')}</a></article>
-    <div class="system-studio-link"><div><h3>${t('把规范用到你的项目','Apply the rules to your project')}</h3><p>${t('调整主题，查看组件状态，再导出经过确认的设计变量。','Edit the theme, inspect component states, then export the tokens you have reviewed.')}</p></div><a class="text-link" href="/apps/studio/">${t('打开主题工作室','Open Theme Studio')} →</a></div>
+    <div class="system-studio-link"><div><h3>${t('把规范用到你的项目','Apply the rules to your project')}</h3><p>${t('调整主题，查看组件状态，再导出经过确认的设计变量。','Edit the theme, inspect component states, then export the tokens you have reviewed.')}</p></div><a class="text-link" href="/apps/studio/">${t('打开主题工作室','Open Theme Studio')} ${iconMarkup('right')}</a></div>
   </div>`;
 }

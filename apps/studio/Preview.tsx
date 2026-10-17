@@ -1,3 +1,4 @@
+import { Icon } from "../../packages/ui/Icon";
 import { t, sceneLabel } from "./i18n";
 import { previewFontVariables } from "../../packages/font-library";
 import { useState, type CSSProperties } from "react";
@@ -158,13 +159,12 @@ export function Preview({
             <br />
             {t("让协作自然发生。")}
           </h1>
-          <p>
-            {t(
-              "把想法变成清晰的下一步。与你的团队一起构建，让每一次更新更有依据。",
-            )}
-          </p>
+          <p>{t("创建项目，分配任务，与团队分享最新进展。")}</p>
           <div className="sample-actions">
-            <button data-token="primary">{t("开始构建 ↗")}</button>
+            <button data-token="primary">
+              <Icon name="right" />
+              {t("开始使用")}
+            </button>
             <button className="secondary" data-token="secondary">
               {t("查看案例")}
             </button>
@@ -232,11 +232,14 @@ export function Preview({
                     ? t("收件箱")
                     : scene === "Dashboard"
                       ? t("项目概览")
-                      : t("每一个状态，都值得被设计。")}
+                      : t("项目概览")}
                 </h2>
-                <p>{t("继续推进项目所需的信息。")}</p>
+                <p>{t("查看项目、任务和最近更新。")}</p>
               </div>
-              <button data-token="primary">{t("＋ 新建项目")}</button>
+              <button data-token="primary">
+                <Icon name="plus" />
+                {t("新建项目")}
+              </button>
             </div>
             {scene === "Mail" ? (
               <article className="sample-mail" data-token="card">

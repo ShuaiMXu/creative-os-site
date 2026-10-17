@@ -1,3 +1,4 @@
+import { Icon } from "./Icon";
 import React from "react";
 import { siteNavigation } from "./site-navigation";
 import "./site-shell.css";
@@ -47,6 +48,7 @@ export function SiteHeader({
               : `Switch to ${dark ? "light" : "dark"} mode`
           }
         >
+          <Icon name={dark ? "sun" : "moon"} />
           {dark
             ? lang === "zh"
               ? "浅色"
@@ -56,6 +58,7 @@ export function SiteHeader({
               : "Dark"}
         </button>
         <button onClick={onLanguage} type="button">
+          <Icon name="globe" />
           {lang === "zh" ? "English" : "中文"}
         </button>
       </div>
