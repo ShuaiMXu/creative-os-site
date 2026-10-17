@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body class="workspace-page">
+  <div id="workbench-shell">
   <header class="nav wrap"><a class="brand" href="/apps/web/"><span class="brand-mark">pd.</span><span>product designer <small>REVIEW LAB</small></span></a><nav aria-label="Review"><a href="/apps/web/">Overview</a><a class="nav-cta" href="https://github.com/ShuaiMXu/creative-os/issues/1">MVP scope ↗</a></nav></header>
   <main class="wrap review-shell">
     <div class="review-heading"><div><p class="eyebrow">EXPERIENCE REVIEW / 001</p><h1>A clearer next step for your product.</h1><p>Inspect the evidence, choose a problem, hand off a scoped change, then record what happened.</p></div><div class="case-switch"><label for="case-select">CASE</label><select id="case-select"><option value="happyclaw">HappyClaw site / repository review</option><option value="sample">Northstar / fictional walkthrough</option></select></div></div>
@@ -25,11 +26,17 @@
     </section>
     <section id="run-panel" class="run panel" aria-labelledby="run-title" hidden>
       <div class="panel-heading"><span>RUN EVIDENCE</span><span id="run-id"></span></div>
-      <div class="run-heading"><div><h2 id="run-title">What did the harness capture?</h2><p>Screenshots, structural checks and the recorded decision from one local run. Structural checks confirm the page still works; they do not measure design quality.</p></div><span id="run-stage" class="foundation-count"></span></div>
-      <div id="run-shots" class="run-shots"></div>
-      <div id="run-reviews" class="run-reviews"></div>
-      <div id="run-checks" class="run-checks"></div>
-      <p id="run-note" class="small-note"></p>
+      <div class="pd-view-switch">
+        <button type="button" data-view="canvas" class="pd-view-btn pd-view-jump">⛶ 打开画布</button>
+        <button type="button" data-view="codediff" class="pd-view-btn pd-view-jump">⎇ Code Diff</button>
+      </div>
+      <div id="run-list-view">
+        <div class="run-heading"><div><h2 id="run-title">What did the harness capture?</h2><p>Screenshots, structural checks and the recorded decision from one local run. Structural checks confirm the page still works; they do not measure design quality.</p></div><span id="run-stage" class="foundation-count"></span></div>
+        <div id="run-shots" class="run-shots"></div>
+        <div id="run-reviews" class="run-reviews"></div>
+        <div id="run-checks" class="run-checks"></div>
+        <p id="run-note" class="small-note"></p>
+      </div>
     </section>
     <div class="review-grid">
       <aside class="context panel"><div class="panel-heading"><span>01 / CONTEXT</span><span>INPUT</span></div><h2 id="project-name"></h2><p id="project-source" class="muted"></p><dl><dt>Product goal</dt><dd id="project-goal"></dd><dt>Audience</dt><dd id="project-audience"></dd><dt>Critical task</dt><dd id="project-task"></dd></dl><h3>Observed evidence</h3><div id="evidence-list"></div><p class="small-note">Evidence is authored from the cited source. No automatic site analysis has run.</p></aside>
@@ -39,6 +46,58 @@
     <section class="next-panel"><span class="eyebrow">NEXT IN THE PRODUCT</span><h2>From one review to a designer that stays.</h2><p>Project history, incremental checks after code changes, evaluator versions and regression examples will turn this single review into a continuous design service.</p></section>
   </main>
   <footer class="wrap"><span>PRODUCT DESIGNER / REVIEW LAB</span><span>Source evidence before confident claims.</span></footer>
+  </div><!-- /workbench-shell -->
+
+  <div id="fullscreen-shell" hidden>
+    <header class="pd-fs-topbar">
+      <div class="pd-fs-brand"><span class="mark">pd</span><span class="name">Product Designer</span></div>
+      <div class="pd-fs-breadcrumb"><span>runs</span><span class="sep">/</span><span class="current" id="pd-fs-run-name"></span></div>
+      <div class="pd-fs-toolbar">
+        <button type="button" id="pd-fs-diff" class="pd-tool-btn" title="Diff 模式 (D)">⧉ Diff</button>
+        <span class="pd-tool-sep"></span>
+        <button type="button" id="pd-zoom-out" class="pd-tool-btn" title="缩小">−</button>
+        <span class="pd-zoom-label" id="pd-zoom-label">100%</span>
+        <button type="button" id="pd-zoom-in" class="pd-tool-btn" title="放大">+</button>
+        <button type="button" id="pd-fs-fit" class="pd-tool-btn" title="Fit 全部 (⇧F)">⤢ Fit</button>
+        <span class="pd-tool-sep"></span>
+        <button type="button" id="pd-fs-codediff" class="pd-tool-btn" title="Code Diff">⎇ Code</button>
+        <button type="button" id="pd-fs-reset" class="pd-tool-btn" title="重置布局">↺ Reset</button>
+        <span class="pd-tool-sep"></span>
+        <a href="#" id="pd-back-to-review" class="pd-tool-btn" title="返回审阅工作台">← 审阅</a>
+      </div>
+    </header>
+    <div class="pd-fs-body">
+      <aside class="pd-sidebar">
+        <div class="pd-sidebar-head">States</div>
+        <div class="pd-sidebar-body" id="pd-sidebar-tree"></div>
+      </aside>
+      <div id="pd-fs-canvas" class="pd-fs-canvas"></div>
+      <aside class="pd-inspector">
+        <div class="pd-inspector-head">Inspector</div>
+        <div class="pd-inspector-body" id="pd-inspector-body">
+          <div class="pd-insp-empty">选择一个节点查看详情</div>
+        </div>
+        <div class="pd-stage-card" id="pd-stage-card">
+          <div class="pd-stage-card-head">
+            <span class="pd-stage-title" id="pd-stage-title">—</span>
+            <span class="pd-stage-badge" id="pd-stage-badge"></span>
+          </div>
+          <p class="pd-stage-desc" id="pd-stage-desc"></p>
+          <div class="pd-stage-cmd" id="pd-stage-cmd">
+            <code id="pd-stage-cmd-text"></code>
+            <button type="button" class="pd-copy-btn" id="pd-stage-copy" title="复制命令">复制</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+    <footer class="pd-fs-statusbar">
+      <span class="status-item" id="pd-fs-count"></span>
+      <span class="spacer"></span>
+      <span class="status-item" id="pd-fs-eval-status"></span>
+      <span class="status-item" id="pd-fs-last-update"></span>
+    </footer>
+    <div id="pd-fs-codediff-container" class="pd-fs-codediff" hidden></div>
+  </div>
   <script type="module" src="./main.js"></script>
 </body>
 </html>

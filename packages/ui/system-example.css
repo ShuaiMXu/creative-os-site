@@ -1,0 +1,140 @@
+.system-example {
+  --ex-bg: var(--hh-bg-raised);
+  --ex-ink: var(--hh-ink);
+  --ex-muted: var(--hh-ink-muted);
+  --ex-line: var(--hh-line);
+  --ex-soft: var(--hh-bg-sunken);
+  --ex-radius: var(--hh-radius-md);
+  background: var(--ex-bg);
+  color: var(--ex-ink);
+  border: 1px solid var(--ex-line);
+  border-radius: var(--hh-radius-xl);
+  padding: var(--hh-space-6);
+  min-width: 0;
+}
+.example-happyhands {
+  --ex-bg: var(--hh-bg-raised);
+  --ex-ink: var(--hh-ink);
+  --ex-muted: var(--hh-ink-muted);
+  --ex-line: var(--hh-line);
+  --ex-soft: var(--hh-bg-sunken);
+}
+/* Quartz palette facts, checked against design.how/r/quartz/theme.json on 2026-10-18.
+   Original example markup and styling; no upstream components or proprietary fonts. */
+.example-quartz[data-appearance="light"] {
+  --ex-bg: oklch(99.7% 0.001 250);
+  --ex-ink: oklch(20% 0.024 262);
+  --ex-soft: oklch(95.6% 0.004 255);
+  --ex-muted: color-mix(in srgb, var(--ex-ink) 75%, var(--ex-bg));
+  --ex-line: color-mix(in srgb, var(--ex-ink) 25%, var(--ex-bg));
+  --ex-radius: 6px;
+}
+.example-quartz[data-appearance="dark"] {
+  --ex-bg: oklch(18.5% 0.016 262);
+  --ex-ink: oklch(96.5% 0.006 250);
+  --ex-soft: oklch(23.5% 0.018 262);
+  --ex-muted: color-mix(in srgb, var(--ex-ink) 75%, var(--ex-bg));
+  --ex-line: color-mix(in srgb, var(--ex-ink) 25%, var(--ex-bg));
+  --ex-radius: 6px;
+}
+.system-example .example-top,
+.system-example .example-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--hh-space-3);
+  flex-wrap: wrap;
+}
+.system-example .example-top {
+  padding-bottom: var(--hh-space-4);
+  border-bottom: 1px solid var(--ex-line);
+  font-size: 12px;
+}
+.system-landing .system-example h2 {
+  font-size: 22px;
+  margin: var(--hh-space-6) 0 var(--hh-space-2);
+}
+.system-example p {
+  color: var(--ex-muted);
+  font-size: 14px;
+}
+.system-example fieldset {
+  margin: var(--hh-space-6) 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.system-example legend {
+  font-size: 12px;
+  margin-bottom: var(--hh-space-2);
+  color: var(--ex-muted);
+}
+.system-example .example-row {
+  display: flex;
+  align-items: center;
+  gap: var(--hh-space-3);
+  padding: var(--hh-space-3) 0;
+  border-top: 1px solid var(--ex-line);
+  cursor: pointer;
+}
+.system-example .example-row span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 14px;
+}
+.system-example .example-row small {
+  margin-left: auto;
+  white-space: nowrap;
+  color: var(--ex-muted);
+  font-size: 12px;
+}
+.system-landing .system-example input[type="checkbox"] {
+  min-height: 16px;
+  margin: 0;
+  padding: 0;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  accent-color: var(--ex-ink);
+}
+.system-landing .system-example button {
+  padding: var(--hh-space-2) var(--hh-space-3);
+  min-height: 44px;
+  border: 1px solid var(--ex-line);
+  border-radius: var(--ex-radius);
+  background: var(--ex-bg);
+  color: var(--ex-ink);
+  cursor: pointer;
+  font-size: 13px;
+}
+.system-landing .system-example button.example-primary,
+.system-landing .system-example button[data-variant="primary"] {
+  background: var(--ex-ink);
+  color: var(--ex-bg);
+  border-color: var(--ex-ink);
+}
+.system-example button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.system-example :is(button, input):focus-visible {
+  outline: 2px solid var(--ex-ink);
+  outline-offset: 3px;
+}
+.system-example .example-caption {
+  font-size: 12px;
+  border-top: 1px solid var(--ex-line);
+  padding-top: var(--hh-space-4);
+  margin: var(--hh-space-4) 0 0;
+}
+@media (max-width: 600px) {
+  .system-example {
+    padding: var(--hh-space-4);
+  }
+  .system-example .example-row {
+    flex-wrap: wrap;
+  }
+  .system-example .example-row small {
+    margin-left: 28px;
+  }
+}

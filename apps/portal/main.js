@@ -1,220 +1,256 @@
-// Portal behaviour — everything here replicates what appllama.io's app JS
-// does to the same markup: the whirl particle field behind the mascot, the
-// llama bob (their runtime adds the same animate class), the scroll
-// choreography over the runway, agent adapter tabs and copy-to-clipboard.
+import '../../packages/ui/site-layout.css';
+import '../../packages/ui/icons.css';
+import {iconMarkup} from '../../packages/ui/icons.ts';
+import {readLanguage, readTheme, savePreference} from '../../packages/ui/site-preferences.ts';
+import * as zh from './content.zh.js';
+import {siteNavigation} from '../../packages/ui/site-navigation.ts';
+import '../../packages/ui/site-shell.css';
+import { designSystemsMarkup } from './design-systems.js';
+import { connectMarkup, setupConnect } from './connect.js';
+import * as en from './content.en.js';
+import { repositories, heroScreens } from './content.js';
+import { startWhirl } from './whirl.js';
 
-const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-let whirlOn = false;
+let lang = readLanguage();
+const t = () => lang === 'zh' ? zh : en;
+document.querySelector('.site-header').classList.add('hh-site-header');
+document.querySelector('.header-cta')?.remove();
 
-/* ---- Whirl field: app screens orbit the mascot on a ring band, with cream
-   particles drifting between them — the screens are runtime-fed canvas
-   drawing on the original site too (no DOM, no CSS; the API data arrives
-   with their app JS). Their radial mask keeps the centre clear for the UFO;
-   this canvas layer sits behind it, which is what makes the screens read as
-   "orbiting behind". Placeholder art: our own exported HappyClaw captures. ---- */
-const canvas = document.querySelector('.whirl-field-canvas');
-if (canvas && !reduced) {
-  const ctx = canvas.getContext('2d');
-  const box = canvas.parentElement?.parentElement;
-  const DPR = Math.min(devicePixelRatio || 1, 2);
-  let width = 0;
-  let height = 0;
-  const particles = [];
-  const tiles = [];
+const systemTheme = matchMedia('(prefers-color-scheme: dark)');
 
-  // The exported HappyClaw run: real before/after captures at both viewports.
-  const SCREENS = [
-    { src: '/runs/06dabc2c/before/desktop.png', w: 150, h: 94 },
-    { src: '/runs/06dabc2c/after/desktop.png', w: 150, h: 94 },
-    { src: '/runs/06dabc2c/before/mobile.png', w: 64, h: 138 },
-    { src: '/runs/06dabc2c/after/mobile.png', w: 64, h: 138 }
-  ];
-  const images = SCREENS.map(screen => {
-    const image = new Image();
-    image.src = screen.src;
-    return { image, ...screen };
-  });
-
-  for (let i = 0; i < 14; i++) {
-    const screen = SCREENS[i % SCREENS.length];
-    tiles.push({
-      image: images[i % images.length],
-      angle: (i / 14) * Math.PI * 2 + Math.random() * 0.3,
-      radius: 0.34 + Math.random() * 0.26,
-      speed: (0.00008 + Math.random() * 0.00022) * (i % 2 ? 1 : -1),
-      scale: 0.8 + Math.random() * 0.5,
-      tilt: (Math.random() - 0.5) * 0.22,
-      alpha: 0.45 + Math.random() * 0.4
-    });
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  document.documentElement.style.colorScheme = theme;
+  document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#111111' : '#f7f6f3';
+  const button = document.getElementById('theme-toggle');
+  if (button) {
+    button.innerHTML = iconMarkup(theme === 'dark' ? 'sun' : 'moon') + (lang === 'zh' ? (theme === 'dark' ? '浅色' : '深色') : (theme === 'dark' ? 'Light' : 'Dark'));
+    button.setAttribute('aria-label', lang === 'zh' ? `切换到${theme === 'dark' ? '浅色' : '深色'}模式` : `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
   }
+}
+const themeButton = document.createElement('button');
+themeButton.id = 'theme-toggle';
+themeButton.type = 'button';
+document.querySelector('.header-actions').prepend(themeButton);
+themeButton.addEventListener('click', () => {
+  const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  savePreference('hh-theme', next);
+  applyTheme(next);
+});
+systemTheme.addEventListener('change', () => applyTheme(readTheme()));
+window.addEventListener('storage', event => {
+  if (event.key === 'hh-theme' || event.key === null) applyTheme(readTheme());
+  if (event.key === 'pd-lang' || event.key === null) {lang = readLanguage(); renderContent();}
+});
+applyTheme(readTheme());
 
-  function resize() {
-    width = box?.clientWidth || innerWidth;
-    height = box?.clientHeight || innerHeight;
-    canvas.width = width * DPR;
-    canvas.height = height * DPR;
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-  }
-  resize();
-  addEventListener('resize', resize);
-
-  for (let i = 0; i < 260; i++) {
-    particles.push({
-      radius: 0.30 + Math.random() * 0.62,          // outside their 50% clear centre
-      angle: Math.random() * Math.PI * 2,
-      speed: (0.00016 + Math.random() * 0.0006) * (Math.random() < 0.5 ? 1 : -1),
-      size: 0.6 + Math.random() * 1.8,
-      alpha: 0.08 + Math.random() * 0.3,
-      drift: Math.random() * Math.PI * 2,
-      driftSpeed: 0.002 + Math.random() * 0.004
-    });
-  }
-
-  function drawTile(tile, rMax) {
-    if (!tile.image.image.complete || tile.image.image.naturalWidth === 0) return;
-    const r = tile.radius * rMax;
-    const x = width / 2 + Math.cos(tile.angle) * r;
-    const y = height / 2 + Math.sin(tile.angle) * r * 0.72; // slight ellipse, matches the mask
-    const w = tile.image.w * tile.scale;
-    const h = tile.image.h * tile.scale;
-    ctx.save();
-    ctx.globalAlpha = tile.alpha;
-    ctx.translate(x, y);
-    ctx.rotate(tile.tilt + Math.sin(tile.angle) * 0.06);
-    ctx.beginPath();
-    ctx.roundRect(-w / 2, -h / 2, w, h, 10);
-    ctx.closePath();
-    ctx.fill();
-    ctx.clip();
-    ctx.drawImage(tile.image.image, -w / 2, -h / 2, w, h);
-    ctx.restore();
-    ctx.save();
-    ctx.globalAlpha = tile.alpha * 0.5;
-    ctx.strokeStyle = 'rgba(240, 220, 200, 0.55)';
-    ctx.lineWidth = 1;
-    ctx.translate(x, y);
-    ctx.rotate(tile.tilt + Math.sin(tile.angle) * 0.06);
-    ctx.beginPath();
-    ctx.roundRect(-w / 2, -h / 2, w, h, 10);
-    ctx.stroke();
-    ctx.restore();
-  }
-
-  function frame() {
-    if (!whirlOn) {
-      whirlOn = true;
-      canvas.style.opacity = '1'; // their 1.5s ease-out transition does the fade
-    }
-    ctx.clearRect(0, 0, width, height);
-    const cx = width / 2;
-    const cy = height / 2;
-    const rMax = Math.max(width, height) / 2;
-    for (const p of particles) {
-      p.angle += p.speed * 16;
-      p.drift += p.driftSpeed;
-      const r = p.radius * rMax * (1 + Math.sin(p.drift) * 0.04);
-      ctx.fillStyle = `rgba(240, 220, 200, ${p.alpha})`;
-      ctx.beginPath();
-      ctx.arc(cx + Math.cos(p.angle) * r, cy + Math.sin(p.angle) * r, p.size, 0, Math.PI * 2);
-      ctx.fill();
-    }
-    for (const tile of tiles) {
-      tile.angle += tile.speed * 16;
-      drawTile(tile, rMax);
-    }
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
+// -- language switcher --
+function renderLangSwitch() {
+  const existing = document.getElementById('lang-switch');
+  if (existing) return;
+  const actions = document.querySelector('.header-actions');
+  if (!actions) return;
+  const switcher = document.createElement('div');
+  switcher.id = 'lang-switch';
+  switcher.setAttribute('role', 'group');
+  switcher.setAttribute('aria-label', 'Language / 语言');
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.addEventListener('click', () => setLang(lang === 'zh' ? 'en' : 'zh'));
+  switcher.appendChild(btn);
+  actions.appendChild(switcher);
 }
 
-/* ---- Mascot: their runtime attaches the bob class to the pilot artwork. ---- */
-const pilot = document.querySelector('.HeroUfoMascot_pilotArtwork__D3UOD');
-if (pilot && !reduced) pilot.classList.add('motion-safe:animate-[llama-bob_4.5s_ease-in-out_infinite]');
-
-/* ---- Scroll choreography: the hero stays sticky for its own height plus a
-   42svh runway; during the runway their JS fades the content out and lifts
-   it, so the catalog slides over a quiet stage instead of a hard cut. ---- */
-const heroInner = document.querySelector('section.sticky > .relative.z-10');
-const runway = document.querySelector('[class*="home-runway-height"]');
-if (heroInner && !reduced) {
-  let ticking = false;
-  function onScroll() {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      const span = runway?.offsetHeight || innerHeight * 0.42;
-      const progress = Math.min(Math.max(scrollY / span, 0), 1);
-      const eased = 1 - Math.pow(1 - progress, 2);
-      heroInner.style.opacity = String(1 - eased);
-      heroInner.style.transform = `translateY(${-eased * 7}vh)`;
-      if (canvas && whirlOn) canvas.style.opacity = String(1 - eased);
-      ticking = false;
-    });
-  }
-  addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+function setLang(code) {
+  lang = code;
+  savePreference('pd-lang', code);
+  renderContent();
 }
 
-/* ---- Agent adapter tabs: the real argv from packages/harness-core/agents.js. ---- */
-const AGENTS = {
-  codex: {
-    label: 'codex exec',
-    argv: 'codex exec -C <worktree> -s workspace-write --json -o agent-last-message.md -',
-    note: 'Prompt 走 stdin；仓库文件一律当作数据，不当作指令。',
-    copy: 'codex exec -C <worktree> -s workspace-write --json -o agent-last-message.md -'
-  },
-  'claude-code': {
-    label: 'claude -p',
-    argv: 'claude -p --output-format stream-json --verbose --permission-mode acceptEdits \\\n  --bare --disallowed-tools "Bash(git push:*) Bash(git remote:*) Bash(git config:*) WebFetch"',
-    note: '--bare 跳过 CLAUDE.md 自动加载：被审仓库无法通过记忆文件给 agent 下指令。',
-    copy: 'claude -p --output-format stream-json --verbose --permission-mode acceptEdits --bare --disallowed-tools "Bash(git push:*) Bash(git remote:*) Bash(git config:*) WebFetch"'
-  }
-};
-
-const argvPre = document.getElementById('agent-argv');
-const noteP = document.getElementById('agent-note');
-const labelSpan = document.getElementById('agent-label');
-const copyButton = document.getElementById('agent-copy');
-
-function selectAgent(id) {
-  const agent = AGENTS[id];
-  if (!agent || !argvPre) return;
-  labelSpan.textContent = agent.label;
-  argvPre.textContent = agent.argv;
-  noteP.textContent = agent.note;
-  copyButton.dataset.copy = agent.copy;
-}
-
-for (const tab of document.querySelectorAll('.pd-tab')) {
-  tab.addEventListener('click', () => {
-    for (const other of document.querySelectorAll('.pd-tab')) other.setAttribute('aria-selected', String(other === tab));
-    selectAgent(tab.dataset.agent);
+function updateNavigation() {
+  document.querySelectorAll('.desktop-nav a').forEach(link => {
+    if (location.hash && new URL(link.href).pathname === location.pathname && new URL(link.href).hash === location.hash) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
   });
 }
-selectAgent('codex');
+window.addEventListener('hashchange', updateNavigation);
 
-/* ---- Copy to clipboard with their button treatment as the toast. ---- */
-let toastTimer = null;
-function showToast(message) {
-  const toast = document.getElementById('toast');
-  if (!toast) return;
-  document.getElementById('toast-text').textContent = message;
-  toast.style.opacity = '1';
-  toast.style.transform = 'translateY(0)';
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => {
-    toast.style.opacity = '0';
-    toast.style.transform = 'translateY(1rem)';
-  }, 1800);
+// -- render all sections from the active language pack --
+function renderContent() {
+  const c = t();
+  document.querySelector('.skip-link').textContent=lang==='zh'?'跳到主要内容':'Skip to content';
+  document.querySelector('.desktop-nav').setAttribute('aria-label',lang==='zh'?'主要导航':'Main navigation');
+  document.querySelector('.wordmark').setAttribute('aria-label','HappyHands');
+  document.querySelector('.desktop-nav').innerHTML=siteNavigation.map(item=>`<a href="${item.href}">${lang==='zh'?item.zh:item.en}</a>`).join('');
+  updateNavigation();
+  applyTheme(document.documentElement.dataset.theme);
+
+  document.querySelector('#lang-switch button').innerHTML = iconMarkup('globe') + (lang === 'zh' ? 'English' : '中文');
+  // hero
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  document.title = lang === 'zh' ? 'HappyHands · 产品体验优化' : 'HappyHands · Product experience optimization';
+  const eyebrow = document.querySelector('.eyebrow');
+  if (eyebrow) eyebrow.innerHTML = c.hero.eyebrow.map(s => `<span>${s}</span>`).join('');
+  const h1 = document.querySelector('h1');
+  if (h1) h1.innerHTML = lang === 'zh'
+    ? `${c.hero.h1}<span>${c.hero.h1Accent}</span>${c.hero.h1Suffix}`
+    : `${c.hero.h1}<span>${c.hero.h1Accent}</span>${c.hero.h1Suffix}`;
+  const heroCopy = document.querySelector('.hero-copy');
+  if (heroCopy) heroCopy.textContent = c.hero.copy;
+  const primary = document.querySelector('.button-primary');
+  if (primary) primary.textContent = c.hero.cta;
+  const secondary = document.querySelector('.button-secondary');
+  if (secondary) secondary.innerHTML = `${c.hero.ctaSecondary} ${iconMarkup('external')}`;
+  const scrollNote = document.querySelector('.scroll-note');
+  if (scrollNote) scrollNote.innerHTML = `${c.ui.scrollNote} ${iconMarkup('down')}`;
+
+  // sections
+  const content = document.querySelector('#portal-content');
+  if (content) {
+    content.innerHTML = `
+    <section class="content-section section-apps" id="apps">
+      <div class="section-head"><div><p class="kicker">${c.sections.apps.kicker}</p><h2>${c.sections.apps.title}</h2></div><div><p>${c.sections.apps.copy}</p><a class="text-link" href="${repositories.core}">${c.sections.apps.link} ${iconMarkup('external')}</a></div></div>
+      <div class="apps-grid">${c.apps.map(appCard).join('')}</div>
+    </section>
+    <section class="content-section section-delivery" id="harness">
+      <div class="section-head"><div><p class="kicker">${lang === 'zh' ? '工作方式' : 'How it works'}</p><h2>${c.delivery.title}</h2></div><p>${c.delivery.copy}</p></div>
+      <dl class="delivery-list">${c.delivery.items.map(([title,copy]) => `<div><dt>${title}</dt><dd>${copy}</dd></div>`).join('')}</dl>
+      <p class="capability-note">${c.delivery.status}</p><a class="text-link" href="${repositories.core}/blob/main/docs/harness.md">${c.delivery.link} ${iconMarkup('external')}</a>
+    </section>
+    <section class="content-section section-explore" id="explore">
+      <div class="section-head"><div><p class="kicker">${c.sections.explore.kicker}</p><h2>${c.sections.explore.title}</h2></div><div><p>${c.sections.explore.copy}</p></div></div>
+      ${designSystemsMarkup(lang)}
+      <details class="system-archives"><summary>${lang === 'zh' ? '更多案例与探索记录' : 'More cases and explorations'}</summary><div class="system-archive-grid">${c.systems.filter(item => item.title !== 'HappyHands').map(systemCard).join('')}</div></details>
+    </section>
+    <section class="content-section" id="screens"><div class="section-head"><div><p class="kicker">${lang === 'zh' ? '案例与组件' : 'Cases and components'}</p><h2>${lang === 'zh' ? '继续了解实际应用' : 'Explore real applications'}</h2></div><div><p>${lang === 'zh' ? '查看有来源的审阅记录，或在设计系统页面试用组件状态。' : 'Read documented review evidence or try component states in the design system.'}</p><a class="text-link" href="https://github.com/ShuaiMXu/creative-os/blob/main/docs/happyclaw-case.md">HappyClaw · ${lang === 'zh' ? '审阅案例' : 'Review case'}</a><a class="text-link" href="/systems/happyhands/#components">HappyHands · ${lang === 'zh' ? '组件与状态' : 'Components & states'}</a></div></div></section>
+    ${connectMarkup(lang)}
+    <section class="get-started" id="get-started">
+      <div class="get-started-copy"><p class="kicker">${c.sections.getStarted.kicker}</p><h2>${c.sections.getStarted.title}<br><span>${c.sections.getStarted.titleLine2}</span></h2><p>${c.sections.getStarted.copy}</p></div>
+      <div class="steps-grid">${c.steps.map(stepCard).join('')}</div>
+      <div class="command-card"><div><span>${c.sections.getStarted.quickstartLabel}</span><strong>${c.sections.getStarted.quickstartTitle}</strong></div><code>pnpm harness onboard --config examples/happyclaw-site/project.json</code><button type="button" data-copy="pnpm harness onboard --config examples/happyclaw-site/project.json">${iconMarkup('copy')} ${c.sections.getStarted.copyBtn}</button></div>
+      <div class="final-actions"><a class="button button-primary" href="${repositories.core}">GitHub ${iconMarkup('external')}</a><a class="button button-secondary" href="${repositories.site}">${lang === 'zh' ? '网站源码' : 'Website source'}</a></div>
+    </section>`;
+  }
+
+  // footer
+  const footer = document.querySelector('footer');
+  if (footer) {
+    footer.innerHTML = `<span>${c.ui.footer.left}</span><span>${c.ui.footer.middle}</span><a href="${repositories.core}">${c.ui.footer.right} ${iconMarkup('external')}</a>`;
+  }
+
+  // re-observe sections for intersection animation
+  observeSections();
+  setupConnect(lang);
 }
 
-for (const button of document.querySelectorAll('[data-copy]')) {
-  button.addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText(button.dataset.copy);
-      showToast('已复制到剪贴板');
-    } catch {
-      showToast('复制失败：浏览器拒绝了剪贴板访问');
-    }
-  });
+function appCard(item) {
+  const c = t();
+  document.querySelector('.skip-link').textContent=lang==='zh'?'跳到主要内容':'Skip to content';
+  document.querySelector('.desktop-nav').setAttribute('aria-label',lang==='zh'?'主要导航':'Main navigation');
+  document.querySelector('.wordmark').setAttribute('aria-label','HappyHands');
+  return `<article class="app-card"><div class="card-top"><span>${item.index}</span><span class="state">${item.state}</span></div><h3>${item.title}</h3><p>${item.description}</p><ul>${item.meta.map(v => `<li>${v}</li>`).join('')}</ul><a href="${item.href || repositories.core}">${item.action} ${iconMarkup('external')}</a></article>`;
 }
+
+const referenceImage = index => `/assets/hero/screen-${String(index).padStart(3, '0')}.webp`;
+const referenceLabel = () => lang === 'zh' ? 'Appllama 参考图 · 临时占位' : 'Appllama reference · Placeholder';
+function systemCard(item) {
+  return `<article class="system-card"><p class="card-tag">${item.tag}</p><h3>${item.title}</h3><p>${item.description}</p><div class="chips">${item.traits.map(v => `<span>${v}</span>`).join('')}</div><a class="card-link" href="${item.href}">${item.action} ${iconMarkup('external')}</a></article>`;
+}
+function stepCard(item) {
+  return `<article class="step-card"><span>${item[0]}</span><h3>${item[1]}</h3><p>${item[2]}</p></article>`;
+}
+
+// -- scroll animations --
+let observer;
+function observeSections() {
+  observer?.disconnect();
+  observer = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); }), { threshold: .12 });
+  document.querySelectorAll('.content-section, .get-started').forEach(s => observer.observe(s));
+}
+
+// -- hero scroll (exact appllama motion model, smooth per-frame interpolation) --
+// Their formula: scrollYProgress from useScroll, then:
+//   opacity = map(p, [0,.35], [1,0]);  scale = map(p, [0,.35], [1,.88]);
+//   bgOpacity = map(p, [.4,.85], [1,0]);
+// We replicate with a rAF loop that lerps toward the scroll target each frame.
+const heroStage = document.querySelector('.hero-scroll-stage');
+const heroCenter = document.querySelector('.hero-center');
+const heroWhirlHost = document.querySelector('.hero-whirl-host');
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+let _raf = null;
+
+function _map(v, [a, b], [c, d]) {
+  const t = Math.min(1, Math.max(0, (v - a) / (b - a)));
+  return c + t * (d - c);
+}
+function _progress() {
+  if (!heroStage) return 0;
+  const r = heroStage.getBoundingClientRect();
+  // Progress denominator = full stage height (matches appllama's useScroll
+  // with offset ["start start", "end start"] on the parent container).
+  // Live-verified: scrollY=50 → p=50/1136=0.044; text gone at scrollY≈400.
+  return r.height <= 0 ? 0 : Math.min(1, Math.max(0, -r.top / r.height));
+}
+// Direct scroll-linked animation: opacity/scale track scroll position exactly.
+// rAF batches the style write for performance but adds zero smoothing —
+// scroll down = text fades proportionally, scroll back up = text returns.
+function _apply() {
+  _raf = null;
+  const p = _progress();
+  // 1. Text fades + shrinks over [0, 0.35]
+  if (heroCenter) {
+    heroCenter.style.opacity = _map(p, [0, .35], [1, 0]).toFixed(4);
+    heroCenter.style.transform = `scale(${_map(p, [0, .35], [1, .88]).toFixed(4)})`;
+  }
+  // 2. Whirl expands (zooms past you) + 3. fades out over [0.4, 0.85].
+  // Their CSS: scale(1 + p * 0.75) on the whirl, plus the outer fade.
+  // The expansion makes the spiral feel like it's rushing outward as you scroll.
+  const whirl = document.querySelector('.hero-whirl-host');
+  if (whirl) {
+    const scale = 1 + p * 0.75;
+    const fade = _map(p, [.4, .85], [1, 0]);
+    whirl.style.opacity = fade.toFixed(4);
+    whirl.style.transform = `translate(-50%, -50%) scale(${scale.toFixed(4)})`;
+  }
+}
+function _onScroll() {
+  if (reduceMotion.matches) return;
+  if (!_raf) _raf = requestAnimationFrame(_apply);
+}
+addEventListener('scroll', _onScroll, { passive: true });
+_apply();
+
+// -- appllama hero whirl (exact motion model, real screenshots) --
+const whirlHost = document.querySelector('.hero-whirl-host') || (() => {
+  // create the host if not in HTML
+  const hero = document.querySelector('.hero');
+  if (!hero) return null;
+  const host = document.createElement('div');
+  host.className = 'hero-whirl-host';
+  const mask = document.createElement('div');
+  mask.className = 'hero-whirl-mask';
+  mask.setAttribute('aria-hidden', 'true');
+  mask.appendChild(host);
+  hero.insertBefore(mask, hero.firstChild);
+  return host;
+})();
+if (whirlHost && heroScreens?.length) {
+  startWhirl(whirlHost, heroScreens);
+  _apply();
+}
+
+// -- copy to clipboard --
+let toastTimer;
+document.addEventListener('click', async e => {
+  const btn = e.target.closest('[data-copy]');
+  if (!btn) return;
+  try {
+    await navigator.clipboard.writeText(btn.dataset.copy);
+    const toast = document.querySelector('#toast');
+    if (toast) { toast.textContent = lang === 'zh' ? '已复制' : 'Copied'; toast.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove('show'), 1800); }
+  } catch { const toast = document.querySelector('#toast'); if (toast) { toast.textContent = lang === 'zh' ? '无法复制，请手动选择上方命令。' : 'Copy unavailable. Select the command above manually.'; toast.classList.add('show'); } }
+});
+
+// -- boot --
+renderLangSwitch();
+renderContent();
