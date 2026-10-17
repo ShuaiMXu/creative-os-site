@@ -1,3 +1,4 @@
+import { SystemExample } from "../../packages/ui/SystemExample";
 import { Icon } from "../../packages/ui/Icon";
 import { SystemDirectory } from "../../packages/ui/SystemDirectory";
 import { useSitePreferences } from "../../packages/ui/useSitePreferences";
@@ -79,8 +80,8 @@ function App() {
                 )}
               </p>
               <div className="actions">
-                <a className="action" href="#components">
-                  {t("浏览组件目录", "Browse components")}
+                <a className="action" href="#example">
+                  {t("查看实际效果", "Try the example")}
                 </a>
                 <a href="#adopt">{t("查看接入方式", "View setup options")}</a>
               </div>
@@ -126,6 +127,7 @@ function App() {
               {[
                 ["overview", "概览", "Overview"],
                 ["foundations", "设计原则", "Principles"],
+                ["example", "效果预览", "Example"],
                 ["components", "组件目录", "Components"],
                 ["patterns", "页面模板", "Screen blocks"],
                 ["adopt", "接入项目", "Setup"],
@@ -172,6 +174,39 @@ function App() {
                   )}
                 </p>
               </article>
+            </div>
+          </section>
+          <section id="example">
+            <p className="eyebrow">{t("效果预览", "See it in use")}</p>
+            <h2>
+              {t(
+                "先看文件，再决定是否允许",
+                "Review the files before allowing an action",
+              )}
+            </h2>
+            <div className="system-example-layout">
+              <div>
+                <p>
+                  {t(
+                    "冷色背景、清晰的列表、一个主要操作。切换外观、勾选文件，看看选择和确认后的反馈。",
+                    "A cool surface, a clear list and one primary action. Switch appearance and select files to try the feedback.",
+                  )}
+                </p>
+                <p className="micro">
+                  {t(
+                    "HappyHands 编写的交互示例，配色与圆角参考 Quartz。使用系统字体；并非上游组件的原样展示，也不会访问你的文件。",
+                    "An interactive example authored by HappyHands, using Quartz palette and corner values with system fonts. It is not an upstream component demo and cannot access your files.",
+                  )}
+                </p>
+                <a
+                  href="https://design.how/r/quartz/theme.json"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {t("查看配色来源", "Palette source")} <Icon name="external" />
+                </a>
+              </div>
+              <SystemExample system="quartz" lang={lang} dark={dark} />
             </div>
           </section>
           <section id="components">

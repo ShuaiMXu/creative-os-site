@@ -18,7 +18,7 @@ export const apps = [
     "meta": [
       "品牌 · 组件 · 使用规则"
     ],
-    "action": "查看设计基础",
+    "action": "查看设计规范",
     "href": "https://github.com/ShuaiMXu/creative-os/blob/main/README.md#design-a-new-surface"
   },
   {
@@ -98,8 +98,8 @@ export const hero = {
     "面向独立开发者",
     "开源 · 本地运行"
   ],
-  "h1": "让产品，",
-  "h1Accent": "真正专业",
+  "h1": "让你的产品，",
+  "h1Accent": "更好用",
   "h1Suffix": "。",
   "copy": "发现界面问题，整理设计规范，让 AI 帮你修改。对比修改前后的页面，由你决定是否保留。",
   "cta": "了解能力",
@@ -314,7 +314,7 @@ export const delivery = {
       "记录产品用途，保存电脑和手机上的原始页面。"
     ],
     [
-      "设计基础",
+      "整理规范",
       "整理颜色、字体和组件，区分待确认内容与已采用的规范。"
     ],
     [

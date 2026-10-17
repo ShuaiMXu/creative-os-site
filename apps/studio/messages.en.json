@@ -315,5 +315,14 @@
   "示例名称": "Example name",
   "团队成员": "Team members",
   "示例数据": "Sample data",
-  "不可用": "Unavailable"
+  "不可用": "Unavailable",
+  "导出主题": "Export theme",
+  "界面颜色": "Interface colors",
+  "尚未确认用于本地项目": "Not yet confirmed for a local project",
+  "Tailwind 3 需要同时导出 CSS 和配置文件。导出仅生成文件，不会修改项目。": "For Tailwind 3, export both CSS and the config file. Exporting creates files without changing your project.",
+  "所选字体": "Selected fonts",
+  "字体加载代码已包含在导出文件顶部。使用时需要联网。": "Font imports are included at the top of the exported file. An internet connection is required.",
+  "这个格式不加载字体。请同时下载字体 CSS，并在项目全局 CSS 顶部引入。": "This format does not load fonts. Download the font CSS too and import it at the top of your global stylesheet.",
+  "下载字体 CSS": "Download font CSS",
+  "字体由 HappyHands 托管。自行托管时，请一并保留字体文件与许可证。自定义字体需由你的项目加载。": "Fonts are hosted by HappyHands. Keep font files and licenses when self-hosting. Load custom fonts in your project."
 }

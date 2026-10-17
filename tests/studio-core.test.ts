@@ -1,6 +1,54 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { themeExport, fontAssetOrigin } from "../apps/studio/theme-export";
 import postcss from "postcss";
+
+test("font-aware exports load selected library fonts once before all CSS rules", () => {
+  const styles = presetStyles("happyhands");
+  for (const mode of ["light", "dark"] as const) {
+    styles[mode]["font-sans"] = '"Inter", "Noto Sans SC", sans-serif';
+    styles[mode]["font-mono"] = '"Inter", monospace';
+  }
+  styles.dark["font-serif"] = '"Noto Serif SC", serif';
+  const original = JSON.stringify(styles);
+  for (const kind of ["css", "tailwind3", "tailwind4"] as const) {
+    const exported = themeExport(styles, kind);
+    assert.deepEqual(
+      exported.fonts.map((f) => f.id),
+      ["inter", "noto-sans-sc", "noto-serif-sc"],
+    );
+    const root = postcss.parse(exported.code);
+    const imports: string[] = [];
+    let sawRule = false;
+    root.each((node) => {
+      if (node.type === "rule") sawRule = true;
+      if (
+        node.type === "atrule" &&
+        node.name === "import" &&
+        node.params.includes("/fonts/")
+      ) {
+        assert.equal(sawRule, false);
+        imports.push(node.params);
+      }
+    });
+    assert.equal(imports.length, 3);
+    assert.equal(new Set(imports).size, 3);
+    assert.ok(imports.every((value) => value.includes(fontAssetOrigin)));
+    assert.match(exported.code, /OFL-1.1/);
+    assert.doesNotMatch(exported.code, /HH Preview|127\.0\.0\.1/);
+  }
+  for (const kind of ["registry", "tailwind3-config"] as const) {
+    const exported = themeExport(styles, kind);
+    assert.equal(exported.includesFonts, false);
+    assert.equal(exported.code, exportTheme(styles, kind));
+    assert.match(exported.fontCss, /@import/);
+  }
+  assert.equal(JSON.stringify(styles), original);
+  const custom = presetStyles("happyhands");
+  assert.equal(themeExport(custom, "css").fontCss, "");
+  custom.light["font-sans"] = '"Customer Font", sans-serif';
+  assert.equal(themeExport(custom, "css").fontCss, "");
+});
 import tailwind3 from "tailwindcss-v3";
 import { compile } from "@tailwindcss/node";
 import { createRequire } from "node:module";

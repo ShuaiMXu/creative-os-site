@@ -1,3 +1,4 @@
+import { SystemExample } from "../../packages/ui/SystemExample";
 import { Icon } from "../../packages/ui/Icon";
 import { SystemDirectory } from "../../packages/ui/SystemDirectory";
 import { useSitePreferences } from "../../packages/ui/useSitePreferences";
@@ -63,8 +64,8 @@ function App() {
               </p>
               <p className="lead">
                 {t(
-                  "从品牌、语义颜色到组件状态，让每个页面遵循同一套规则。官网与主题工作室正在使用的设计基础。",
-                  "From brand and semantic colors to component states: shared rules for every screen. The foundation used by this website and Theme Studio.",
+                  "统一页面的颜色、字体和操作反馈。这套规范已用于本站和主题工作室，你可以直接试用。",
+                  "Consistent colors, type and feedback across pages. Try the same design rules used by this website and Theme Studio.",
                 )}
               </p>
               <div className="actions">
@@ -76,50 +77,7 @@ function App() {
                 </a>
               </div>
             </div>
-            <aside
-              className="system-showcase"
-              aria-label={t(
-                "HappyHands 组件预览",
-                "HappyHands component preview",
-              )}
-            >
-              <div className="showcase-heading">
-                <span>{t("页面审阅", "Page review")}</span>
-                <span className="showcase-status">{t("可试用", "Try it")}</span>
-              </div>
-              <p className="eyebrow">{t("交互示例", "Interactive example")}</p>
-              <h2>{t("试试操作后的反馈", "Try an action and its feedback")}</h2>
-              <p>
-                {t(
-                  "点击按钮，看看确认提示的样式。这个示例不会修改项目。",
-                  "Press the button to see a confirmation message. This example does not change your project.",
-                )}
-              </p>
-              <div className="actions">
-                <Button
-                  variant="primary"
-                  onClick={() =>
-                    setStatus(
-                      t(
-                        "这是一条示例确认提示，未修改项目。",
-                        "This is a sample confirmation. No project was changed.",
-                      ),
-                    )
-                  }
-                >
-                  {t("显示确认提示", "Show confirmation")}
-                </Button>
-                <a href="#components">
-                  {t("查看组件状态", "See component states")}
-                </a>
-              </div>
-              <div className="showcase-palette" aria-hidden="true">
-                <i />
-                <i />
-                <i />
-                <i />
-              </div>
-            </aside>
+            <SystemExample system="happyhands" lang={lang} dark={dark} />
           </section>
           <SystemDirectory label={t("本页目录", "On this page")}>
             <nav aria-label={t("设计系统目录", "Design system navigation")}>
