@@ -1,0 +1,18 @@
+import { iconPaths, type IconName } from "./icons";
+import "./icons.css";
+export function Icon({ name }: { name: IconName }) {
+  return (
+    <svg
+      className="hh-icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.65"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+      dangerouslySetInnerHTML={{ __html: iconPaths[name] }}
+    />
+  );
+}

@@ -1,0 +1,18 @@
+.hh-icon {
+  display: inline-block;
+  width: 1.125rem;
+  height: 1.125rem;
+  flex: none;
+  vertical-align: -0.2em;
+  pointer-events: none;
+}
+:is(a, button) > .hh-icon {
+  margin-inline: 0.25em;
+}
+.hh-site-tools button,
+.header-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}

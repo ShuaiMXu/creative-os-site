@@ -68,13 +68,13 @@ try {
       true,
       "custom changes apply without blur",
     );
-    await page.getByRole("button", { name: "↶ 撤销", exact: true }).click();
+    await page.getByRole("button", { name: "撤销", exact: true }).click();
     await page.waitForFunction(
       (value) => document.querySelector("#font-sans-custom").value === value,
       selected["font-sans"],
     );
     assert.equal(await input.inputValue(), selected["font-sans"]);
-    await page.getByRole("button", { name: "↷ 重做", exact: true }).click();
+    await page.getByRole("button", { name: "重做", exact: true }).click();
     await page.waitForFunction(
       (value) => document.querySelector("#font-sans-custom").value === value,
       custom,

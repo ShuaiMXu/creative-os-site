@@ -32,15 +32,15 @@ try {
         .querySelector(".theme-preview")
         ?.style.getPropertyValue("--primary") === "#336699",
   );
-  await page.getByRole("button", { name: "↶ 撤销", exact: true }).click();
+  await page.getByRole("button", { name: "撤销", exact: true }).click();
   assert.notEqual(
     await page
       .locator(".theme-preview")
       .evaluate((el) => el.style.getPropertyValue("--primary")),
     "#336699",
   );
-  await page.getByRole("button", { name: "↷ 重做", exact: true }).click();
-  await page.getByRole("button", { name: "☾ 深色", exact: true }).click();
+  await page.getByRole("button", { name: "重做", exact: true }).click();
+  await page.getByRole("button", { name: "深色", exact: true }).click();
   assert.notEqual(
     await page
       .locator(".theme-preview")
@@ -53,7 +53,7 @@ try {
       .evaluate((el) => getComputedStyle(el).backgroundColor),
     shell,
   );
-  await page.getByRole("button", { name: "☀ 浅色", exact: true }).click();
+  await page.getByRole("button", { name: "浅色", exact: true }).click();
   await page.getByRole("button", { name: "保存", exact: true }).click();
   await page.reload();
   await page.getByRole("heading", { name: "项目设计系统" }).waitFor();
@@ -95,7 +95,7 @@ try {
   await page.getByRole("button", { name: "前后对比", exact: true }).click();
   assert.equal(await page.locator(".theme-preview").count(), 2);
   await page.getByRole("button", { name: "前后对比", exact: true }).click();
-  await page.getByRole("button", { name: "检查 token", exact: true }).click();
+  await page.getByRole("button", { name: "查看设计变量", exact: true }).click();
   await page.locator('.theme-preview [data-token="primary"]').first().click();
   assert.ok(await page.locator(".inspector-bar").isVisible());
   await page.getByLabel("预览场景").selectOption("Connected page");
@@ -172,7 +172,7 @@ try {
       buffer: Buffer.from(JSON.stringify(foundation)),
     });
   page.once("dialog", (dialog) => dialog.accept("review-race"));
-  await page.getByRole("button", { name: "＋", exact: true }).click();
+  await page.locator(".project-select").getByRole("button", { name: "新建项目", exact: true }).click();
   await page.evaluate(() => window.finishImport());
   await page
     .getByRole("alert")

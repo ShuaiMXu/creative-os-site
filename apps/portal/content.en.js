@@ -1,20 +1,20 @@
 export const apps = [
   {
     "index": "01",
-    "state": "LOCAL",
+    "state": "Runs locally",
     "title": "Review",
-    "description": "Capture desktop, mobile and named task states. Diagnose, prioritize and confirm the evidence before selecting one scoped change.",
+    "description": "Check desktop and mobile pages, find usability issues and choose what to improve first.",
     "meta": [
-      "CAPTURE · DIAGNOSIS"
+      "Screenshots · Findings"
     ],
     "action": "Read capture guide",
     "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md"
   },
   {
     "index": "02",
-    "state": "BOUNDED",
-    "title": "Systematize",
-    "description": "Extract brand, token, component and state candidates. Human approval freezes the Foundation version before it constrains changes or new pages.",
+    "state": "Review required",
+    "title": "Organize your design system",
+    "description": "Collect colors, fonts and components from your project. Review them before using the same rules across pages.",
     "meta": [
       "BRAND · COMPONENTS"
     ],
@@ -23,22 +23,22 @@ export const apps = [
   },
   {
     "index": "03",
-    "state": "LOCAL",
+    "state": "Runs locally",
     "title": "Fix",
-    "description": "Give Codex or Claude Code a scoped brief in an isolated worktree. Retain the brief, code patch and execution record.",
+    "description": "Let your coding assistant make the changes you choose in a separate working copy. Compare the results before keeping them.",
     "meta": [
-      "WORKTREE · PATCH"
+      "Working copy · Changes"
     ],
     "action": "Read execution guide",
     "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md#choosing-a-coding-agent"
   },
   {
     "index": "04",
-    "state": "REVIEW REQUIRED",
-    "title": "Verify and learn",
-    "description": "Recapture matching states, run structural checks and attach independent visual QA. Record accept or reject with a reason for the next review.",
+    "state": "Review required",
+    "title": "Check changes",
+    "description": "Compare the same page sizes and states. Check how they work, then choose which changes to keep.",
     "meta": [
-      "EVIDENCE · JUDGMENT"
+      "Comparison · Feedback"
     ],
     "action": "Read review guide",
     "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md#screenshot-aware-visual-review"
@@ -101,7 +101,7 @@ export const hero = {
   "h1": "Make your product ",
   "h1Accent": "professional",
   "h1Suffix": ".",
-  "copy": "Bring a design loop to your working app: organize brand and components, prioritize UX issues, scope code changes, and review the evidence together.",
+  "copy": "Find interface issues, organize your design rules and let AI help make changes. Compare the pages and choose what to keep.",
   "cta": "Explore capabilities",
   "ctaSecondary": "View a real review"
 };
@@ -143,19 +143,19 @@ export const sections = {
   "apps": {
     "kicker": "01 / APPS",
     "title": "After the build",
-    "copy": "Review the pages, systematize the foundation, fix within constraints, optimize visual and experience — each step's output feeds the next.",
-    "link": "View source on GitHub ↗"
+    "copy": "Review pages, organize design rules and check changes in one workflow.",
+    "link": "View source on GitHub"
   },
   "explore": {
     "kicker": "02 / DESIGN SYSTEMS",
-    "title": "Design system archive",
+    "title": "Choose your design system",
     "copy": "Start with HappyHands rules and components, then choose a foundation for your project. Keep your existing brand and document its rules first if you prefer."
   },
   "screens": {
     "kicker": "03 / BEFORE & AFTER",
     "title": "See what changed",
     "copy": "A historical review of the HappyClaw repository at 1280×800 and 390×844. Independent visual QA failed: the desktop brand mark is clipped and needs repair and recapture. This is not a live deployment or conversion result.",
-    "link": "Open the full review ↗"
+    "link": "Open the full review"
   },
   "elements": {
     "kicker": "04 / UI ELEMENTS",
@@ -165,7 +165,7 @@ export const sections = {
   "getStarted": {
     "kicker": "05 / GET STARTED",
     "title": "Try a real product",
-    "titleLine2": "Start with local evidence",
+    "titleLine2": "Start with one page",
     "copy": "Install the core repository dependencies with Node.js 22.15+, pnpm 11.19+ and Chrome or Edge. Configure your target repository and preview using the guide. A first capture is the beginning of a review.",
     "quickstartLabel": "QUICKSTART",
     "quickstartTitle": "After setup, capture the baseline",
@@ -297,35 +297,35 @@ export const systems = [
 
 export const ui = {
   "scrollNote": "SCROLL",
-  "githubLink": "GitHub ↗",
+  "githubLink": "GitHub",
   "footer": {
     "left": "HappyHands · AI Product Designer",
-    "middle": "Evidence before claims",
-    "right": "View source ↗"
+    "middle": "Make every page easier to use",
+    "right": "View source"
   }
 };
 
 export const delivery = {
-  "title": "Every review leaves an inspectable record",
-  "copy": "The Harness governs stages and evidence. Skills supply design methods. A coding agent makes the change. You decide whether to accept it.",
+  "title": "Look back at every change",
+  "copy": "The tools collect pages and suggestions. Your coding assistant makes the changes you approve. Review the original pages, changes and check results whenever you need.",
   "items": [
     [
-      "Context and evidence",
-      "Product goals, source baseline, task states and desktop / mobile captures."
+      "Understand the project",
+      "Record the product goals and original desktop and mobile pages."
     ],
     [
-      "Design Foundation",
-      "Brand, semantic tokens, component states and patterns. Observed candidates stay separate from approved versions."
+      "Design rules",
+      "Collect colors, fonts and components. Keep suggestions separate from the rules you have adopted."
     ],
     [
       "Change and review",
-      "A scoped brief, code patch, recaptures, structural checks and independent visual review."
+      "View the change summary, code differences, before-and-after pages and check results."
     ],
     [
-      "Judgment and next steps",
-      "Accept / reject, rationale, unresolved findings and a run ledger. New surfaces start from an approved Foundation."
+      "Choose what to keep",
+      "Keep the changes you like and record what needs more work. Use your approved design rules for new pages."
     ]
   ],
-  "status": "Local engineering release: 27 versioned Skill contracts, with 17 bounded handlers and 10 contract-only placeholders. None is operational. Hosted monitoring, automatic learning, a calibrated Experience Score and subscriptions remain future work.",
-  "link": "Read the complete Harness guide ↗"
+  "status": "Installation and local setup are required. Automatic monitoring, learning and subscriptions are not available yet. See the development guide for implementation details.",
+  "link": "Read development guide"
 };

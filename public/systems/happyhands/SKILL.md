@@ -19,6 +19,7 @@ Public website detail pages use `packages/ui/site-layout.css`, `system-page.css`
 
 - Warm neutral surfaces, ink primary actions, orange used sparingly for brand emphasis. Use role tokens, including light/dark pairs; no copied raw values in component styles.
 - Chinese and English use the PingFang-first sans-serif stack in the tokens. Preserve readable hierarchy, ordinary sentence case and natural wrapping.
+- Website copy follows `docs/website-language-and-icons.md`: explain the task in plain language, use specific verb labels, and keep implementation details in setup guidance. Translate labels and placeholders together. Use the original shared web SVGs in `packages/ui/icons.ts` through `Icon.tsx` or `iconMarkup`; preserve text labels and accessible names. Do not substitute emoji or font-dependent glyphs for controls, or bundle proprietary Apple symbols or fonts.
 - Use the existing spacing/radius scale. Controls use the control radius; floating surfaces use the floating radius. Avoid decorative nested cards and shadows on every surface.
 - Show one main action per task stage. Keep evidence and advanced details accessible through progressive disclosure, not deleted.
 - Reuse the real Button with primary, secondary, ghost and danger variants. Loading blocks repeat submission and exposes aria-busy. Preserve accessible names and state explanations. Other form/dialog examples on the system page are native HTML examples, not published reusable components.

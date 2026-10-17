@@ -1,4 +1,6 @@
 import '../../packages/ui/site-layout.css';
+import '../../packages/ui/icons.css';
+import {iconMarkup} from '../../packages/ui/icons.ts';
 import {readLanguage, readTheme, savePreference} from '../../packages/ui/site-preferences.ts';
 import * as zh from './content.zh.js';
 import {siteNavigation} from '../../packages/ui/site-navigation.ts';
@@ -22,7 +24,7 @@ function applyTheme(theme) {
   document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#111111' : '#f7f6f3';
   const button = document.getElementById('theme-toggle');
   if (button) {
-    button.textContent = lang === 'zh' ? (theme === 'dark' ? '浅色' : '深色') : (theme === 'dark' ? 'Light' : 'Dark');
+    button.innerHTML = iconMarkup(theme === 'dark' ? 'sun' : 'moon') + (lang === 'zh' ? (theme === 'dark' ? '浅色' : '深色') : (theme === 'dark' ? 'Light' : 'Dark'));
     button.setAttribute('aria-label', lang === 'zh' ? `切换到${theme === 'dark' ? '浅色' : '深色'}模式` : `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
   }
 }
@@ -83,10 +85,10 @@ function renderContent() {
   updateNavigation();
   applyTheme(document.documentElement.dataset.theme);
 
-  document.querySelector('#lang-switch button').textContent = lang === 'zh' ? 'English' : '中文';
+  document.querySelector('#lang-switch button').innerHTML = iconMarkup('globe') + (lang === 'zh' ? 'English' : '中文');
   // hero
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-  document.title = lang === 'zh' ? 'HappyHands — 持续在线的 AI 产品设计师' : 'HappyHands — AI Product Designer';
+  document.title = lang === 'zh' ? 'HappyHands — 产品设计工具' : 'HappyHands — AI Product Designer';
   const eyebrow = document.querySelector('.eyebrow');
   if (eyebrow) eyebrow.innerHTML = c.hero.eyebrow.map(s => `<span>${s}</span>`).join('');
   const h1 = document.querySelector('h1');
@@ -98,22 +100,22 @@ function renderContent() {
   const primary = document.querySelector('.button-primary');
   if (primary) primary.textContent = c.hero.cta;
   const secondary = document.querySelector('.button-secondary');
-  if (secondary) secondary.innerHTML = `${c.hero.ctaSecondary} <span aria-hidden="true">↗</span>`;
+  if (secondary) secondary.innerHTML = `${c.hero.ctaSecondary} ${iconMarkup('external')}`;
   const scrollNote = document.querySelector('.scroll-note');
-  if (scrollNote) scrollNote.innerHTML = `${c.ui.scrollNote} <span>↓</span>`;
+  if (scrollNote) scrollNote.innerHTML = `${c.ui.scrollNote} ${iconMarkup('down')}`;
 
   // sections
   const content = document.querySelector('#portal-content');
   if (content) {
     content.innerHTML = `
     <section class="content-section section-apps" id="apps">
-      <div class="section-head"><div><p class="kicker">${c.sections.apps.kicker}</p><h2>${c.sections.apps.title}</h2></div><div><p>${c.sections.apps.copy}</p><a class="text-link" href="${repositories.core}">${c.sections.apps.link}</a></div></div>
+      <div class="section-head"><div><p class="kicker">${c.sections.apps.kicker}</p><h2>${c.sections.apps.title}</h2></div><div><p>${c.sections.apps.copy}</p><a class="text-link" href="${repositories.core}">${c.sections.apps.link} ${iconMarkup('external')}</a></div></div>
       <div class="apps-grid">${c.apps.map(appCard).join('')}</div>
     </section>
     <section class="content-section section-delivery" id="harness">
-      <div class="section-head"><div><p class="kicker">HARNESS / EXPERT LOOP</p><h2>${c.delivery.title}</h2></div><p>${c.delivery.copy}</p></div>
+      <div class="section-head"><div><p class="kicker">${lang === 'zh' ? '工作方式' : 'How it works'}</p><h2>${c.delivery.title}</h2></div><p>${c.delivery.copy}</p></div>
       <dl class="delivery-list">${c.delivery.items.map(([title,copy]) => `<div><dt>${title}</dt><dd>${copy}</dd></div>`).join('')}</dl>
-      <p class="capability-note">${c.delivery.status}</p><a class="text-link" href="${repositories.core}/blob/main/docs/harness.md">${c.delivery.link}</a>
+      <p class="capability-note">${c.delivery.status}</p><a class="text-link" href="${repositories.core}/blob/main/docs/harness.md">${c.delivery.link} ${iconMarkup('external')}</a>
     </section>
     <section class="content-section section-explore" id="explore">
       <div class="section-head"><div><p class="kicker">${c.sections.explore.kicker}</p><h2>${c.sections.explore.title}</h2></div><div><p>${c.sections.explore.copy}</p></div></div>
@@ -125,15 +127,15 @@ function renderContent() {
     <section class="get-started" id="get-started">
       <div class="get-started-copy"><p class="kicker">${c.sections.getStarted.kicker}</p><h2>${c.sections.getStarted.title}<br><span>${c.sections.getStarted.titleLine2}</span></h2><p>${c.sections.getStarted.copy}</p></div>
       <div class="steps-grid">${c.steps.map(stepCard).join('')}</div>
-      <div class="command-card"><div><span>${c.sections.getStarted.quickstartLabel}</span><strong>${c.sections.getStarted.quickstartTitle}</strong></div><code>pnpm harness onboard --config examples/happyclaw-site/project.json</code><button type="button" data-copy="pnpm harness onboard --config examples/happyclaw-site/project.json">${c.sections.getStarted.copyBtn}</button></div>
-      <div class="final-actions"><a class="button button-primary" href="${repositories.core}">GitHub ↗</a><a class="button button-secondary" href="${repositories.site}">${lang === 'zh' ? '网站源码 ↗' : 'Website source ↗'}</a></div>
+      <div class="command-card"><div><span>${c.sections.getStarted.quickstartLabel}</span><strong>${c.sections.getStarted.quickstartTitle}</strong></div><code>pnpm harness onboard --config examples/happyclaw-site/project.json</code><button type="button" data-copy="pnpm harness onboard --config examples/happyclaw-site/project.json">${iconMarkup('copy')} ${c.sections.getStarted.copyBtn}</button></div>
+      <div class="final-actions"><a class="button button-primary" href="${repositories.core}">GitHub ${iconMarkup('external')}</a><a class="button button-secondary" href="${repositories.site}">${lang === 'zh' ? '网站源码' : 'Website source'}</a></div>
     </section>`;
   }
 
   // footer
   const footer = document.querySelector('footer');
   if (footer) {
-    footer.innerHTML = `<span>${c.ui.footer.left}</span><span>${c.ui.footer.middle}</span><a href="${repositories.core}">${c.ui.footer.right}</a>`;
+    footer.innerHTML = `<span>${c.ui.footer.left}</span><span>${c.ui.footer.middle}</span><a href="${repositories.core}">${c.ui.footer.right} ${iconMarkup('external')}</a>`;
   }
 
   // re-observe sections for intersection animation
@@ -146,13 +148,13 @@ function appCard(item) {
   document.querySelector('.skip-link').textContent=lang==='zh'?'跳到主要内容':'Skip to content';
   document.querySelector('.desktop-nav').setAttribute('aria-label',lang==='zh'?'主要导航':'Main navigation');
   document.querySelector('.wordmark').setAttribute('aria-label','HappyHands');
-  return `<article class="app-card"><div class="card-top"><span>${item.index}</span><span class="state">${item.state}</span></div><h3>${item.title}</h3><p>${item.description}</p><ul>${item.meta.map(v => `<li>${v}</li>`).join('')}</ul><a href="${item.href || repositories.core}">${item.action} <span aria-hidden="true">↗</span></a></article>`;
+  return `<article class="app-card"><div class="card-top"><span>${item.index}</span><span class="state">${item.state}</span></div><h3>${item.title}</h3><p>${item.description}</p><ul>${item.meta.map(v => `<li>${v}</li>`).join('')}</ul><a href="${item.href || repositories.core}">${item.action} ${iconMarkup('external')}</a></article>`;
 }
 
 const referenceImage = index => `/assets/hero/screen-${String(index).padStart(3, '0')}.webp`;
 const referenceLabel = () => lang === 'zh' ? 'Appllama 参考图 · 临时占位' : 'Appllama reference · Placeholder';
 function systemCard(item) {
-  return `<article class="system-card"><p class="card-tag">${item.tag}</p><h3>${item.title}</h3><p>${item.description}</p><div class="chips">${item.traits.map(v => `<span>${v}</span>`).join('')}</div><a class="card-link" href="${item.href}">${item.action} ↗</a></article>`;
+  return `<article class="system-card"><p class="card-tag">${item.tag}</p><h3>${item.title}</h3><p>${item.description}</p><div class="chips">${item.traits.map(v => `<span>${v}</span>`).join('')}</div><a class="card-link" href="${item.href}">${item.action} ${iconMarkup('external')}</a></article>`;
 }
 function stepCard(item) {
   return `<article class="step-card"><span>${item[0]}</span><h3>${item[1]}</h3><p>${item[2]}</p></article>`;

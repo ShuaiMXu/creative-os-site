@@ -3,7 +3,7 @@ export const apps = [
     "index": "01",
     "state": "本地可用",
     "title": "审阅产品",
-    "description": "采集桌面、移动端和指定任务状态的证据，诊断并排序。确认问题仍然存在，再选择一个范围明确的修改。",
+    "description": "查看电脑和手机上的页面，找出影响使用的问题，选择优先改进的地方。",
     "meta": [
       "截图 · 诊断 · 优先级"
     ],
@@ -12,11 +12,11 @@ export const apps = [
   },
   {
     "index": "02",
-    "state": "有界实现",
+    "state": "需要确认",
     "title": "整理设计系统",
-    "description": "从源码提取品牌、令牌、组件与状态候选。人工批准并冻结版本后，才成为修改和新页面的约束。",
+    "description": "从项目中整理颜色、字体和组件。确认后，用同一套规范改进现有页面或创建新页面。",
     "meta": [
-      "品牌 · 组件 · 版本批准"
+      "品牌 · 组件 · 规范确认"
     ],
     "action": "查看设计基础",
     "href": "https://github.com/ShuaiMXu/creative-os/blob/main/README.md#design-a-new-surface"
@@ -25,9 +25,9 @@ export const apps = [
     "index": "03",
     "state": "本地可用",
     "title": "修正问题",
-    "description": "将限定任务交给 Codex 或 Claude Code，在隔离工作区修改；保留修改简报、代码差异和执行记录。",
+    "description": "把选好的问题交给 AI 编程工具。在独立副本中修改，方便查看和比较。",
     "meta": [
-      "隔离修改 · diff.patch"
+      "独立副本 · 修改记录"
     ],
     "action": "查看执行流程",
     "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md#choosing-a-coding-agent"
@@ -35,8 +35,8 @@ export const apps = [
   {
     "index": "04",
     "state": "人工复核",
-    "title": "验证与沉淀",
-    "description": "同状态重拍，运行结构检查并附加独立视觉复核。记录接受或拒绝的理由，为下一轮留下证据。",
+    "title": "检查修改",
+    "description": "在相同尺寸和状态下对比页面，检查交互是否正常，再决定保留哪些修改。",
     "meta": [
       "前后对照 · 判断记录"
     ],
@@ -63,7 +63,7 @@ export const elements = [
   },
   {
     "kind": "tokens",
-    "title": "语义令牌",
+    "title": "设计变量",
     "description": "别在代码里写死色值，用变量。改一处，处处生效。"
   },
   {
@@ -101,7 +101,7 @@ export const hero = {
   "h1": "让产品，",
   "h1Accent": "真正专业",
   "h1Suffix": "。",
-  "copy": "为已经能跑的产品补上设计闭环：整理品牌与组件，定位体验问题，约束代码修改，用前后证据和你的判断验证结果。",
+  "copy": "发现界面问题，整理设计规范，让 AI 帮你修改。对比修改前后的页面，由你决定是否保留。",
   "cta": "了解能力",
   "ctaSecondary": "查看真实审阅"
 };
@@ -142,20 +142,20 @@ export const screenPairs = [
 export const sections = {
   "apps": {
     "kicker": "01 / 应用",
-    "title": "产品做完之后",
-    "copy": "审阅、整理设计系统、修正问题、体验优化——每一步的产出，都是下一步的输入。",
-    "link": "在 GitHub 查看源码 ↗"
+    "title": "让现有产品更好用",
+    "copy": "从查看页面到确认修改，在一个流程中完成。",
+    "link": "在 GitHub 查看源码"
   },
   "explore": {
     "kicker": "02 / 设计系统",
-    "title": "设计系统档案",
+    "title": "选择你的设计系统",
     "copy": "先了解 HappyHands 的规范与组件，再选择适合项目的设计基础。已有品牌可以保留，从整理自己的规则开始。"
   },
   "screens": {
     "kicker": "03 / 前后对比",
     "title": "改了什么，一目了然",
     "copy": "HappyClaw 仓库基线的历史审阅，桌面 1280×800、移动 390×844。独立视觉复核未通过：桌面品牌标识被裁切，仍需修复与重拍。不是线上部署效果或转化验证。",
-    "link": "查看完整审阅 ↗"
+    "link": "查看完整审阅"
   },
   "elements": {
     "kicker": "04 / 组件",
@@ -165,7 +165,7 @@ export const sections = {
   "getStarted": {
     "kicker": "05 / 开始使用",
     "title": "试一个真实产品",
-    "titleLine2": "从本地证据开始",
+    "titleLine2": "从一个页面开始",
     "copy": "在主仓库安装依赖，准备 Node.js 22.15+、pnpm 11.19+ 和 Chrome 或 Edge。按指南配置目标仓库与预览；首次采集不等于完成设计审阅。",
     "quickstartLabel": "快速开始",
     "quickstartTitle": "配置完成后，启动首次采集",
@@ -177,17 +177,17 @@ export const steps = [
   [
     "01",
     "准备项目",
-    "安装主仓库依赖，配置目标仓库、预览命令和 Experience Spec。"
+    "按设置指南安装工具，选择项目并配置页面预览。"
   ],
   [
     "02",
     "采集并诊断",
-    "保存基线，提取设计基础，确认一个值得修改的问题。"
+    "保存原始页面，整理设计规范，选择要修改的问题。"
   ],
   [
     "03",
     "修改并复核",
-    "隔离执行、重拍、附加视觉复核，再记录接受或拒绝及理由。"
+    "对比前后页面，检查使用效果，决定是否保留修改。"
   ]
 ];
 
@@ -297,35 +297,35 @@ export const systems = [
 
 export const ui = {
   "scrollNote": "往下看",
-  "githubLink": "GitHub ↗",
+  "githubLink": "GitHub",
   "footer": {
     "left": "HappyHands · AI Product Designer",
-    "middle": "先看证据，再下结论",
-    "right": "查看源码 ↗"
+    "middle": "让每个页面更好用",
+    "right": "查看源码"
   }
 };
 
 export const delivery = {
-  "title": "每一轮，都留下可检查的结果",
-  "copy": "Harness 负责执行顺序与证据门槛；Skills 提供设计方法；编码 Agent 执行修改；你决定结果是否接受。",
+  "title": "每次修改，都可以回看",
+  "copy": "工具整理页面和修改建议，AI 按确认的范围修改代码。你可以随时查看原页面、改动和检查结果。",
   "items": [
     [
-      "项目与证据",
-      "产品目标、源码基线、任务状态与桌面 / 移动截图。"
+      "了解项目",
+      "记录产品用途，保存电脑和手机上的原始页面。"
     ],
     [
       "设计基础",
-      "品牌、语义令牌、组件状态与模式；观察候选和批准版本分开保存。"
+      "整理颜色、字体和组件，区分待确认内容与已采用的规范。"
     ],
     [
       "修改与复核",
-      "范围明确的简报、代码差异、重拍结果、结构检查和独立视觉意见。"
+      "查看修改说明、代码变化、前后截图和检查结果。"
     ],
     [
-      "判断与下一轮",
-      "接受 / 拒绝、理由、未解决问题及运行记录。新页面从批准的设计基础开始。"
+      "决定是否保留",
+      "保留满意的修改，记录还需改进的地方。新页面沿用已确认的设计规范。"
     ]
   ],
-  "status": "当前为本地工程：27 个版本化 Skill 契约，其中 17 个有界处理器、10 个契约占位。尚无 Skill 达到 operational；持续托管监控、自动学习、校准后的 Experience Score 和订阅服务仍需建设。",
-  "link": "阅读完整 Harness 指南 ↗"
+  "status": "目前需要在本地安装和运行。自动监控、自动学习和订阅服务尚未开放。各项功能的实现情况见开发指南。",
+  "link": "查看开发指南"
 };

@@ -1,3 +1,4 @@
+import { Icon } from "../../packages/ui/Icon";
 import { SystemDirectory } from "../../packages/ui/SystemDirectory";
 import { useSitePreferences } from "../../packages/ui/useSitePreferences";
 import { SiteHeader } from "../../packages/ui/SiteHeader";
@@ -70,7 +71,9 @@ function App() {
                 <a className="action" href="#components">
                   {t("试用组件", "Try components")}
                 </a>
-                <a href="#adopt">{t("接入项目", "Use in your project")} →</a>
+                <a href="#adopt">
+                  {t("接入项目", "Use in your project")} <Icon name="right" />
+                </a>
               </div>
             </div>
             <aside
@@ -87,7 +90,7 @@ function App() {
                 </span>
               </div>
               <p className="eyebrow">{t("交互示例", "Interactive example")}</p>
-              <h2>{t("确认本次审阅范围", "Confirm the review scope")}</h2>
+              <h2>{t("选择要改进的页面", "Choose pages to improve")}</h2>
               <p>
                 {t(
                   "选择需要改进的页面，再核对修改结果。",
@@ -175,7 +178,7 @@ function App() {
                 </p>
               </article>
               <article>
-                <h3>{t("动作与证据", "Actions & evidence")}</h3>
+                <h3>{t("操作与反馈", "Actions & feedback")}</h3>
                 <p>
                   {t(
                     "黑白主按钮表达下一步。橙色用于品牌强调；成功、警告和错误同时使用明确文案。",
@@ -191,11 +194,11 @@ function App() {
             </p>
             <h2>{t("试用组件与交互", "Try the components")}</h2>
             <div className="demo">
-              <h3>Button</h3>
+              <h3>{t("按钮", "Buttons")}</h3>
               <p>
                 {t(
-                  "复用 packages/ui 的 React 组件：四种意图、禁用与加载。",
-                  "Uses the React component from packages/ui: four intents, disabled and loading states.",
+                  "选择适合任务的按钮样式，也可以查看不可用和加载状态。",
+                  "Choose a button style for each action, and preview disabled and loading states.",
                 )}
               </p>
               <div className="actions">
@@ -456,15 +459,15 @@ function App() {
                 </p>
               </div>
               <a className="action secondary" href="/apps/studio/">
-                {t("打开主题工作室", "Open Theme Studio")} →
+                {t("打开主题工作室", "Open Theme Studio")} <Icon name="right" />
               </a>
             </div>
             <div className="system-return">
               <a href="/apps/portal/#explore">
-                ← {t("返回设计系统", "All design systems")}
+                <Icon name="left" /> {t("返回设计系统", "All design systems")}
               </a>
               <a href="/systems/quartz/">
-                {t("了解 Quartz", "Explore Quartz")} →
+                {t("了解 Quartz", "Explore Quartz")} <Icon name="right" />
               </a>
             </div>
             <details>

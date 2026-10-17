@@ -1,3 +1,4 @@
+import { Icon } from "../../packages/ui/Icon";
 import { SystemDirectory } from "../../packages/ui/SystemDirectory";
 import { useSitePreferences } from "../../packages/ui/useSitePreferences";
 import { SiteHeader } from "../../packages/ui/SiteHeader";
@@ -293,7 +294,8 @@ function App() {
                 </p>
               </div>
               <a className="action secondary" href="/systems/happyhands/">
-                {t("探索 HappyHands", "Explore HappyHands")} →
+                {t("探索 HappyHands", "Explore HappyHands")}{" "}
+                <Icon name="right" />
               </a>
             </div>
             <details>
