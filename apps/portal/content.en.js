@@ -141,7 +141,7 @@ export const screenPairs = [
 
 export const sections = {
   "apps": {
-    "kicker": "01 / What you get",
+    "kicker": "01 / Review records",
     "title": "A record of every review",
     "copy": "Keep the findings, design rules, code changes and review results together.",
     "link": "View source on GitHub"
@@ -153,7 +153,7 @@ export const sections = {
   },
   "screens": {
     "kicker": "03 / BEFORE & AFTER",
-    "title": "See what changed",
+    "title": "Compare the pages before and after",
     "copy": "A historical review of the HappyClaw repository at 1280×800 and 390×844. Independent visual QA failed: the desktop brand mark is clipped and needs repair and recapture. This is not a live deployment or conversion result.",
     "link": "Open the full review"
   },
