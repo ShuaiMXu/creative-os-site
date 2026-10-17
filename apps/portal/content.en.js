@@ -98,10 +98,10 @@ export const hero = {
     "FOR INDEPENDENT BUILDERS",
     "OPEN SOURCE · LOCAL"
   ],
-  "h1": "Make your product ",
-  "h1Accent": "easier to use",
+  "h1": "Improve your ",
+  "h1Accent": "product experience",
   "h1Suffix": ".",
-  "copy": "Find interface issues, organize your design rules and let AI help make changes. Compare the pages and choose what to keep.",
+  "copy": "Review page layouts, user flows and component consistency to identify improvements. Let AI help make changes, then compare the pages and review the results.",
   "cta": "Explore capabilities",
   "ctaSecondary": "View a real review"
 };
@@ -300,7 +300,7 @@ export const ui = {
   "githubLink": "GitHub",
   "footer": {
     "left": "HappyHands · AI Product Designer",
-    "middle": "Make every page easier to use",
+    "middle": "Product experience optimization",
     "right": "View source"
   }
 };

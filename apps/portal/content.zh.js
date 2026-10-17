@@ -98,10 +98,10 @@ export const hero = {
     "面向独立开发者",
     "开源 · 本地运行"
   ],
-  "h1": "让你的产品，",
-  "h1Accent": "更好用",
-  "h1Suffix": "。",
-  "copy": "发现界面问题，整理设计规范，让 AI 帮你修改。对比修改前后的页面，由你决定是否保留。",
+  "h1": "优化",
+  "h1Accent": "产品体验",
+  "h1Suffix": "",
+  "copy": "检查页面布局、操作流程和组件一致性，提出体验优化建议。让 AI 协助修改，由你对照前后页面确认效果。",
   "cta": "了解能力",
   "ctaSecondary": "查看真实审阅"
 };
@@ -300,7 +300,7 @@ export const ui = {
   "githubLink": "GitHub",
   "footer": {
     "left": "HappyHands · AI Product Designer",
-    "middle": "让每个页面更好用",
+    "middle": "产品体验优化",
     "right": "查看源码"
   }
 };
