@@ -27,21 +27,29 @@ function App() {
       "操作与输入",
       "Actions & inputs",
       "Button · Field · Input · Select · Checkbox",
+      "填写表单时，用 Field 组织标签与说明；输入用 Input，固定选项用 Select，多选或开关选择用 Checkbox，提交用 Button。",
+      "For forms, use Field to organize labels and help, Input for text, Select for fixed choices, Checkbox for selections and Button to submit.",
     ],
     [
       "反馈与浮层",
       "Feedback & overlays",
       "Status · Alert · Empty state · Dialog · Toast",
+      "持续状态放在 Status；需要处理的问题用 Alert；没有内容时给出 Empty state；需先做决定时用 Dialog，短暂确认用 Toast。",
+      "Use Status for ongoing state, Alert for issues that need attention, Empty state when there is no content, Dialog for a decision and Toast for brief confirmation.",
     ],
     [
       "导航与数据",
       "Navigation & data",
       "Tabs · Filter bar · Table · Data grid",
+      "同一任务下的不同视图可用 Tabs；缩小结果范围用 Filter bar；逐行阅读用 Table，需要编辑和复杂操作时再考虑 Data grid。",
+      "Use Tabs for related views and Filter bar to narrow results. Start with Table for reading rows; consider Data grid for editing and more complex interactions.",
     ],
     [
       "AI 工作流",
       "AI workflows",
       "Conversation · Prompt input · Tool call · Run trace",
+      "Conversation 呈现对话，Prompt input 接收请求，Tool call 展示具体操作，Run trace 帮助追踪一次执行。先判断用户需要查看哪一层信息。",
+      "Conversation presents a dialogue, Prompt input takes requests, Tool call shows an operation and Run trace helps follow an execution. Start with the level of detail the user needs.",
     ],
   ];
   return (
@@ -129,8 +137,13 @@ function App() {
             </nav>
           </SystemDirectory>
           <section id="foundations">
-            <p className="eyebrow">01 / PRINCIPLES</p>
-            <h2>{t("视觉规则服务于操作", "Visual rules support the task")}</h2>
+            <p className="eyebrow">{t("01 / 设计原则", "01 / Principles")}</p>
+            <h2>
+              {t(
+                "颜色、状态与组件的使用约定",
+                "Rules for colors, states and components",
+              )}
+            </h2>
             <div className="rules">
               <article>
                 <h3>{t("中性框架", "Neutral structure")}</h3>
@@ -162,26 +175,33 @@ function App() {
             </div>
           </section>
           <section id="components">
-            <p className="eyebrow">02 / COMPONENTS</p>
+            <p className="eyebrow">{t("02 / 组件目录", "02 / Components")}</p>
             <h2>{t("从任务找到组件", "Find components by task")}</h2>
             <p>
               {t(
-                "目录说明，非本地已安装组件。接入后需按官方 API 与项目实际行为验收。",
-                "Catalog descriptions, not locally installed components. Verify upstream APIs and real project behavior after setup.",
+                "展开查看各类组件适合什么任务。以下为 HappyHands 整理的选型说明，不是 Quartz 组件的交互演示；具体接口以原始文档为准。",
+                "Expand a group to see when to use it. These are selection notes by HappyHands, not interactive Quartz demos. Refer to the original documentation for APIs.",
               )}
             </p>
-            <div className="rules">
-              {groups.map(([cn, en, list]) => (
-                <article key={en}>
-                  <h3>{t(cn, en)}</h3>
+            <div className="component-directory">
+              {groups.map(([cn, en, list, desc, eng]) => (
+                <details key={en}>
+                  <summary>
+                    {t(cn, en)} <Icon name="down" />
+                  </summary>
                   <p>{list}</p>
-                </article>
+                  <p>{t(desc, eng)}</p>
+                </details>
               ))}
             </div>
           </section>
           <section id="patterns">
-            <p className="eyebrow">03 / BLOCKS</p>
-            <h2>{t("整屏从实际任务开始", "Start screens from real tasks")}</h2>
+            <p className="eyebrow">
+              {t("03 / 页面模板", "03 / Screen blocks")}
+            </p>
+            <h2>
+              {t("按使用场景选择页面模板", "Choose a screen for your task")}
+            </h2>
             <div className="rules">
               {[
                 [
@@ -229,7 +249,7 @@ function App() {
             </div>
           </section>
           <section id="adopt">
-            <p className="eyebrow">04 / ADOPT</p>
+            <p className="eyebrow">{t("04 / 接入项目", "04 / Setup")}</p>
             <h2>{t("带回你的项目", "Bring it to your project")}</h2>
             <p>
               {t(

@@ -1,3 +1,4 @@
+import { openStudioActions } from "./studio-ui-helpers.mjs";
 import { chromium } from "playwright-core";
 import assert from "node:assert/strict";
 import { readFile, mkdir } from "node:fs/promises";
@@ -93,6 +94,7 @@ try {
       true,
     );
   }
+  await openStudioActions(page);
   await page.getByRole("button", { name: "保存", exact: true }).click();
   assert.equal(
     await page.evaluate(() =>

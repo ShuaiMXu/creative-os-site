@@ -1,4 +1,30 @@
 /* Shared public design-system detail pages. Shell controls keep site-shell.css. */
+.component-directory {
+  margin-top: var(--hh-space-6);
+}
+.component-directory details {
+  border-top: 1px solid var(--hh-line);
+  padding: var(--hh-space-4) 0;
+}
+.component-directory summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+}
+.component-directory summary::-webkit-details-marker {
+  display: none;
+}
+.component-directory details[open] summary .hh-icon {
+  transform: rotate(180deg);
+}
+.component-directory p {
+  color: var(--hh-ink-muted);
+  max-width: 760px;
+}
 * {
   box-sizing: border-box;
 }

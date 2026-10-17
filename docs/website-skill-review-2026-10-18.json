@@ -1,0 +1,250 @@
+{
+  "date": "2026-10-18",
+  "revision": "043be20b2bf71100ad35109789478950ea1be4d0",
+  "target": "http://127.0.0.1:4192",
+  "method": "Manual application of four project skills plus HappyHands rules, source inspection, independent Chrome browser. Not a Harness-generated run or independent acceptance.",
+  "inferredCriticalTask": "从官网理解产品，进入设计系统和主题工作室，调整主题并预览、导出。",
+  "skills": [
+    "consistency-auditor",
+    "design-system-drift-detector",
+    "content-design-reviewer",
+    "responsive-reviewer"
+  ],
+  "basis": [
+    "public/systems/happyhands/SKILL.md",
+    "docs/website-language-and-icons.md",
+    "docs/studio-design-language.md",
+    "packages/design-tokens/happyhands.json"
+  ],
+  "evidenceRoot": "../test-results/skill-review-2026-10-18",
+  "evidence": [
+    {
+      "id": "E1",
+      "files": [
+        "studio-desktop-light.png",
+        "approval-desktop.png",
+        "approval-dom.txt"
+      ],
+      "url": "/apps/studio/",
+      "viewport": "1440x1000",
+      "state": "Chinese; light shell default / dark shell review panel; disposable local browser draft"
+    },
+    {
+      "id": "E2",
+      "files": [
+        "studio-phone-en.png",
+        "studio-phone-zh.png",
+        "studio-tablet.png"
+      ],
+      "url": "/apps/studio/",
+      "viewport": "390x844 and 768x1024",
+      "state": "phone preview; English/Chinese; tablet no horizontal document overflow"
+    },
+    {
+      "id": "E3",
+      "files": [
+        "source-scan.json",
+        "computed-surfaces.json",
+        "computed-light-surface.json",
+        "computed-studio.json",
+        "home-get-started-dark.png"
+      ],
+      "state": "static source and computed runtime styles"
+    },
+    {
+      "id": "E4",
+      "files": [
+        "happyhands-desktop.png",
+        "happyhands-dom.txt"
+      ],
+      "url": "/systems/happyhands/",
+      "viewport": "1440x1000",
+      "state": "Chinese dark; confirmation demo; keyboard dialog checked at768x1024"
+    },
+    {
+      "id": "E5",
+      "files": [
+        "quartz-components.png",
+        "quartz-components-dom.txt"
+      ],
+      "url": "/systems/quartz/#components",
+      "viewport": "1440x1000",
+      "state": "Chinese dark"
+    },
+    {
+      "id": "E6",
+      "files": [
+        "home-apps.png",
+        "home-apps-dom.txt"
+      ],
+      "url": "/apps/portal/#apps",
+      "viewport": "1440x1000",
+      "state": "Chinese dark; work-process section read in DOM"
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "high",
+      "skill": "content-design-reviewer",
+      "confidence": "high",
+      "kind": "task hierarchy",
+      "title": "默认主操作偏向工程审批",
+      "evidence": [
+        "E1"
+      ],
+      "source": [
+        "apps/studio/main.tsx:488",
+        "apps/studio/main.tsx:717",
+        "apps/studio/main.tsx:842"
+      ],
+      "observed": "零修改状态仍突出审核变更；点击展示 Foundation、审核人、批准理由和 Harness 文件导出。",
+      "interpretation": "与页面承诺的选颜色字体→预览→导出主任务不匹配；审批有真实用途，建议作为高级接入流程保留。",
+      "effort": "medium"
+    },
+    {
+      "id": "F2",
+      "priority": "high",
+      "skill": "responsive-reviewer",
+      "confidence": "high",
+      "kind": "responsive task continuity",
+      "title": "手机首屏被编辑器外围信息占用",
+      "evidence": [
+        "E2"
+      ],
+      "source": [
+        "packages/ui/site-shell.css:112",
+        "apps/studio/studio.css:805",
+        "apps/studio/main.tsx:451"
+      ],
+      "observed": "390×844 英文预览起点 y=752.1875；导航容器350px，内容384px，最后链接右边界403.5px。",
+      "interpretation": "导航可横向滚动，并非链接失效；预览入口后的实际内容可见量不足。",
+      "effort": "medium"
+    },
+    {
+      "id": "F3",
+      "priority": "medium",
+      "skill": "content-design-reviewer",
+      "confidence": "high",
+      "kind": "sample clarity",
+      "title": "固定设计一致性92%容易与产品检测混淆",
+      "evidence": [
+        "E1"
+      ],
+      "source": [
+        "apps/studio/Preview.tsx:272",
+        "apps/studio/Preview.tsx:373"
+      ],
+      "observed": "默认组件场景有12/48/92%固定示例指标；示例声明在预览底部，首屏不可见。",
+      "interpretation": "不是已证实的虚假产品检测声明，已有示例说明；建议把说明移到预览顶部并换掉设计一致性评分。",
+      "effort": "small"
+    },
+    {
+      "id": "F4",
+      "priority": "medium",
+      "skill": "design-system-drift-detector",
+      "confidence": "high",
+      "kind": "ungoverned values / off-scale values",
+      "title": "规范变量已共用，但仍存在运行时生效的例外",
+      "evidence": [
+        "E3"
+      ],
+      "source": [
+        "apps/portal/layout.css:111",
+        "apps/portal/layout.css:123",
+        "apps/studio/studio.css:118",
+        "apps/studio/studio.css:190",
+        "packages/design-tokens/happyhands.json"
+      ],
+      "observed": "get-started 背景深色#191919、浅色#f0eae2不在canonical颜色表；toolbar gap=7px，segmented gap/padding=3px。",
+      "interpretation": "7距8差1px，3距4差1px；需决定沿用现有规范或登记语义例外，不自动改值。",
+      "effort": "small"
+    },
+    {
+      "id": "F5",
+      "priority": "medium",
+      "skill": "consistency-auditor",
+      "confidence": "high",
+      "kind": "copy and icon consistency",
+      "title": "中文命名及控件图标仍未统一",
+      "evidence": [
+        "E4",
+        "E5",
+        "E1"
+      ],
+      "source": [
+        "systems/happyhands/main.tsx:360",
+        "systems/happyhands/main.tsx:367",
+        "systems/quartz/main.tsx:132",
+        "systems/quartz/main.tsx:165",
+        "systems/quartz/main.tsx:183",
+        "apps/studio/main.tsx:554"
+      ],
+      "observed": "中文仍有Theme Studio/打开 Studio及三个大写英文段标；关闭面板使用文字×，未使用共享SVG。",
+      "interpretation": "技术命令、组件API与用户项目名应保留原文；这里的公共导航名称、段标和关闭图标应遵循现有规范。",
+      "effort": "small"
+    },
+    {
+      "id": "F6",
+      "priority": "medium",
+      "skill": "content-design-reviewer",
+      "confidence": "high",
+      "kind": "label-action alignment",
+      "title": "HappyHands首屏示例要求选择页面却没有选择控件",
+      "evidence": [
+        "E4"
+      ],
+      "source": [
+        "systems/happyhands/main.tsx:93",
+        "systems/happyhands/main.tsx:112"
+      ],
+      "observed": "确认范围仅提示示例范围已确认，未修改项目；旁边已经标注交互示例。",
+      "interpretation": "不应描述为伪装真实执行；问题是示例任务自身不完整。可改成具体按钮状态演示，或补一个可选择的示例对象。",
+      "effort": "small"
+    },
+    {
+      "id": "F7",
+      "priority": "medium",
+      "skill": "content-design-reviewer",
+      "confidence": "medium",
+      "kind": "catalog usefulness",
+      "title": "Quartz目录缺少帮助选择的预览或条目入口",
+      "evidence": [
+        "E5"
+      ],
+      "source": [
+        "systems/quartz/main.tsx:165"
+      ],
+      "observed": "四组组件名文本，没有单项交互入口；明确说明是目录资料，未安装组件。",
+      "interpretation": "保持第三方目录定位，添加有来源的视觉例子或条目说明；不冒充已集成可用组件。",
+      "effort": "medium"
+    },
+    {
+      "id": "F8",
+      "priority": "low",
+      "skill": "content-design-reviewer",
+      "confidence": "medium",
+      "kind": "content repetition",
+      "title": "首页能力介绍与工作方式重复",
+      "evidence": [
+        "E6"
+      ],
+      "source": [
+        "apps/portal/main.js:116",
+        "apps/portal/content.zh.js:313"
+      ],
+      "observed": "两个区块均覆盖审阅/设计基础/修改/复核。",
+      "interpretation": "不是功能错误；建议让前者展示结果实例，后者解释操作步骤，减少同义介绍。",
+      "effort": "medium"
+    }
+  ],
+  "limitations": [
+    "没有本轮新的机器可读approved Foundation或Harness运行记录；不伪造approval状态。规范偏差以项目明确采用的HappyHands文件为依据，自动漂移验收为needs-evidence。",
+    "没有真实用户研究、转化数据或Experience Score。",
+    "本轮只审查本地版本；未重新验证生产部署。",
+    "只抽查桌面/手机/平板、深浅色和中英文；未全覆盖200%缩放、所有错误状态、字体导出和全部设备。",
+    "CSS声明统计含旧规则、布局与用户可编辑预览，不等于设计系统覆盖率。"
+  ],
+  "acceptance": "needs-evidence",
+  "productCodeChanged": false
+}

@@ -1,3 +1,4 @@
+import { openStudioActions } from "./studio-ui-helpers.mjs";
 import { chromium } from "playwright-core";
 import assert from "node:assert/strict";
 import { mkdir } from "node:fs/promises";
@@ -54,6 +55,7 @@ try {
     shell,
   );
   await page.getByRole("button", { name: "浅色", exact: true }).click();
+  await openStudioActions(page);
   await page.getByRole("button", { name: "保存", exact: true }).click();
   await page.reload();
   await page.getByRole("heading", { name: "项目设计系统" }).waitFor();
@@ -63,6 +65,7 @@ try {
       .inputValue(),
     "#336699",
   );
+  await openStudioActions(page);
   await page.getByRole("button", { name: "导入", exact: true }).click();
   await page
     .getByRole("textbox", { name: "导入源代码" })
@@ -95,7 +98,9 @@ try {
   await page.getByRole("button", { name: "前后对比", exact: true }).click();
   assert.equal(await page.locator(".theme-preview").count(), 2);
   await page.getByRole("button", { name: "前后对比", exact: true }).click();
+  await page.locator(".preview-options > summary").click();
   await page.getByRole("button", { name: "查看设计变量", exact: true }).click();
+  await page.locator(".preview-options > summary").click();
   await page.locator('.theme-preview [data-token="primary"]').first().click();
   assert.ok(await page.locator(".inspector-bar").isVisible());
   await page.getByLabel("预览场景").selectOption("Connected page");
@@ -110,6 +115,7 @@ try {
     "#884422",
   );
   await page.getByLabel("预览场景").selectOption("Components");
+  await openStudioActions(page);
   await page.getByRole("button", { name: /审核变更/ }).click();
   await page.getByLabel("审核人", { exact: true }).fill("Browser test");
   await page
@@ -163,22 +169,25 @@ try {
       });
     };
   });
+  await openStudioActions(page);
   await page.getByRole("button", { name: /审核变更/ }).click();
-  await page
-    .locator(".review-grid input[type=file]")
-    .setInputFiles({
-      name: "foundation.json",
-      mimeType: "application/json",
-      buffer: Buffer.from(JSON.stringify(foundation)),
-    });
+  await page.locator(".review-grid input[type=file]").setInputFiles({
+    name: "foundation.json",
+    mimeType: "application/json",
+    buffer: Buffer.from(JSON.stringify(foundation)),
+  });
   page.once("dialog", (dialog) => dialog.accept("review-race"));
-  await page.locator(".project-select").getByRole("button", { name: "新建项目", exact: true }).click();
+  await page
+    .locator(".project-select")
+    .getByRole("button", { name: "新建项目", exact: true })
+    .click();
   await page.evaluate(() => window.finishImport());
   await page
     .getByRole("alert")
     .filter({ hasText: "文件读取期间项目或主题已变化" })
     .waitFor();
   assert.equal(await page.getByLabel("选择项目").inputValue(), "review-race");
+  await openStudioActions(page);
   await page.getByRole("button", { name: "保存", exact: true }).click();
   assert.equal(
     await page.evaluate(

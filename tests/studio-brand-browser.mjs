@@ -1,3 +1,4 @@
+import { openStudioActions } from "./studio-ui-helpers.mjs";
 import { formatHex } from "culori";
 import { chromium } from "playwright-core";
 import assert from "node:assert/strict";
@@ -30,6 +31,7 @@ try {
       .evaluate((el) => el.style.getPropertyValue("--primary")),
     "#161616",
   );
+  await openStudioActions(page);
   await page.getByRole("button", { name: "设计规范", exact: true }).click();
   await page
     .getByText("已执行的自动检查未发现偏离", { exact: false })

@@ -1,3 +1,4 @@
+import { openStudioActions } from "./studio-ui-helpers.mjs";
 import { chromium } from "playwright-core";
 import assert from "node:assert/strict";
 import { mkdir } from "node:fs/promises";
@@ -89,10 +90,17 @@ try {
       custom,
     );
     await input.fill(custom);
+    await openStudioActions(page);
     await page.getByRole("button", { name: "保存", exact: true }).click();
-    const saved = await page.evaluate(() => JSON.parse(localStorage.getItem("hh-studio:font-picker-check")));
+    const saved = await page.evaluate(() =>
+      JSON.parse(localStorage.getItem("hh-studio:font-picker-check")),
+    );
     assert.equal(saved.styles.light["font-sans"], custom);
-    assert.equal(saved.styles.dark["font-sans"], custom, "fonts stay synchronized across modes");
+    assert.equal(
+      saved.styles.dark["font-sans"],
+      custom,
+      "fonts stay synchronized across modes",
+    );
     await page.reload();
     if (width < 700)
       await page.getByRole("button", { name: "编辑", exact: true }).click();

@@ -85,16 +85,14 @@ function App() {
             >
               <div className="showcase-heading">
                 <span>{t("页面审阅", "Page review")}</span>
-                <span className="showcase-status">
-                  {t("待确认", "Awaiting confirmation")}
-                </span>
+                <span className="showcase-status">{t("可试用", "Try it")}</span>
               </div>
               <p className="eyebrow">{t("交互示例", "Interactive example")}</p>
-              <h2>{t("选择要改进的页面", "Choose pages to improve")}</h2>
+              <h2>{t("试试操作后的反馈", "Try an action and its feedback")}</h2>
               <p>
                 {t(
-                  "选择需要改进的页面，再核对修改结果。",
-                  "Choose the pages to improve, then review the results.",
+                  "点击按钮，看看确认提示的样式。这个示例不会修改项目。",
+                  "Press the button to see a confirmation message. This example does not change your project.",
                 )}
               </p>
               <div className="actions">
@@ -103,13 +101,13 @@ function App() {
                   onClick={() =>
                     setStatus(
                       t(
-                        "示例范围已确认，未修改项目。",
-                        "Demo scope confirmed. No project was changed.",
+                        "这是一条示例确认提示，未修改项目。",
+                        "This is a sample confirmation. No project was changed.",
                       ),
                     )
                   }
                 >
-                  {t("确认范围", "Confirm scope")}
+                  {t("显示确认提示", "Show confirmation")}
                 </Button>
                 <a href="#components">
                   {t("查看组件状态", "See component states")}
@@ -344,7 +342,9 @@ function App() {
             <p className="eyebrow">
               {t("03 / 页面模式", "03 / Screen patterns")}
             </p>
-            <h2>{t("从真实使用处查看", "See it in use")}</h2>
+            <h2>
+              {t("这些页面正在使用 HappyHands", "Pages built with HappyHands")}
+            </h2>
             <div className="rules">
               <article>
                 <h3>{t("官网", "Portal")}</h3>
@@ -357,14 +357,16 @@ function App() {
                 <a href="/apps/portal/">{t("打开官网", "Open portal")}</a>
               </article>
               <article>
-                <h3>Theme Studio</h3>
+                <h3>{t("主题工作室", "Theme Studio")}</h3>
                 <p>
                   {t(
                     "设计变量编辑和组件状态预览。",
                     "Token editing and component-state previews.",
                   )}
                 </p>
-                <a href="/apps/studio/">{t("打开 Studio", "Open Studio")}</a>
+                <a href="/apps/studio/">
+                  {t("打开主题工作室", "Open Theme Studio")}
+                </a>
               </article>
               <article>
                 <h3>{t("本地审阅工作台", "Local review workbench")}</h3>

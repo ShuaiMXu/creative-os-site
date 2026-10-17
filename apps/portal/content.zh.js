@@ -2,10 +2,10 @@ export const apps = [
   {
     "index": "01",
     "state": "本地可用",
-    "title": "审阅产品",
-    "description": "查看电脑和手机上的页面，找出影响使用的问题，选择优先改进的地方。",
+    "title": "问题清单",
+    "description": "每个问题带有页面截图、位置与影响说明，便于判断先改哪一处。",
     "meta": [
-      "截图 · 诊断 · 优先级"
+      "截图 · 问题 · 优先级"
     ],
     "action": "阅读采集指南",
     "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md"
@@ -13,10 +13,10 @@ export const apps = [
   {
     "index": "02",
     "state": "需要确认",
-    "title": "整理设计系统",
-    "description": "从项目中整理颜色、字体和组件。确认后，用同一套规范改进现有页面或创建新页面。",
+    "title": "项目设计规范",
+    "description": "汇总项目已有的颜色、字体与组件，并标出仍需确认的规则。",
     "meta": [
-      "品牌 · 组件 · 规范确认"
+      "品牌 · 组件 · 使用规则"
     ],
     "action": "查看设计基础",
     "href": "https://github.com/ShuaiMXu/creative-os/blob/main/README.md#design-a-new-surface"
@@ -24,10 +24,10 @@ export const apps = [
   {
     "index": "03",
     "state": "本地可用",
-    "title": "修正问题",
-    "description": "把选好的问题交给 AI 编程工具。在独立副本中修改，方便查看和比较。",
+    "title": "可检查的修改",
+    "description": "保留独立工作副本与代码差异，能查看具体改了什么。",
     "meta": [
-      "独立副本 · 修改记录"
+      "工作副本 · 代码差异"
     ],
     "action": "查看执行流程",
     "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md#choosing-a-coding-agent"
@@ -35,10 +35,10 @@ export const apps = [
   {
     "index": "04",
     "state": "人工复核",
-    "title": "检查修改",
-    "description": "在相同尺寸和状态下对比页面，检查交互是否正常，再决定保留哪些修改。",
+    "title": "前后对照记录",
+    "description": "在相同尺寸与页面状态下比较结果，保留接受或拒绝修改的理由。",
     "meta": [
-      "前后对照 · 判断记录"
+      "前后截图 · 复核记录"
     ],
     "action": "查看复核流程",
     "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md#screenshot-aware-visual-review"
@@ -142,8 +142,8 @@ export const screenPairs = [
 export const sections = {
   "apps": {
     "kicker": "01 / 应用",
-    "title": "让现有产品更好用",
-    "copy": "从查看页面到确认修改，在一个流程中完成。",
+    "title": "每次审阅，会留下什么",
+    "copy": "问题、设计规范、代码改动和复核结果，都有记录可查。",
     "link": "在 GitHub 查看源码"
   },
   "explore": {

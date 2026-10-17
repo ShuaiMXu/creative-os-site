@@ -48,6 +48,9 @@ export function Preview({
         }
       }}
     >
+      <p className="sample-disclaimer">
+        {t("主题预览 · 以下为示例内容，不代表项目数据")}
+      </p>
       <div className="sample-nav" data-token="border">
         <b title={projectLabel}>{projectLabel}</b>
         <span>
@@ -179,6 +182,53 @@ export function Preview({
             ))}
           </div>
         </div>
+      ) : scene === "Components" ? (
+        <div className="sample-content component-specimen">
+          <h2>{t("看看主题用在界面上的样子")}</h2>
+          <p>{t("试试按钮和输入框，检查文字、边框与操作反馈。")}</p>
+          <div className="sample-grid">
+            <article data-token="card">
+              <h3>{t("文字与操作")}</h3>
+              <p>{t("正文要容易阅读，辅助说明也应清楚。")}</p>
+              <div className="sample-actions">
+                <button data-token="primary" onClick={() => setChecked(true)}>
+                  {t("保存示例")}
+                </button>
+                <button
+                  className="secondary"
+                  data-token="secondary"
+                  onClick={() => setChecked(false)}
+                >
+                  {t("重置示例")}
+                </button>
+                <button disabled>{t("不可用")}</button>
+              </div>
+              <p role="status">
+                {checked
+                  ? t("示例已保存，不会修改项目。")
+                  : t("点击保存，查看操作反馈。")}
+              </p>
+            </article>
+            <article data-token="card">
+              <h3>{t("输入与选择")}</h3>
+              <label>
+                {t("示例名称")}
+                <input data-token="input" placeholder={t("例如：产品首页")} />
+              </label>
+              <label>
+                {t("优先级")}
+                <select>
+                  <option>{t("常规")}</option>
+                  <option>{t("高优先级")}</option>
+                </select>
+              </label>
+              <label className="sample-check">
+                <input type="checkbox" />
+                {t("完成后通知我")}
+              </label>
+            </article>
+          </div>
+        </div>
       ) : scene === "Typography" ? (
         <div className="sample-content">
           <small>{t("字体预览")}</small>
@@ -269,11 +319,11 @@ export function Preview({
             ) : (
               <>
                 <div className="sample-stats">
-                  {["活跃项目", "本周任务", "设计一致性"].map((item, i) => (
+                  {["活跃项目", "本周任务", "团队成员"].map((item, i) => (
                     <article key={item} data-token="card">
                       <small>{t(item)}</small>
-                      <h2>{["12", "48", "92%"][i]}</h2>
-                      <p>{t("↑ 相比上周")}</p>
+                      <h2>{["12", "48", "8"][i]}</h2>
+                      <p>{t("示例数据")}</p>
                     </article>
                   ))}
                 </div>
@@ -369,9 +419,6 @@ export function Preview({
           </div>
         </div>
       )}
-      <footer className="sample-footer">
-        {t("示例界面 · 用于检查主题，不会提交业务数据")}
-      </footer>
     </div>
   );
 }
