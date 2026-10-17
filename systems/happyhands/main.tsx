@@ -64,8 +64,8 @@ function App() {
               </p>
               <p className="lead">
                 {t(
-                  "统一页面的颜色、字体和操作反馈。这套规范已用于本站和主题工作室，你可以直接试用。",
-                  "Consistent colors, type and feedback across pages. Try the same design rules used by this website and Theme Studio.",
+                  "统一页面颜色、字体与交互反馈，提供可复用的设计规范。本站与主题工作室均采用这套规范。",
+                  "Reusable guidelines for consistent colors, typography and interaction feedback, used throughout this website and Theme Studio.",
                 )}
               </p>
               <div className="actions">

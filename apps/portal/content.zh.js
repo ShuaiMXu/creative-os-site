@@ -24,7 +24,7 @@ export const apps = [
   {
     "index": "03",
     "state": "本地可用",
-    "title": "可检查的修改",
+    "title": "代码修改记录",
     "description": "保留独立工作副本与代码差异，方便核对每处修改。",
     "meta": [
       "工作副本 · 代码差异"
@@ -54,17 +54,17 @@ export const elements = [
   {
     "kind": "input",
     "title": "输入框",
-    "description": "打字、生成中、出错，每一步用户都得看得见。"
+    "description": "明确呈现输入、加载与错误状态。"
   },
   {
     "kind": "status",
     "title": "AI 标签",
-    "description": "AI 参与的内容要能认出来，已批准和待审核不能搞混。"
+    "description": "标识 AI 生成内容，区分已批准与待审核状态。"
   },
   {
     "kind": "tokens",
     "title": "设计变量",
-    "description": "别在代码里写死色值，用变量。改一处，处处生效。"
+    "description": "使用设计变量管理颜色，保持组件样式一致。"
   },
   {
     "kind": "tabs",
@@ -79,17 +79,17 @@ export const elements = [
   {
     "kind": "empty",
     "title": "空状态",
-    "description": "没内容的时候告诉用户该干嘛，不是放个图标就完了。"
+    "description": "说明当前状态，并提供明确的下一步操作。"
   },
   {
     "kind": "dialog",
     "title": "确认弹窗",
-    "description": "高风险操作说清后果，给用户反悔的机会。"
+    "description": "说明操作影响，并提供确认与取消选项。"
   },
   {
     "kind": "card",
     "title": "内容卡片",
-    "description": "标题、状态、证据、操作，一张卡片讲完一件事。"
+    "description": "集中呈现相关标题、状态、证据与操作。"
   }
 ];
 
@@ -98,10 +98,10 @@ export const hero = {
     "面向独立开发者",
     "开源 · 本地运行"
   ],
-  "h1": "优化",
-  "h1Accent": "产品体验",
-  "h1Suffix": "",
-  "copy": "检查页面布局、操作流程和组件一致性，提出体验优化建议。让 AI 协助修改，由你对照前后页面确认效果。",
+  "h1": "让你的产品，",
+  "h1Accent": "更专业",
+  "h1Suffix": "。",
+  "copy": "系统优化页面布局、交互流程与组件一致性。结合 AI 辅助修改与效果复核，提升产品体验。",
   "cta": "了解能力",
   "ctaSecondary": "查看真实审阅"
 };
@@ -142,8 +142,8 @@ export const screenPairs = [
 export const sections = {
   "apps": {
     "kicker": "01 / 应用",
-    "title": "每次审阅都有记录",
-    "copy": "问题、设计规范、代码改动和复核结果，都有记录可查。",
+    "title": "完整的设计审阅",
+    "copy": "涵盖体验诊断、设计规范、代码修改与效果复核，支持查看各阶段的结果。",
     "link": "在 GitHub 查看源码"
   },
   "explore": {
@@ -164,8 +164,8 @@ export const sections = {
   },
   "getStarted": {
     "kicker": "05 / 开始使用",
-    "title": "试一个真实产品",
-    "titleLine2": "从一个页面开始",
+    "title": "开始产品体验审阅",
+    "titleLine2": "选择首个审阅页面",
     "copy": "在主仓库安装依赖，准备 Node.js 22.15+、pnpm 11.19+ 和 Chrome 或 Edge。按指南配置目标仓库与预览；首次采集不等于完成设计审阅。",
     "quickstartLabel": "快速开始",
     "quickstartTitle": "配置完成后，启动首次采集",
@@ -187,7 +187,7 @@ export const steps = [
   [
     "03",
     "修改并复核",
-    "对比前后页面，检查使用效果，决定是否保留修改。"
+    "对比前后页面，复核使用效果，确认修改结果。"
   ]
 ];
 
@@ -280,7 +280,7 @@ export const systems = [
   {
     "tag": "规划",
     "title": "SwiftUI",
-    "description": "原生 App 这条路还没走通，先记下来。",
+    "description": "原生应用支持处于规划阶段，尚未提供可用实现。",
     "values": [
       "颜色",
       "字体",
@@ -296,7 +296,7 @@ export const systems = [
 ];
 
 export const ui = {
-  "scrollNote": "往下看",
+  "scrollNote": "浏览产品能力",
   "githubLink": "GitHub",
   "footer": {
     "left": "HappyHands · AI Product Designer",
@@ -306,8 +306,8 @@ export const ui = {
 };
 
 export const delivery = {
-  "title": "每次修改，都可以回看",
-  "copy": "工具整理页面和修改建议，AI 按确认的范围修改代码。你可以随时查看原页面、改动和检查结果。",
+  "title": "修改与复核流程",
+  "copy": "基于页面证据形成修改建议，由 AI 在确认范围内执行。原始页面、代码差异与复核结果均可查阅。",
   "items": [
     [
       "了解项目",
@@ -322,8 +322,8 @@ export const delivery = {
       "查看修改说明、代码变化、前后截图和检查结果。"
     ],
     [
-      "决定是否保留",
-      "保留满意的修改，记录还需改进的地方。新页面沿用已确认的设计规范。"
+      "确认修改结果",
+      "依据复核结果接受或拒绝修改，记录待解决的问题。新页面沿用已确认的设计规范。"
     ]
   ],
   "status": "目前需要在本地安装和运行。自动监控、自动学习和订阅服务尚未开放。各项功能的实现情况见开发指南。",

@@ -177,14 +177,14 @@ export function Preview({
               <article key={item} data-token="card">
                 <small>0{i + 1}</small>
                 <h3>{t(item)}</h3>
-                <p>{t("设计、交付与反馈，让团队关注真正重要的事情。")}</p>
+                <p>{t("统一设计规范，管理交付进度与反馈。")}</p>
               </article>
             ))}
           </div>
         </div>
       ) : scene === "Components" ? (
         <div className="sample-content component-specimen">
-          <h2>{t("看看主题用在界面上的样子")}</h2>
+          <h2>{t("主题应用预览")}</h2>
           <p>{t("试试按钮和输入框，检查文字、边框与操作反馈。")}</p>
           <div className="sample-grid">
             <article data-token="card">
