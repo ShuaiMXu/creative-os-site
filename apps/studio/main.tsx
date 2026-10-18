@@ -1,3 +1,4 @@
+import { Select } from "../../packages/ui/Select";
 import { Icon } from "../../packages/ui/Icon";
 import { t, sceneLabel } from "./i18n";
 import { useEffect, useRef, useState, type ReactNode } from "react";
@@ -439,7 +440,7 @@ function App() {
       <div className="studio-project-bar">
         <span>{lang === "zh" ? "主题工作室" : "Theme Studio"}</span>
         <div className="project-select">
-          <select
+          <Select
             aria-label={t("选择项目")}
             value={draft.id}
             onChange={(e) => switchProject(e.target.value)}
@@ -447,7 +448,7 @@ function App() {
             {projectIds.map((id) => (
               <option key={id}>{id}</option>
             ))}
-          </select>
+          </Select>
           <Button
             aria-label={t("新建项目")}
             onClick={() => {
@@ -680,7 +681,7 @@ function App() {
             ) : panel === "export" ? (
               <>
                 <div className="toolbar">
-                  <select
+                  <Select
                     aria-label={t("导出格式")}
                     value={format}
                     onChange={(e) => setFormat(e.target.value as ExportKind)}
@@ -690,7 +691,7 @@ function App() {
                     <option value="tailwind3">Tailwind 3 CSS</option>
                     <option value="tailwind3-config">Tailwind 3 config</option>
                     <option value="registry">shadcn registry</option>
-                  </select>
+                  </Select>
                   <Button
                     onClick={() =>
                       download(
@@ -969,7 +970,7 @@ function App() {
             <div className="preset-bar">
               <label>
                 {t("起始预设")}
-                <select
+                <Select
                   aria-label={t("主题预设")}
                   value={preset}
                   onChange={(e) => setPreset(e.target.value)}
@@ -979,7 +980,7 @@ function App() {
                       {p.label || id}
                     </option>
                   ))}
-                </select>
+                </Select>
               </label>
               <Button
                 onClick={() => {
@@ -1159,7 +1160,7 @@ function App() {
           </aside>
           <section className="preview-workspace">
             <div className="preview-toolbar">
-              <select
+              <Select
                 aria-label={t("预览场景")}
                 value={scene}
                 onChange={(e) => setScene(e.target.value)}
@@ -1177,7 +1178,7 @@ function App() {
                     {sceneLabel(s)}
                   </option>
                 ))}
-              </select>
+              </Select>
               <Button
                 aria-pressed={compare}
                 onClick={() => setCompare(!compare)}
@@ -1197,7 +1198,7 @@ function App() {
                   {t("预览设置")} <Icon name="down" />
                 </summary>
                 <div className="toolbar">
-                  <select
+                  <Select
                     aria-label={t("预览宽度")}
                     value={viewport}
                     onChange={(e) => setViewport(e.target.value)}
@@ -1205,7 +1206,7 @@ function App() {
                     <option value="desktop">{t("桌面")}</option>
                     <option value="tablet">{t("平板 · 768")}</option>
                     <option value="mobile">{t("手机 · 390")}</option>
-                  </select>
+                  </Select>
                   <Button
                     aria-pressed={inspector}
                     onClick={() => setInspector(!inspector)}

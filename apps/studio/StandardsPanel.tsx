@@ -1,3 +1,4 @@
+import { Select } from "../../packages/ui/Select";
 import { t, sceneLabel } from "./i18n";
 import { useState } from "react";
 import { Button } from "../../packages/ui";
@@ -33,14 +34,14 @@ export function StandardsPanel({
         </div>
         <label>
           {t("检查基准")}
-          <select
+          <Select
             aria-label={t("设计检查基准")}
             value={profile}
             onChange={(e) => setProfile(e.target.value as typeof profile)}
           >
             <option value="happyhands">{t("HappyHands 设计语言")}</option>
             <option value="general">{t("通用文字可读性")}</option>
-          </select>
+          </Select>
         </label>
       </div>
       <div className="standards-principles">

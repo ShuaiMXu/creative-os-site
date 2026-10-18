@@ -1,3 +1,4 @@
+import { Select } from "../../packages/ui/Select";
 import { useEffect, useRef, useState } from "react";
 import { presetStyles, validateValue } from "../../packages/theme-core";
 import { t } from "./i18n";
@@ -85,7 +86,7 @@ export function FontInput({
         {t(labels[name])}
         <small>{name}</small>
       </label>
-      <select
+      <Select
         id={`${name}-select`}
         value={custom || !match ? "custom" : value}
         onChange={(event) => {
@@ -136,7 +137,7 @@ export function FontInput({
             ))}
         </optgroup>
         <option value="custom">{t("自定义字体")}</option>
-      </select>
+      </Select>
       <label className="font-stack-label" htmlFor={`${name}-custom`}>
         {t("字体与备用字体")}
       </label>

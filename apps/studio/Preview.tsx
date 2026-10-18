@@ -1,3 +1,4 @@
+import { Select } from "../../packages/ui/Select";
 import { Icon } from "../../packages/ui/Icon";
 import { t, sceneLabel } from "./i18n";
 import { previewFontVariables } from "../../packages/font-library";
@@ -217,10 +218,10 @@ export function Preview({
               </label>
               <label>
                 {t("优先级")}
-                <select>
+                <Select>
                   <option>{t("常规")}</option>
                   <option>{t("高优先级")}</option>
-                </select>
+                </Select>
               </label>
               <label className="sample-check">
                 <input type="checkbox" />
@@ -366,10 +367,10 @@ export function Preview({
                     </label>
                     <label>
                       {t("优先级")}
-                      <select>
+                      <Select>
                         <option>{t("高优先级")}</option>
                         <option>{t("常规")}</option>
-                      </select>
+                      </Select>
                     </label>
                     <label className="sample-check">
                       <input
