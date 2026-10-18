@@ -57,7 +57,7 @@ try {
         0,
       );
       await check("catalog");
-      const catalogLeft = (await page.locator("#happyhands").boundingBox()).x;
+      const catalogLeft = (await page.locator("#system-foundations-title").boundingBox()).x;
       const headerLeft = (
         await page.locator('header a[aria-label="HappyHands"]').boundingBox()
       ).x;
