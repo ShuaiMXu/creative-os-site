@@ -300,7 +300,7 @@ p {
   background: var(--hh-bg-raised);
   flex-wrap: wrap;
 }
-.preview-toolbar > select {
+.preview-toolbar > .hh-select-field {
   font-size: 12px;
 }
 .preview-stage {
@@ -1422,7 +1422,7 @@ button[aria-pressed="true"] {
     gap: var(--hh-space-2);
     padding: var(--hh-space-2);
   }
-  .preview-toolbar > select,
+  .preview-toolbar > .hh-select-field,
   .preview-toolbar > button {
     flex: 1;
     min-width: 0;

@@ -1,3 +1,33 @@
+.hh-select-field {
+  position: relative;
+  display: inline-grid;
+  min-width: 0;
+  max-width: 100%;
+  vertical-align: middle;
+}
+.hh-select-field > select {
+  appearance: none;
+  width: 100%;
+  min-width: 0;
+  padding-inline-end: calc(var(--hh-space-3) + 16px + var(--hh-space-2));
+  text-overflow: ellipsis;
+}
+.hh-select-field > .hh-icon {
+  position: absolute;
+  inset-inline-end: var(--hh-space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+.hh-select-field:has(> select:disabled) > .hh-icon {
+  opacity: 0.4;
+}
+@media (forced-colors: active) {
+  .hh-select-field > select { appearance: auto; }
+  .hh-select-field > .hh-icon { display: none; }
+}
 .hh-button {
   min-height: 36px;
   border-radius: var(--hh-radius-md);
