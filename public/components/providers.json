@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "providers": [
+    {
+      "id": "refero",
+      "name": "Refero Styles",
+      "kind": "design-reference",
+      "status": "source-guide",
+      "website": "https://styles.refero.design/",
+      "automaticUse": false
+    },
+    {
+      "id": "cult-ui",
+      "name": "Cult UI",
+      "kind": "source-registry",
+      "status": "local-preview",
+      "catalog": "/components/cult-ui/catalog.json",
+      "website": "https://www.cult-ui.com",
+      "license": "MIT",
+      "automaticUse": false
+    },
+    {
+      "id": "kage",
+      "name": "Kage",
+      "kind": "design-reference",
+      "status": "on-demand-search",
+      "transport": "streamable-http",
+      "endpoint": "https://kage.design/mcp",
+      "documentation": "https://kage.design/mcp-setup",
+      "terms": "https://kage.design/terms",
+      "tools": ["design_brief", "search_designs", "get_design", "get_component", "list_taxonomy"],
+      "bulkMirror": false,
+      "automaticUse": false
+    }
+  ]
+}

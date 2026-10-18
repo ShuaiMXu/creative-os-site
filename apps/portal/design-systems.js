@@ -26,12 +26,40 @@ export function quartzPrompt(language, existing) {
 
 export function designSystemsMarkup(language) {
   const t = (zh,en) => language === 'zh' ? zh : en;
-  return `<div class="system-collection">
-    <article class="system-feature system-feature-primary" id="happyhands" aria-labelledby="happyhands-title">
-      <div><p class="kicker">${t('我们的设计系统','Our design system')}</p><h3 id="happyhands-title">HappyHands</h3><p>${t('统一页面颜色、字体与交互反馈，提供可复用的设计规范。本站与主题工作室均采用这套规范。','Reusable guidelines for consistent colors, typography and interaction feedback, used throughout this website and Theme Studio.')}</p><div class="system-feature-actions"><a class="button button-primary" href="/systems/happyhands/">${t('探索 HappyHands','Explore HappyHands')}</a><a class="text-link" href="/systems/happyhands/#components">${t('试用组件','Try components')}</a></div></div>
-      <div class="system-specimen" aria-hidden="true"><span>HappyHands</span><strong>${t('清楚、克制、亲和。','Clear. Considered. Human.')}</strong><div class="specimen-colors"><i></i><i></i><i></i><i></i></div><p>${t('品牌规范 · 双模式主题 · 组件状态','Brand rules · Light & dark · Component states')}</p></div>
-    </article>
-    <article class="system-feature system-feature-secondary" id="quartz" aria-labelledby="quartz-title"><div><p class="kicker">${t('外部设计系统 · design.how','External system · design.how')}</p><h3 id="quartz-title">Quartz</h3><p>${t('面向 AI 产品和代理工作流。查看组件目录、页面模板与接入说明，再判断是否适合你的项目。','For AI products and agent workflows. Explore its component catalog, screen blocks and setup guidance to see whether it fits your project.')}</p></div><a class="button button-secondary" href="/systems/quartz/">${t('了解 Quartz','Explore Quartz')}</a></article>
-    <div class="system-studio-link"><div><h3>${t('定制产品主题','Customize your product theme')}</h3><p>${t('配置颜色与字体，预览组件效果，导出项目所需的主题文件。','Configure colors and fonts, preview components and export theme files for your project.')}</p></div><a class="text-link" href="/apps/studio/">${t('打开主题工作室','Open Theme Studio')} ${iconMarkup('right')}</a></div>
-  </div>`;
+  const card = ({name,tag,copy,href,tone}) => `<article class="resource-tile" id="${name.toLowerCase().replaceAll(' ','-')}">
+    <div class="resource-tile-art resource-tile-art-${tone}" aria-hidden="true"><span>${name}</span><div class="tile-window"><i></i><i></i><i></i><div class="tile-lines"><b></b><b></b><b></b></div><div class="tile-blocks"><b></b><b></b><b></b></div></div></div>
+    <div class="resource-tile-body"><p class="resource-tile-tag">${tag}</p><h4>${name}</h4><p>${copy}</p><a class="text-link" href="${href}">${t('查看详情','View details')} ${iconMarkup('right')}</a></div>
+  </article>`;
+  const sections = [
+    {id:'system-foundations-title',title:t('设计系统','Design systems'),copy:t('为产品选择一套完整的视觉与交互规范。','Choose a visual and interaction foundation for your product.'),items:[
+      {name:'HappyHands',tag:t('我们的设计系统','Our design system'),copy:t('暖中性色、清晰排版与一致的组件状态。','Warm neutrals, clear typography and consistent component states.'),href:'/systems/happyhands/',tone:'happyhands'},
+      {name:'Quartz',tag:t('设计系统 · design.how','Design system · design.how'),copy:t('面向 AI 产品的组件规范与页面模板。','Component guidelines and screen templates for AI products.'),href:'/systems/quartz/',tone:'quartz'}
+    ]},
+    {id:'system-components-title',title:t('组件库','Component libraries'),copy:t('预览组件效果，选择适合项目的交互。','Preview components and choose interactions that fit your project.'),items:[
+      {name:'Cult UI',tag:t('组件与交互','Components and interactions'),copy:t('按钮、卡片、导航与页面区块，提供预览和源码。','Buttons, cards, navigation and sections with previews and source.'),href:'/components/?provider=cult-ui',tone:'cult'}
+    ]},
+    {id:'system-references-title',title:t('设计参考','Design references'),copy:t('浏览页面布局与视觉风格，完善自己的设计。','Explore layouts and visual styles to refine your own design.'),items:[
+      {name:'Kage',tag:t('页面与区块','Pages and sections'),copy:t('按产品或风格查找截图，查看页面结构与设计分析。','Find screenshots by product or style and explore design analysis.'),href:'/components/?provider=kage',tone:'kage'},
+      {name:'Refero Styles',tag:t('风格与规范 · DESIGN.md','Style guidelines · DESIGN.md'),copy:t('了解颜色、字体与间距规则。目前提供来源与使用说明。','Explore color, type and spacing rules. Source and usage guidance available.'),href:'/components/?provider=refero',tone:'refero'}
+    ]}
+  ];
+  return `<div class="system-collection resource-collection">${sections.map(section=>{
+    const rail=section.id==='system-foundations-title';
+    return `<section class="system-resource-section" aria-labelledby="${section.id}"><header class="system-resource-heading"><h3 id="${section.id}">${section.title}</h3><p>${section.copy}</p>${rail?`<div class="system-rail-controls"><button type="button" data-rail-step="-1" aria-controls="design-system-rail" aria-label="${t('上一个设计系统','Previous design system')}">←</button><button type="button" data-rail-step="1" aria-controls="design-system-rail" aria-label="${t('下一个设计系统','Next design system')}">→</button></div>`:''}</header><div class="resource-tile-grid${rail?' system-card-rail':''}" ${rail?`id="design-system-rail" tabindex="0" role="region" aria-labelledby="${section.id}"`:''}>${section.items.map(card).join('')}</div></section>`;
+  }).join('')}</div>`;
+}
+
+let cleanupRail;
+export function setupSystemRail() {
+  cleanupRail?.();
+  const rail=document.querySelector('#design-system-rail');
+  if(!rail)return;
+  const buttons=[...document.querySelectorAll('[data-rail-step]')];
+  const update=()=>{const max=rail.scrollWidth-rail.clientWidth;buttons[0].disabled=rail.scrollLeft<=1;buttons[1].disabled=rail.scrollLeft>=max-1;};
+  const move=direction=>rail.scrollBy({left:direction*((rail.firstElementChild?.getBoundingClientRect().width||300)+parseFloat(getComputedStyle(rail).columnGap||0)),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+  buttons.forEach(button=>button.onclick=()=>move(Number(button.dataset.railStep)));
+  rail.addEventListener('scroll',update,{passive:true});
+  rail.addEventListener('keydown',event=>{if(event.target!==rail)return;if(event.key==='ArrowRight'||event.key==='ArrowLeft'){event.preventDefault();move(event.key==='ArrowRight'?1:-1);}});
+  const observer=new ResizeObserver(update);observer.observe(rail);update();
+  cleanupRail=()=>observer.disconnect();
 }

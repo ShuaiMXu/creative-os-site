@@ -49,7 +49,7 @@ try {
       );
       await follow('header a[href="/apps/portal/#explore"]');
       assert.deepEqual(
-        await page.locator(".system-collection article h3").allTextContents(),
+        await page.locator(".system-resource-section:first-child article h4").allTextContents(),
         ["HappyHands", "Quartz"],
       );
       assert.equal(

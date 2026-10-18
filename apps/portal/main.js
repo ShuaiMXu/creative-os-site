@@ -5,7 +5,7 @@ import {readLanguage, readTheme, savePreference} from '../../packages/ui/site-pr
 import * as zh from './content.zh.js';
 import {siteNavigation} from '../../packages/ui/site-navigation.ts';
 import '../../packages/ui/site-shell.css';
-import { designSystemsMarkup } from './design-systems.js';
+import { designSystemsMarkup, setupSystemRail } from './design-systems.js';
 import { connectMarkup, setupConnect } from './connect.js';
 import * as en from './content.en.js';
 import { repositories, heroScreens } from './content.js';
@@ -141,6 +141,7 @@ function renderContent() {
   // re-observe sections for intersection animation
   observeSections();
   setupConnect(lang);
+  setupSystemRail();
 }
 
 function appCard(item) {
