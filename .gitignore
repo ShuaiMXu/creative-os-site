@@ -9,3 +9,9 @@ public/skillry-full/
 
 test-results/
 .vercel/
+
+# Rebuilt offline from pinned, integrity-checked Cult UI snapshots.
+/components/preview/generated/
+/public/components/cult-ui/*.json
+/public/components/cult-ui/LICENSE.txt
+/public/textures/

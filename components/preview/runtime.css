@@ -1,0 +1,36 @@
+:root {
+  --font-geist-sans: system-ui, sans-serif;
+  --font-geist-mono: ui-monospace, monospace;
+  font-family: system-ui, sans-serif;
+}
+body {
+  margin: 0;
+  min-width: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+}
+.preview-runtime {
+  padding: 32px 20px;
+  min-height: 400px;
+  display: grid;
+  place-items: center;
+  overflow: auto;
+}
+.preview-runtime > main,
+.preview-runtime > div {
+  max-width: 100%;
+}
+#preview-note {
+  padding: 0 20px;
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+[data-motion="reduce"] *,
+[data-motion="reduce"] *::before,
+[data-motion="reduce"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}

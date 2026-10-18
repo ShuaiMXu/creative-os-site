@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import { resolve, dirname, join, relative, isAbsolute } from 'node:path';
 import { existsSync, statSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import kageHandler from './api/kage.mjs';
 
 const root = dirname(fileURLToPath(import.meta.url));
 
@@ -24,7 +25,7 @@ function mirrorIndex(urlPath) {
 
 export default defineConfig({
   server: { port: 4173, strictPort: true, fs: { strict: true } },
-  plugins: [{
+  plugins: [{name:'kage-reference-search',configureServer(server){server.middlewares.use('/api/kage',kageHandler)},configurePreviewServer(server){server.middlewares.use('/api/kage',kageHandler)}},{
     name: 'skillry-mirror-dir-index',
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
@@ -42,6 +43,8 @@ export default defineConfig({
     home: resolve('index.html'),
     happyhands: resolve('systems/happyhands/index.html'),
     quartz: resolve('systems/quartz/index.html'),
+    'component-preview': resolve('components/preview/index.html'),
+    components: resolve('components/index.html'),
     portal: resolve('apps/portal/index.html'),
     studio: resolve('apps/studio/index.html'),
     web: resolve('apps/web/index.html'),

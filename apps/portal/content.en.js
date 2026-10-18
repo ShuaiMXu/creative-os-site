@@ -148,8 +148,8 @@ export const sections = {
   },
   "explore": {
     "kicker": "02 / DESIGN SYSTEMS",
-    "title": "Choose your design system",
-    "copy": "Start with HappyHands rules and components, then choose a foundation for your project. Keep your existing brand and document its rules first if you prefer."
+    "title": "Design foundations, components and references",
+    "copy": "Start with guidelines, choose suitable components and refine details with layout and style references. Your existing brand and project rules remain the foundation."
   },
   "screens": {
     "kicker": "03 / BEFORE & AFTER",

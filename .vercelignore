@@ -1,0 +1,4 @@
+test-results/
+*.log
+node_modules/
+.git/

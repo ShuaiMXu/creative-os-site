@@ -381,3 +381,6 @@ body {
     grid-template-columns: 1fr;
   }
 }
+.system-embedded .hh-site-header,.system-embedded .system-breadcrumb,.system-embedded .skip { display:none; }
+.system-embedded .system-landing { margin-top:0; padding-top:0; }
+.system-embedded body { min-height:0; }
