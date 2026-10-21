@@ -82,3 +82,9 @@ The website provides setup guidance and read-only historical examples. Install c
 `/apps/web/` is a historical compatibility URL that redirects to the portal; legacy exploration pages may retain those links. The old read-only site workbench is not the current local application.
 
 Builds publish `release.json` with the source revision and known/unknown dirty state. `npm run verify:alpha` checks built routes and source identity; it does not establish production performance or visual quality. See [dependency audit](docs/dependency-audit-2026-10-18.md) for the remaining development-test advisories.
+
+### 官网到本地工作台
+
+接入区可填写仓库目录、任务和项目内 DESIGN.md/token/组件源码路径，通过 loopback 工作台链接交接。先运行主仓库 `pnpm workbench`，本地确认后复用原 onboard 流程；官网的“查看本次记录”恢复同一持久任务/run。没有跨域本地 API 调用，也不会从链接自动批准规范或执行代码。数据保留在当前标签页 sessionStorage，源码只在本地读取。需配套包含 site-handoff 协议的新版本主仓库；Studio 的未导出主题草稿仍走原审批导出/导入流程。
+
+协议集成校验：`node --test tests/site-handoff.test.mjs`（主仓库默认 `../creative-os`，可用 `HARNESS_ROOT` 指定）。
