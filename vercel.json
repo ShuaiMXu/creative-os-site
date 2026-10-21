@@ -4,5 +4,17 @@
   "installCommand": "npm ci",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "trailingSlash": true
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/apps/web",
+      "destination": "/apps/portal/",
+      "permanent": true
+    },
+    {
+      "source": "/apps/web/:path*",
+      "destination": "/apps/portal/",
+      "permanent": true
+    }
+  ]
 }

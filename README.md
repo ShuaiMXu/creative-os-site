@@ -6,7 +6,7 @@ The HappyHands website for [creative-os](https://github.com/ShuaiMXu/creative-os
 
 ```text
 apps/portal/    中文门户 — Apps / Explore / Screens / UI Elements / Get Started
-apps/web/       Product page — the English product page
+apps/web/       Historical URL — redirects to the shared portal
 apps/designer/  Review Workbench — reads exported harness runs
 apps/studio/    Theme Studio — project themes, previews, exports and Foundation approval
 packages/theme-core/  Adapted tweakcn engine, presets, import/export and project logic
@@ -25,7 +25,7 @@ npm run dev
 ```
 
 - Portal: `http://127.0.0.1:4173/apps/portal/`
-- Product page: `http://127.0.0.1:4173/apps/web/`
+- Product entry: `http://127.0.0.1:4173/apps/portal/`
 - Workbench: `http://127.0.0.1:4173/apps/designer/?case=happyclaw`
 - Theme Studio: `http://127.0.0.1:4173/apps/studio/`
 
@@ -74,3 +74,11 @@ emphasis, and product actions remain neutral. Chinese and Latin copy share a
 PingFang-first sans-serif stack; the portal uses no serif typeface. Studio can
 preview a project's optional serif token independently. The
 official dark-background logo and mark live in `public/brand/`.
+
+## Local Web Alpha
+
+The website provides setup guidance and read-only historical examples. Install creative-os dependencies and run `pnpm workbench`; enter your repository directory and key user task in the local workbench. Project DESIGN.md, tokens and component code remain the design sources. Confirm rules and scope before isolated edits; independently review the result before a human decision. The current scoped example is [the approved HappyClaw command-hint change](https://github.com/ShuaiMXu/creative-os/blob/main/docs/counter-evidence-review-2026-10-21.md). Its original disputed review remains in history and does not imply human acceptance or deployment.
+
+`/apps/web/` is a historical compatibility URL that redirects to the portal; legacy exploration pages may retain those links. The old read-only site workbench is not the current local application.
+
+Builds publish `release.json` with the source revision and known/unknown dirty state. `npm run verify:alpha` checks built routes and source identity; it does not establish production performance or visual quality. See [dependency audit](docs/dependency-audit-2026-10-18.md) for the remaining development-test advisories.

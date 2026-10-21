@@ -19,7 +19,7 @@ export const apps = [
       "Brand · Components · Rules"
     ],
     "action": "Read design rules guide",
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/README.md#design-a-new-surface"
+    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/reusable-design-system-extraction.md"
   },
   {
     "index": "03",
@@ -96,7 +96,7 @@ export const elements = [
 export const hero = {
   "eyebrow": [
     "FOR INDEPENDENT BUILDERS",
-    "OPEN SOURCE · LOCAL"
+    "ALPHA · OPEN SOURCE · LOCAL"
   ],
   "h1": "Make your product ",
   "h1Accent": "more professional",
@@ -166,9 +166,9 @@ export const sections = {
     "kicker": "05 / GET STARTED",
     "title": "Start a product experience review",
     "titleLine2": "Select the first page to review",
-    "copy": "Install the core repository dependencies with Node.js 22.15+, pnpm 11.19+ and Chrome or Edge. Configure your target repository and preview using the guide. A first capture is the beginning of a review.",
+    "copy": "Install the core repository dependencies with Node.js 22.15+, pnpm 11.19+ and Chrome or Edge. Run pnpm workbench, enter your repository directory and key user task, then confirm the capture scope. Alpha is a guided local Web trial; a first capture is the beginning of a review.",
     "quickstartLabel": "QUICKSTART",
-    "quickstartTitle": "After setup, capture the baseline",
+    "quickstartTitle": "After installing dependencies, open the local workbench",
     "copyBtn": "Copy command"
   }
 };
@@ -177,7 +177,7 @@ export const steps = [
   [
     "01",
     "Prepare",
-    "Install core dependencies and configure the target repo, preview and Experience Spec."
+    "Run pnpm workbench, enter your repository directory and key task, then confirm the suggested capture scope."
   ],
   [
     "02",

@@ -15,3 +15,5 @@ test-results/
 /public/components/cult-ui/*.json
 /public/components/cult-ui/LICENSE.txt
 /public/textures/
+
+/public/release.json
