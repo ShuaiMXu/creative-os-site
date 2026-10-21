@@ -1,0 +1,70 @@
+{
+  "method": "built-in image generation",
+  "purpose": "Static film concepts, not live captures",
+  "artwork": [
+    {
+      "id": "opening",
+      "file": "01-opening.webp",
+      "generatedSource": "exec-f3528c29-bef2-4787-8771-03020a59c29c.png",
+      "sha256": "325b051fb58a6a777cde7ff8cc24a34bc205b86173e4550db667a554aeda1cdc",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "connect",
+      "file": "02-connect.webp",
+      "generatedSource": "exec-2e97c95d-e034-488d-966c-090d8a2e0152.png",
+      "sha256": "c2d034417116f565d0d5889433e77fa1fe9127e37ca8c5523f0340ff0361baa1",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "review",
+      "file": "03-review.webp",
+      "generatedSource": "exec-29c5e7db-b2e0-4b2f-8d77-ba7670b2fdb7.png",
+      "sha256": "53b626869426f8fc61ec3e4064d9b041174816d68723469ed6c9cd10e02e62f0",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "foundation",
+      "file": "04-foundation.webp",
+      "generatedSource": "exec-ddd8aca1-3520-409c-8205-9b7d84005095.png",
+      "sha256": "8fb5211234b4239e7f07d477cd5f7a6d49af1cd02a2c8f93955f6ad6c020a7d0",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "scope",
+      "file": "05-scope.webp",
+      "generatedSource": "exec-5248a365-69b4-4200-8071-e4950731b92f.png",
+      "sha256": "c42bef67c344fe0e9ee1e561294c805daaa097df72d53b0dba324e56ab15ec03",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "execute",
+      "file": "06-execute.webp",
+      "generatedSource": "exec-1eea44ed-8769-4856-b00c-c92c96748ecd.png",
+      "sha256": "f9a3ca5e69933ce3ae627ad4e2583fec83bcd5dc534e1b92741535789b95decf",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "id": "compare",
+      "file": "07-compare.webp",
+      "generatedSource": "exec-1709fd95-7288-4cef-a95b-f43b7dfb70bb.png",
+      "sha256": "7cf10b53587b4fc2426d544a8d1d893825a3aa2b01793876a9f89b629c2c92de",
+      "width": 1672,
+      "height": 940
+    },
+    {
+      "id": "record",
+      "file": "08-record.webp",
+      "generatedSource": "exec-b7f9da51-d065-4b7e-905a-50f4ddcf273b.png",
+      "sha256": "9ae9b99fca06062783e87fd13e35885a7a3267e8a7ba402bd7ac205d01c0917b",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}

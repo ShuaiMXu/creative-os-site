@@ -1,2 +1,3 @@
 # Integrity checks require byte-identical upstream snapshots on every host.
 vendor/cult-ui/upstream/** -text
+*.pdf binary
