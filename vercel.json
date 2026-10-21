@@ -7,6 +7,11 @@
   "trailingSlash": true,
   "redirects": [
     {
+      "source": "/apps/web/",
+      "destination": "/apps/portal/",
+      "permanent": true
+    },
+    {
       "source": "/apps/web",
       "destination": "/apps/portal/",
       "permanent": true
