@@ -19,7 +19,7 @@ export const apps = [
       "品牌 · 组件 · 使用规则"
     ],
     "action": "查看设计规范",
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/README.md#design-a-new-surface"
+    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/reusable-design-system-extraction.md"
   },
   {
     "index": "03",
@@ -96,7 +96,7 @@ export const elements = [
 export const hero = {
   "eyebrow": [
     "面向独立开发者",
-    "开源 · 本地运行"
+    "Alpha · 开源 · 本地运行"
   ],
   "h1": "让你的产品，",
   "h1Accent": "更专业",
@@ -166,9 +166,9 @@ export const sections = {
     "kicker": "05 / 开始使用",
     "title": "开始产品体验审阅",
     "titleLine2": "选择首个审阅页面",
-    "copy": "在主仓库安装依赖，准备 Node.js 22.15+、pnpm 11.19+ 和 Chrome 或 Edge。按指南配置目标仓库与预览；首次采集不等于完成设计审阅。",
+    "copy": "在主仓库安装依赖，准备 Node.js 22.15+、pnpm 11.19+ 和 Chrome 或 Edge。运行 pnpm workbench，在本地工作台填写项目目录和核心任务，再核对采集范围。Alpha 面向有人指导的本地 Web 试用；首次采集不等于完成设计审阅。",
     "quickstartLabel": "快速开始",
-    "quickstartTitle": "配置完成后，启动首次采集",
+    "quickstartTitle": "安装依赖后，打开本地工作台",
     "copyBtn": "复制命令"
   }
 };
@@ -177,7 +177,7 @@ export const steps = [
   [
     "01",
     "准备项目",
-    "按设置指南安装工具，选择项目并配置页面预览。"
+    "运行 pnpm workbench，填写项目目录和核心任务，核对建议的采集范围。"
   ],
   [
     "02",

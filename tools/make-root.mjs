@@ -88,7 +88,7 @@ const injector = `
       else if (t === 'Get everything with Pro') el.textContent = '了解产品';
       else if (t.indexOf('Come do it') === 0) el.innerHTML = '现在，从一个<span class="theme-accent-word text-accent">真实的应用</span>开始。';
       else if (t.indexOf('Every onboarding step') === 0) el.textContent = '把你的应用接进闭环——基线、证据、一次修改、一次判定，都留在你自己的机器上。';
-      else if (t === 'Studio') { el.textContent = '产品页'; el.setAttribute('href', '/apps/web/'); }
+      else if (t === 'Studio') { el.textContent = '产品页'; el.setAttribute('href', '/apps/portal/'); }
       else if (t === 'Public works') { el.textContent = 'Workbench'; el.setAttribute('href', '/apps/designer/?case=happyclaw'); }
     });
     var fp = document.querySelector('.site-footer-fineprint');

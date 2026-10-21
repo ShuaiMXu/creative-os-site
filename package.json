@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "build": "npm run catalog:build && vite build",
+    "build": "node scripts/release-metadata.mjs && npm run catalog:build && vite build",
     "preview": "vite preview --host 127.0.0.1",
     "typecheck": "npm run catalog:build && tsc --noEmit",
     "test:studio": "node --import tsx --test tests/studio-core.test.ts tests/studio-bridge.test.mjs",
@@ -22,7 +22,8 @@
     "catalog:sync": "node scripts/sync-cult-registry.mjs",
     "predev": "npm run catalog:build",
     "test:components:browser": "node tests/component-library-browser.mjs",
-    "test:components": "npm run catalog:build && node --test tests/component-catalog.test.mjs"
+    "test:components": "npm run catalog:build && node --test tests/component-catalog.test.mjs",
+    "verify:alpha": "node scripts/verify-alpha-release.mjs"
   },
   "dependencies": {
     "@base-ui/react": "1.9.0",
@@ -66,12 +67,15 @@
     "tsx": "^4.23.15",
     "typescript": "^7.0.2",
     "typescript-compiler": "npm:typescript@5.9.3",
-    "vite": "8.3.0"
+    "vite": "8.3.5"
   },
   "workspaces": [
     "apps/studio",
     "packages/contracts",
     "packages/ui",
     "packages/theme-core"
-  ]
+  ],
+  "overrides": {
+    "postcss-selector-parser": "7.1.7"
+  }
 }

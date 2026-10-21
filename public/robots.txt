@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /apps/designer/
+Disallow: /components/preview/
+Disallow: /skillry-full/
+Disallow: /apps/appllama/
+Disallow: /apps/appllama-full/
+Sitemap: https://happyhands-design.vercel.app/sitemap.xml
