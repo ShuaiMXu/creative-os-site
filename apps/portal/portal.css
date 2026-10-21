@@ -59,9 +59,9 @@ section[id] { scroll-margin-top:90px; }
 
 .local-workbench-connect { display:grid; gap:12px; min-width:0; }
 .local-workbench-connect h3,.local-workbench-connect p { margin:0; }
-.local-workbench-connect label { margin:0; }
-.local-workbench-connect input,.local-workbench-connect textarea { width:100%; min-width:0; min-height:44px; padding:10px 12px; border:1px solid var(--line-strong); border-radius:8px; background:var(--ink); color:var(--paper); font:16px/1.5 var(--font-sans); }
-.local-workbench-connect textarea { margin:0; resize:vertical; }
+.connect-panel .local-workbench-connect label { margin:0; }
+.connect-panel .local-workbench-connect input,.connect-panel .local-workbench-connect textarea { width:100%; min-width:0; min-height:44px; padding:10px 12px; border:1px solid var(--line-strong); border-radius:8px; background:var(--ink); color:var(--paper); font:16px/1.5 var(--font-sans); }
+.connect-panel .local-workbench-connect textarea { margin:0; resize:vertical; }
 .local-workbench-connect [hidden] { display:none; }
 .agent-setup-help { margin-top:24px; }
 .agent-setup-help summary { cursor:pointer; min-height:44px; }
