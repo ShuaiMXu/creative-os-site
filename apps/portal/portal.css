@@ -56,3 +56,13 @@ section[id] { scroll-margin-top:90px; }
 /* Reference mask is relative to the viewport, not the 2000px scene. */
 .hero-whirl-mask { position:absolute; top:0; left:-10%; width:120%; height:100%; pointer-events:none; contain:layout style; mask-image:radial-gradient(45% 45% at 50% 50%,transparent 0 50.5%,black 90%); -webkit-mask-image:radial-gradient(45% 45% at 50% 50%,transparent 0 50.5%,black 90%); }
 .hero-whirl-host { mask-image:none; -webkit-mask-image:none; }
+
+.local-workbench-connect { display:grid; gap:12px; min-width:0; }
+.local-workbench-connect h3,.local-workbench-connect p { margin:0; }
+.local-workbench-connect label { margin:0; }
+.local-workbench-connect input,.local-workbench-connect textarea { width:100%; min-width:0; min-height:44px; padding:10px 12px; border:1px solid var(--line-strong); border-radius:8px; background:var(--ink); color:var(--paper); font:16px/1.5 var(--font-sans); }
+.local-workbench-connect textarea { margin:0; resize:vertical; }
+.local-workbench-connect [hidden] { display:none; }
+.agent-setup-help { margin-top:24px; }
+.agent-setup-help summary { cursor:pointer; min-height:44px; }
+.agent-setup-help .agent-choices { margin-top:16px; }
