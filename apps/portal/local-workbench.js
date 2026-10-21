@@ -13,7 +13,7 @@ export function setupLocalWorkbench(lang) {
   if(draft){repo.value=draft.repo;task.value=draft.task;sources.value=draft.sources;address.value=draft.address;}
   let prepared=null;
   function prepare(){
-    const input={repo:repo.value.trim(),task:task.value.trim(),designSources:sources.value.split(/\r?\n/).map(path=>path.trim()).filter(Boolean)};
+    const input={repo:repo.value.trim(),task:task.value.trim(),designSources:[...new Set(sources.value.split(/\r?\n/).map(path=>path.trim()).filter(Boolean))]};
     const same=value=>value&&value.repo===input.repo&&value.task===input.task&&JSON.stringify(value.designSources)===JSON.stringify(input.designSources);
     const id=same(prepared)?prepared.id:same(last?.handoff)?last.handoff.id:crypto.randomUUID();
     prepared=assertSiteHandoff({schemaVersion:'0.1',id,...input});
