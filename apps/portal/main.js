@@ -1,3 +1,4 @@
+import {setupSiteMenu} from '../../packages/ui/site-menu.ts';
 import '../../packages/ui/site-layout.css';
 import '../../packages/ui/icons.css';
 import {iconMarkup} from '../../packages/ui/icons.ts';
@@ -24,7 +25,7 @@ function applyTheme(theme) {
   document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#111111' : '#f7f6f3';
   const button = document.getElementById('theme-toggle');
   if (button) {
-    button.innerHTML = iconMarkup(theme === 'dark' ? 'sun' : 'moon') + (lang === 'zh' ? (theme === 'dark' ? '浅色' : '深色') : (theme === 'dark' ? 'Light' : 'Dark'));
+    button.innerHTML = iconMarkup(theme === 'dark' ? 'sun' : 'moon') + '<span class="hh-tool-label">' + (lang === 'zh' ? (theme === 'dark' ? '浅色' : '深色') : (theme === 'dark' ? 'Light' : 'Dark')) + '</span>';
     button.setAttribute('aria-label', lang === 'zh' ? `切换到${theme === 'dark' ? '浅色' : '深色'}模式` : `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
   }
 }
@@ -85,7 +86,10 @@ function renderContent() {
   updateNavigation();
   applyTheme(document.documentElement.dataset.theme);
 
-  document.querySelector('#lang-switch button').innerHTML = iconMarkup('globe') + (lang === 'zh' ? 'English' : '中文');
+  document.querySelector('#lang-switch button').innerHTML = iconMarkup('globe') + '<span class="hh-tool-label">' + (lang === 'zh' ? 'English' : '中文') + '</span>';
+  document.querySelector('#lang-switch button').setAttribute('aria-label',lang === 'zh' ? 'English' : '中文');
+  disposeMenu?.();
+  disposeMenu = setupSiteMenu(document.querySelector('.site-header'), lang);
   // hero
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
   document.title = lang === 'zh' ? 'HappyHands · 产品体验优化' : 'HappyHands · Product experience optimization';
@@ -253,5 +257,6 @@ document.addEventListener('click', async e => {
 });
 
 // -- boot --
+let disposeMenu;
 renderLangSwitch();
 renderContent();

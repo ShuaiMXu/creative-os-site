@@ -1,5 +1,6 @@
 import { Icon } from "./Icon";
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { setupSiteMenu } from "./site-menu";
 import { siteNavigation } from "./site-navigation";
 import "./site-shell.css";
 export function SiteHeader({
@@ -15,8 +16,10 @@ export function SiteHeader({
   onTheme: () => void;
   active?: string;
 }) {
+  const header = useRef<HTMLElement>(null);
+  useEffect(() => setupSiteMenu(header.current!, lang), [lang]);
   return (
-    <header className="hh-site-header">
+    <header className="hh-site-header" ref={header}>
       <a href="/apps/portal/" aria-label="HappyHands">
         <img
           src={
@@ -27,7 +30,19 @@ export function SiteHeader({
           alt="HappyHands"
         />
       </a>
-      <nav aria-label={lang === "zh" ? "主要导航" : "Main navigation"}>
+      <button
+        className="hh-site-menu-toggle"
+        type="button"
+        aria-controls="site-navigation"
+        aria-expanded="false"
+        aria-label={lang === "zh" ? "菜单" : "Menu"}
+      >
+        <Icon name="menu" />
+      </button>
+      <nav
+        id="site-navigation"
+        aria-label={lang === "zh" ? "主要导航" : "Main navigation"}
+      >
         {siteNavigation.map((item) => (
           <a
             key={item.href}
@@ -49,17 +64,25 @@ export function SiteHeader({
           }
         >
           <Icon name={dark ? "sun" : "moon"} />
-          {dark
-            ? lang === "zh"
-              ? "浅色"
-              : "Light"
-            : lang === "zh"
-              ? "深色"
-              : "Dark"}
+          <span className="hh-tool-label">
+            {dark
+              ? lang === "zh"
+                ? "浅色"
+                : "Light"
+              : lang === "zh"
+                ? "深色"
+                : "Dark"}
+          </span>
         </button>
-        <button onClick={onLanguage} type="button">
+        <button
+          onClick={onLanguage}
+          type="button"
+          aria-label={lang === "zh" ? "English" : "中文"}
+        >
           <Icon name="globe" />
-          {lang === "zh" ? "English" : "中文"}
+          <span className="hh-tool-label">
+            {lang === "zh" ? "English" : "中文"}
+          </span>
         </button>
       </div>
     </header>

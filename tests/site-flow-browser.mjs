@@ -38,18 +38,40 @@ try {
         });
       }
       async function follow(selector) {
+        if (
+          selector.startsWith("header ") &&
+          !(await page.locator(selector).isVisible())
+        ) {
+          await page.locator(".hh-site-menu-toggle").click();
+        }
         await page.locator(selector).click();
         await page.waitForLoadState("networkidle");
       }
       await page.goto(base + "/apps/portal/", { waitUntil: "networkidle" });
       await check("home");
+      const menu = page.locator(".hh-site-menu-toggle");
+      assert.equal(await menu.isVisible(), width <= 1000);
+      if (width <= 1000) {
+        assert.equal(await page.locator("header nav").isVisible(), false);
+        await menu.press("Enter");
+        assert.equal(await menu.getAttribute("aria-expanded"), "true");
+        await page.locator("header nav a").first().focus();
+        await page.keyboard.press("Escape");
+        assert.equal(await menu.getAttribute("aria-expanded"), "false");
+        assert.equal(
+          await menu.evaluate((el) => el === document.activeElement),
+          true,
+        );
+      }
       assert.equal(
         await page.locator('header a[aria-current="page"]').count(),
         0,
       );
       await follow('header a[href="/apps/portal/#explore"]');
       assert.deepEqual(
-        await page.locator(".system-resource-section:first-child article h4").allTextContents(),
+        await page
+          .locator(".system-resource-section:first-child article h4")
+          .allTextContents(),
         ["HappyHands", "Quartz"],
       );
       assert.equal(
@@ -57,7 +79,9 @@ try {
         0,
       );
       await check("catalog");
-      const catalogLeft = (await page.locator("#system-foundations-title").boundingBox()).x;
+      const catalogLeft = (
+        await page.locator("#system-foundations-title").boundingBox()
+      ).x;
       const headerLeft = (
         await page.locator('header a[aria-label="HappyHands"]').boundingBox()
       ).x;
