@@ -12,7 +12,7 @@ root=Path(__file__).resolve().parent.parent
 base=root/'public/film/storyboard'
 data=json.loads(subprocess.check_output(['node','--input-type=module','-e',"import {timing} from './film/storyboard/scenes.js';console.log(JSON.stringify(timing))"],cwd=root,text=True))
 for name,file in [('Film','InstrumentSans-Regular.ttf'),('FilmBold','InstrumentSans-Bold.ttf')]:pdfmetrics.registerFont(TTFont(name,str(base/'fonts'/file)))
-out=base/'HappyHands-Storyboard-V6.pdf';c=canvas.Canvas(str(out),pagesize=(1280,1040));c.setTitle('HappyHands — Product film storyboard V6');c.setAuthor('HappyHands')
+out=base/'HappyHands-Storyboard-V7.pdf';c=canvas.Canvas(str(out),pagesize=(1280,1040));c.setTitle('HappyHands — Product film storyboard V7');c.setAuthor('HappyHands')
 def t(x,y,s,size=15,bold=False,color='#20221f'):
  c.setFont('FilmBold' if bold else 'Film',size);c.setFillColor(HexColor(color));c.drawString(x,y,s)
 def paragraph(x,y,s,width,size=16):

@@ -1,5 +1,5 @@
 export const storyboard = {
-  version: "V6",
+  version: "V7",
   duration: 85,
   title: "See the page. Understand the change.",
   status: "Static storyboard for approval. No video production has started.",
@@ -9,14 +9,14 @@ export const storyboard = {
       seconds: 8,
       title: "Connect the website",
       caption: "Start with your website.",
-      plate: "v6/01-connect.png",
+      plate: "v7/01-connect.png",
       tone: "light",
       composed: true,
-      alt: "Static HappyHands UI concept: connect the website, with the Northstar page and its source context.",
+      alt: "Art-directed HappyHands storyboard: connect the website, with the Northstar page and its source context.",
       action:
         "Enter the page URL, confirm local repository access and supply design sources. Show the complete Northstar page beside the connection form, plus its phone view.",
       camera:
-        "Hold a straight-on full application frame. Track the URL entry, then reveal the full page without perspective distortion.",
+        "An enlarged URL control resolves into a full-page object, its source bundle and a phone view. Keep the neutral stage fixed.",
       transition:
         "The page stays fixed as the analysis panel replaces the form.",
       voiceover:
@@ -31,14 +31,14 @@ export const storyboard = {
       seconds: 12,
       title: "Analyze the whole page",
       caption: "See the whole experience.",
-      plate: "v6/02-analysis.png",
+      plate: "v7/02-analysis.png",
       tone: "light",
       composed: true,
-      alt: "Static HappyHands UI concept: analyze the whole page, with the Northstar page and its source context.",
+      alt: "Art-directed HappyHands storyboard: analyze the whole page, with the Northstar page and its source context.",
       action:
         "Show the full-page overview from navigation through contact. Surface desktop and phone capture coverage and the declared enquiry interaction being reviewed.",
       camera:
-        "Move down the page with a stable miniature overview. Keep the current region and analysis state visible together.",
+        "Track the scan across the complete page. A source-connected crop expands into the contact region and its evidence note.",
       transition:
         "An analysis candidate anchors the next zoom to the Intro region.",
       voiceover:
@@ -53,10 +53,10 @@ export const storyboard = {
       seconds: 10,
       title: "Inspect a specific finding",
       caption: "Find what needs attention.",
-      plate: "v6/03-findings.png",
+      plate: "v7/03-findings.png",
       tone: "light",
       composed: true,
-      alt: "Static HappyHands UI concept: inspect a specific finding, with the Northstar page and its source context.",
+      alt: "Art-directed HappyHands storyboard: inspect a specific finding, with the Northstar page and its source context.",
       action:
         "Select candidate 1. Highlight the copy-to-action relationship and show its screenshot, component source and design guidance. Keep the full-page navigator visible.",
       camera:
@@ -74,14 +74,14 @@ export const storyboard = {
       seconds: 12,
       title: "Read the design system",
       caption: "Understand your design system.",
-      plate: "v6/04-foundation.png",
+      plate: "v7/04-foundation.png",
       tone: "light",
       composed: true,
-      alt: "Static HappyHands UI concept: read the design system, with the Northstar page and its source context.",
+      alt: "Art-directed HappyHands storyboard: read the design system, with the Northstar page and its source context.",
       action:
         "Show type, colors and spacing alongside the complete page and actual named source paths. Review selected Foundation constraints before approving them.",
       camera:
-        "Keep three connected surfaces visible: page, extracted rules and source evidence. Emphasize space.8 at 32 px.",
+        "Pull type and spacing out of the page into connected specimens. Set 32 px at data scale, then anchor it back to the source.",
       transition:
         "Carry the selected component reference into its anatomy and consumers.",
       voiceover:
@@ -96,14 +96,14 @@ export const storyboard = {
       seconds: 10,
       title: "Inspect component anatomy",
       caption: "Break it down into components.",
-      plate: "v6/05-components.png",
+      plate: "v7/05-components.png",
       tone: "light",
       composed: true,
-      alt: "Static HappyHands UI concept: inspect component anatomy, with the Northstar page and its source context.",
+      alt: "Art-directed HappyHands storyboard: inspect component anatomy, with the Northstar page and its source context.",
       action:
         "Locate ActionLink inside Intro. Show its label, icon, declared states and two illustrative consumers. Keep the existing shared control and change its parent spacing only.",
       camera:
-        "Track the selected page control into its component view. Reveal source, inputs and consumers without floating objects.",
+        "Lift the selected control from the page into an exploded-view composition. Separate its label, spacing and icon; reveal states and consumers.",
       transition:
         "Return to the parent layout with the proposed spacing adjustment highlighted.",
       voiceover:
@@ -118,14 +118,14 @@ export const storyboard = {
       seconds: 11,
       title: "Preview the exact adjustment",
       caption: "See exactly what will change.",
-      plate: "v6/06-scope.png",
+      plate: "v7/06-scope.png",
       tone: "light",
       composed: true,
-      alt: "Static HappyHands UI concept: preview the exact adjustment, with the Northstar page and its source context.",
+      alt: "Art-directed HappyHands storyboard: preview the exact adjustment, with the Northstar page and its source context.",
       action:
         "Display the proposed 32 px spacing on the same Intro, with 16 → 32 px and the token reference. Explicitly retain wording, imagery, navigation and ActionLink. Confirm the candidate and scope.",
       camera:
-        "Hold the before value and proposed value beside the rendered adjustment. Keep one main confirmation action.",
+        "Make 16 to 32 px the leading visual. Slide the exact source token into the page crop, keeping one bounded scope confirmation.",
       transition: "The approved token change match-cuts into the source diff.",
       voiceover:
         "Preview the adjustment before code changes. Confirm the spacing, the source token and the boundaries: keep the content, imagery, navigation and shared control.",
@@ -139,14 +139,14 @@ export const storyboard = {
       seconds: 12,
       title: "Apply the confirmed change",
       caption: "Turn the decision into code.",
-      plate: "v6/07-execute.png",
+      plate: "v7/07-execute.png",
       tone: "light",
       composed: true,
-      alt: "Static HappyHands UI concept: apply the confirmed change, with the Northstar page and its source context.",
+      alt: "Art-directed HappyHands storyboard: apply the confirmed change, with the Northstar page and its source context.",
       action:
         "Show the configured agent stage, isolated Git copy, Intro.tsx diff and source-linked managed preview. Change --space-4 to --space-8 in the parent layout.",
       camera:
-        "Keep the code diff and page result side by side. Follow the selected line into the visible spacing change.",
+        "Follow the source diff across a shallow change of plane into the page result. Preserve the source path and execution boundary.",
       transition:
         "Lock the preview state and split it into matched before and after evidence.",
       voiceover:
@@ -161,14 +161,14 @@ export const storyboard = {
       seconds: 10,
       title: "Compare and keep the record",
       caption: "Review the difference.",
-      plate: "v6/08-compare.png",
+      plate: "v7/08-compare.png",
       tone: "light",
       composed: true,
-      alt: "Static HappyHands UI concept: compare and keep the record, with the Northstar page and its source context.",
+      alt: "Art-directed HappyHands storyboard: compare and keep the record, with the Northstar page and its source context.",
       action:
         "Compare the same rendered Intro state at the same scale. Show 16 px before and 32 px after, the planned desktop/phone checks, independent review boundary and pending human decision. Retain the same run record.",
       camera:
-        "Use a fixed before/after composition; the page stays primary while the review panel explains the next human action.",
+        "Use equal-scale before/after surfaces and a fixed comparison seam. The evidence condenses into a human-decision strip.",
       transition:
         "End with the real HappyHands logo in the same workflow context, not a separate promotional card.",
       voiceover:

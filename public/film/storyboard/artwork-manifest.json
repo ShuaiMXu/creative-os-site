@@ -1,64 +1,66 @@
 {
-  "version": "V6",
-  "method": "Deterministic HTML/CSS rendered in the browser",
-  "purpose": "Authored static storyboard examples; not real Harness execution evidence",
+  "version": "V7",
+  "method": "Art-directed HTML/CSS browser compositions",
+  "purpose": "Static product-film storyboard concepts, not live execution evidence",
   "viewport": {
     "width": 1600,
     "height": 900
   },
   "sourceFiles": {
-    "film/storyboard/frame.html": "c6add31c5bb230df9eafdc272ebe4ff0a13d375c6b188cd490f1f63da2816217",
-    "film/storyboard/frame.js": "ceebe77d9d76dfa1e503fdd3174a6295d7381d2942bcfd1cae3f337a630b75d6",
+    "film/storyboard/frame.html": "6d3e355aa15e32111183ae837c85002f8246770b10490aaaf36ff3edb0dfca77",
+    "film/storyboard/frame.js": "76c6e2a4b39955fae6c9f9f09a414f599ca5ed796f8dda67dbf659d88bc85d85",
     "film/storyboard/frame.css": "c3e58fcb34b17cfd2acfb82a5a3645befecb5d46e8a0a8ec316293305fb1cf55",
-    "film/storyboard/scenes.js": "530556ea3b9effd8a49427541bef9f22709b0cf00310afdd005e8c38ae085717",
+    "film/storyboard/composition-v7.js": "7409bee16042a8333d5241f0f4990c5502e5378a8c2f7daca90143137a184bf8",
+    "film/storyboard/composition-v7.css": "51085489dcc38980e387a2bbbf7aafecbcc2ec1c0bead11618992fcf383c0e0e",
+    "film/storyboard/scenes.js": "80be4351c5793a9a2ab06019123cb51dae9bf12b9b533db6ee824eebb23cc41c",
     "public/brand/happyhands-logo-ink.png": "235a2cfeba071a57ced90873d82880d0ef465beb89bb85ba1730d80c7bff02b8"
   },
   "frames": [
     {
-      "file": "v6/01-connect.png",
-      "sha256": "79ef6bee746d921190c42972f205dcb1e137ffd59bf24d921ea3e560e935bbd1",
+      "file": "v7/01-connect.png",
+      "sha256": "7a4b700e1493327051d0a9a69f30caca47fe4fed68339eb09790792403853321",
       "width": 1600,
       "height": 900
     },
     {
-      "file": "v6/02-analysis.png",
-      "sha256": "1c69c32bb03f18f90a089dd546f1d26ea5fd2d354ba5deac4a23336ab373acc8",
+      "file": "v7/02-analysis.png",
+      "sha256": "b46f77fcd676f6a6c13dde05fc79ba697a13c3bcb89be750936aa7b6332db0fb",
       "width": 1600,
       "height": 900
     },
     {
-      "file": "v6/03-findings.png",
-      "sha256": "260af3c6c25805106dbb54801324e12d473c5133bd83a53c1536c48fb4b7e650",
+      "file": "v7/03-findings.png",
+      "sha256": "0a20ba6de4d2a2dd9eb2db910db360fa8bd594bb5abfccc6651fd8fcde89da4c",
       "width": 1600,
       "height": 900
     },
     {
-      "file": "v6/04-foundation.png",
-      "sha256": "6a2bbc4452fbef07f20c12a06ac5a72695bf85901ee0f0ff58c93008739975d4",
+      "file": "v7/04-foundation.png",
+      "sha256": "aa5b2f211894c08f335489f91de25c7c4199d44b8af3ea027bfe7d04cb71933c",
       "width": 1600,
       "height": 900
     },
     {
-      "file": "v6/05-components.png",
-      "sha256": "d56c901ba5d57d04ca33ad89be321b275bf8efc419a0a07899b93ab6b4f1cc12",
+      "file": "v7/05-components.png",
+      "sha256": "57b6d59edb672468009edcbb1ef82dfb42f6af3a7bb97092071b1e0ec90279c0",
       "width": 1600,
       "height": 900
     },
     {
-      "file": "v6/06-scope.png",
-      "sha256": "8569fe58ac750eb2d6f713643ea7d1c03f32fe0a578c7a57faf3a0849e9297ac",
+      "file": "v7/06-scope.png",
+      "sha256": "eacd7268e9b22fc0118899ed4553ccd3f9016b8351bc81b3d20bede244be9bd8",
       "width": 1600,
       "height": 900
     },
     {
-      "file": "v6/07-execute.png",
-      "sha256": "5ed46b1b5d16802c8cec40ae65cf0c6fd716a6a456b433189bf0d0f0d47d842d",
+      "file": "v7/07-execute.png",
+      "sha256": "0fc78444db5d349ab40373bc77e88f86ba436cc5c180c94ed148dcc01447f27f",
       "width": 1600,
       "height": 900
     },
     {
-      "file": "v6/08-compare.png",
-      "sha256": "ce9105013f1fd801714da1336dc205871d6af8fd4c42842d3471050367cfdd04",
+      "file": "v7/08-compare.png",
+      "sha256": "3bebd0e4e3527ce8b5c20c43dc055bbb97ff7cf5b0d0b6a2fa4e139f6fe920c7",
       "width": 1600,
       "height": 900
     }
