@@ -1,0 +1,12 @@
+{
+  "kind": "historical-product-evidence",
+  "images": [
+    {"file":"workbench-desktop.png","source":"verification/2026-10-15/workbench-ui/revision-3c2612d/final-canvas-1440-zh.png","context":"Historical HappyClaw page-review UI, run d9d0898d; not a current preview or live execution"},
+    {"file":"workbench-mobile.png","source":"verification/2026-10-15/workbench-ui/revision-3c2612d/final-canvas-390-zh.png","context":"Same historical page-review UI, phone layout"},
+    {"file":"report.png","source":"verification/2026-10-21/site-workbench-handoff/happyclaw-result.png","context":"Separate baseline diagnosis after portal handoff; independent review not yet performed in this record"},
+    {"file":"before-mobile.png","source":"verification/2026-10-21/approved-scroll-hint/before-mobile.png","viewport":{"width":390,"height":844},"context":"Approved command-scroll-hint task, before"},
+    {"file":"after-mobile.png","source":"verification/2026-10-21/approved-scroll-hint/after-mobile.png","viewport":{"width":390,"height":844},"context":"Same task and viewport, after; no forced line wrapping"}
+  ],
+  "caseRecord":"https://github.com/ShuaiMXu/creative-os/blob/main/docs/counter-evidence-review-2026-10-21.md",
+  "caseBoundary":"Independent re-review passed; human acceptance remains pending in the linked record. Not a whole-site acceptance or production deployment claim."
+}

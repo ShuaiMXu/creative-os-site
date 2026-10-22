@@ -1,24 +1,119 @@
-import {localWorkbenchMarkup,setupLocalWorkbench} from './local-workbench.js';
-import {iconMarkup} from '../../packages/ui/icons.ts';
-const guide = 'https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md';
-let selectedAgent = 'codex';
+import {
+  localWorkbenchMarkup,
+  setupLocalWorkbench,
+} from "./local-workbench.js";
+import { iconMarkup } from "../../packages/ui/icons.ts";
+const guide =
+  "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md";
+let selectedAgent = "codex";
 export function connectMarkup(lang) {
-  const zh = lang === 'zh';
-  const steps = zh ? [['01', '准备环境', '本地准备 Node.js 22.15+、pnpm 11.19+、Chrome 或 Edge，以及已登录的 Agent CLI。'], ['02', '打开本地工作台', '安装依赖后运行 pnpm workbench，填写项目目录和核心用户任务；预览与高级配置按需补充。'], ['03', '采集与确认', '先保存基线、诊断并确认问题。准备好简报后，再由所选 Agent 执行隔离修改。']] : [['01', 'Prepare', 'Install Node.js 22.15+, pnpm 11.19+, Chrome or Edge, and sign in to your agent CLI.'], ['02', 'Open the local workbench', 'Install dependencies and run pnpm workbench. Enter your repository and key user task; add preview or advanced settings when needed.'], ['03', 'Capture and confirm', 'Capture a baseline, diagnose and confirm a finding. Prepare a brief before running an isolated agent edit.']];
-  const faq = zh ? [['需要把仓库上传吗？', '工具在你的电脑上运行。所选 Agent 的模型请求遵循该工具的配置与数据处理方式；本站不会替你上传或连接仓库。'], ['设计方法和执行工具有什么区别？', '设计方法说明如何检查页面；执行工具负责保存截图、安排修改步骤，并记录你的确认结果。'], ['支持 Cursor 等其他 Agent 吗？', '当前明确注册的执行适配器为 Codex CLI 和 Claude Code CLI。其他工具的自动执行接入仍需实现与验证。'], ['复制提示词就能自动改完吗？', '复制只是开始。还需要本地环境、项目配置、有效证据和范围确认；修改后仍需复核与人工决定。视觉结论有争议时，提交新反证申请独立重审，保留原记录。']] : [['Do I upload my repository?', 'The tools run on your computer. Model requests follow your selected agent’s configuration and data handling. This website does not connect or upload your repository.'], ['How do design methods and tools work together?', 'Design methods explain how to review pages. The tools save screenshots, organize editing steps and record your decisions.'], ['What about Cursor or other agents?', 'Codex CLI and Claude Code CLI are the registered execution adapters. Other automated integrations still need implementation and verification.'], ['Does copying the prompt finish a review?', 'No. You still need a local environment, project configuration, evidence and scope confirmation. Changes require review and a human decision. Disputed visual findings need new counter-evidence and an independent re-review; the original is retained.']];
-  return `<section class="content-section section-connect" id="connect-agent"><div class="section-head"><div><p class="kicker">${zh ? '连接工具' : 'Connect your tools'}</p><h2>${zh ? '连接项目，开始本地审阅' : 'Connect a project for local review'}</h2></div><p>${zh ? '填写项目和设计规范来源，在本地确认后开始采集；执行与结果保留在同一份记录。' : 'Enter your project and design sources, confirm locally, and keep execution and results in the same record.'}</p></div><div class="connect-grid"><div class="connect-panel">${localWorkbenchMarkup(lang)}<details class="agent-setup-help"><summary>${zh ? '尚未安装？使用 Agent 协助设置' : 'Not installed? Set up with your agent'}</summary><div class="agent-choices" role="group" aria-label="${zh ? '选择执行 Agent' : 'Choose an agent'}"><button type="button" data-agent="codex">Codex CLI</button><button type="button" data-agent="claude-code">Claude Code CLI</button></div><p id="agent-status" class="agent-status"></p><label for="agent-prompt">${zh ? '复制给你的 Agent' : 'Paste into your agent'}</label><textarea id="agent-prompt" readonly rows="7"></textarea><div class="connect-actions"><button class="button button-primary" id="copy-agent" type="button">${iconMarkup("copy")} ${zh ? '复制接入提示词' : 'Copy setup prompt'}</button><a class="text-link" href="${guide}">${zh ? '查看设置指南' : 'Read setup guide'} ${iconMarkup('external')}</a></div><p class="connect-note">${zh ? '本地接入指导 · 复制不会连接账号或执行命令' : 'Local setup guidance · Copying does not connect an account or execute commands'}</p></details></div><ol class="connect-steps">${steps.map(([n,title,copy]) => `<li><span>${n}</span><div><h3>${title}</h3><p>${copy}</p></div></li>`).join('')}</ol></div><div class="connect-faq"><h3>${zh ? '常见问题' : 'Frequently asked questions'}</h3>${faq.map(([q,a])=>`<details><summary>${q}</summary><p>${a}</p></details>`).join('')}</div></section>`;
+  const zh = lang === "zh";
+  const steps = zh
+    ? [
+        [
+          "01",
+          "准备环境",
+          "本地准备 Node.js 22.15+、pnpm 11.19+、Chrome 或 Edge，以及已登录的 Agent CLI。",
+        ],
+        [
+          "02",
+          "打开本地工作台",
+          "安装依赖后运行 pnpm workbench，填写项目目录和核心用户任务；预览与高级配置按需补充。",
+        ],
+        [
+          "03",
+          "采集与确认",
+          "先保存基线、诊断并确认问题。准备好简报后，再由所选 Agent 执行隔离修改。",
+        ],
+      ]
+    : [
+        [
+          "01",
+          "Prepare",
+          "Install Node.js 22.15+, pnpm 11.19+, Chrome or Edge, and sign in to your agent CLI.",
+        ],
+        [
+          "02",
+          "Open the local workbench",
+          "Install dependencies and run pnpm workbench. Enter your repository and key user task; add preview or advanced settings when needed.",
+        ],
+        [
+          "03",
+          "Capture and confirm",
+          "Capture a baseline, diagnose and confirm a finding. Prepare a brief before running an isolated agent edit.",
+        ],
+      ];
+  const faq = zh
+    ? [
+        [
+          "需要把仓库上传吗？",
+          "工具在你的电脑上运行。所选 Agent 的模型请求遵循该工具的配置与数据处理方式；本站不会替你上传或连接仓库。",
+        ],
+        [
+          "设计方法和执行工具有什么区别？",
+          "设计方法说明如何检查页面；执行工具负责保存截图、安排修改步骤，并记录你的确认结果。",
+        ],
+        [
+          "支持 Cursor 等其他 Agent 吗？",
+          "当前明确注册的执行适配器为 Codex CLI 和 Claude Code CLI。其他工具的自动执行接入仍需实现与验证。",
+        ],
+        [
+          "复制提示词就能自动改完吗？",
+          "复制只是开始。还需要本地环境、项目配置、有效证据和范围确认；修改后仍需复核与人工决定。视觉结论有争议时，提交新反证申请独立重审，保留原记录。",
+        ],
+      ]
+    : [
+        [
+          "Do I upload my repository?",
+          "The tools run on your computer. Model requests follow your selected agent’s configuration and data handling. This website does not connect or upload your repository.",
+        ],
+        [
+          "How do design methods and tools work together?",
+          "Design methods explain how to review pages. The tools save screenshots, organize editing steps and record your decisions.",
+        ],
+        [
+          "What about Cursor or other agents?",
+          "Codex CLI and Claude Code CLI are the registered execution adapters. Other automated integrations still need implementation and verification.",
+        ],
+        [
+          "Does copying the prompt finish a review?",
+          "No. You still need a local environment, project configuration, evidence and scope confirmation. Changes require review and a human decision. Disputed visual findings need new counter-evidence and an independent re-review; the original is retained.",
+        ],
+      ];
+  return `<section class="content-section section-connect" id="connect-agent"><span id="get-started" class="anchor-alias"></span><div class="section-head"><h2>${zh ? "从你的项目开始" : "Start with your project"}</h2><p>${zh ? "把项目与设计规范带到本地工作台。确认采集范围后，开始第一轮审阅。" : "Bring your project and design sources into the local workbench. Confirm the capture scope, then begin your first review."}</p></div><div class="connect-grid"><div class="connect-orientation"><h3>${zh ? "先启动本地工作台" : "Open your local workbench"}</h3><p>${zh ? "已安装？在主仓库运行下面的命令，再填写项目资料。" : "Already installed? Run this in the core repository, then enter your project details."}</p><div class="launch-command"><code>pnpm workbench</code><button type="button" data-copy="pnpm workbench" aria-label="${zh ? "复制启动命令" : "Copy startup command"}">${iconMarkup("copy")}</button></div><details class="agent-setup-help"><summary>${zh ? "首次使用？查看安装帮助" : "First time? Set up your tools"}</summary><p>${zh ? "准备 Node.js 22.15+、pnpm 11.19+、Chrome 或 Edge，以及已登录的 Agent CLI。可将以下完整提示词交给 Agent 协助设置。" : "Prepare Node.js 22.15+, pnpm 11.19+, Chrome or Edge, and an authenticated agent CLI. Give your agent the complete prompt below to help with setup."}</p><div class="agent-choices" role="group" aria-label="${zh ? "选择执行 Agent" : "Choose an agent"}"><button type="button" data-agent="codex">Codex CLI</button><button type="button" data-agent="claude-code">Claude Code CLI</button></div><p id="agent-status" class="agent-status"></p><label for="agent-prompt">${zh ? "完整接入提示词" : "Complete setup prompt"}</label><textarea id="agent-prompt" readonly rows="7"></textarea><div class="connect-actions"><button class="button" id="copy-agent" type="button">${iconMarkup("copy")} ${zh ? "复制接入提示词" : "Copy setup prompt"}</button><a class="text-link" href="${guide}">${zh ? "阅读设置指南" : "Read setup guide"}</a></div><p class="connect-note">${zh ? "复制不会连接账号或执行命令。" : "Copying does not connect an account or execute a command."}</p></details><p class="alpha-note">${zh ? "当前为本地 Web Alpha，适合有人指导的试用。设计规范需确认，代码修改需批准，最后由你决定是否接受。" : "Local Web Alpha, intended for guided use. Confirm design rules, approve edits and make the final acceptance decision."}</p></div><div class="connect-panel" data-ui>${localWorkbenchMarkup(lang)}</div></div><div class="connect-faq"><h3>${zh ? "你可能还想了解" : "A few useful answers"}</h3><div>${faq.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join("")}<details><summary>${zh ? "哪些能力还未开放？" : "What is not available yet?"}</summary><p>${zh ? "持续监控、自动学习和订阅服务尚未开放。当前工作流以本地执行、独立复核与人工判断为基础。" : "Continuous monitoring, automatic learning and subscriptions are not available. The current workflow uses local execution, independent review and a human decision."}</p></details></div></div></section>`;
 }
 export function setupConnect(lang) {
-  const zh = lang === 'zh';
+  const zh = lang === "zh";
   setupLocalWorkbench(lang);
   const apply = () => {
-    const label = selectedAgent === 'codex' ? 'Codex CLI' : 'Claude Code CLI';
-    const prompt = zh ? `请帮我用 ${label} 接入 Creative OS 的本地产品设计 Harness。先阅读 ${guide} 并核对仓库当前实现。检查本地环境与 Agent CLI 登录状态；已有 creative-os 仓库就复用，否则先说明安装位置。安装依赖后运行 pnpm workbench，打开本地工作台。先向我获取项目目录和核心用户任务；在工作台核对建议的采集范围，必要时补充预览启动方式和高级配置，再采集基线。已有项目规范以 DESIGN.md、样式 token 和组件代码为来源，完整 Skills 不删减。先展示有证据的诊断与修改范围，等我确认后再在隔离 worktree 中执行。选择适配器 ${selectedAgent}。保留截图、代码差异和评估记录；不自动推送、合并或部署，不把未验证结果说成成功。` : `Help me set up the local Creative OS product-design Harness with ${label}. Read ${guide} and verify the current implementation first. Check local prerequisites and CLI authentication. Reuse an existing creative-os checkout or explain where it will be installed. Install dependencies and run pnpm workbench. Open the local workbench and ask for my repository directory and key user task. Review the suggested capture scope; add preview startup details or advanced settings when needed, then capture a baseline. Use project DESIGN.md, style tokens and component code as sources; preserve complete Skills. Present evidence-backed findings and scope for my confirmation before isolated worktree execution. Select adapter ${selectedAgent}. Retain captures, patches and evaluations. Do not automatically push, merge or deploy, or claim unverified success.`;
-    document.getElementById('agent-prompt').value = prompt;
-    document.getElementById('copy-agent').dataset.copy = prompt;
-    document.querySelectorAll('[data-agent]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.agent === selectedAgent)));
-    document.getElementById('agent-status').textContent = selectedAgent === 'codex' ? (zh ? '使用前请安装并登录 Codex CLI' : 'Install and sign in to Codex CLI before starting.') : (zh ? '使用前请安装并登录 Claude Code CLI；完整流程仍需验证' : 'Install and sign in to Claude Code CLI. The complete workflow still needs verification.');
+    const label = selectedAgent === "codex" ? "Codex CLI" : "Claude Code CLI";
+    const prompt = zh
+      ? `请帮我用 ${label} 接入 Creative OS 的本地产品设计 Harness。先阅读 ${guide} 并核对仓库当前实现。检查本地环境与 Agent CLI 登录状态；已有 creative-os 仓库就复用，否则先说明安装位置。安装依赖后运行 pnpm workbench，打开本地工作台。先向我获取项目目录和核心用户任务；在工作台核对建议的采集范围，必要时补充预览启动方式和高级配置，再采集基线。已有项目规范以 DESIGN.md、样式 token 和组件代码为来源，完整 Skills 不删减。先展示有证据的诊断与修改范围，等我确认后再在隔离 worktree 中执行。选择适配器 ${selectedAgent}。保留截图、代码差异和评估记录；不自动推送、合并或部署，不把未验证结果说成成功。`
+      : `Help me set up the local Creative OS product-design Harness with ${label}. Read ${guide} and verify the current implementation first. Check local prerequisites and CLI authentication. Reuse an existing creative-os checkout or explain where it will be installed. Install dependencies and run pnpm workbench. Open the local workbench and ask for my repository directory and key user task. Review the suggested capture scope; add preview startup details or advanced settings when needed, then capture a baseline. Use project DESIGN.md, style tokens and component code as sources; preserve complete Skills. Present evidence-backed findings and scope for my confirmation before isolated worktree execution. Select adapter ${selectedAgent}. Retain captures, patches and evaluations. Do not automatically push, merge or deploy, or claim unverified success.`;
+    document.getElementById("agent-prompt").value = prompt;
+    document.getElementById("copy-agent").dataset.copy = prompt;
+    document
+      .querySelectorAll("[data-agent]")
+      .forEach((button) =>
+        button.setAttribute(
+          "aria-pressed",
+          String(button.dataset.agent === selectedAgent),
+        ),
+      );
+    document.getElementById("agent-status").textContent =
+      selectedAgent === "codex"
+        ? zh
+          ? "使用前请安装并登录 Codex CLI"
+          : "Install and sign in to Codex CLI before starting."
+        : zh
+          ? "使用前请安装并登录 Claude Code CLI；完整流程仍需验证"
+          : "Install and sign in to Claude Code CLI. The complete workflow still needs verification.";
   };
-  document.querySelectorAll('[data-agent]').forEach(button => button.addEventListener('click', () => { selectedAgent = button.dataset.agent; apply(); }));
+  document.querySelectorAll("[data-agent]").forEach((button) =>
+    button.addEventListener("click", () => {
+      selectedAgent = button.dataset.agent;
+      apply();
+    }),
+  );
   apply();
 }
