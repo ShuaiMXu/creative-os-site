@@ -19,8 +19,9 @@ export function ProviderReference({ lang }: { lang: "zh" | "en" }) {
   return <main id="catalog-main" className="provider-reference">
     <p className="catalog-eyebrow">Kage · {t("设计参考", "Design references")}</p>
     <h2>{t("从真实产品中寻找设计参考", "Find references from real products")}</h2>
-    <p>{t("通过 MCP 按需获取页面、区块截图与设计说明，再适配到你的项目。", "Retrieve page and section references through MCP, then adapt them to your project.")}</p>
+    <p>{t("查找页面布局、区块和交互参考，查看来源后再应用到项目。", "Find page layouts, sections and interaction references, with sources to review before applying them.")}</p>
     <KageGallery lang={lang} />
+    <details className="reference-setup"><summary>{t("在 AI 工具中使用 Kage", "Use Kage in your AI tool")}</summary>
     <div className="provider-columns">
       <section>
         <h3>{t("连接到你的 AI 工具", "Connect your agent")}</h3>
@@ -30,7 +31,6 @@ export function ProviderReference({ lang }: { lang: "zh" | "en" }) {
         <details><summary>{t("其他支持 MCP 的工具", "Other MCP clients")}</summary>
           <pre>{JSON.stringify({ mcpServers: { kage: { url: provider.endpoint } } }, null, 2)}</pre>
         </details>
-        <p>{t("也可将官方 MCP 连接到本地 AI 工具。", "You can also connect the official MCP to your local agent.")}</p>
       </section>
       <section>
         <h3>{t("带着项目要求使用参考", "Use references in project context")}</h3>
@@ -40,6 +40,7 @@ export function ProviderReference({ lang }: { lang: "zh" | "en" }) {
         <p>{t("需求仅用于生成本地说明，不会自动发送到 Kage。", "Your request only generates local guidance; it is not automatically sent to Kage.")}</p>
       </section>
     </div>
+    </details>
     <p aria-live="polite">{notice}</p>
     <details><summary>{t("来源与使用范围", "Source and usage")}</summary>
       <p>{t("Kage 提供参考截图和设计分析，不是开源组件包。分析提示词可用于项目；截图与品牌资产属于原产品。该来源不做整库镜像，也不计入本站可运行组件数量。", "Kage provides screenshots and design analysis, not an open-source component package. Prompts can inform projects; screenshots and brand assets belong to their owners. This source is not mirrored or counted as runnable components.")}</p>

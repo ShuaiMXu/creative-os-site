@@ -1,4 +1,14 @@
 /* Shared page grid. Hero geometry and motion stay in portal.css / whirl.js. */
+.agent-prompt-preview { margin-block:16px; border-block:1px solid var(--hh-line); }
+.agent-prompt-preview summary { display:flex; align-items:center; min-height:44px; font-size:14px; }
+.agent-prompt-preview[open] { padding-bottom:16px; }
+.case-links { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:32px; }
+.case-links article { border-top:1px solid var(--line); padding-top:24px; }
+.case-links h3 { margin:0 0 12px; font-size:20px; }
+.case-links p { color:var(--muted); line-height:1.8; margin:0; max-width:560px; }
+.case-links details { margin-top:16px; font-size:13px; }
+.case-links summary { min-height:44px; display:flex; align-items:center; }
+@media(max-width:620px) { .case-links { grid-template-columns:1fr; gap:24px; } }
 .site-header { padding-inline:var(--page-inset); }
 .content-section,.get-started { padding:var(--section-space) var(--page-inset); }
 .content-section *, .get-started *, .site-footer>* { min-width:0; }

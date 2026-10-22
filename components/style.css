@@ -436,5 +436,41 @@ h1 {
 .system-library-card { padding:var(--hh-space-6); border:1px solid var(--hh-line); border-radius:var(--hh-radius-lg); background:var(--hh-bg-raised); }
 .provider-navigation a { padding:var(--hh-space-2) var(--hh-space-3); }
 .provider-navigation a span { display:none; }
-.system-library-full { max-width:1280px; margin:auto; }
+.system-library-full { width:100%; margin:auto; }
 .system-library-full iframe { display:block; width:100%; border:0; min-height:600px; }
+
+/* Keep the catalog aligned with the site header and system detail pages. */
+.library-heading,
+.resource-sections,
+.provider-navigation,
+.provider-reference,
+.library-layout {
+  max-width: none;
+  padding-inline: var(--page-inset);
+}
+.library-heading { padding-block:32px 16px; }
+.library-heading .catalog-eyebrow a { text-decoration:none; }
+.library-heading .catalog-eyebrow a:hover { color:var(--hh-brand-text); }
+.resource-sections { gap:24px; padding-block:0; border-bottom:1px solid var(--hh-line); }
+.resource-sections a { padding-inline:0; border-radius:0; }
+.provider-navigation { padding-block:16px; gap:8px; }
+.provider-navigation a { min-height:44px; align-content:center; font-size:14px; }
+.provider-reference { padding-top:16px; padding-bottom:48px; }
+.provider-reference > p { max-width:760px; color:var(--hh-ink-muted); }
+.provider-reference h2 { font-size:clamp(24px,3vw,32px); line-height:1.35; margin:8px 0 16px; }
+.provider-reference h3 { font-size:18px; line-height:1.5; }
+.provider-reference li { line-height:1.8; }
+.provider-reference > a { display:inline-flex; align-items:center; min-height:44px; text-decoration:none; color:var(--hh-brand-text); }
+.provider-reference details > summary { min-height:44px; display:flex; align-items:center; font-weight:500; }
+.reference-setup { border-block:1px solid var(--hh-line); padding-block:8px; }
+.reference-setup .provider-columns { margin-block:16px; }
+.kage-gallery { margin-block:24px; }
+.kage-search button:disabled { opacity:.5; cursor:not-allowed; }
+.kage-detail { border-radius:var(--hh-radius-lg); }
+.kage-gallery [role="status"]:empty { margin:0; }
+@media(max-width:800px) {
+  .library-heading { padding-top:24px; }
+  .catalog-total { white-space:normal; }
+  .resource-sections { gap:20px; font-size:14px; }
+  .provider-navigation a { flex:0 1 auto; min-width:0; }
+}

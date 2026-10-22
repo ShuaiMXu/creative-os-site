@@ -10,8 +10,7 @@ export function KageGallery({lang}:{lang:string}) {
  catch(e){if(!c.signal.aborted)setError(t('暂时无法获取参考，请重试。','Unable to load references. Please retry.'));}
  finally{if(!c.signal.aborted)setBusy(false);}}
  return <section className="kage-gallery">
- <h2>{t('浏览设计参考','Browse design references')}</h2>
- <p>{t('输入产品或风格，按需查询 Kage。每次最多展示 6 项，不镜像整库。','Search Kage by product or style. Up to six references per request; no library mirroring.')}</p>
+ <p>{t('输入产品名称或风格，每次展示最多 6 个相关参考。','Enter a product or style to see up to six relevant references.')}</p>
  <form onSubmit={search} className="kage-search"><label>{t('产品或风格','Product or style')}<input type="search" maxLength={160} required value={query} onChange={e=>setQuery(e.target.value)} placeholder="Linear, minimal, dashboard…" /></label><button disabled={busy || !query.trim()}>{busy?t('查询中…','Searching…'):t('查找参考','Search references')}</button></form>
  <p role="status">{error || (!busy && searched && !items.length ? t('没有找到匹配的参考。','No matching references.') : '')}</p>
  <div className="kage-grid">{items.map(x=><button className="kage-card" key={x.slug} onClick={()=>setSelected(x)}>{x.image&&<img src={x.image} alt={x.title} loading="lazy" referrerPolicy="no-referrer" onError={e=>{e.currentTarget.hidden=true}}/>}<strong>{x.title}</strong><span>{x.product} · {x.styles.join(' / ')}</span><span>{t('查看设计分析','View design analysis')}</span></button>)}</div>

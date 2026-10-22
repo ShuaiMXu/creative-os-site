@@ -130,7 +130,13 @@ function renderContent() {
       ${designSystemsMarkup(lang)}
       <details class="system-archives"><summary>${lang === 'zh' ? '更多案例与探索记录' : 'More cases and explorations'}</summary><div class="system-archive-grid">${c.systems.filter(item => item.title !== 'HappyHands').map(systemCard).join('')}</div></details>
     </section>
-    <section class="content-section" id="screens"><div class="section-head"><div><p class="kicker">${lang === 'zh' ? '案例与组件' : 'Cases and components'}</p><h2>${lang === 'zh' ? '继续了解实际应用' : 'Explore real applications'}</h2></div><div><p>${lang === 'zh' ? '查看有来源的审阅记录，或在设计系统页面试用组件状态。' : 'Read documented review evidence or try component states in the design system.'}</p><a class="text-link" href="https://github.com/ShuaiMXu/creative-os/blob/main/docs/counter-evidence-review-2026-10-21.md">HappyClaw · ${lang === 'zh' ? '批准后的修改与前后证据' : 'Approved change and before/after evidence'}</a><p>${lang === 'zh' ? '限定长命令滚动提示，不强制折行。反证独立重审已通过，原失败记录保留，人工接受仍待记录；不代表线上部署或全站验收。' : 'Scoped command scroll hint, without forced wrapping. Independent re-review passed; the original failure is retained and human acceptance is pending. This is not a deployment or whole-site acceptance.'}</p><a class="text-link" href="/systems/happyhands/#components">HappyHands · ${lang === 'zh' ? '组件与状态' : 'Components & states'}</a></div></div></section>
+    <section class="content-section" id="screens">
+      <div class="section-head"><div><p class="kicker">${lang === 'zh' ? '案例与组件' : 'Cases and components'}</p><h2>${lang === 'zh' ? '实际项目中的设计改进' : 'Design improvements in practice'}</h2></div><p>${lang === 'zh' ? '查看修改过程与对照记录，试用组件的交互状态。' : 'Explore a documented change and try component interactions.'}</p></div>
+      <div class="case-links">
+        <article><h3>HappyClaw</h3><p>${lang === 'zh' ? '为长命令补充滚动提示，帮助用户发现被隐藏的内容。' : 'A scroll hint helps users discover the hidden part of a long command.'}</p><a class="text-link" href="https://github.com/ShuaiMXu/creative-os/blob/main/docs/counter-evidence-review-2026-10-21.md">${lang === 'zh' ? '查看修改记录' : 'View change record'} ${iconMarkup('external')}</a><details><summary>${lang === 'zh' ? '复核状态' : 'Review status'}</summary><p>${lang === 'zh' ? '本次局部修改已通过独立重审，人工接受仍待记录。原失败记录保留；此案例不代表全站验收或线上部署。' : 'This scoped change passed independent re-review; human acceptance is pending. The original failure is retained. It does not represent whole-site acceptance or deployment.'}</p></details></article>
+        <article><h3>HappyHands</h3><p>${lang === 'zh' ? '试用按钮、表单与反馈状态，查看同一套规范如何应用到界面。' : 'Try buttons, forms and feedback states to see the system in use.'}</p><a class="text-link" href="/systems/happyhands/#components">${lang === 'zh' ? '试用组件' : 'Try components'} ${iconMarkup('right')}</a></article>
+      </div>
+    </section>
     ${connectMarkup(lang)}
     <section class="get-started" id="get-started">
       <div class="get-started-copy"><p class="kicker">${c.sections.getStarted.kicker}</p><h2>${c.sections.getStarted.title}<br><span>${c.sections.getStarted.titleLine2}</span></h2><p>${c.sections.getStarted.copy}</p></div>
@@ -148,7 +154,6 @@ function renderContent() {
   }
 
   // re-observe sections for intersection animation
-  observeSections();
   setupConnect(lang);
   setupSystemRail();
 }
@@ -168,14 +173,6 @@ function systemCard(item) {
 }
 function stepCard(item) {
   return `<article class="step-card"><span>${item[0]}</span><h3>${item[1]}</h3><p>${item[2]}</p></article>`;
-}
-
-// -- scroll animations --
-let observer;
-function observeSections() {
-  observer?.disconnect();
-  observer = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); }), { threshold: .12 });
-  document.querySelectorAll('.content-section, .get-started').forEach(s => observer.observe(s));
 }
 
 // -- hero scroll (exact appllama motion model, smooth per-frame interpolation) --
