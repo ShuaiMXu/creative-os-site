@@ -63,6 +63,24 @@ section[id] { scroll-margin-top:90px; }
 .connect-panel .local-workbench-connect input,.connect-panel .local-workbench-connect textarea { width:100%; min-width:0; min-height:44px; padding:10px 12px; border:1px solid var(--line-strong); border-radius:8px; background:var(--ink); color:var(--paper); font:16px/1.5 var(--font-sans); }
 .connect-panel .local-workbench-connect textarea { margin:0; resize:vertical; }
 .local-workbench-connect [hidden] { display:none; }
-.agent-setup-help { margin-top:24px; }
-.agent-setup-help summary { cursor:pointer; min-height:44px; }
+.agent-setup-help { margin:0 0 40px; padding:24px; border:1px solid var(--line); border-radius:var(--hh-radius-lg); background:var(--surface); }
+.agent-setup-help h3 { margin:0 0 12px; }
 .agent-setup-help .agent-choices { margin-top:16px; }
+
+.agent-setup-help > p { max-width:760px; color:var(--muted); line-height:1.7; }
+.agent-setup-help .agent-choices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.agent-setup-help .agent-choices button { display:grid; gap:8px; text-align:start; padding:16px; background:var(--ink); color:var(--paper); border-color:var(--line); }
+.agent-setup-help .agent-choices button span { font-size:13px; color:var(--muted); }
+.agent-setup-help .agent-choices button[aria-pressed="true"] { border-color:var(--paper); background:var(--ink); box-shadow:inset 0 0 0 1px var(--paper); }
+.agent-setup-help .agent-choices button:focus-visible { outline:2px solid var(--hh-ring); outline-offset:3px; }
+.agent-setup-help label { display:block; margin:20px 0 12px; font-size:14px; }
+@media(max-width:620px) { .agent-setup-help { padding:18px; } .agent-setup-help .agent-choices { grid-template-columns:1fr; } }
+
+.command-card pre { margin:0; min-width:0; max-width:100%; overflow-x:auto; padding:8px 0; line-height:1.9; }
+.command-card pre code { white-space:pre; }
+.quickstart-note { color:var(--muted); font-size:13px; line-height:1.8; max-width:900px; margin-top:16px; }
+
+.agent-setup-help .agent-choices { grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); }
+.agent-choices img { object-fit:contain; padding:4px; background:#fff; border-radius:8px; box-sizing:content-box; }
+.project-handoff-details > summary { cursor:pointer; padding:20px 0; font-weight:600; }
+.project-handoff-details .connect-grid { margin-top:16px; }

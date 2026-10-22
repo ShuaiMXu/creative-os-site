@@ -166,9 +166,9 @@ export const sections = {
     "kicker": "05 / GET STARTED",
     "title": "Start a product experience review",
     "titleLine2": "Select the first page to review",
-    "copy": "Install the core repository dependencies with Node.js 22.15+, pnpm 11.19+ and Chrome or Edge. Run pnpm workbench, enter your repository directory and key user task, then confirm the capture scope. Alpha is a guided local Web trial; a first capture is the beginning of a review.",
+    "copy": "The workbench runs locally. You approve code changes. Install and launch it, connect your project, choose pages to review, then inspect recommendations and results.",
     "quickstartLabel": "QUICKSTART",
-    "quickstartTitle": "After installing dependencies, open the local workbench",
+    "quickstartTitle": "Install and launch the workbench",
     "copyBtn": "Copy command"
   }
 };
@@ -326,6 +326,6 @@ export const delivery = {
       "Accept or reject changes based on review results and record unresolved issues. Apply approved design rules to new pages."
     ]
   ],
-  "status": "Installation and local setup are required. Automatic monitoring, learning and subscriptions are not available yet. See the development guide for implementation details.",
+  "status": "The development guide covers setup for page capture, code changes and review.",
   "link": "Read development guide"
 };
