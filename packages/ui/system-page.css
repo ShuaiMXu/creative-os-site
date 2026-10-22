@@ -350,13 +350,6 @@ body {
     cursor: pointer;
     color: var(--hh-ink-muted);
   }
-  .system-directory > summary::after {
-    content: " +";
-    float: right;
-  }
-  .system-directory[open] > summary::after {
-    content: " −";
-  }
   .system-landing .system-directory:not([open]) > nav {
     display: none;
   }

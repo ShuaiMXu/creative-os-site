@@ -25,8 +25,6 @@
 .system-shift-details { margin-top:var(--hh-space-5); border-top:1px solid var(--hh-line); }
 .system-shift-details summary { display:flex; align-items:center; justify-content:space-between; gap:16px; min-height:44px; cursor:pointer; font-weight:600; list-style:none; }
 .system-shift-details summary::-webkit-details-marker { display:none; }
-.system-shift-details summary::after { content:'+'; font-size:20px; font-weight:400; color:var(--hh-ink-muted); }
-.system-shift-details[open] summary::after { content:'−'; }
 .system-shift-details ul { margin:0; padding:0 0 16px 20px; color:var(--hh-ink-muted); line-height:1.8; }
 @media (prefers-reduced-motion:no-preference) {
   .system-shift-details[open] ul { animation:system-details-reveal 160ms ease-out; }
