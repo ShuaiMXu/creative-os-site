@@ -43,6 +43,7 @@ export default defineConfig({
     home: resolve('index.html'),
     happyhands: resolve('systems/happyhands/index.html'),
     quartz: resolve('systems/quartz/index.html'),
+    lime: resolve('systems/lime/index.html'),
     'component-preview': resolve('components/preview/index.html'),
     components: resolve('components/index.html'),
     portal: resolve('apps/portal/index.html'),

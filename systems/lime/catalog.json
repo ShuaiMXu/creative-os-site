@@ -1,0 +1,327 @@
+{
+  "source": "https://design.how/r/lime/registry.json",
+  "checkedAt": "2026-10-21",
+  "sourceHash": "01659eabca6fdeeccc50fd77408a253bea8554315cbcfc1d19bba9af206b25aa",
+  "items": [
+    {
+      "name": "button",
+      "title": "Button",
+      "type": "registry:ui"
+    },
+    {
+      "name": "copy-button",
+      "title": "Copy button",
+      "type": "registry:ui"
+    },
+    {
+      "name": "input",
+      "title": "Input",
+      "type": "registry:ui"
+    },
+    {
+      "name": "textarea",
+      "title": "Textarea",
+      "type": "registry:ui"
+    },
+    {
+      "name": "field",
+      "title": "Field",
+      "type": "registry:ui"
+    },
+    {
+      "name": "select",
+      "title": "Select",
+      "type": "registry:ui"
+    },
+    {
+      "name": "combobox",
+      "title": "Combobox",
+      "type": "registry:ui"
+    },
+    {
+      "name": "dropzone",
+      "title": "Dropzone",
+      "type": "registry:ui"
+    },
+    {
+      "name": "keypad",
+      "title": "Keypad",
+      "type": "registry:ui"
+    },
+    {
+      "name": "checkbox",
+      "title": "Checkbox",
+      "type": "registry:ui"
+    },
+    {
+      "name": "radio",
+      "title": "Radio",
+      "type": "registry:ui"
+    },
+    {
+      "name": "switch",
+      "title": "Switch",
+      "type": "registry:ui"
+    },
+    {
+      "name": "slider",
+      "title": "Slider",
+      "type": "registry:ui"
+    },
+    {
+      "name": "segmented",
+      "title": "Segmented",
+      "type": "registry:ui"
+    },
+    {
+      "name": "chip",
+      "title": "Chip",
+      "type": "registry:ui"
+    },
+    {
+      "name": "badge",
+      "title": "Badge",
+      "type": "registry:ui"
+    },
+    {
+      "name": "avatar",
+      "title": "Avatar",
+      "type": "registry:ui"
+    },
+    {
+      "name": "card",
+      "title": "Card",
+      "type": "registry:ui"
+    },
+    {
+      "name": "table",
+      "title": "Table",
+      "type": "registry:ui"
+    },
+    {
+      "name": "list",
+      "title": "List",
+      "type": "registry:ui"
+    },
+    {
+      "name": "list-item-menu",
+      "title": "List item menu",
+      "type": "registry:ui"
+    },
+    {
+      "name": "progress",
+      "title": "Progress",
+      "type": "registry:ui"
+    },
+    {
+      "name": "amount",
+      "title": "Amount",
+      "type": "registry:ui"
+    },
+    {
+      "name": "status",
+      "title": "Status",
+      "type": "registry:ui"
+    },
+    {
+      "name": "empty",
+      "title": "Empty",
+      "type": "registry:ui"
+    },
+    {
+      "name": "skeleton",
+      "title": "Skeleton",
+      "type": "registry:ui"
+    },
+    {
+      "name": "error-state",
+      "title": "Error state",
+      "type": "registry:ui"
+    },
+    {
+      "name": "toast",
+      "title": "Toast",
+      "type": "registry:ui"
+    },
+    {
+      "name": "dialog",
+      "title": "Dialog",
+      "type": "registry:ui"
+    },
+    {
+      "name": "alert-dialog",
+      "title": "Alert dialog",
+      "type": "registry:ui"
+    },
+    {
+      "name": "sheet",
+      "title": "Sheet",
+      "type": "registry:ui"
+    },
+    {
+      "name": "popover",
+      "title": "Popover",
+      "type": "registry:ui"
+    },
+    {
+      "name": "dropdown-menu",
+      "title": "Dropdown menu",
+      "type": "registry:ui"
+    },
+    {
+      "name": "tooltip",
+      "title": "Tooltip",
+      "type": "registry:ui"
+    },
+    {
+      "name": "tabs",
+      "title": "Tabs",
+      "type": "registry:ui"
+    },
+    {
+      "name": "toolbar",
+      "title": "Toolbar",
+      "type": "registry:ui"
+    },
+    {
+      "name": "accordion",
+      "title": "Accordion",
+      "type": "registry:ui"
+    },
+    {
+      "name": "collapsible",
+      "title": "Collapsible",
+      "type": "registry:ui"
+    },
+    {
+      "name": "separator",
+      "title": "Separator",
+      "type": "registry:ui"
+    },
+    {
+      "name": "scroll-area",
+      "title": "Scroll area",
+      "type": "registry:ui"
+    },
+    {
+      "name": "chat-input",
+      "title": "Chat input",
+      "type": "registry:ui"
+    },
+    {
+      "name": "message",
+      "title": "Message",
+      "type": "registry:ui"
+    },
+    {
+      "name": "tool-call",
+      "title": "Tool call",
+      "type": "registry:ui"
+    },
+    {
+      "name": "follow-ups",
+      "title": "Follow ups",
+      "type": "registry:ui"
+    },
+    {
+      "name": "approval-request",
+      "title": "Approval request",
+      "type": "registry:ui"
+    },
+    {
+      "name": "action-receipt",
+      "title": "Action receipt",
+      "type": "registry:ui"
+    },
+    {
+      "name": "autonomy-rule",
+      "title": "Autonomy rule",
+      "type": "registry:ui"
+    },
+    {
+      "name": "receipt-match",
+      "title": "Receipt match",
+      "type": "registry:ui"
+    },
+    {
+      "name": "insight",
+      "title": "Insight",
+      "type": "registry:ui"
+    },
+    {
+      "name": "bill-schedule",
+      "title": "Bill schedule",
+      "type": "registry:ui"
+    },
+    {
+      "name": "balance",
+      "title": "Balance",
+      "type": "registry:ui"
+    },
+    {
+      "name": "home",
+      "title": "Home screen",
+      "type": "registry:block"
+    },
+    {
+      "name": "assistant-approval",
+      "title": "Assistant approval",
+      "type": "registry:block"
+    },
+    {
+      "name": "assistant-alert",
+      "title": "Assistant alert",
+      "type": "registry:block"
+    },
+    {
+      "name": "settings-rules",
+      "title": "Settings rules",
+      "type": "registry:block"
+    },
+    {
+      "name": "split-request",
+      "title": "Split request",
+      "type": "registry:block"
+    },
+    {
+      "name": "utils",
+      "title": "cn",
+      "type": "registry:lib"
+    },
+    {
+      "name": "icon",
+      "title": "Icon",
+      "type": "registry:component"
+    },
+    {
+      "name": "portal",
+      "title": "Portal",
+      "type": "registry:lib"
+    },
+    {
+      "name": "use-focus-when-replaced",
+      "title": "useFocusWhenReplaced",
+      "type": "registry:lib"
+    },
+    {
+      "name": "popup",
+      "title": "Popup classes",
+      "type": "registry:lib"
+    },
+    {
+      "name": "lint",
+      "title": "Lime lint",
+      "type": "registry:item"
+    },
+    {
+      "name": "theme",
+      "title": "Lime theme",
+      "type": "registry:item"
+    },
+    {
+      "name": "skill",
+      "title": "Lime skill",
+      "type": "registry:item"
+    }
+  ]
+}

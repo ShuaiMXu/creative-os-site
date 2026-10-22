@@ -4,28 +4,6 @@
   line-height: 1.5;
   margin: 0 0 var(--hh-space-4);
 }
-.swatches {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: var(--hh-space-3);
-}
-.swatches i {
-  display: block;
-  height: 56px;
-  border: 1px solid var(--hh-line);
-  border-radius: var(--hh-radius-md);
-  margin-bottom: var(--hh-space-3);
-}
-.swatches strong,
-.swatches code {
-  display: block;
-  font-size: 12px;
-  overflow-wrap: anywhere;
-}
-.swatches code {
-  font-family: var(--hh-font-mono);
-  color: var(--hh-ink-muted);
-}
 .system-return {
   display: flex;
   flex-wrap: wrap;
@@ -42,8 +20,5 @@
 @media (max-width: 899px) {
   .system-showcase {
     padding: var(--hh-space-6);
-  }
-  .swatches {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }

@@ -71,3 +71,7 @@
 .system-rail-controls button:disabled { opacity:.35; cursor:default; }
 .system-card-rail:focus-visible,.system-rail-controls button:focus-visible { outline:2px solid var(--hh-ring); outline-offset:2px; }
 @media(max-width:600px){.system-card-rail>.resource-tile{flex-basis:85%;}}
+
+.resource-tile-body .resource-tile-coverage { font-size: 12px; margin-top: var(--hh-space-3); color: var(--hh-ink-muted); }
+
+.resource-tile-art-lime .tile-lines b:first-child { background: var(--tile-accent); }
