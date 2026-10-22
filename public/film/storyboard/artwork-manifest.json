@@ -1,70 +1,66 @@
 {
-  "method": "built-in image generation",
-  "purpose": "Static film concepts, not live captures",
-  "artwork": [
+  "version": "V6",
+  "method": "Deterministic HTML/CSS rendered in the browser",
+  "purpose": "Authored static storyboard examples; not real Harness execution evidence",
+  "viewport": {
+    "width": 1600,
+    "height": 900
+  },
+  "sourceFiles": {
+    "film/storyboard/frame.html": "c6add31c5bb230df9eafdc272ebe4ff0a13d375c6b188cd490f1f63da2816217",
+    "film/storyboard/frame.js": "ceebe77d9d76dfa1e503fdd3174a6295d7381d2942bcfd1cae3f337a630b75d6",
+    "film/storyboard/frame.css": "c3e58fcb34b17cfd2acfb82a5a3645befecb5d46e8a0a8ec316293305fb1cf55",
+    "film/storyboard/scenes.js": "530556ea3b9effd8a49427541bef9f22709b0cf00310afdd005e8c38ae085717",
+    "public/brand/happyhands-logo-ink.png": "235a2cfeba071a57ced90873d82880d0ef465beb89bb85ba1730d80c7bff02b8"
+  },
+  "frames": [
     {
-      "id": "opening",
-      "file": "01-opening.webp",
-      "generatedSource": "exec-f3528c29-bef2-4787-8771-03020a59c29c.png",
-      "sha256": "325b051fb58a6a777cde7ff8cc24a34bc205b86173e4550db667a554aeda1cdc",
-      "width": 1672,
-      "height": 941
+      "file": "v6/01-connect.png",
+      "sha256": "79ef6bee746d921190c42972f205dcb1e137ffd59bf24d921ea3e560e935bbd1",
+      "width": 1600,
+      "height": 900
     },
     {
-      "id": "connect",
-      "file": "02-connect.webp",
-      "generatedSource": "exec-2e97c95d-e034-488d-966c-090d8a2e0152.png",
-      "sha256": "c2d034417116f565d0d5889433e77fa1fe9127e37ca8c5523f0340ff0361baa1",
-      "width": 1672,
-      "height": 941
+      "file": "v6/02-analysis.png",
+      "sha256": "1c69c32bb03f18f90a089dd546f1d26ea5fd2d354ba5deac4a23336ab373acc8",
+      "width": 1600,
+      "height": 900
     },
     {
-      "id": "review",
-      "file": "03-review.webp",
-      "generatedSource": "exec-29c5e7db-b2e0-4b2f-8d77-ba7670b2fdb7.png",
-      "sha256": "53b626869426f8fc61ec3e4064d9b041174816d68723469ed6c9cd10e02e62f0",
-      "width": 1672,
-      "height": 941
+      "file": "v6/03-findings.png",
+      "sha256": "260af3c6c25805106dbb54801324e12d473c5133bd83a53c1536c48fb4b7e650",
+      "width": 1600,
+      "height": 900
     },
     {
-      "id": "foundation",
-      "file": "04-foundation.webp",
-      "generatedSource": "exec-ddd8aca1-3520-409c-8205-9b7d84005095.png",
-      "sha256": "8fb5211234b4239e7f07d477cd5f7a6d49af1cd02a2c8f93955f6ad6c020a7d0",
-      "width": 1672,
-      "height": 941
+      "file": "v6/04-foundation.png",
+      "sha256": "6a2bbc4452fbef07f20c12a06ac5a72695bf85901ee0f0ff58c93008739975d4",
+      "width": 1600,
+      "height": 900
     },
     {
-      "id": "scope",
-      "file": "05-scope.webp",
-      "generatedSource": "exec-5248a365-69b4-4200-8071-e4950731b92f.png",
-      "sha256": "c42bef67c344fe0e9ee1e561294c805daaa097df72d53b0dba324e56ab15ec03",
-      "width": 1672,
-      "height": 941
+      "file": "v6/05-components.png",
+      "sha256": "d56c901ba5d57d04ca33ad89be321b275bf8efc419a0a07899b93ab6b4f1cc12",
+      "width": 1600,
+      "height": 900
     },
     {
-      "id": "execute",
-      "file": "06-execute.webp",
-      "generatedSource": "exec-1eea44ed-8769-4856-b00c-c92c96748ecd.png",
-      "sha256": "f9a3ca5e69933ce3ae627ad4e2583fec83bcd5dc534e1b92741535789b95decf",
-      "width": 1672,
-      "height": 941
+      "file": "v6/06-scope.png",
+      "sha256": "8569fe58ac750eb2d6f713643ea7d1c03f32fe0a578c7a57faf3a0849e9297ac",
+      "width": 1600,
+      "height": 900
     },
     {
-      "id": "compare",
-      "file": "07-compare.webp",
-      "generatedSource": "exec-1709fd95-7288-4cef-a95b-f43b7dfb70bb.png",
-      "sha256": "7cf10b53587b4fc2426d544a8d1d893825a3aa2b01793876a9f89b629c2c92de",
-      "width": 1672,
-      "height": 940
+      "file": "v6/07-execute.png",
+      "sha256": "5ed46b1b5d16802c8cec40ae65cf0c6fd716a6a456b433189bf0d0f0d47d842d",
+      "width": 1600,
+      "height": 900
     },
     {
-      "id": "record",
-      "file": "08-record.webp",
-      "generatedSource": "exec-b7f9da51-d065-4b7e-905a-50f4ddcf273b.png",
-      "sha256": "9ae9b99fca06062783e87fd13e35885a7a3267e8a7ba402bd7ac205d01c0917b",
-      "width": 1672,
-      "height": 941
+      "file": "v6/08-compare.png",
+      "sha256": "ce9105013f1fd801714da1336dc205871d6af8fd4c42842d3471050367cfdd04",
+      "width": 1600,
+      "height": 900
     }
   ]
 }

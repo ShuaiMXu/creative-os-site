@@ -1,176 +1,183 @@
 export const storyboard = {
-  version: "V5",
-  duration: 80,
-  title: "Make it feel designed.",
-  status: "Storyboard for approval. Video production has not started.",
+  version: "V6",
+  duration: 85,
+  title: "See the page. Understand the change.",
+  status: "Static storyboard for approval. No video production has started.",
   scenes: [
     {
-      id: "opening",
-      seconds: 6,
-      title: "A working product",
-      caption: "Your app works. Make it feel designed.",
-      plate: "01-opening.webp",
-      tone: "light",
-      alt: "The fictional Northstar architecture website on desktop and phone, framed in warm daylight.",
-      action:
-        "Establish Northstar as the sample project. Move from its complete page toward the area that needs a closer look.",
-      camera:
-        "A slow oblique push through the website plane; keep the architecture and type readable.",
-      transition:
-        "The website edge becomes the boundary of the project connection pane.",
-      voiceover:
-        "Your product works. HappyHands helps you take the next step: a more considered experience.",
-      capability: "Review an existing product",
-      source: "README.md",
-      boundary:
-        "Northstar is a fictional target project, not the HappyHands interface or a customer result.",
-    },
-    {
       id: "connect",
-      seconds: 10,
-      title: "Connect the real project",
-      caption: "Start with your project.",
-      plate: "02-connect.webp",
+      seconds: 8,
+      title: "Connect the website",
+      caption: "Start with your website.",
+      plate: "v6/01-connect.png",
       tone: "light",
-      alt: "A website connection form hands Northstar and its design source paths into a local confirmation panel.",
+      composed: true,
+      alt: "Static HappyHands UI concept: connect the website, with the Northstar page and its source context.",
       action:
-        "Carry the project, user task and design-source paths from the website to local confirmation.",
+        "Enter the page URL, confirm local repository access and supply design sources. Show the complete Northstar page beside the connection form, plus its phone view.",
       camera:
-        "Track the cursor between the two panes, then move into the local workbench.",
+        "Hold a straight-on full application frame. Track the URL entry, then reveal the full page without perspective distortion.",
       transition:
-        "A confirmed local connection resolves into the first captured page.",
+        "The page stays fixed as the analysis panel replaces the form.",
       voiceover:
-        "Connect your repository and task. Bring your design sources, then confirm the project and capture scope locally.",
-      capability: "Website-to-local project handoff",
+        "Start with your website. Connect its repository and design sources, then confirm what the local workbench should review.",
+      capability: "Website handoff and local onboarding",
       source: "docs/site-workbench-handoff.md",
       boundary:
-        "The public website does not read source or execute agents. Local setup and confirmation are required.",
+        "A URL supports capture; source extraction and editing require a connected local repository. This concept is not a new hosted URL-only service.",
     },
     {
-      id: "review",
+      id: "analysis",
       seconds: 12,
-      title: "Review the experience",
-      caption: "A closer look.",
-      plate: "03-review.webp",
+      title: "Analyze the whole page",
+      caption: "See the whole experience.",
+      plate: "v6/02-analysis.png",
       tone: "light",
-      alt: "A copper spacing marker links the Northstar page to a compact evidence-inspection note; a phone view remains behind it.",
+      composed: true,
+      alt: "Static HappyHands UI concept: analyze the whole page, with the Northstar page and its source context.",
       action:
-        "Inspect normal desktop and phone captures, whole-page regions and explicitly planned interactions. Open the original image behind a candidate.",
+        "Show the full-page overview from navigation through contact. Surface desktop and phone capture coverage and the declared enquiry interaction being reviewed.",
       camera:
-        "Push into one spacing relationship, then reveal its attached review note.",
+        "Move down the page with a stable miniature overview. Keep the current region and analysis state visible together.",
       transition:
-        "Hold the copper selection while the component separates from the page.",
+        "An analysis candidate anchors the next zoom to the Intro region.",
       voiceover:
-        "Review captured pages and planned interactions. Follow each candidate back to its evidence, and decide which problem is worth addressing.",
-      capability: "Captured evidence and screenshot-aware diagnosis",
+        "Follow the page from top to bottom. Review layout, content hierarchy, spacing and planned interactions, with the checked scope always visible.",
+      capability: "Whole-page, regional and planned-state capture",
       source: "docs/harness.md",
       boundary:
-        "A candidate is not a confirmed defect. Uncaptured routes and states remain unverified; pixel labels here are illustrative.",
+        "Coverage and progress are illustrative. Capture covers declared routes and states; unseen routes and interactions are not certified.",
+    },
+    {
+      id: "findings",
+      seconds: 10,
+      title: "Inspect a specific finding",
+      caption: "Find what needs attention.",
+      plate: "v6/03-findings.png",
+      tone: "light",
+      composed: true,
+      alt: "Static HappyHands UI concept: inspect a specific finding, with the Northstar page and its source context.",
+      action:
+        "Select candidate 1. Highlight the copy-to-action relationship and show its screenshot, component source and design guidance. Keep the full-page navigator visible.",
+      camera:
+        "Move closer to the selected component without losing the page locator. Hold the observed 16 px value next to the proposed rule.",
+      transition: "Follow the source reference into the design-system view.",
+      voiceover:
+        "Open a candidate and see where it occurs, what was observed and which source supports the proposed change. Confirm the intent before treating it as a defect.",
+      capability: "Evidence-linked diagnosis and candidate confirmation",
+      source: "docs/harness.md",
+      boundary:
+        "The example has three authored candidates. These are not actual scan results; neither the design value nor the defect is automatically validated.",
     },
     {
       id: "foundation",
       seconds: 12,
-      title: "Use the project’s design language",
-      caption: "Your language, made explicit.",
-      plate: "04-foundation.webp",
+      title: "Read the design system",
+      caption: "Understand your design system.",
+      plate: "v6/04-foundation.png",
       tone: "light",
-      alt: "A selected Northstar component is connected to a type specimen, token source and a Foundation awaiting approval.",
+      composed: true,
+      alt: "Static HappyHands UI concept: read the design system, with the Northstar page and its source context.",
       action:
-        "Connect existing DESIGN.md, style tokens and component sources to observed rules. Review selected constraints before approving a version.",
+        "Show type, colors and spacing alongside the complete page and actual named source paths. Review selected Foundation constraints before approving them.",
       camera:
-        "Track from the component to its source, then settle on the explicit Foundation approval.",
+        "Keep three connected surfaces visible: page, extracted rules and source evidence. Emphasize space.8 at 32 px.",
       transition:
-        "The selected rule stays anchored as it becomes part of the confirmed brief.",
+        "Carry the selected component reference into its anatomy and consumers.",
       voiceover:
-        "Trace typography, spacing and components to their sources. Review the proposed rules and approve the design constraints you want the change to follow.",
-      capability: "Source-backed inventory and versioned Foundation approval",
+        "Read the design language behind the page. Compare observed styles with DESIGN.md and tokens, then approve the constraints that should guide the work.",
+      capability: "Source-backed design inventory and Foundation approval",
       source: "docs/reusable-design-system-extraction.md",
       boundary:
-        "Inventory can be partial. This is not automatic design-system certification; approval remains a human action.",
+        "The inventory is illustrative and can be partial in real runs. Approving Foundation constraints does not authorize editing.",
+    },
+    {
+      id: "components",
+      seconds: 10,
+      title: "Inspect component anatomy",
+      caption: "Break it down into components.",
+      plate: "v6/05-components.png",
+      tone: "light",
+      composed: true,
+      alt: "Static HappyHands UI concept: inspect component anatomy, with the Northstar page and its source context.",
+      action:
+        "Locate ActionLink inside Intro. Show its label, icon, declared states and two illustrative consumers. Keep the existing shared control and change its parent spacing only.",
+      camera:
+        "Track the selected page control into its component view. Reveal source, inputs and consumers without floating objects.",
+      transition:
+        "Return to the parent layout with the proposed spacing adjustment highlighted.",
+      voiceover:
+        "Trace controls to their components, inputs and consumers. Reuse the shared parts where they fit; change only the layout that needs attention.",
+      capability: "Component inventory and reuse planning",
+      source: "docs/reusable-design-system-extraction.md",
+      boundary:
+        "Code declarations and static state examples are not replay evidence. Automatic extraction into new components is not claimed; the reuse decision is scoped.",
     },
     {
       id: "scope",
-      seconds: 10,
-      title: "Confirm one bounded change",
-      caption: "Choose what changes.",
-      plate: "05-scope.webp",
+      seconds: 11,
+      title: "Preview the exact adjustment",
+      caption: "See exactly what will change.",
+      plate: "v6/06-scope.png",
       tone: "light",
-      alt: "A focused scope confirmation for the spacing change sits over the selected Northstar component.",
+      composed: true,
+      alt: "Static HappyHands UI concept: preview the exact adjustment, with the Northstar page and its source context.",
       action:
-        "Confirm the specific spacing adjustment. Keep wording, imagery and navigation outside the change.",
+        "Display the proposed 32 px spacing on the same Intro, with 16 → 32 px and the token reference. Explicitly retain wording, imagery, navigation and ActionLink. Confirm the candidate and scope.",
       camera:
-        "Hold on the proposed boundary; let the cursor approach Confirm scope without skipping the decision.",
-      transition:
-        "The selected spacing value match-cuts into the isolated code diff.",
+        "Hold the before value and proposed value beside the rendered adjustment. Keep one main confirmation action.",
+      transition: "The approved token change match-cuts into the source diff.",
       voiceover:
-        "Choose a supported issue and confirm its boundaries. Keep the content and navigation that already work, and approve only the intended adjustment.",
-      capability: "Evidence confirmation and scope-bound planning",
+        "Preview the adjustment before code changes. Confirm the spacing, the source token and the boundaries: keep the content, imagery, navigation and shared control.",
+      capability: "Scoped planning and explicit change confirmation",
       source: "docs/harness.md",
       boundary:
-        "No unconfirmed direction is added to the brief. An approved Foundation does not itself authorize an edit.",
+        "The frame shows a proposal, not an applied change. The other two candidates remain open; approving one issue does not accept the full page.",
     },
     {
       id: "execute",
       seconds: 12,
-      title: "Turn the decision into code",
-      caption: "A scoped change. A traceable diff.",
-      plate: "06-execute.webp",
-      tone: "dark",
-      alt: "An isolated working-copy code diff adjusts the sample spacing, with the Northstar preview behind it.",
+      title: "Apply the confirmed change",
+      caption: "Turn the decision into code.",
+      plate: "v6/07-execute.png",
+      tone: "light",
+      composed: true,
+      alt: "Static HappyHands UI concept: apply the confirmed change, with the Northstar page and its source context.",
       action:
-        "Pass the confirmed brief to the configured coding agent. Inspect the isolated working-copy diff and managed preview.",
-      camera: "Follow the highlighted source line into the rendered component.",
+        "Show the configured agent stage, isolated Git copy, Intro.tsx diff and source-linked managed preview. Change --space-4 to --space-8 in the parent layout.",
+      camera:
+        "Keep the code diff and page result side by side. Follow the selected line into the visible spacing change.",
       transition:
-        "The copper diff marker becomes the before/after comparison seam.",
+        "Lock the preview state and split it into matched before and after evidence.",
       voiceover:
-        "The coding agent works in an isolated copy. Inspect the relevant code changes and preview the result against the approved scope.",
-      capability: "Coding-agent adapters, isolated worktrees and preview",
+        "Run the confirmed change with the configured coding agent in an isolated copy. Inspect the exact source diff and the matching managed preview.",
+      capability: "Coding-agent execution, isolated worktrees and preview",
       source: "docs/harness.md",
       boundary:
-        "Sample code is illustrative. The shipped adapters are Codex CLI and Claude Code CLI; this is not automatic push, merge or deployment.",
+        "Static sample diff, not a real Northstar agent execution. Local setup is required. No automatic push, PR, merge or deployment is promised.",
     },
     {
       id: "compare",
-      seconds: 12,
-      title: "Compare, review and decide",
-      caption: "Compare. Review. Decide.",
-      plate: "07-compare.webp",
-      tone: "dark",
-      alt: "A single Northstar comparison surface leads to an independent-review strip awaiting a human decision.",
-      action:
-        "Compare the same planned state and viewport. Inspect independent review and supporting evidence before a human decision.",
-      camera:
-        "Wipe across a fixed comparison, then pull back to the decision strip.",
-      transition:
-        "The comparison and review notes settle into the same durable run.",
-      voiceover:
-        "Compare matching page states and viewports. Read the independent review and its limitations, then decide whether to accept the change or request revision.",
-      capability: "Matched evidence, independent QA and human judgment",
-      source: "docs/counter-evidence-review-2026-10-21.md",
-      boundary:
-        "This is a concept comparison, not a real executed Northstar run. No QA pass or acceptance is claimed.",
-    },
-    {
-      id: "record",
-      seconds: 6,
-      title: "Return to the same record",
-      caption: "Every change, in context.",
-      plate: "08-record.webp",
+      seconds: 10,
+      title: "Compare and keep the record",
+      caption: "Review the difference.",
+      plate: "v6/08-compare.png",
       tone: "light",
-      closing: true,
-      alt: "Source, diff and review records recede around a calm central space for the official HappyHands logo.",
+      composed: true,
+      alt: "Static HappyHands UI concept: compare and keep the record, with the Northstar page and its source context.",
       action:
-        "Keep source, page evidence, code changes and review in the same run. Return through the website’s saved handoff link.",
+        "Compare the same rendered Intro state at the same scale. Show 16 px before and 32 px after, the planned desktop/phone checks, independent review boundary and pending human decision. Retain the same run record.",
       camera:
-        "Pull back from the record; the official hand-and-wordmark logo settles into the clear center.",
+        "Use a fixed before/after composition; the page stays primary while the review panel explains the next human action.",
       transition:
-        "Hold the brand and the real website address for the final three seconds.",
+        "End with the real HappyHands logo in the same workflow context, not a separate promotional card.",
       voiceover:
-        "Keep the context together. Return to the same record, and make your product feel designed.",
-      capability: "Durable job and run recovery",
-      source: "docs/site-workbench-validation-2026-10-21.md",
+        "Compare matching page states and inspect independent review. Accept the change or request revision, with source, evidence and decisions kept in the same record.",
+      capability:
+        "Matched before/after evidence, independent review and human judgment",
+      source: "docs/harness.md",
       boundary:
-        "The closing is a brand composition. It does not imply continuous monitoring, autonomous learning or a hosted agent service.",
+        "These are concept comparisons with no actual QA verdict or acceptance. The two other authored candidates remain open; a local change is not whole-site certification.",
     },
   ],
 };

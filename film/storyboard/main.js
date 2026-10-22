@@ -27,8 +27,10 @@ function render() {
   $("scene-time").textContent =
     `Scene ${selected + 1} of ${timing.length} · ${timecode(s.start)}–${timecode(s.start + s.seconds)} · ${s.seconds} seconds`;
   $("scene-title").textContent = s.title;
-  $("plate").src = `/film/storyboard/plates/${s.plate}`;
+  $("plate").src = `/film/storyboard/${s.plate}`;
+  $("frame").classList.toggle("composed", Boolean(s.composed));
   $("plate").alt = s.alt;
+  $("open-frame").href = $("plate").src;
   $("caption").textContent = s.caption;
   $("frame").classList.toggle("dark", s.tone === "dark");
   $("frame").classList.toggle("closing", Boolean(s.closing));

@@ -476,3 +476,8 @@ details[open] summary {
     font-size: 12px;
   }
 }
+
+.film-frame.composed .film-logo,
+.film-frame.composed figcaption {
+  display: none;
+}

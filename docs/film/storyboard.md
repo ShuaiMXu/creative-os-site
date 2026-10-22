@@ -1,34 +1,42 @@
-# HappyHands product film — V5 storyboard
+# HappyHands product film — V6 storyboard
 
-Static storyboard for approval, **80 seconds / eight scenes**. Video production starts only after storyboard approval. Preview at `/film/storyboard/`; download the nine-page PDF from the page header. This isolated route changes no existing product flow, shared font rules or Skills.
+Static storyboard for approval, **85 seconds / eight scenes**. Preview `/film/storyboard/` or download `HappyHands-Storyboard-V6.pdf` from its header. Keep PR #28 unmerged until the storyboard is approved. No video or sound is being produced.
 
-## Story
+## Visual direction: Visible work
 
-| Time        | Scene                             | Actual capability represented                                  |
-| ----------- | --------------------------------- | -------------------------------------------------------------- |
-| 00:00–00:06 | A working product                 | Review an existing product; Northstar is fictional             |
-| 00:06–00:16 | Connect the real project          | Website handoff, local project/task/design-source confirmation |
-| 00:16–00:28 | Review the experience             | Captured desktop/phone evidence and planned interactions       |
-| 00:28–00:40 | Use the project's design language | Source inventory and versioned Foundation approval             |
-| 00:40–00:50 | Confirm one bounded change        | Confirm the issue and scope before editing                     |
-| 00:50–01:02 | Turn the decision into code       | Configured agent, isolated working copy and preview            |
-| 01:02–01:14 | Compare, review and decide        | Matching evidence, independent review and human decision       |
-| 01:14–01:20 | Return to the same record         | Retain source, evidence, diff and review in a durable run      |
+The page itself is the subject. The workbench sits on white and a restrained light-gray field. The frame uses the unchanged official HappyHands hand-and-wordmark. No architectural scenery, photography, perspective planes, glass or floating paper panels. Its character comes from alignment, considered typography and the visible relationship between an observation and its source.
 
-`film/storyboard/scenes.js` is the source of timing, English copy, camera directions, transitions, narration drafts and capability boundaries. Each scene links to supporting core documentation pinned at `8b1541a9488b9413f98096f8547163f7c261acda`. Northstar is solely the demonstration target. Its code, measurements and outcomes are illustrative; they are not live execution evidence. Replace illustrative UI text and claimed outcomes with deterministically typeset UI and real Harness evidence before producing the finished film.
+A complete page view establishes the scope first, with navigation, introduction, work, studio, contact and footer all visible. Subsequent inspection frames keep either the full-page locator or the corresponding page region visible. UI labels, values, source names and code are deterministically typeset in HTML/CSS. Northstar is a fictional digital product studio, not a HappyHands feature or a customer project. Atlas and Fieldnotes are authored project samples; none of their data is a product metric or customer result.
 
-## Identity and typography
+One example connects the story: Intro has a 16 px copy-to-action gap; its supplied design guidance proposes 32 px via `--space-8`. The user confirms that constraint and the scoped finding. ActionLink stays shared and unchanged. Only the parent layout changes, with the exact token line shown in the diff. The final view compares the same DOM composition and scale. Two other authored candidates remain open. This is a design of the demonstration, not an actual Harness execution or QA result.
 
-The original `public/brand/happyhands-logo-{ink,paper}.png` is overlaid separately, with unchanged artwork/proportions. Never regenerate the logo in a scene plate.
+## Story and capability boundaries
 
-Self-hosted Instrument Sans Regular/Bold supplies HappyHands captions and viewer controls. Instrument Serif Regular is confined to the fictional Northstar display specimen. No synthetic weights or external font requests. Raster lettering inside the generated concepts is indicative; final UI typography must be typeset from these exact font files. Both fonts include OFL notices under `public/film/storyboard/fonts/`. Upstream: [Instrument Sans](https://github.com/Instrument/instrument-sans), [Instrument Serif](https://github.com/Instrument/instrument-serif).
+| Time        | Scene                       | What the viewer can see                                                                |
+| ----------- | --------------------------- | -------------------------------------------------------------------------------------- |
+| 00:00–00:08 | Connect the website         | URL, local repository, task and design sources beside the complete page and phone view |
+| 00:08–00:20 | Analyze the whole page      | Page overview, currently inspected region and declared capture-state coverage          |
+| 00:20–00:30 | Inspect a specific finding  | Exact spacing relationship, observed value, source and candidate confirmation          |
+| 00:30–00:42 | Read the design system      | Type, palette, spacing tokens, source files and a separate Foundation approval         |
+| 00:42–00:52 | Inspect component anatomy   | Existing component inputs, source-declared states, consumers and reuse decision        |
+| 00:52–01:03 | Preview the adjustment      | 16 → 32 px; retained content/navigation; one confirmed scope                           |
+| 01:03–01:15 | Apply the confirmed change  | Run action, isolated working copy, exact Intro.tsx diff and source-linked preview      |
+| 01:15–01:25 | Compare and keep the record | Same-state comparison, pending independent review/human decision and the same record   |
 
-The approved direction uses warm ivory, ink, copper, architectural depth and continuous object-led transitions. These are shots in a continuous story rather than title slides; camera/transition notes describe the intended motion, not rendered animation.
+`film/storyboard/scenes.js` owns timing, English text, narration, camera/transition directions and per-scene boundaries. Supporting core documentation is pinned at `8b1541a9488b9413f98096f8547163f7c261acda`. A URL enables page capture; source inventory and editing need a locally connected repository and configured agent. The public website does not execute agents. A declared state or static component style does not prove replay. No automatic acceptance, push, PR, merge or deployment is claimed.
 
-## Reproduction and review
+## Assets and typography
 
-- Artwork prompts: `docs/film/storyboard-prompts.md`; plate checksums: `public/film/storyboard/artwork-manifest.json`. Eight optimized WebP plates total about 1.06 MB. Original generated PNGs remain outside the repository.
-- Run `npm run typecheck`, `npm run test:studio`, `npm run test:components`, `npm run build`.
-- Run `npm run preview -- --port 4236 --strictPort`; inspect `/film/storyboard/` in a real browser. Check all scenes, deep links, image/font loading, normal desktop and phone widths, and PDF availability.
-- Rebuild PDF with `python3 scripts/export-film-storyboard.py` (Pillow and reportlab required), then rebuild the site. The PDF is committed so Vercel does not need Python.
-- No video, audio, target-project modification, automatic acceptance, merge or production deployment is part of this deliverable. PR preview is for user approval.
+Instrument Sans Regular/Bold supplies HappyHands controls and captions; Instrument Serif supplies the fictional Northstar display headings. Both are self-hosted with original OFL notices. Code uses the platform monospace stack. The original logo is loaded from `public/brand/` in the composition. The PNG includes its logo/caption already, so the viewer and PDF do not overlay them a second time.
+
+V6 frames are generated by rendering the authored `frame.html`, `frame.js` and `frame.css` in the actual browser at **1600 × 900**, with full font/image loading. Eight committed PNGs are in `public/film/storyboard/v6/`; their source checksum manifest is adjacent. No image model output is used in V6. Older V5 concept plates/prompts/PDF remain historical assets; they are not the current viewer.
+
+## Reproduction and verification
+
+1. `npm run dev -- --port 4237 --strictPort`.
+2. Open `/film/storyboard/frame.html?scene=ID`, for each declared scene ID. This is a fixed 16:9 composition, not a usable product UI. Render and save the full 1600 × 900 viewport to its matching PNG with the supported browser tool. Do not crop the page or stretch its dimensions.
+3. Check every composition: no panel overflow, full-page footer within its frame, logo loaded, text/source relationships correct, 16 px before and 32 px after computed layout gaps.
+4. Rebuild PDF with `python3 scripts/export-film-storyboard.py` (Pillow/reportlab), then `npm run typecheck` and `npm run build`. PDF is committed so cloud builds do not need Python.
+5. Inspect `/film/storyboard/` navigation, full-size frame links, all image resources, deep links, PDF and normal desktop/phone viewer layouts. Cloud content verification remains distinct from a successful deployment.
+
+The composition route shows authored examples only. It never reads a local repository, sends form values, invokes an agent, captures a real target page or changes any Skills.
