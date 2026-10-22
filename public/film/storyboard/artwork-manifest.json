@@ -10,7 +10,7 @@
     "film/storyboard/frame.html": "6d3e355aa15e32111183ae837c85002f8246770b10490aaaf36ff3edb0dfca77",
     "film/storyboard/frame.js": "76c6e2a4b39955fae6c9f9f09a414f599ca5ed796f8dda67dbf659d88bc85d85",
     "film/storyboard/frame.css": "c3e58fcb34b17cfd2acfb82a5a3645befecb5d46e8a0a8ec316293305fb1cf55",
-    "film/storyboard/composition-v7.js": "7409bee16042a8333d5241f0f4990c5502e5378a8c2f7daca90143137a184bf8",
+    "film/storyboard/composition-v7.js": "44d6384f921eae75fc61fa53b5459a340b3a65dde108ea9344ce500e5462db2e",
     "film/storyboard/composition-v7.css": "51085489dcc38980e387a2bbbf7aafecbcc2ec1c0bead11618992fcf383c0e0e",
     "film/storyboard/scenes.js": "80be4351c5793a9a2ab06019123cb51dae9bf12b9b533db6ee824eebb23cc41c",
     "public/brand/happyhands-logo-ink.png": "235a2cfeba071a57ced90873d82880d0ef465beb89bb85ba1730d80c7bff02b8"
@@ -18,7 +18,7 @@
   "frames": [
     {
       "file": "v7/01-connect.png",
-      "sha256": "7a4b700e1493327051d0a9a69f30caca47fe4fed68339eb09790792403853321",
+      "sha256": "30f75b58b2a32a4d1931aa94e0e34bac8c82feeda4388a4de0d4f382a00358ba",
       "width": 1600,
       "height": 900
     },
