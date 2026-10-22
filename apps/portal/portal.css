@@ -84,3 +84,17 @@ section[id] { scroll-margin-top:90px; }
 .agent-choices img { object-fit:contain; padding:4px; background:#fff; border-radius:8px; box-sizing:content-box; }
 .project-handoff-details > summary { cursor:pointer; padding:20px 0; font-weight:600; }
 .project-handoff-details .connect-grid { margin-top:16px; }
+
+.project-handoff-details .connect-panel { border:1px solid var(--hh-line); border-radius:var(--hh-radius-lg); background:var(--hh-bg-raised); color:var(--hh-ink); }
+.local-workbench-connect { gap:24px; }
+.local-workbench-connect header { display:grid; gap:8px; }
+.local-workbench-connect header p { color:var(--hh-ink-muted); font-size:14px; line-height:1.7; }
+.handoff-field { display:grid; gap:8px; min-width:0; }
+.handoff-field small { color:var(--hh-ink-muted); font-size:12px; line-height:1.6; }
+.connect-panel .local-workbench-connect input,.connect-panel .local-workbench-connect textarea { border-color:var(--hh-line); border-radius:var(--hh-radius-md); background:var(--hh-bg); color:var(--hh-ink); font-family:var(--hh-font-sans); }
+.local-workbench-connect :is(input,textarea):focus-visible { outline:2px solid var(--hh-ring); outline-offset:2px; }
+.handoff-options { border-top:1px solid var(--hh-line); border-bottom:1px solid var(--hh-line); }
+.handoff-options summary { padding:12px 0; min-height:44px; cursor:pointer; font-size:14px; }
+.handoff-options .handoff-field { margin:8px 0 20px; }
+.local-workbench-connect .connect-actions { margin:0; }
+.local-workbench-connect #handoff-status:empty { display:none; }
