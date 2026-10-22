@@ -320,7 +320,7 @@ function App() {
                 <Icon name="right" />
               </a>
             </div>
-            <div className="system-return"><a href="/apps/portal/#explore">{t("返回设计系统", "All design systems")}</a><a href="/systems/lime/">{t("了解 Lime", "Explore Lime")} <Icon name="right" /></a></div>
+            <div className="system-return"><a href="/components/?provider=systems">{t("返回设计系统", "All design systems")}</a><a href="/systems/lime/">{t("了解 Lime", "Explore Lime")} <Icon name="right" /></a></div>
             <details>
               <summary>
                 {t("来源、版本与许可", "Sources, versions & licensing")}

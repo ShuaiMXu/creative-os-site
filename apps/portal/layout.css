@@ -177,3 +177,5 @@
 .connect-faq details p { padding:12px 0 4px; }
 @media(max-width:900px) { .connect-grid { grid-template-columns:minmax(0,1fr); gap:32px; } }
 @media(max-width:620px) { .connect-panel { padding:18px; } }
+
+.how-to-steps { margin-block: 24px 32px; }

@@ -6,8 +6,6 @@ import {readLanguage, readTheme, savePreference} from '../../packages/ui/site-pr
 import * as zh from './content.zh.js';
 import {siteNavigation} from '../../packages/ui/site-navigation.ts';
 import '../../packages/ui/site-shell.css';
-import { designSystemsMarkup } from './design-systems.js';
-import { resourceCovers } from './resource-covers.js';
 import { connectMarkup, setupConnect } from './connect.js';
 import * as en from './content.en.js';
 import { repositories, heroScreens } from './content.js';
@@ -79,7 +77,9 @@ function updateNavigation() {
     else link.removeAttribute('aria-current');
   });
 }
-window.addEventListener('hashchange', updateNavigation);
+function routeLegacyResources(){if(location.hash==='#explore')location.replace('/components/?provider=systems');}
+routeLegacyResources();
+window.addEventListener('hashchange',()=>{routeLegacyResources();updateNavigation();});
 
 // -- render all sections from the active language pack --
 function renderContent() {
@@ -107,7 +107,7 @@ function renderContent() {
   const heroCopy = document.querySelector('.hero-copy');
   if (heroCopy) heroCopy.textContent = c.hero.copy;
   const primary = document.querySelector('.button-primary');
-  if (primary) primary.textContent = c.hero.cta;
+  if (primary) { primary.textContent = lang === 'zh' ? '开始体验优化' : 'Get started'; primary.href='#connect-agent'; }
   const secondary = document.querySelector('.button-secondary');
   if (secondary) secondary.innerHTML = `${c.hero.ctaSecondary} ${iconMarkup('external')}`;
   const scrollNote = document.querySelector('.scroll-note');
@@ -117,6 +117,7 @@ function renderContent() {
   const content = document.querySelector('#portal-content');
   if (content) {
     content.innerHTML = `
+    ${connectMarkup(lang)}
     <section class="content-section section-apps" id="apps">
       <div class="section-head"><div><p class="kicker">${c.sections.apps.kicker}</p><h2>${c.sections.apps.title}</h2></div><div><p>${c.sections.apps.copy}</p><a class="text-link" href="${repositories.core}">${c.sections.apps.link} ${iconMarkup('external')}</a></div></div>
       <div class="apps-grid">${c.apps.map(appCard).join('')}</div>
@@ -126,12 +127,6 @@ function renderContent() {
       <dl class="delivery-list">${c.delivery.items.map(([title,copy]) => `<div><dt>${title}</dt><dd>${copy}</dd></div>`).join('')}</dl>
       <p class="capability-note">${c.delivery.status}</p><a class="text-link" href="${repositories.core}/blob/main/docs/harness.md">${c.delivery.link} ${iconMarkup('external')}</a>
     </section>
-    <section class="content-section section-explore" id="explore">
-      <div class="section-head"><div><p class="kicker">${c.sections.explore.kicker}</p><h2>${c.sections.explore.title}</h2></div><div><p>${c.sections.explore.copy}</p></div></div>
-      ${resourceCovers(lang)}
-      ${designSystemsMarkup(lang)}
-      <details class="system-archives"><summary>${lang === 'zh' ? '更多案例与探索记录' : 'More cases and explorations'}</summary><div class="system-archive-grid">${c.systems.filter(item => item.title !== 'HappyHands').map(systemCard).join('')}</div></details>
-    </section>
     <section class="content-section" id="screens">
       <div class="section-head"><div><p class="kicker">${lang === 'zh' ? '案例与组件' : 'Cases and components'}</p><h2>${lang === 'zh' ? '实际项目中的设计改进' : 'Design improvements in practice'}</h2></div><p>${lang === 'zh' ? '查看修改过程与对照记录，试用组件的交互状态。' : 'Explore a documented change and try component interactions.'}</p></div>
       <div class="case-links">
@@ -139,7 +134,6 @@ function renderContent() {
         <article><h3>HappyHands</h3><p>${lang === 'zh' ? '试用按钮、表单与反馈状态，查看同一套规范如何应用到界面。' : 'Try buttons, forms and feedback states to see the system in use.'}</p><a class="text-link" href="/systems/happyhands/#components">${lang === 'zh' ? '试用组件' : 'Try components'} ${iconMarkup('right')}</a></article>
       </div>
     </section>
-    ${connectMarkup(lang)}
     <section class="get-started" id="get-started">
       <div class="get-started-copy"><p class="kicker">${c.sections.getStarted.kicker}</p><h2>${c.sections.getStarted.title}<br><span>${c.sections.getStarted.titleLine2}</span></h2><p>${c.sections.getStarted.copy}</p></div>
       <div class="steps-grid">${c.steps.map(stepCard).join('')}</div>

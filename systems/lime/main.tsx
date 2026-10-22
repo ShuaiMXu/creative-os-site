@@ -253,7 +253,7 @@ function App() {
           </section>
           <footer>
             <div className="system-return">
-              <a href="/apps/portal/#explore">
+              <a href="/components/?provider=systems">
                 {t("返回设计系统", "All design systems")}
               </a>
               <a href="/systems/happyhands/">HappyHands</a>

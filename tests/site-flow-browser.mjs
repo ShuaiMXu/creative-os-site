@@ -76,28 +76,11 @@ try {
         await page.locator('header a[aria-current="page"]').count(),
         0,
       );
-      await follow('header a[href="/apps/portal/#explore"]');
-      assert.deepEqual(
-        await page
-          .locator(".resource-cover-caption h3")
-          .allTextContents(),
-        ["设计系统", "主题工作室"],
-      );
-      assert.equal(
-        await page.locator("#explore textarea, #explore pre").count(),
-        0,
-      );
-      assert.equal(await page.locator('#system-foundations-title').count(), 0, 'no duplicate system directory');
-      const coverBoxes = await page.locator('.resource-cover').evaluateAll(items => items.map(item => { const r=item.getBoundingClientRect(); return {x:r.x,y:r.y}; }));
-      assert.equal(Math.abs(coverBoxes[0].y-coverBoxes[1].y)<1, width>620, 'covers stay side by side above phone widths');
+      assert.equal(await page.locator('#explore').count(), 0);
+      await follow('header a[href="/components/?provider=systems"]');
       await check("catalog");
-      const catalogLeft = (
-        await page.locator(".resource-covers").boundingBox()
-      ).x;
-      const headerLeft = (
-        await page.locator('header a[aria-label="HappyHands"]').boundingBox()
-      ).x;
-      await follow('.resource-cover[href="/components/?provider=systems"]');
+      const catalogLeft = (await page.locator('.library-heading h1').boundingBox()).x;
+      const headerLeft = (await page.locator('header a[aria-label="HappyHands"]').boundingBox()).x;
       await page.frameLocator('iframe[title="HappyHands 完整设计规范"]').getByRole("heading", {name:"HappyHands", exact:true}).waitFor();
       await page.goto(base + '/systems/happyhands/');
       assert.equal(await page.locator("h1").innerText(), "HappyHands");
@@ -163,10 +146,9 @@ try {
       await check("happyhands");
       await page.getByRole("button", { name: "English", exact: true }).click();
       assert.equal(await page.locator("html").getAttribute("lang"), "en");
-      await follow('.system-breadcrumb a[href="/apps/portal/#explore"]');
-      assert.equal(await page.locator(".resource-covers").isVisible(), true);
+      await follow('.system-breadcrumb a[href="/components/?provider=systems"]');
+      assert.equal(await page.locator(".resource-sections").isVisible(), true);
       assert.equal(await page.locator("html").getAttribute("lang"), "en");
-      await follow('.resource-cover[href="/components/?provider=systems"]');
       await follow('.provider-navigation a[href="?provider=systems&system=quartz"]');
       await page.frameLocator('iframe[title="Quartz complete design system"]').getByRole("heading", {name:"Quartz", exact:true}).first().waitFor();
       await page.goto(base + '/systems/quartz/');
@@ -302,7 +284,7 @@ try {
       await context.close();
     }
   console.log(
-    "PASS: home → HappyHands → home → Quartz → Theme Studio → home → connection guide, 390/768/1280px, both themes, language persistence, mobile directory, edits retained, translated panels, no page errors or overflow.",
+    "PASS: home → resource directory → HappyHands → Quartz → Theme Studio → connection guide, 390/768/965/1280px, both themes, language persistence, mobile directory, edits retained, translated panels, no page errors or overflow.",
   );
 } finally {
   await browser.close();

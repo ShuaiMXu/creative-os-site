@@ -47,7 +47,7 @@ export function SiteHeader({
           <a
             key={item.href}
             href={item.href}
-            aria-current={item.href === active ? "page" : undefined}
+            aria-current={item.href === (active === "/apps/portal/#explore" ? "/components/?provider=systems" : active) ? "page" : undefined}
           >
             {lang === "zh" ? item.zh : item.en}
           </a>

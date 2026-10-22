@@ -1,3 +1,4 @@
+import { ReferoImport } from "./ReferoImport";
 import { SystemLibrary } from "./SystemLibrary";
 import React, { useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
@@ -190,16 +191,7 @@ function App() {
           e.preventDefault(); setProvider(p.id); history.pushState(null, "", `?provider=${p.id}`);
         }}><strong>{p.name}</strong><span>{p.kind === "source-registry" ? t("组件源码 · 站内预览", "Component source · Local previews") : p.id === "refero" ? t("风格与规范 · DESIGN.md", "Style guidelines · DESIGN.md") : t("页面与区块 · MCP", "Pages and sections · MCP")}</span></a>)}
       </nav>}
-      {provider === 'systems' ? <SystemLibrary lang={lang} /> : provider === "refero" ? <main id="catalog-main" className="provider-reference">
-        <p className="catalog-eyebrow">Refero Styles · DESIGN.md</p>
-        <h2>{t("将参考风格整理为项目规范", "Turn style references into project guidelines")}</h2>
-        <p>{t("查看颜色、字体、间距与组件规则，再对照项目现有规范。提供 DESIGN.md、CSS 变量、Tailwind v4 和设计变量格式。", "Explore colors, typography, spacing and component rules alongside your existing guidelines. Formats include DESIGN.md, CSS variables, Tailwind v4 and design tokens.")}</p>
-        <p>{t("目前收录来源与使用说明，尚未接入站内预览或自动导入。", "Source and usage guidance are available; local previews and automatic import are not connected.")}</p>
-        <a href="https://styles.refero.design/" target="_blank" rel="noreferrer">{t("浏览 Refero Styles（外部网站）", "Browse Refero Styles (external)")}</a>
-        <h3>{t("应用到项目", "Apply to a project")}</h3>
-        <ol><li>{t("选定参考，保留原始来源和适用页面。", "Select a reference and retain its source and intended scope.")}</li><li>{t("对照已有品牌、设计变量与组件，确认差异。", "Compare existing branding, tokens and components.")}</li><li>{t("将确认的规则整理进项目 DESIGN.md，再验证实际页面。", "Record agreed rules in the project DESIGN.md, then validate actual pages.")}</li></ol>
-        <p>{t("提取后的风格分析不等于原产品官方设计系统，示例也不是原站源码。", "Extracted style analysis is not the original product’s official design system, and examples are not its source code.")}</p>
-      </main> : provider === "kage" ? <ProviderReference lang={lang} /> :
+      {provider === 'systems' ? <SystemLibrary lang={lang} /> : provider === "refero" ? <ReferoImport lang={lang} /> : provider === "kage" ? <ProviderReference lang={lang} /> :
       <div className="library-layout">
         <aside
           className="library-directory"

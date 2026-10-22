@@ -410,7 +410,7 @@ function App() {
               </a>
             </div>
             <div className="system-return">
-              <a href="/apps/portal/#explore">
+              <a href="/components/?provider=systems">
                 <Icon name="left" /> {t("返回设计系统", "All design systems")}
               </a>
               <a href="/systems/quartz/">
