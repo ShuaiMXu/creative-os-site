@@ -6,7 +6,8 @@ import {readLanguage, readTheme, savePreference} from '../../packages/ui/site-pr
 import * as zh from './content.zh.js';
 import {siteNavigation} from '../../packages/ui/site-navigation.ts';
 import '../../packages/ui/site-shell.css';
-import { designSystemsMarkup, setupSystemRail } from './design-systems.js';
+import { designSystemsMarkup } from './design-systems.js';
+import { resourceCovers } from './resource-covers.js';
 import { connectMarkup, setupConnect } from './connect.js';
 import * as en from './content.en.js';
 import { repositories, heroScreens } from './content.js';
@@ -127,6 +128,7 @@ function renderContent() {
     </section>
     <section class="content-section section-explore" id="explore">
       <div class="section-head"><div><p class="kicker">${c.sections.explore.kicker}</p><h2>${c.sections.explore.title}</h2></div><div><p>${c.sections.explore.copy}</p></div></div>
+      ${resourceCovers(lang)}
       ${designSystemsMarkup(lang)}
       <details class="system-archives"><summary>${lang === 'zh' ? '更多案例与探索记录' : 'More cases and explorations'}</summary><div class="system-archive-grid">${c.systems.filter(item => item.title !== 'HappyHands').map(systemCard).join('')}</div></details>
     </section>
@@ -153,9 +155,7 @@ function renderContent() {
     footer.innerHTML = `<span>${c.ui.footer.left}</span><span>${c.ui.footer.middle}</span><a href="${repositories.core}">${c.ui.footer.right} ${iconMarkup('external')}</a>`;
   }
 
-  // re-observe sections for intersection animation
   setupConnect(lang);
-  setupSystemRail();
 }
 
 function appCard(item) {

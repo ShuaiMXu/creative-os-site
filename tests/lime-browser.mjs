@@ -50,7 +50,10 @@ try {
         await page.goto(base + "/apps/portal/#explore", {
           waitUntil: "networkidle",
         });
-        await page.locator('#lime a[href="/systems/lime/"]').click();
+        await page.locator('.resource-cover[href="/components/?provider=systems"]').click();
+        await page.locator('.provider-navigation a[href="?provider=systems&system=lime"]').click();
+        await page.frameLocator('iframe[src="/systems/lime/?embedded=1"]').getByRole("heading", { name:"Lime", exact:true }).waitFor();
+        await page.goto(base + '/systems/lime/');
         await page
           .getByRole("heading", { name: "Lime", exact: true })
           .waitFor();

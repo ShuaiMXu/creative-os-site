@@ -79,22 +79,27 @@ try {
       await follow('header a[href="/apps/portal/#explore"]');
       assert.deepEqual(
         await page
-          .locator(".system-resource-section:first-child article h4")
+          .locator(".resource-cover-caption h3")
           .allTextContents(),
-        ["HappyHands", "Quartz", "Lime"],
+        ["设计系统", "主题工作室"],
       );
       assert.equal(
         await page.locator("#explore textarea, #explore pre").count(),
         0,
       );
+      assert.equal(await page.locator('#system-foundations-title').count(), 0, 'no duplicate system directory');
+      const coverBoxes = await page.locator('.resource-cover').evaluateAll(items => items.map(item => { const r=item.getBoundingClientRect(); return {x:r.x,y:r.y}; }));
+      assert.equal(Math.abs(coverBoxes[0].y-coverBoxes[1].y)<1, width>620, 'covers stay side by side above phone widths');
       await check("catalog");
       const catalogLeft = (
-        await page.locator("#system-foundations-title").boundingBox()
+        await page.locator(".resource-covers").boundingBox()
       ).x;
       const headerLeft = (
         await page.locator('header a[aria-label="HappyHands"]').boundingBox()
       ).x;
-      await follow('#happyhands a[href="/systems/happyhands/"]');
+      await follow('.resource-cover[href="/components/?provider=systems"]');
+      await page.frameLocator('iframe[title="HappyHands 完整设计规范"]').getByRole("heading", {name:"HappyHands", exact:true}).waitFor();
+      await page.goto(base + '/systems/happyhands/');
       assert.equal(await page.locator("h1").innerText(), "HappyHands");
       const detailLeft = (
         await page.locator(".system-breadcrumb").boundingBox()
@@ -159,9 +164,12 @@ try {
       await page.getByRole("button", { name: "English", exact: true }).click();
       assert.equal(await page.locator("html").getAttribute("lang"), "en");
       await follow('.system-breadcrumb a[href="/apps/portal/#explore"]');
-      assert.equal(await page.locator("#happyhands").isVisible(), true);
+      assert.equal(await page.locator(".resource-covers").isVisible(), true);
       assert.equal(await page.locator("html").getAttribute("lang"), "en");
-      await follow('#quartz a[href="/systems/quartz/"]');
+      await follow('.resource-cover[href="/components/?provider=systems"]');
+      await follow('.provider-navigation a[href="?provider=systems&system=quartz"]');
+      await page.frameLocator('iframe[title="Quartz complete design system"]').getByRole("heading", {name:"Quartz", exact:true}).first().waitFor();
+      await page.goto(base + '/systems/quartz/');
       await check("quartz-en");
       const catalog = page.locator(".quartz-catalog");
       await catalog.getByRole("searchbox").fill("button");
