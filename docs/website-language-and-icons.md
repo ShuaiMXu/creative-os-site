@@ -1,6 +1,6 @@
 # Website language and icons
 
-Reviewed 2026-10-18. Applies to the public portal, HappyHands and Quartz system pages, and Theme Studio. Archived experiments and the separate local workbench are outside this release.
+Reviewed 2026-10-18. Applies to the public portal, HappyHands, Quartz and Lime system pages, and Theme Studio. Archived experiments and the separate local workbench are outside this release.
 
 ## Writing
 
@@ -29,3 +29,9 @@ The [Apple HIG icon guidance](https://developer.apple.com/design/human-interface
 ## Verification
 
 Check the complete homepage → catalog → HappyHands → Quartz → Theme Studio → setup flow in Chinese and English, both appearances, and at 390/768/1280px. Recheck font selection, custom values, undo/redo, saved drafts, button feedback and keyboard access when changing controls.
+
+## Links and controls (2026-10-22)
+
+Navigation and standalone action links use clear labels and optional shared SVG icons without permanent underlines. Hover changes foreground color; keyboard focus keeps a visible ring. Inline prose links may underline on hover. Section dividers are independent of link decoration.
+
+The shared header is 64px high with 44px click targets. Theme Studio uses neutral selected backgrounds and a single focus ring per active input. Its select arrows use the shared Select component and reserved end padding. The editable preview continues to use the project's own theme.
