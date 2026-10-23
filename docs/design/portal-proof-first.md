@@ -33,3 +33,26 @@ Skill files are not modified. Existing brand token values remain canonical. All 
 ## Visual critique and remaining boundary
 
 The product is now visible before explanation; the case names the exact scope and retained constraint. Typography, whitespace and section rhythm have been checked on desktop and phone. Mobile uses a single selected comparison image, while desktop shows both. The historical workbench is still visually dense; it is an honest product capture, with a link to the unaltered original, rather than a fabricated simplified interface. The report selector is a preview of another explicitly dated record. User visual acceptance and merge remain pending.
+
+
+## Synced-main review — 2026-10-23
+
+Base: e056557 (design-system showcase PR #30); merged locally in 9b2c625. Found and fixed a semantic merge omission: the redesigned resource index did not link to the new Lime system. Added its Chinese/English entry and navigated from the phone menu through the resource link to the real Lime catalog.
+
+Rechecked full-page screenshots at 1440×1000, 768×1024 and 390×844; page widths match the viewport without horizontal overflow. Checked phone menu open/close on section selection, before/after selection, report selection, empty handoff keyboard validation, repository/task/three design-source paths encoded in the loopback URL, and draft retention during language changes. Full Codex and Claude setup prompts retain approval and complete-Skills requirements. English phone headings remain within two lines; dark theme remains readable. Browser error log was empty. Updated public/portal-preview captures show this revision, not the previous build.
+
+Build, typecheck, routing/handoff 2/2 tests and source lint (0 FAIL / 0 WARN) passed. Independent Codex review against e056557 found no definite actionable regressions. Browser inspection used the supported in-app browser controller; inspect.mjs was not run and no inspector score is claimed. No new project execution or human acceptance is implied by these presentation checks. Skill sources remain unchanged.
+
+ROUND 2
+Seen in one second: a large promise paired with the real HappyHands workbench.
+Idea (one sentence): retained HappyHands review evidence becomes the product demonstration.
+Live thing: real page/report selection and matched before/after selection.
+Layout words by section: hero=split-and-frame / case=paired-evidence / workflow=sequence / sources=definition-and-index / connect=form / footer=close.
+Scores: design 7 · usability 8 · creativity 7 · content 8 → overall 7.4.
+Caps applied: creativity capped at 7 for a familiar product-evidence approach; restrained motion does not earn a higher design score.
+Top three problems (most visible first), each with the screenshot it shows in and the fix:
+1. The synced resource catalog was missing Lime in the old index; corrected in desktop-page.png and mobile-page.png.
+2. Historical workbench captures remain dense at reduced width (tablet-page.png); originals are available for inspection. This is an honest preview, not a replacement for using the workbench.
+3. The phone workflow is a long reading sequence (mobile-page.png); it remains fully visible and grouped by output, with installation details collapsed. Further visual changes await user feedback rather than removing useful content.
+
+Visual approval is pending. Do not merge PR #29 until the user confirms.

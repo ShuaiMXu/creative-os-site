@@ -66,6 +66,11 @@ export function proofContent(lang) {
       "/systems/quartz/",
     ],
     [
+      "Lime",
+      t("消费类应用与个人助手的组件模板", "Components for consumer apps and personal assistants"),
+      "/systems/lime/",
+    ],
+    [
       "Cult UI",
       t("可预览的交互组件与源码", "Interactive components and source"),
       "/components/?provider=cult-ui",
