@@ -75,12 +75,15 @@ export async function searchKage(query) {
       .map(normalizeDesign),
   };
 }
+export function normalizeDesignResponse(result) {
+  const design = result?.design ?? result;
+  if (!design || typeof design !== "object" || !text(design.slug) || !text(design.title)) {
+    throw Error("Invalid Kage design response");
+  }
+  return { design: normalizeDesign(design) };
+}
 export async function getKage(slug) {
-  return {
-    design: normalizeDesign(
-      await callKage("get_design", { slug, include_image: false }),
-    ),
-  };
+  return normalizeDesignResponse(await callKage("get_design", { slug, include_image: false }));
 }
 
 export default async function handler(req, res) {

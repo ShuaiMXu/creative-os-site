@@ -23,3 +23,7 @@ Design systems open as a cover gallery; full system documents load only after se
 ## Evidence and limits
 
 Screenshots: public/pr31-preview/gallery-desktop.png, gallery-mobile.png, gallery-detail-mobile.png. Thumbnails are cropped local source previews, not bespoke marketing artwork. External Kage availability is not asserted by local gallery checks. Full refresh does not persist local search/page state. Remote CI and cloud deployment were not independently verified; the preview remains behind Vercel authentication. No production merge performed.
+
+## Final merge review
+
+The full-branch independent review identified a Kage detail-response compatibility issue: `get_design` may return a design directly or inside `{design: ...}`. The API now handles both forms and rejects malformed details instead of replacing a reference with blank content. Regression tests cover both shapes and missing content (three Kage tests passed). A real public query successfully resolved `openship-cloud-landing-page` with title, full image and analysis prompt. Production build passed after the fix. Before the fix, the full validation also passed typecheck, nine site tests and 18 Studio tests. Existing component source and skill files were not deleted or shortened. Remote CI diagnostics still require GitHub connector authentication and are not claimed as passed.
