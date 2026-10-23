@@ -24,7 +24,7 @@ function mirrorIndex(urlPath) {
 }
 
 export default defineConfig({
-  server: { port: 4173, strictPort: true, fs: { strict: true } },
+  server: { cors: { origin: [/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/, 'null'] }, port: 4173, strictPort: true, fs: { strict: true } },
   plugins: [{name:'kage-reference-search',configureServer(server){server.middlewares.use('/api/kage',kageHandler)},configurePreviewServer(server){server.middlewares.use('/api/kage',kageHandler)}},{
     name: 'skillry-mirror-dir-index',
     configureServer(server) {

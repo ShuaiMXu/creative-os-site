@@ -100,7 +100,6 @@ function App() {
           </SystemDirectory>
           <SystemScenes system="happyhands" lang={lang} dark={dark} />
           <section id="foundations">
-            <p className="eyebrow">{t("01 / 基础规范", "01 / Foundations")}</p>
             <h2>{t("颜色、文字与间距", "Color, type and spacing")}</h2>
             <div className="rules">
               <article>
@@ -134,9 +133,6 @@ function App() {
             <TokenReference lang={lang} dark={dark} />
           </section>
           <section id="components">
-            <p className="eyebrow">
-              {t("02 / 组件与状态", "02 / Components & states")}
-            </p>
             <h2>{t("试用组件与交互", "Try the components")}</h2>
             <div className="demo">
               <h3>{t("按钮", "Buttons")}</h3>
@@ -287,9 +283,6 @@ function App() {
             </div>
           </section>
           <section id="patterns">
-            <p className="eyebrow">
-              {t("03 / 页面模式", "03 / Screen patterns")}
-            </p>
             <h2>
               {t("从组件到页面", "From components to screens")}
             </h2>
@@ -332,7 +325,6 @@ function App() {
             </div>
           </section>
           <section id="adopt">
-            <p className="eyebrow">{t("04 / 接入项目", "04 / Setup")}</p>
             <h2>{t("获取 AI 接入指令", "Get the AI setup prompt")}</h2>
             <p>
               {t(
