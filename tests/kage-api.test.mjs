@@ -51,3 +51,30 @@ test("detail preserves content for direct and wrapped upstream results", () => {
  assert.equal(result.components[0].source,null);
  assert.equal(result.components[0].prompt,"Source analysis");
 });
+
+test('cache and request budget bound upstream work and recover after a minute', async () => {
+ const {createHandler}=await import('../api/kage.mjs');
+ let time=0,calls=0;
+ const api=createHandler({now:()=>time,search:async()=>{calls++;return {designs:[]}}});
+ const request=async(query)=>{const headers={};const res={statusCode:200,setHeader(k,v){headers[k]=v},end(body){this.body=body}};await api({method:'GET',url:'/api/kage?query='+query},res);return {res,headers}};
+ await request('same');await request('same');assert.equal(calls,1);
+ for(let i=0;i<29;i++)await request('query'+i);
+ const denied=await request('overflow');assert.equal(denied.res.statusCode,429);assert.equal(denied.headers['Cache-Control'],'no-store');
+ time=60001;assert.equal((await request('overflow')).res.statusCode,200);
+ time=300001;await request('same');assert.equal(calls,32);
+});
+test('upstream response size is bounded',async()=>{
+ const {boundedText}=await import('../api/kage.mjs');
+ assert.equal(await boundedText({body:[Buffer.from('ok')]}),'ok');
+ await assert.rejects(()=>boundedText({body:[Buffer.alloc(2*1024*1024+1)]}),/too large/);
+});
+test('concurrent requests are capped and errors are not cached',async()=>{
+ const {createHandler}=await import('../api/kage.mjs');
+ let release;const gate=new Promise(r=>release=r);
+ const api=createHandler({search:async()=>{await gate;throw Error('private upstream information')}});
+ const res=()=>({statusCode:200,setHeader(){},end(body){this.body=body}});
+ const pending=Array.from({length:4},()=>api({method:'GET',url:'/api/kage?query=test'},res()));
+ const blocked=res();await api({method:'GET',url:'/api/kage?query=extra'},blocked);assert.equal(blocked.statusCode,429);
+ release();await Promise.all(pending);
+ const retry=res();await api({method:'GET',url:'/api/kage?query=test'},retry);assert.equal(retry.statusCode,502);assert.ok(!retry.body.includes('private'));
+});

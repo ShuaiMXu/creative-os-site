@@ -494,7 +494,7 @@ function App() {
                             key={`${selected}-${dark}-${motion}`}
                             title={`${title(item)} ${t("交互预览", "interactive preview")}`}
                             src={`/components/preview/?component=${item.id}&theme=${dark ? "dark" : "light"}&lang=${lang}&motion=${motion ? "on" : "off"}`}
-                            sandbox={`allow-scripts allow-same-origin${item.id === "bg-image-texture" ? " allow-downloads" : ""}`}
+                            sandbox={`allow-scripts${item.id === "bg-image-texture" ? " allow-downloads" : ""}`}
                             referrerPolicy="no-referrer"
                           />
                         ) : (

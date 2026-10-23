@@ -43,7 +43,7 @@ export function ComponentTile({
             src={`/components/preview/?component=${encodeURIComponent(id)}&theme=${dark ? "dark" : "light"}&lang=${lang}&motion=off`}
             tabIndex={-1}
             inert
-            sandbox="allow-scripts allow-same-origin"
+            sandbox="allow-scripts"
             referrerPolicy="no-referrer"
           />
         )}

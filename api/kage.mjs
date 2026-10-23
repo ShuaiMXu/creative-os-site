@@ -1,7 +1,16 @@
 import { fetch, EnvHttpProxyAgent } from "undici";
 const dispatcher = new EnvHttpProxyAgent();
 const endpoint = "https://kage.design/mcp";
-let activeRequests = 0;
+export async function boundedText(response) {
+  let size = 0;
+  const chunks = [];
+  for await (const chunk of response.body) {
+    size += chunk.byteLength;
+    if (size > 2 * 1024 * 1024) throw Error("Kage response too large");
+    chunks.push(Buffer.from(chunk));
+  }
+  return Buffer.concat(chunks).toString("utf8");
+}
 function decode(text) {
   if (text.trim().startsWith("{")) return JSON.parse(text);
   for (const line of text.split("\n"))
@@ -27,7 +36,7 @@ async function callKage(name, args) {
     if (!r.ok) throw Error("Kage unavailable");
     const session = r.headers.get("mcp-session-id");
     if (session) headers["mcp-session-id"] = session;
-    const result = decode(await r.text());
+    const result = decode(await boundedText(r));
     if (result.error || result.result?.isError)
       throw Error("Kage query failed");
     return result.result;
@@ -103,37 +112,57 @@ export async function getKage(slug) {
   return normalizeDesignResponse(await callKage("get_design", { slug, include_image: false }));
 }
 
-export default async function handler(req, res) {
-  res.setHeader("Cache-Control", "no-store");
-  if (req.method !== "GET") {
-    res.statusCode = 405;
-    return res.end();
+export function createHandler({ search = searchKage, detail = getKage, now = Date.now } = {}) {
+  let activeRequests = 0;
+  const cache = new Map();
+  let windowStart = now(), requests = 0;
+  return async function handler(req, res) {
+    res.setHeader("Cache-Control", "no-store");
+    if (req.method !== "GET") {
+      res.setHeader("Allow", "GET");
+      res.statusCode = 405;
+      return res.end();
+    }
+    const params = new URL(req.url, "http://localhost").searchParams;
+    const query = params.get("query")?.trim(),
+      slug = params.get("slug"),
+      browse = params.get("browse") === "all";
+    res.setHeader("Content-Type", "application/json");
+    if (
+      slug ? !/^[a-zA-Z0-9_-]{1,200}$/.test(slug) : browse ? !!query : !query || query.length > 160
+    ) {
+      res.statusCode = 400;
+      return res.end(JSON.stringify({ error: "Invalid query" }));
+    }
+    const key = slug ? `detail:${slug}` : `search:${query || ""}`;
+    const cached = cache.get(key);
+    if (cached && cached.expires > now()) {
+      res.setHeader("Cache-Control", "public, max-age=0, s-maxage=300");
+      return res.end(cached.body);
+    }
+    if (cached) cache.delete(key);
+    // Instance-local safeguard, supplementary to distributed edge protection.
+    if (now() - windowStart >= 60000) { windowStart = now(); requests = 0; }
+    if (activeRequests >= 4 || requests >= 30) {
+      res.statusCode = 429;
+      res.setHeader("Retry-After", "60");
+      return res.end(JSON.stringify({ error: "Please retry shortly." }));
+    }
+    requests++;
+    activeRequests++;
+    try {
+      const body = JSON.stringify(slug ? await detail(slug) : await search(query));
+      if (cache.size >= 32) cache.delete(cache.keys().next().value);
+      cache.set(key, {body, expires: now() + 300000});
+      res.setHeader("Cache-Control", "public, max-age=0, s-maxage=300");
+      res.end(body);
+    } catch {
+      res.statusCode = 502;
+      res.end(JSON.stringify({ error: "Kage is unavailable. Please retry." }));
+    } finally {
+      activeRequests--;
+    }
   }
-  const params = new URL(req.url, "http://localhost").searchParams;
-  const query = params.get("query")?.trim(),
-    slug = params.get("slug"),
-    browse = params.get("browse") === "all";
-  res.setHeader("Content-Type", "application/json");
-  if (
-    slug ? !/^[a-zA-Z0-9_-]{1,200}$/.test(slug) : browse ? !!query : !query || query.length > 160
-  ) {
-    res.statusCode = 400;
-    return res.end(JSON.stringify({ error: "Invalid query" }));
-  }
-  if (activeRequests >= 4) {
-    res.statusCode = 429;
-    res.setHeader("Retry-After", "15");
-    return res.end(JSON.stringify({ error: "Please retry shortly." }));
-  }
-  activeRequests++;
-  try {
-    res.end(
-      JSON.stringify(slug ? await getKage(slug) : await searchKage(query)),
-    );
-  } catch {
-    res.statusCode = 502;
-    res.end(JSON.stringify({ error: "Kage is unavailable. Please retry." }));
-  } finally {
-    activeRequests--;
-  }
+
 }
+export default createHandler();
