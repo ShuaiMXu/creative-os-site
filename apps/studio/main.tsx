@@ -196,6 +196,8 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
     </section>
   );
 }
+const presetCandidates = Object.keys(presets).map(id => ({ id, styles: presetStyles(id) }));
+
 function App() {
   const { lang, dark, toggleLanguage, toggleTheme } = useSitePreferences();
   useEffect(() => {
@@ -247,8 +249,7 @@ function App() {
       count: number;
     } | null>(null),
     [format, setFormat] = useState<ExportKind>("css");
-  const [preset, setPreset] = useState("happyhands"),
-    [search, setSearch] = useState(""),
+  const [search, setSearch] = useState(""),
     [hue, setHue] = useState(0),
     [saturation, setSaturation] = useState(1),
     [lightness, setLightness] = useState(1);
@@ -259,6 +260,11 @@ function App() {
   const styles = h.present,
     values = styles[mode],
     changes = differences(draft.baseline, styles);
+  const preset = presetCandidates.find(({styles: candidate}) => {
+    return (["light", "dark"] as const).every((m) =>
+      keys.every((key) => candidate[m][key] === styles[m][key]),
+    );
+  })?.id || "custom";
   const liveImportTarget = useRef({ id: draft.id, styles });
   const previewFonts = useFontLoading(
     (["font-sans", "font-serif", "font-mono"] as const).flatMap((key) => [
@@ -1020,8 +1026,14 @@ function App() {
                 <Select
                   aria-label={t("主题预设")}
                   value={preset}
-                  onChange={(e) => setPreset(e.target.value)}
+                  onChange={(e) => {
+                    const id = e.target.value;
+                    replace(presetStyles(id));
+                    setDraft((d) => ({ ...d, provenance: { revision, source: id } }));
+                    setConfirmed(false);
+                  }}
                 >
+                  {preset === "custom" && <option value="custom" disabled>{t("自定义主题")}</option>}
                   {Object.entries(presets).map(([id, p]) => (
                     <option value={id} key={id}>
                       {p.label || id}
@@ -1029,21 +1041,10 @@ function App() {
                   ))}
                 </Select>
               </label>
-              <Button
-                onClick={() => {
-                  replace(presetStyles(preset));
-                  setDraft((d) => ({
-                    ...d,
-                    provenance: { revision, source: preset },
-                  }));
-                  setConfirmed(false);
-                }}
-              >
-                {t("应用")}
-              </Button>
+
             </div>
             <p className="micro">
-              {t("替换双模式值，可撤销。默认使用苹方优先的无衬线字体。")}
+              {t("选择后立即预览浅色与深色主题，可随时撤销。")}
             </p>
             <div className="segmented">
               {(["light", "dark"] as const).map((m) => (

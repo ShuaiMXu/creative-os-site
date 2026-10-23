@@ -74,8 +74,8 @@ try {
   await page.locator(".kage-search input").fill("Linear");
   await page.locator(".kage-search button").click();
   await page.locator(".kage-card").click();
-  await page.locator(".kage-detail button").nth(1).waitFor();
-  await page.locator(".kage-detail button").nth(1).click();
+  await page.getByRole("button", { name: "重试", exact: true }).click();
+  await page.getByRole("button", { name: "设计分析", exact: true }).click();
   await page.locator(".kage-detail .reference-text").waitFor();
   assert.match(
     await page.locator(".reference-text").textContent(),
@@ -93,7 +93,8 @@ try {
       fullPage: true,
     });
   }
-  await page.locator(".kage-detail > button").click();
+  await page.getByRole("button", { name: "收起详情", exact: true }).click();
+  await page.waitForFunction(() => document.activeElement?.classList.contains("kage-card"));
   assert.equal(await page.locator(".kage-detail").count(), 0);
   assert.ok(
     await page

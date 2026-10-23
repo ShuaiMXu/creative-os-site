@@ -1,3 +1,4 @@
+import { SystemScenes } from "../../packages/ui/SystemScenes";
 import { SystemExample } from "../../packages/ui/SystemExample";
 import { Icon } from "../../packages/ui/Icon";
 import { SystemDirectory } from "../../packages/ui/SystemDirectory";
@@ -84,6 +85,7 @@ function App() {
           <SystemDirectory label={t("本页目录", "On this page")}>
             <nav aria-label={t("设计系统目录", "Design system navigation")}>
               {[
+                ["scenes", "应用场景", "Scenes"],
                 ["overview", "概览", "Overview"],
                 ["foundations", "基础规范", "Foundations"],
                 ["components", "组件与状态", "Components & states"],
@@ -96,6 +98,7 @@ function App() {
               ))}
             </nav>
           </SystemDirectory>
+          <SystemScenes system="happyhands" lang={lang} dark={dark} />
           <section id="foundations">
             <p className="eyebrow">{t("01 / 基础规范", "01 / Foundations")}</p>
             <h2>{t("颜色、文字与间距", "Color, type and spacing")}</h2>

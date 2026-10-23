@@ -41,3 +41,13 @@ test("detail preserves content for direct and wrapped upstream results", () => {
     assert.throws(()=>normalizeDesignResponse(invalid),/Invalid Kage design response/);
   }
 });
+
+ test("normalizes section images without accepting unsafe URLs", () => {
+ const result = normalizeDesign({full_page_url:"https://example.com/full.webp", source_url:"javascript:alert(1)", components:[null,{slug:"hero", image_url:"javascript:alert(1)",page_url:"https://user:pass@example.com",prompt:"Source analysis"}]});
+ assert.equal(result.fullPageImage,"https://example.com/full.webp");
+ assert.equal(result.website,null);
+ assert.equal(result.components.length,1);
+ assert.equal(result.components[0].image,null);
+ assert.equal(result.components[0].source,null);
+ assert.equal(result.components[0].prompt,"Source analysis");
+});

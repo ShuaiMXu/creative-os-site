@@ -1,0 +1,85 @@
+.theme-preview .specimen-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  text-align: left;
+}
+.theme-preview .specimen-table th,
+.theme-preview .specimen-table td {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.theme-preview .specimen-table th {
+  color: var(--muted-foreground);
+  font-weight: 500;
+}
+.theme-preview .specimen-switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.theme-preview button.specimen-switch {
+  width: 40px;
+  height: 24px;
+  min-height: 0;
+  padding: 3px;
+  border-radius: 20px;
+  background: var(--muted);
+  border: 1px solid var(--border);
+}
+.theme-preview button.specimen-switch[aria-checked="true"] {
+  background: var(--primary);
+}
+.theme-preview .specimen-switch span {
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--foreground);
+}
+.theme-preview .specimen-switch[aria-checked="true"] span {
+  transform: translateX(16px);
+  background: var(--primary-foreground);
+}
+.theme-preview .specimen-notice {
+  padding: 12px;
+  margin: 12px 0;
+  background: var(--muted);
+  color: var(--muted-foreground);
+  border-radius: var(--radius);
+}
+.theme-preview .specimen-notice p {
+  margin: 6px 0 0;
+  color: inherit;
+}
+.theme-preview .specimen-error {
+  background: var(--background);
+  border: 1px solid var(--destructive);
+  color: var(--destructive);
+}
+.theme-preview .specimen-dialog {
+  width: min(420px, calc(100vw - 48px));
+  padding: 24px;
+  background: var(--popover);
+  color: var(--popover-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.theme-preview .specimen-dialog::backdrop {
+  background: rgb(0 0 0 / 0.4);
+}
+.theme-preview input[type="range"] {
+  accent-color: var(--primary);
+  padding: 0;
+}
+.theme-preview .specimen-caption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

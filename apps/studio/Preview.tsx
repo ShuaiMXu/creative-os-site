@@ -1,3 +1,4 @@
+import { ComponentExamples } from "./ComponentExamples";
 import { Select } from "../../packages/ui/Select";
 import { Icon } from "../../packages/ui/Icon";
 import { t, sceneLabel } from "./i18n";
@@ -228,6 +229,7 @@ export function Preview({
                 {t("完成后通知我")}
               </label>
             </article>
+            <ComponentExamples />
           </div>
         </div>
       ) : scene === "Typography" ? (

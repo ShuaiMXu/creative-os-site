@@ -1,30 +1,20 @@
-import { ReferenceActions } from "./ReferenceActions";
+import "./kage-detail.css";
 import React, { useEffect, useRef, useState } from "react";
-type Design = {
-  slug: string;
-  title: string;
-  description: string;
-  image: string | null;
-  fullImage: string | null;
-  source: string | null;
-  product: string;
-  styles: string[];
-  prompt?: string;
-};
+import { KageDetail, KageImage, type KageDesign as Design } from "./KageDetail";
+import { Button } from "../packages/ui";
 export function KageGallery({ lang }: { lang: string }) {
   const t = (zh: string, en: string) => (lang === "zh" ? zh : en);
-  const [query, setQuery] = useState("landing page"),
+  const [query, setQuery] = useState(""),
+    [activeQuery, setActiveQuery] = useState(""),
     [items, setItems] = useState<Design[]>([]),
     [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [searched, setSearched] = useState(false),
     [selected, setSelected] = useState<Design | null>(null);
-  const [activeQuery, setActiveQuery] = useState("landing page");
   const [detailBusy, setDetailBusy] = useState(false),
     [detailError, setDetailError] = useState("");
   const controller = useRef<AbortController | null>(null),
     detailController = useRef<AbortController | null>(null),
-    heading = useRef<HTMLHeadingElement>(null),
     opener = useRef<HTMLButtonElement | null>(null);
   useEffect(
     () => () => {
@@ -34,15 +24,17 @@ export function KageGallery({ lang }: { lang: string }) {
     [],
   );
   useEffect(() => {
-    void search("landing page");
+    const timer = window.setTimeout(() => void search(undefined, ""), 0);
+    return () => window.clearTimeout(timer);
   }, []);
-  async function search(term: string) {
+  async function search(e?: React.FormEvent, phrase = query) {
+    e?.preventDefault();
+    setActiveQuery(phrase.trim());
+    setQuery(phrase);
     controller.current?.abort();
     detailController.current?.abort();
     const c = new AbortController();
     controller.current = c;
-    setQuery(term);
-    setActiveQuery(term);
     setBusy(true);
     setError("");
     setSelected(null);
@@ -50,7 +42,9 @@ export function KageGallery({ lang }: { lang: string }) {
     setSearched(true);
     try {
       const r = await fetch(
-        `/api/kage?query=${encodeURIComponent(term.trim())}`,
+        phrase.trim()
+          ? `/api/kage?query=${encodeURIComponent(phrase.trim())}`
+          : "/api/kage?browse=all",
         { signal: c.signal },
       );
       if (!r.ok) throw Error();
@@ -75,7 +69,6 @@ export function KageGallery({ lang }: { lang: string }) {
     setSelected(x);
     setDetailBusy(true);
     setDetailError("");
-    requestAnimationFrame(() => heading.current?.focus());
     try {
       const r = await fetch(`/api/kage?slug=${encodeURIComponent(x.slug)}`, {
         signal: c.signal,
@@ -94,63 +87,91 @@ export function KageGallery({ lang }: { lang: string }) {
   }
   return (
     <section className="kage-gallery">
-      <div
-        className="reference-topics"
-        aria-label={t("参考主题", "Reference topics")}
-      >
-        {[
-          ["dashboard", "工作台", "Dashboards"],
-          ["landing page", "产品官网", "Landing pages"],
-          ["pricing", "定价页", "Pricing"],
-          ["settings", "设置页", "Settings"],
-        ].map(([term, zh, en]) => (
-          <button
-            key={term}
-            type="button"
-            aria-pressed={activeQuery === term}
-            onClick={() => void search(term)}
-          >
-            {t(zh, en)}
-          </button>
-        ))}
-      </div>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (query.trim()) void search(query);
-        }}
-        className="kage-search"
-      >
+      <p>
+        {t(
+          "搜索产品或风格，在本站查看截图、设计分析和页面区块。",
+          "Search a product or style, then explore screenshots, analysis and page sections here.",
+        )}
+      </p>
+      <form onSubmit={search} className="kage-search">
         <label>
           {t("产品或风格", "Product or style")}
           <input
             type="search"
             maxLength={160}
-            required
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Linear, minimal, dashboard…"
           />
         </label>
-        <button disabled={busy || !query.trim()}>
+        <Button type="submit" variant="primary" loading={busy}>
           {busy
             ? t("查询中…", "Searching…")
             : t("查找参考", "Search references")}
-        </button>
+        </Button>
       </form>
+      <div
+        className="kage-suggestions"
+        role="group"
+        aria-label={t("参考方向", "Reference topics")}
+      >
+        {[
+          [t("全部类型", "All types"), ""],
+          [t("产品首页", "Landing pages"), "landing page"],
+          ["Linear", "Linear"],
+          [t("仪表盘", "Dashboard"), "dashboard"],
+          [t("极简页面", "Minimal pages"), "minimal"],
+          [t("定价页面", "Pricing pages"), "pricing"],
+          [t("作品集", "Portfolios"), "portfolio"],
+          [t("电商", "Commerce"), "ecommerce"],
+          [t("金融产品", "Finance"), "finance"],
+          [t("AI 产品", "AI products"), "AI"],
+          [t("编辑排版", "Editorial"), "editorial"],
+          [t("深色界面", "Dark interfaces"), "dark"],
+          [t("字体设计", "Typography"), "typography"],
+        ].map(([label, phrase]) => (
+          <Button
+            key={phrase}
+            aria-pressed={activeQuery === phrase}
+            onClick={() => void search(undefined, phrase)}
+          >
+            {label}
+          </Button>
+        ))}
+      </div>
       <p role="status">
-        {busy
-          ? t("正在从 Kage 加载真实参考…", "Loading references from Kage…")
-          : error ||
-            (!busy && searched && !items.length
-              ? t("没有找到匹配的参考。", "No matching references.")
+        {error ||
+          (!busy && searched && !items.length
+            ? t("没有找到匹配的参考。", "No matching references.")
+            : !busy && items.length
+              ? t(
+                  `共 ${items.length} 个参考，点击卡片查看完整页面与设计分析。`,
+                  `${items.length} references. Open a card for the full page and design analysis.`,
+                )
               : "")}
       </p>
-      {error && (
-        <button type="button" onClick={() => void search(activeQuery)}>
-          {t("重新加载参考", "Retry references")}
-        </button>
+      {!busy && !error && items.length > 0 && (
+        <p className="kage-result-note">
+          {t(
+            "每次最多展示 24 个结果，可切换分类或搜索其他参考。",
+            "Up to 24 results per request. Choose a topic or search for other references.",
+          )}
+        </p>
       )}
+      {!searched && (
+        <p className="kage-empty">
+          {t(
+            "选择一个参考方向，或输入你想查看的产品。",
+            "Choose a topic or enter a product you want to explore.",
+          )}
+        </p>
+      )}
+      {error && (
+        <Button onClick={() => void search(undefined, activeQuery)}>
+          {t("重新加载参考", "Retry references")}
+        </Button>
+      )}
+      {busy && <p role="status">{t("正在查找参考…", "Finding references…")}</p>}
       <div className="kage-grid" aria-busy={busy} hidden={!!selected}>
         {items.map((x) => (
           <button
@@ -161,84 +182,27 @@ export function KageGallery({ lang }: { lang: string }) {
               void open(x);
             }}
           >
-            {x.image && (
-              <img
-                src={x.image}
-                alt={x.title}
-                loading="lazy"
-                referrerPolicy="no-referrer"
-                onError={(e) => {
-                  e.currentTarget.hidden = true;
-                }}
-              />
-            )}
+            <KageImage src={x.image} title={x.title} lang={lang} />
             <strong>{x.title}</strong>
             <span>{[x.product, ...x.styles].filter(Boolean).join(" / ")}</span>
+            <span>{t("站内查看", "Explore here")}</span>
           </button>
         ))}
       </div>
       {selected && (
-        <section
-          className="kage-detail"
-          aria-label={t("设计详情", "Design details")}
-        >
-          <button
-            onClick={() => {
-              detailController.current?.abort();
-              setSelected(null);
-              requestAnimationFrame(() => opener.current?.focus());
-            }}
-          >
-            {t("收起详情", "Close details")}
-          </button>
-          <h3 ref={heading} tabIndex={-1}>
-            {selected.title}
-          </h3>
-          <p role="status">
-            {detailBusy
-              ? t("正在加载设计分析…", "Loading analysis…")
-              : detailError}
-          </p>
-          {detailError && (
-            <button onClick={() => void open(selected)}>
-              {t("重试", "Retry")}
-            </button>
-          )}
-          {selected.fullImage && (
-            <img
-              src={selected.fullImage}
-              alt={selected.title}
-              referrerPolicy="no-referrer"
-              onError={(e) => {
-                e.currentTarget.hidden = true;
-              }}
-            />
-          )}
-          <p>{selected.description}</p>
-          {!detailBusy && !detailError && selected.prompt && (
-            <>
-              <h4>{t("设计分析 / 原文", "Design analysis / Original")}</h4>
-              <pre className="reference-text">{selected.prompt}</pre>
-              <ReferenceActions
-                key={selected.slug}
-                lang={lang}
-                content={selected.prompt}
-                source={selected.source || selected.title}
-              />
-            </>
-          )}
-          {selected.source && (
-            <a href={selected.source} target="_blank" rel="noreferrer">
-              {t("查看 Kage 来源", "View Kage source")}
-            </a>
-          )}
-          <p>
-            {t(
-              "截图属于原产品，仅用于设计参考。设计分析为上游原文。",
-              "Screenshots belong to their products and are for reference. Analysis is the original source text.",
-            )}
-          </p>
-        </section>
+        <KageDetail
+          key={selected.slug}
+          design={selected}
+          lang={lang}
+          busy={detailBusy}
+          error={detailError}
+          retry={() => void open(selected)}
+          close={() => {
+            detailController.current?.abort();
+            setSelected(null);
+            requestAnimationFrame(() => opener.current?.focus());
+          }}
+        />
       )}
     </section>
   );
