@@ -8,7 +8,7 @@ import {
   approve,
   validateFoundation,
 } from "../packages/theme-core/project.ts";
-const root = resolve(process.env.HARNESS_ROOT || "../creative-os");
+const root = resolve(process.env.HARNESS_ROOT || "../happyhands");
 const { createRun, saveFoundationApproval, loadRun } = await import(
   pathToFileURL(join(root, "packages/harness-core/store.js")).href
 );

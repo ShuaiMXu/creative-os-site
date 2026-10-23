@@ -1,4 +1,4 @@
-export const repositories = { core: 'https://github.com/ShuaiMXu/creative-os', site: 'https://github.com/ShuaiMXu/creative-os-site', happyclaw: 'https://github.com/ShuaiMXu/happyclaw-site' };
+export const repositories = { core: 'https://github.com/ShuaiMXu/happyhands', site: 'https://github.com/ShuaiMXu/happyhands-site', happyclaw: 'https://github.com/ShuaiMXu/happyclaw-site' };
 
 // Temporary reference imagery, reused from the local Appllama collection.
 export const heroScreens = Array.from({length:111}, (_, i) => `/assets/hero/screen-${String(i+1).padStart(3,'0')}.webp`);

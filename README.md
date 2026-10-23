@@ -1,8 +1,21 @@
-# HappyHands
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="public/brand/happyhands-logo-paper.png">
+    <img src="public/brand/happyhands-logo-ink.png" alt="HappyHands" width="280" height="60">
+  </picture>
+</p>
 
-The HappyHands website for [creative-os](https://github.com/ShuaiMXu/creative-os) — the AI Product Designer harness for apps built with coding agents. The site is extracted from the main repository so the product story, design system and evidence can iterate and deploy independently.
+# HappyHands website
 
-**HappyHands 是 creative-os 的产品与内容门户。从主仓库提取，独立迭代与部署。**
+[![Stars](https://img.shields.io/github/stars/ShuaiMXu/happyhands-site?style=flat-square)](https://github.com/ShuaiMXu/happyhands-site/stargazers)
+[![Forks](https://img.shields.io/github/forks/ShuaiMXu/happyhands-site?style=flat-square)](https://github.com/ShuaiMXu/happyhands-site/forks)
+[![Website](https://img.shields.io/badge/website-happyhands.cc-161616?style=flat-square)](https://happyhands.cc)
+
+[Star history](https://www.star-history.com/?repos=ShuaiMXu%2Fhappyhands-site&type=date) | [Core workbench](https://github.com/ShuaiMXu/happyhands)
+
+The public website for HappyHands: product guidance, design systems, component previews, and Theme Studio. The local workbench and Harness are maintained separately in [happyhands](https://github.com/ShuaiMXu/happyhands).
+
+HappyHands 官网提供产品指引、设计系统、组件预览和主题工作室。本地工作台与 Harness 由核心仓库独立维护。
 
 ```text
 apps/portal/    中文门户 — Apps / Explore / Screens / UI Elements / Get Started
@@ -11,7 +24,7 @@ apps/designer/  Review Workbench — reads exported harness runs
 apps/studio/    Theme Studio — project themes, previews, exports and Foundation approval
 packages/theme-core/  Adapted tweakcn engine, presets, import/export and project logic
 packages/contracts/   Versioned drafts and Harness Foundation schema snapshot
-public/runs/    Run artifacts published by `pnpm harness export` in creative-os
+public/runs/    Run artifacts published by `pnpm harness export` in happyhands
 packages/       Shared theme/contracts/UI modules, spec validation
                 (experience-core) and the Expert Loop state machine (workflow.js)
 examples/       The bundled Experience Specs the workbench opens without a run
@@ -50,20 +63,20 @@ npm run typecheck
 npm run test:studio
 npm run build
 npm run test:studio:browser  # dev server running; Edge by default
-npm run test:studio:harness # sibling ../creative-os checkout required
+npm run test:studio:harness # sibling ../happyhands checkout required
 ```
 
 ## Data flow
 
 The Review Workbench is read-only for run data. Runs are produced in the
-[creative-os](https://github.com/ShuaiMXu/creative-os) harness and published with
+[happyhands](https://github.com/ShuaiMXu/happyhands) harness and published with
 `pnpm harness export`, which copies an allow-list (manifest, spec, captures,
 screenshots, skill results, reviews) into `public/runs/`. Nothing here edits a
 run; judgments are recorded in the harness CLI.
 
 Portal content lives in `apps/portal/content.js`; reusable render functions live
 in `apps/portal/components.js`. The hero and Screens section use only exported
-creative-os run captures. Product claims link back to the core repository,
+happyhands run captures. Product claims link back to the core repository,
 issues or Workbench evidence.
 
 ## Brand foundation
@@ -77,7 +90,7 @@ official dark-background logo and mark live in `public/brand/`.
 
 ## Local Web Alpha
 
-The website provides setup guidance and read-only historical examples. Install creative-os dependencies and run `pnpm workbench`; enter your repository directory and key user task in the local workbench. Project DESIGN.md, tokens and component code remain the design sources. Confirm rules and scope before isolated edits; independently review the result before a human decision. The current scoped example is [the approved HappyClaw command-hint change](https://github.com/ShuaiMXu/creative-os/blob/main/docs/counter-evidence-review-2026-10-21.md). Its original disputed review remains in history and does not imply human acceptance or deployment.
+The website provides setup guidance and read-only historical examples. Install happyhands dependencies and run `pnpm workbench`; enter your repository directory and key user task in the local workbench. Project DESIGN.md, tokens and component code remain the design sources. Confirm rules and scope before isolated edits; independently review the result before a human decision. The current scoped example is [the approved HappyClaw command-hint change](https://github.com/ShuaiMXu/happyhands/blob/main/docs/counter-evidence-review-2026-10-21.md). Its original disputed review remains in history and does not imply human acceptance or deployment.
 
 `/apps/web/` is a historical compatibility URL that redirects to the portal; legacy exploration pages may retain those links. The old read-only site workbench is not the current local application.
 
@@ -87,4 +100,4 @@ Builds publish `release.json` with the source revision and known/unknown dirty s
 
 接入区可填写仓库目录、任务和项目内 DESIGN.md/token/组件源码路径，通过 loopback 工作台链接交接。先运行主仓库 `pnpm workbench`，本地确认后复用原 onboard 流程；官网的“查看本次记录”恢复同一持久任务/run。没有跨域本地 API 调用，也不会从链接自动批准规范或执行代码。数据保留在当前标签页 sessionStorage，源码只在本地读取。需配套包含 site-handoff 协议的新版本主仓库；Studio 的未导出主题草稿仍走原审批导出/导入流程。
 
-协议集成校验：`node --test tests/site-handoff.test.mjs`（主仓库默认 `../creative-os`，可用 `HARNESS_ROOT` 指定）。
+协议集成校验：`node --test tests/site-handoff.test.mjs`（主仓库默认 `../happyhands`，可用 `HARNESS_ROOT` 指定）。

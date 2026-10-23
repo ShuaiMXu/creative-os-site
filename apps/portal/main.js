@@ -16,8 +16,8 @@ import './homepage-motion.css';
 import "../../packages/ui/owned-ui.css";
 let disposeHomepageMotion;
 
-const quickstartCommand = `git clone https://github.com/ShuaiMXu/creative-os.git
-cd creative-os
+const quickstartCommand = `git clone https://github.com/ShuaiMXu/happyhands.git
+cd happyhands
 pnpm install --frozen-lockfile
 pnpm workbench`;
 let lang = readLanguage();
@@ -136,7 +136,7 @@ function renderContent() {
     <section class="content-section" id="screens">
       <div class="section-head"><div><h2>${lang === 'zh' ? '实际项目中的设计改进' : 'Design improvements in practice'}</h2></div><p>${lang === 'zh' ? '查看修改过程与对照记录，试用组件的交互状态。' : 'Explore a documented change and try component interactions.'}</p></div>
       <div class="case-links">
-        <article><h3>HappyClaw</h3><p>${lang === 'zh' ? '为长命令补充滚动提示，帮助用户发现被隐藏的内容。' : 'A scroll hint helps users discover the hidden part of a long command.'}</p><a class="text-link" href="https://github.com/ShuaiMXu/creative-os/blob/main/docs/counter-evidence-review-2026-10-21.md">${lang === 'zh' ? '查看修改记录' : 'View change record'} ${iconMarkup('external')}</a><details><summary>${lang === 'zh' ? '复核状态' : 'Review status'}</summary><p>${lang === 'zh' ? '本次局部修改已通过独立重审，人工接受仍待记录。原失败记录保留；此案例不代表全站验收或线上部署。' : 'This scoped change passed independent re-review; human acceptance is pending. The original failure is retained. It does not represent whole-site acceptance or deployment.'}</p></details></article>
+        <article><h3>HappyClaw</h3><p>${lang === 'zh' ? '为长命令补充滚动提示，帮助用户发现被隐藏的内容。' : 'A scroll hint helps users discover the hidden part of a long command.'}</p><a class="text-link" href="https://github.com/ShuaiMXu/happyhands/blob/main/docs/counter-evidence-review-2026-10-21.md">${lang === 'zh' ? '查看修改记录' : 'View change record'} ${iconMarkup('external')}</a><details><summary>${lang === 'zh' ? '复核状态' : 'Review status'}</summary><p>${lang === 'zh' ? '本次局部修改已通过独立重审，人工接受仍待记录。原失败记录保留；此案例不代表全站验收或线上部署。' : 'This scoped change passed independent re-review; human acceptance is pending. The original failure is retained. It does not represent whole-site acceptance or deployment.'}</p></details></article>
         <article><h3>HappyHands</h3><p>${lang === 'zh' ? '试用按钮、表单与反馈状态，查看同一套规范如何应用到界面。' : 'Try buttons, forms and feedback states to see the system in use.'}</p><a class="text-link" href="/systems/happyhands/#components">${lang === 'zh' ? '试用组件' : 'Try components'} ${iconMarkup('right')}</a></article>
       </div>
     </section>
@@ -144,7 +144,7 @@ function renderContent() {
       <div class="get-started-copy"><h2>${c.sections.getStarted.title}<br><span>${c.sections.getStarted.titleLine2}</span></h2><p>${c.sections.getStarted.copy}</p></div>
       <div class="steps-grid">${c.steps.map(stepCard).join('')}</div>
       <div class="command-card"><div><span>${c.sections.getStarted.quickstartLabel}</span><strong>${c.sections.getStarted.quickstartTitle}</strong></div><pre><code>${quickstartCommand}</code></pre><button type="button" data-copy="${quickstartCommand}">${iconMarkup('copy')} ${c.sections.getStarted.copyBtn}</button></div>
-      <p class="quickstart-note">${lang === 'zh' ? '先准备 Git、Node.js 22.15+ 和 pnpm 11.19.0，并确认 GitHub 账号有工程仓库访问权限。逐行执行，前一步成功后再继续。已有工程时，进入 creative-os 目录执行 pnpm workbench 即可。' : 'Requires Git, Node.js 22.15+, pnpm 11.19.0 and access to the GitHub repository. Run each line after the previous step succeeds. For an existing installation, run pnpm workbench from the creative-os directory.'}</p>
+      <p class="quickstart-note">${lang === 'zh' ? '先准备 Git、Node.js 22.15+ 和 pnpm 11.19.0，并确认 GitHub 账号有工程仓库访问权限。逐行执行，前一步成功后再继续。已有工程时，进入 happyhands 目录执行 pnpm workbench 即可。' : 'Requires Git, Node.js 22.15+, pnpm 11.19.0 and access to the GitHub repository. Run each line after the previous step succeeds. For an existing installation, run pnpm workbench from the happyhands directory.'}</p>
       <div class="final-actions"><a class="button button-primary" href="${repositories.core}">GitHub ${iconMarkup('external')}</a><a class="button button-secondary" href="${repositories.site}">${lang === 'zh' ? '网站源码' : 'Website source'}</a></div>
     </section>`;
   }
