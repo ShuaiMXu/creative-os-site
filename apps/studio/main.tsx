@@ -454,145 +454,176 @@ function App() {
         onTheme={toggleTheme}
         active="/apps/studio/"
       />
-      <div className="studio-project-bar">
-        <span>{lang === "zh" ? "主题工作室" : "Theme Studio"}</span>
-        <div className="project-select">
-          <Select
-            aria-label={t("选择项目")}
-            value={draft.id}
-            onChange={(e) => switchProject(e.target.value)}
-          >
-            {projectIds.map((id) => (
-              <option key={id}>{id}</option>
-            ))}
-          </Select>
-          <Button
-            ref={projectTrigger}
-            aria-label={t("新建项目")}
-            aria-expanded={creatingProject}
-            aria-controls="new-project-form"
-            onClick={() => {
-              if (creatingProject) closeProjectForm();
-              else {
-                setProjectId("");
-                setProjectError("");
-                setCreatingProject(true);
-              }
-            }}
-          >
-            <Icon name="plus" />
-          </Button>
-        </div>
-      </div>
-      {creatingProject && (
-        <form id="new-project-form" className="studio-new-project"
-          onKeyDown={(event) => {
-            if (event.key === "Escape") { event.stopPropagation(); closeProjectForm(); }
-          }}
-          onSubmit={(event) => {
-            event.preventDefault();
-            const id = projectId.trim();
-            if (!/^[\w-]{1,80}$/.test(id)) {
-              setProjectError(t("请输入 1–80 位英文、数字、短横线或下划线"));
-              return;
-            }
-            if (projectIds.includes(id)) {
-              setProjectError(t("项目已存在，请在项目列表中选择"));
-              return;
-            }
-            if (switchProject(id)) closeProjectForm();
-          }}>
-          <label htmlFor="new-project-id">{t("项目 ID")}</label>
-          <div className="studio-new-project-controls">
-            <input id="new-project-id" autoFocus value={projectId} maxLength={80}
-              autoComplete="off" spellCheck={false} aria-invalid={!!projectError}
-              aria-describedby={projectError ? "new-project-error" : undefined}
-              onChange={(event) => { setProjectId(event.target.value); setProjectError(""); }} />
-            <Button type="submit" variant="primary">{t("创建项目")}</Button>
-            <Button type="button" onClick={closeProjectForm}>{t("取消")}</Button>
-          </div>
-          {projectError && <p id="new-project-error" role="alert">{projectError}</p>}
-        </form>
-      )}
       <main className="studio-shell">
         <div className="studio-title">
           <div>
             <h1>{t("项目设计系统")}</h1>
             <p>{t("选择颜色和字体，预览效果，再导出到你的项目。")}</p>
           </div>
-          <div className="toolbar studio-actions">
-            <Button disabled={!h.past.length} onClick={() => setH(undo)}>
-              <Icon name="undo" />
-              {t("撤销")}
-            </Button>
-            <Button disabled={!h.future.length} onClick={() => setH(redo)}>
-              <Icon name="redo" />
-              {t("重做")}
-            </Button>
-            <Button
-              ref={exportTrigger}
-              variant={panel ? "secondary" : "primary"}
-              onClick={() => openPanel("export")}
-            >
-              {t("导出")}
-            </Button>
-            <details
-              className="studio-more"
-              ref={moreDetails}
-              onKeyDown={(e) => {
-                if (e.key === "Escape") {
-                  if (moreDetails.current) moreDetails.current.open = false;
-                  moreTrigger.current?.focus();
-                }
-              }}
-            >
-              <summary ref={moreTrigger}>
-                {t("更多操作")} <Icon name="down" />
-              </summary>
-              <div className="studio-more-content">
-                <Button onClick={() => openPanel("standards")}>
-                  {t("设计规范")}
-                </Button>
-                <Button
-                  onClick={() =>
-                    guard(() => {
-                      persist();
-                      if (moreDetails.current) moreDetails.current.open = false;
-                      moreTrigger.current?.focus();
-                    })
+          <div className="studio-title-tools">
+            <div className="project-select">
+              <Select
+                aria-label={t("选择项目")}
+                value={draft.id}
+                onChange={(e) => switchProject(e.target.value)}
+              >
+                {projectIds.map((id) => (
+                  <option key={id}>{id}</option>
+                ))}
+              </Select>
+              <Button
+                ref={projectTrigger}
+                aria-label={t("新建项目")}
+                aria-expanded={creatingProject}
+                aria-controls="new-project-form"
+                onClick={() => {
+                  if (creatingProject) closeProjectForm();
+                  else {
+                    setProjectId("");
+                    setProjectError("");
+                    setCreatingProject(true);
                   }
-                >
-                  {t("保存")}
-                </Button>
-                <Button onClick={() => openPanel("import")}>{t("导入")}</Button>
-                <div className="studio-advanced">
-                  <p>{t("接入本地项目")}</p>
-                  <Button
-                    onClick={() => {
-                      setConfirmed(false);
-                      openPanel("review");
-                    }}
-                  >
-                    {t("审核变更")} {changes.length || ""}
+                }}
+              >
+                <Icon name="plus" />
+              </Button>
+            </div>
+            <div className="toolbar studio-actions">
+              <Button disabled={!h.past.length} onClick={() => setH(undo)}>
+                <Icon name="undo" />
+                {t("撤销")}
+              </Button>
+              <Button disabled={!h.future.length} onClick={() => setH(redo)}>
+                <Icon name="redo" />
+                {t("重做")}
+              </Button>
+              <Button
+                ref={exportTrigger}
+                variant={panel ? "secondary" : "primary"}
+                onClick={() => openPanel("export")}
+              >
+                {t("导出")}
+              </Button>
+              <details
+                className="studio-more"
+                ref={moreDetails}
+                onKeyDown={(e) => {
+                  if (e.key === "Escape") {
+                    if (moreDetails.current) moreDetails.current.open = false;
+                    moreTrigger.current?.focus();
+                  }
+                }}
+              >
+                <summary ref={moreTrigger}>
+                  {t("更多操作")} <Icon name="down" />
+                </summary>
+                <div className="studio-more-content">
+                  <Button onClick={() => openPanel("standards")}>
+                    {t("设计规范")}
                   </Button>
-                  <p className="micro">
-                    {t("将主题交给本地工作台前，核对变更并导出批准文件。")}
-                  </p>
-                  <a className="review-link" href="/apps/portal/#connect-agent">
-                    {t("设置本地工作台")}
-                  </a>
-                  <p className="micro">
-                    {Object.keys(presets).length} {t("预设  / ")} {keys.length}{" "}
-                    {t("变量 × 2 模式  / ")}{" "}
-                    {draft.foundation
-                      ? `Foundation ${draft.foundation.foundationVersion}`
-                      : t("尚未确认用于本地项目")}
-                  </p>
+                  <Button
+                    onClick={() =>
+                      guard(() => {
+                        persist();
+                        if (moreDetails.current)
+                          moreDetails.current.open = false;
+                        moreTrigger.current?.focus();
+                      })
+                    }
+                  >
+                    {t("保存")}
+                  </Button>
+                  <Button onClick={() => openPanel("import")}>
+                    {t("导入")}
+                  </Button>
+                  <div className="studio-advanced">
+                    <p>{t("接入本地项目")}</p>
+                    <Button
+                      onClick={() => {
+                        setConfirmed(false);
+                        openPanel("review");
+                      }}
+                    >
+                      {t("审核变更")} {changes.length || ""}
+                    </Button>
+                    <p className="micro">
+                      {t("将主题交给本地工作台前，核对变更并导出批准文件。")}
+                    </p>
+                    <a
+                      className="review-link"
+                      href="/apps/portal/#connect-agent"
+                    >
+                      {t("设置本地工作台")}
+                    </a>
+                    <p className="micro">
+                      {Object.keys(presets).length} {t("预设  / ")}{" "}
+                      {keys.length} {t("变量 × 2 模式  / ")}{" "}
+                      {draft.foundation
+                        ? `Foundation ${draft.foundation.foundationVersion}`
+                        : t("尚未确认用于本地项目")}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </details>
+              </details>
+            </div>
           </div>
         </div>
+        {creatingProject && (
+          <form
+            id="new-project-form"
+            className="studio-new-project"
+            onKeyDown={(event) => {
+              if (event.key === "Escape") {
+                event.stopPropagation();
+                closeProjectForm();
+              }
+            }}
+            onSubmit={(event) => {
+              event.preventDefault();
+              const id = projectId.trim();
+              if (!/^[\w-]{1,80}$/.test(id)) {
+                setProjectError(t("请输入 1–80 位英文、数字、短横线或下划线"));
+                return;
+              }
+              if (projectIds.includes(id)) {
+                setProjectError(t("项目已存在，请在项目列表中选择"));
+                return;
+              }
+              if (switchProject(id)) closeProjectForm();
+            }}
+          >
+            <label htmlFor="new-project-id">{t("项目 ID")}</label>
+            <div className="studio-new-project-controls">
+              <input
+                id="new-project-id"
+                autoFocus
+                value={projectId}
+                maxLength={80}
+                autoComplete="off"
+                spellCheck={false}
+                aria-invalid={!!projectError}
+                aria-describedby={
+                  projectError ? "new-project-error" : undefined
+                }
+                onChange={(event) => {
+                  setProjectId(event.target.value);
+                  setProjectError("");
+                }}
+              />
+              <Button type="submit" variant="primary">
+                {t("创建项目")}
+              </Button>
+              <Button type="button" onClick={closeProjectForm}>
+                {t("取消")}
+              </Button>
+            </div>
+            {projectError && (
+              <p id="new-project-error" role="alert">
+                {projectError}
+              </p>
+            )}
+          </form>
+        )}
         <div className="status-line">
           <span role="status">{t(notice)}</span>
         </div>
