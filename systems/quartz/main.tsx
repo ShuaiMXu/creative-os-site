@@ -116,7 +116,6 @@ function App() {
           <SystemScenes system="quartz" lang={lang} dark={dark} />
           <section id="foundations">
             <FoundationSpecimen system="quartz" lang={lang} />
-            <p className="eyebrow">{t("01 / 设计原则", "01 / Principles")}</p>
             <h2>
               {t(
                 "颜色、状态与组件的使用约定",
@@ -187,7 +186,6 @@ function App() {
             </div>
           </section>
           <section id="components">
-            <p className="eyebrow">{t("02 / 组件目录", "02 / Components")}</p>
             <h2>{t("浏览完整组件目录", "Browse the complete catalog")}</h2>
             <p>
               {t(
@@ -198,9 +196,6 @@ function App() {
             <QuartzCatalog lang={lang} />
           </section>
           <section id="patterns">
-            <p className="eyebrow">
-              {t("03 / 页面模板", "03 / Screen blocks")}
-            </p>
             <h2>
               {t("按使用场景选择页面模板", "Choose a screen for your task")}
             </h2>
@@ -257,7 +252,6 @@ function App() {
             </div>
           </section>
           <section id="adopt">
-            <p className="eyebrow">{t("04 / 接入项目", "04 / Setup")}</p>
             <h2>{t("带回你的项目", "Bring it to your project")}</h2>
             <p>
               {t(

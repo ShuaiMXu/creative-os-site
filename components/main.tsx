@@ -190,17 +190,11 @@ function App() {
         onTheme={toggleTheme}
         active="/apps/portal/#explore"
       />
-      <header className="library-heading">
+      <div className="library-heading">
         <div>
           <h1>{t("设计资源", "Design resources")}</h1>
         </div>
-        {provider === "cult-ui" && (
-          <p className="catalog-total">
-            Cult UI / {data.previewCount}{" "}
-            {t("个组件可预览", "component previews")}
-          </p>
-        )}
-      </header>
+      </div>
       <nav
         className="resource-sections"
         aria-label={t("设计系统分类", "Design system sections")}

@@ -1058,7 +1058,7 @@ a:focus-visible {
   line-height: 18px;
 }
 .preview-footer {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--hh-ink-muted);
 }
 .token-row small {
