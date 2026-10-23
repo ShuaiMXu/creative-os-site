@@ -1,0 +1,422 @@
+{
+  "source": "https://design.how/r/quartz/registry.json",
+  "checkedAt": "2026-10-21",
+  "sourceHash": "2f329fc63c3a9963c0ffa3b50cd20515b3fe66f8aa0e9fdf0b77d842e95c37a2",
+  "items": [
+    {
+      "name": "button",
+      "title": "Button",
+      "type": "registry:ui"
+    },
+    {
+      "name": "button-group",
+      "title": "Button group",
+      "type": "registry:ui"
+    },
+    {
+      "name": "copy-button",
+      "title": "Copy button",
+      "type": "registry:ui"
+    },
+    {
+      "name": "input",
+      "title": "Input",
+      "type": "registry:ui"
+    },
+    {
+      "name": "textarea",
+      "title": "Textarea",
+      "type": "registry:ui"
+    },
+    {
+      "name": "field",
+      "title": "Field",
+      "type": "registry:ui"
+    },
+    {
+      "name": "date-picker",
+      "title": "Date picker",
+      "type": "registry:ui"
+    },
+    {
+      "name": "combobox",
+      "title": "Combobox",
+      "type": "registry:ui"
+    },
+    {
+      "name": "checkbox",
+      "title": "Checkbox",
+      "type": "registry:ui"
+    },
+    {
+      "name": "radio-group",
+      "title": "Radio group",
+      "type": "registry:ui"
+    },
+    {
+      "name": "switch",
+      "title": "Switch",
+      "type": "registry:ui"
+    },
+    {
+      "name": "slider",
+      "title": "Slider",
+      "type": "registry:ui"
+    },
+    {
+      "name": "select",
+      "title": "Select",
+      "type": "registry:ui"
+    },
+    {
+      "name": "segmented-control",
+      "title": "Segmented control",
+      "type": "registry:ui"
+    },
+    {
+      "name": "badge",
+      "title": "Badge",
+      "type": "registry:ui"
+    },
+    {
+      "name": "chip",
+      "title": "Chip",
+      "type": "registry:ui"
+    },
+    {
+      "name": "status",
+      "title": "Status",
+      "type": "registry:ui"
+    },
+    {
+      "name": "stat",
+      "title": "Stat",
+      "type": "registry:ui"
+    },
+    {
+      "name": "avatar",
+      "title": "Avatar",
+      "type": "registry:ui"
+    },
+    {
+      "name": "kbd",
+      "title": "Kbd",
+      "type": "registry:ui"
+    },
+    {
+      "name": "relative-time",
+      "title": "Relative time",
+      "type": "registry:ui"
+    },
+    {
+      "name": "truncate",
+      "title": "Truncate",
+      "type": "registry:ui"
+    },
+    {
+      "name": "item",
+      "title": "Item",
+      "type": "registry:ui"
+    },
+    {
+      "name": "card",
+      "title": "Card",
+      "type": "registry:ui"
+    },
+    {
+      "name": "panel",
+      "title": "Panel",
+      "type": "registry:ui"
+    },
+    {
+      "name": "data-list",
+      "title": "Data list",
+      "type": "registry:ui"
+    },
+    {
+      "name": "alert",
+      "title": "Alert",
+      "type": "registry:ui"
+    },
+    {
+      "name": "toast",
+      "title": "Toast",
+      "type": "registry:ui"
+    },
+    {
+      "name": "empty-state",
+      "title": "Empty state",
+      "type": "registry:ui"
+    },
+    {
+      "name": "skeleton",
+      "title": "Skeleton",
+      "type": "registry:ui"
+    },
+    {
+      "name": "progress",
+      "title": "Progress",
+      "type": "registry:ui"
+    },
+    {
+      "name": "dialog",
+      "title": "Dialog",
+      "type": "registry:ui"
+    },
+    {
+      "name": "sheet",
+      "title": "Sheet",
+      "type": "registry:ui"
+    },
+    {
+      "name": "popover",
+      "title": "Popover",
+      "type": "registry:ui"
+    },
+    {
+      "name": "tooltip",
+      "title": "Tooltip",
+      "type": "registry:ui"
+    },
+    {
+      "name": "dropdown-menu",
+      "title": "Dropdown menu",
+      "type": "registry:ui"
+    },
+    {
+      "name": "command",
+      "title": "Command",
+      "type": "registry:ui"
+    },
+    {
+      "name": "tabs",
+      "title": "Tabs",
+      "type": "registry:ui"
+    },
+    {
+      "name": "breadcrumb",
+      "title": "Breadcrumb",
+      "type": "registry:ui"
+    },
+    {
+      "name": "pagination",
+      "title": "Pagination",
+      "type": "registry:ui"
+    },
+    {
+      "name": "collapsible",
+      "title": "Collapsible",
+      "type": "registry:ui"
+    },
+    {
+      "name": "page-header",
+      "title": "Page header",
+      "type": "registry:ui"
+    },
+    {
+      "name": "table",
+      "title": "Table",
+      "type": "registry:ui"
+    },
+    {
+      "name": "filter-bar",
+      "title": "Filter bar",
+      "type": "registry:ui"
+    },
+    {
+      "name": "timeline",
+      "title": "Timeline",
+      "type": "registry:ui"
+    },
+    {
+      "name": "code-block",
+      "title": "Code block",
+      "type": "registry:ui"
+    },
+    {
+      "name": "json-view",
+      "title": "JSON view",
+      "type": "registry:ui"
+    },
+    {
+      "name": "log-viewer",
+      "title": "Log viewer",
+      "type": "registry:ui"
+    },
+    {
+      "name": "attachment",
+      "title": "Attachment",
+      "type": "registry:ui"
+    },
+    {
+      "name": "chart",
+      "title": "Chart",
+      "type": "registry:ui"
+    },
+    {
+      "name": "message",
+      "title": "Message",
+      "type": "registry:component"
+    },
+    {
+      "name": "conversation",
+      "title": "Conversation",
+      "type": "registry:component"
+    },
+    {
+      "name": "response",
+      "title": "Response",
+      "type": "registry:component"
+    },
+    {
+      "name": "reasoning",
+      "title": "Reasoning",
+      "type": "registry:component"
+    },
+    {
+      "name": "tool-call",
+      "title": "Tool call",
+      "type": "registry:component"
+    },
+    {
+      "name": "activity",
+      "title": "Activity",
+      "type": "registry:component"
+    },
+    {
+      "name": "prompt-input",
+      "title": "Prompt input",
+      "type": "registry:component"
+    },
+    {
+      "name": "send-button",
+      "title": "Send button",
+      "type": "registry:component"
+    },
+    {
+      "name": "mention",
+      "title": "Mention",
+      "type": "registry:component"
+    },
+    {
+      "name": "bulk-action-bar",
+      "title": "Bulk action bar",
+      "type": "registry:ui"
+    },
+    {
+      "name": "data-grid",
+      "title": "Data grid",
+      "type": "registry:ui"
+    },
+    {
+      "name": "project-home",
+      "title": "Workspace home",
+      "type": "registry:block"
+    },
+    {
+      "name": "agent-session",
+      "title": "Agent session",
+      "type": "registry:block"
+    },
+    {
+      "name": "tool-approval",
+      "title": "Tool approval",
+      "type": "registry:block"
+    },
+    {
+      "name": "api-keys",
+      "title": "API keys",
+      "type": "registry:block"
+    },
+    {
+      "name": "deploy-detail",
+      "title": "Prompt release",
+      "type": "registry:block"
+    },
+    {
+      "name": "run-trace",
+      "title": "Run trace",
+      "type": "registry:block"
+    },
+    {
+      "name": "live-requests",
+      "title": "Live activity",
+      "type": "registry:block"
+    },
+    {
+      "name": "utils",
+      "title": "cn",
+      "type": "registry:lib"
+    },
+    {
+      "name": "icon",
+      "title": "Icon",
+      "type": "registry:component"
+    },
+    {
+      "name": "portal",
+      "title": "Portal",
+      "type": "registry:lib"
+    },
+    {
+      "name": "overlay",
+      "title": "Overlay",
+      "type": "registry:lib"
+    },
+    {
+      "name": "kind",
+      "title": "Kinds",
+      "type": "registry:lib"
+    },
+    {
+      "name": "format",
+      "title": "Column formatters",
+      "type": "registry:lib"
+    },
+    {
+      "name": "css-var",
+      "title": "CSS token reader",
+      "type": "registry:lib"
+    },
+    {
+      "name": "direction",
+      "title": "Direction",
+      "type": "registry:lib"
+    },
+    {
+      "name": "use-focus-when-replaced",
+      "title": "useFocusWhenReplaced",
+      "type": "registry:lib"
+    },
+    {
+      "name": "use-offscreen",
+      "title": "useOffscreen",
+      "type": "registry:lib"
+    },
+    {
+      "name": "children",
+      "title": "Compound parts",
+      "type": "registry:lib"
+    },
+    {
+      "name": "scroll-focus",
+      "title": "Scroll tab stop",
+      "type": "registry:lib"
+    },
+    {
+      "name": "lint",
+      "title": "Quartz lint",
+      "type": "registry:item"
+    },
+    {
+      "name": "theme",
+      "title": "Quartz theme",
+      "type": "registry:item"
+    },
+    {
+      "name": "skill",
+      "title": "Quartz skill",
+      "type": "registry:item"
+    }
+  ]
+}

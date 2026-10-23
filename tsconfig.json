@@ -22,6 +22,7 @@
     "systems/quartz",
     "packages/contracts",
     "packages/ui",
-    "components"
+    "components",
+    "systems/lime"
   ]
 }

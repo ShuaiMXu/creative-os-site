@@ -40,7 +40,15 @@ body {
 }
 .system-landing a {
   color: inherit;
+  text-decoration: none;
   text-underline-offset: 4px;
+}
+.system-landing :is(p, dd) a {
+  color: var(--hh-brand-text);
+  font-weight: 500;
+}
+.system-landing :is(p, dd) a:hover {
+  text-decoration: underline;
 }
 .system-landing :is(button, input, select, textarea) {
   font: inherit;
@@ -65,8 +73,8 @@ body {
   text-decoration: none;
 }
 .system-breadcrumb a:hover {
-  color: var(--hh-ink);
-  text-decoration: underline;
+  color: var(--hh-brand-text);
+  text-decoration: none;
 }
 .system-breadcrumb [aria-current] {
   color: var(--hh-ink);
@@ -215,8 +223,8 @@ body {
 .system-landing .system-directory nav a:hover,
 .system-landing .system-directory a[aria-current="location"] {
   color: var(--hh-ink);
-  text-decoration: underline;
-  text-underline-offset: 8px;
+  font-weight: 600;
+  text-decoration: none;
 }
 .system-landing .rules {
   display: grid;

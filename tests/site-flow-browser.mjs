@@ -9,7 +9,7 @@ const browser = await chromium.launch({
 });
 await mkdir("test-results/site-flow", { recursive: true });
 try {
-  for (const width of [1280, 768, 390])
+  for (const width of [1280, 965, 768, 390])
     for (const theme of ["light", "dark"]) {
       const context = await browser.newContext({
         viewport: { width, height: 900 },
@@ -49,6 +49,15 @@ try {
       }
       await page.goto(base + "/apps/portal/", { waitUntil: "networkidle" });
       await check("home");
+      const guideLink = page.locator('#harness > a.text-link');
+      await guideLink.scrollIntoViewIfNeeded();
+      const linkStyle = await guideLink.evaluate(element => ({line:getComputedStyle(element).textDecorationLine,border:getComputedStyle(element).borderBottomWidth,height:element.getBoundingClientRect().height}));
+      assert.equal(linkStyle.line, 'none');assert.equal(linkStyle.border, '0px');assert.ok(linkStyle.height>=44);
+      await guideLink.hover();assert.equal(await guideLink.evaluate(element=>getComputedStyle(element).textDecorationLine),'none');
+      await page.keyboard.press('Tab');await guideLink.focus();
+      assert.ok(await guideLink.evaluate(element=>parseFloat(getComputedStyle(element).outlineWidth)>=2),'guide link keeps keyboard focus');
+      await page.locator('header.hh-site-header').scrollIntoViewIfNeeded();
+
       const menu = page.locator(".hh-site-menu-toggle");
       assert.equal(await menu.isVisible(), width <= 1000);
       if (width <= 1000) {
@@ -72,7 +81,7 @@ try {
         await page
           .locator(".system-resource-section:first-child article h4")
           .allTextContents(),
-        ["HappyHands", "Quartz"],
+        ["HappyHands", "Quartz", "Lime"],
       );
       assert.equal(
         await page.locator("#explore textarea, #explore pre").count(),
@@ -154,16 +163,13 @@ try {
       assert.equal(await page.locator("html").getAttribute("lang"), "en");
       await follow('#quartz a[href="/systems/quartz/"]');
       await check("quartz-en");
-      const componentGroup = page
-        .locator(".component-directory details")
-        .filter({ hasText: "Actions & inputs" });
-      await componentGroup.locator("summary").focus();
+      const catalog = page.locator(".quartz-catalog");
+      await catalog.getByRole("searchbox").fill("button");
+      const componentEntry = catalog.locator('[data-registry-item="button"]');
+      await componentEntry.locator("summary").focus();
       await page.keyboard.press("Enter");
-      assert.ok(
-        await componentGroup
-          .getByText("For forms, use Field", { exact: false })
-          .isVisible(),
-      );
+      assert.ok(await componentEntry.locator("pre").isVisible());
+      assert.match(await componentEntry.locator("pre").innerText(), /quartz\/button\.json/);
       assert.equal(await page.locator("html").getAttribute("lang"), "en");
       await follow('header a[href="/apps/studio/"]');
       await check("studio-en");

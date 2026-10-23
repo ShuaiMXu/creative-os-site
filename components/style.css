@@ -14,8 +14,8 @@
 .kage-detail img { display:block; width:100%; max-height:650px; object-fit:contain; object-position:top; }
 @media(max-width:700px){.kage-grid {grid-template-columns:1fr}.kage-search{align-items:stretch;flex-direction:column}}
 .resource-sections { max-width:1280px; margin:auto; padding:var(--hh-space-4) var(--hh-space-6); display:flex; gap:var(--hh-space-6); flex-wrap:wrap; }
-.resource-sections a { padding-block:var(--hh-space-3); text-decoration:none; border-bottom:2px solid transparent; }
-.resource-sections a[aria-current="page"] { border-color:var(--hh-ink); }
+.resource-sections a { padding:var(--hh-space-2) var(--hh-space-3); min-height:44px; display:inline-flex; align-items:center; text-decoration:none; border:0; border-radius:var(--hh-radius-sm); color:var(--hh-ink-muted); }
+.resource-sections a[aria-current="page"], .resource-sections a:hover { color:var(--hh-ink); font-weight:600; }
 .provider-navigation, .provider-reference {
   max-width: 1280px;
   margin: auto;

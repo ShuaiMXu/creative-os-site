@@ -23,7 +23,11 @@
     "predev": "npm run catalog:build",
     "test:components:browser": "node tests/component-library-browser.mjs",
     "test:components": "npm run catalog:build && node --test tests/component-catalog.test.mjs",
-    "verify:alpha": "node scripts/verify-alpha-release.mjs"
+    "verify:alpha": "node scripts/verify-alpha-release.mjs",
+    "test:systems:browser": "node tests/design-system-reference-browser.mjs",
+    "quartz:sync": "node scripts/sync-design-catalog.mjs quartz",
+    "lime:sync": "node scripts/sync-design-catalog.mjs lime",
+    "test:lime:browser": "node tests/lime-browser.mjs"
   },
   "dependencies": {
     "@base-ui/react": "1.9.0",

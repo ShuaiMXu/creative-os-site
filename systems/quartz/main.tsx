@@ -1,3 +1,4 @@
+import { QuartzCatalog } from "./QuartzCatalog";
 import { SystemExample } from "../../packages/ui/SystemExample";
 import { Icon } from "../../packages/ui/Icon";
 import { SystemDirectory } from "../../packages/ui/SystemDirectory";
@@ -23,36 +24,6 @@ function App() {
   const t = (cn: string, en: string) => (lang === "zh" ? cn : en);
 
   const prompt = quartzPrompt(lang, existing);
-  const groups = [
-    [
-      "操作与输入",
-      "Actions & inputs",
-      "Button · Field · Input · Select · Checkbox",
-      "填写表单时，用 Field 组织标签与说明；输入用 Input，固定选项用 Select，多选或开关选择用 Checkbox，提交用 Button。",
-      "For forms, use Field to organize labels and help, Input for text, Select for fixed choices, Checkbox for selections and Button to submit.",
-    ],
-    [
-      "反馈与浮层",
-      "Feedback & overlays",
-      "Status · Alert · Empty state · Dialog · Toast",
-      "持续状态放在 Status；需要处理的问题用 Alert；没有内容时给出 Empty state；需先做决定时用 Dialog，短暂确认用 Toast。",
-      "Use Status for ongoing state, Alert for issues that need attention, Empty state when there is no content, Dialog for a decision and Toast for brief confirmation.",
-    ],
-    [
-      "导航与数据",
-      "Navigation & data",
-      "Tabs · Filter bar · Table · Data grid",
-      "同一任务下的不同视图可用 Tabs；缩小结果范围用 Filter bar；逐行阅读用 Table，需要编辑和复杂操作时再考虑 Data grid。",
-      "Use Tabs for related views and Filter bar to narrow results. Start with Table for reading rows; consider Data grid for editing and more complex interactions.",
-    ],
-    [
-      "AI 工作流",
-      "AI workflows",
-      "Conversation · Prompt input · Tool call · Run trace",
-      "Conversation 呈现对话，Prompt input 接收请求，Tool call 展示具体操作，Run trace 帮助追踪一次执行。先判断用户需要查看哪一层信息。",
-      "Conversation presents a dialogue, Prompt input takes requests, Tool call shows an operation and Run trace helps follow an execution. Start with the level of detail the user needs.",
-    ],
-  ];
   return (
     <>
       <SiteHeader
@@ -211,24 +182,14 @@ function App() {
           </section>
           <section id="components">
             <p className="eyebrow">{t("02 / 组件目录", "02 / Components")}</p>
-            <h2>{t("从任务找到组件", "Find components by task")}</h2>
+            <h2>{t("浏览完整组件目录", "Browse the complete catalog")}</h2>
             <p>
               {t(
-                "展开查看各类组件适合什么任务。以下为 HappyHands 整理的选型说明，不是 Quartz 组件的交互演示；具体接口以原始文档为准。",
-                "Expand a group to see when to use it. These are selection notes by HappyHands, not interactive Quartz demos. Refer to the original documentation for APIs.",
+                "按操作、导航、反馈和工作流分类查找，也可搜索全部注册项。展开条目，在本站查看用途和接入方式；实际组件接口以来源为准。",
+                "Search all registered entries, or browse actions, navigation, feedback and workflow categories. Open an entry here for its purpose and setup. Refer to upstream for component APIs.",
               )}
             </p>
-            <div className="component-directory">
-              {groups.map(([cn, en, list, desc, eng]) => (
-                <details key={en}>
-                  <summary>
-                    {t(cn, en)} <Icon name="down" />
-                  </summary>
-                  <p>{list}</p>
-                  <p>{t(desc, eng)}</p>
-                </details>
-              ))}
-            </div>
+            <QuartzCatalog lang={lang} />
           </section>
           <section id="patterns">
             <p className="eyebrow">
@@ -270,10 +231,16 @@ function App() {
                   "Browse ongoing events",
                 ],
                 [
-                  "密钥与发布",
-                  "Keys & releases",
-                  "管理访问与发布信息",
-                  "Manage access and release information",
+                  "访问密钥",
+                  "API keys",
+                  "创建、查看与撤销密钥",
+                  "Create, inspect and revoke keys",
+                ],
+                [
+                  "发布详情",
+                  "Prompt release",
+                  "发布检查与回退",
+                  "Release checks and rollback",
                 ],
               ].map(([cn, en, desc, eng]) => (
                 <article key={en}>
@@ -353,6 +320,7 @@ function App() {
                 <Icon name="right" />
               </a>
             </div>
+            <div className="system-return"><a href="/apps/portal/#explore">{t("返回设计系统", "All design systems")}</a><a href="/systems/lime/">{t("了解 Lime", "Explore Lime")} <Icon name="right" /></a></div>
             <details>
               <summary>
                 {t("来源、版本与许可", "Sources, versions & licensing")}

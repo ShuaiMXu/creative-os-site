@@ -7,7 +7,8 @@ import { SystemBreadcrumb } from "../../packages/ui/SystemBreadcrumb";
 import React, { useState, useRef } from "react";
 import { createRoot } from "react-dom/client";
 import { Button } from "../../packages/ui";
-import tokens from "../../packages/design-tokens/happyhands.json";
+import { TokenReference } from "./TokenReference";
+import { ComponentShowcase, ScreenPatterns } from "./Showcase";
 import "../../packages/design-tokens/happyhands.css";
 import "../../packages/ui/components.css";
 import "../../packages/ui/site-layout.css";
@@ -97,23 +98,6 @@ function App() {
           <section id="foundations">
             <p className="eyebrow">{t("01 / 基础规范", "01 / Foundations")}</p>
             <h2>{t("颜色、文字与间距", "Color, type and spacing")}</h2>
-            <div className="swatches">
-              {["bg", "bg-raised", "ink", "brand", "success", "danger"].map(
-                (key) => (
-                  <div key={key}>
-                    <i style={{ background: `var(--hh-${key})` }} />
-                    <strong>{key}</strong>
-                    <code>
-                      {
-                        (dark ? tokens.dark : tokens.light)[
-                          key as keyof typeof tokens.light
-                        ]
-                      }
-                    </code>
-                  </div>
-                ),
-              )}
-            </div>
             <div className="rules">
               <article>
                 <h3>{t("文字", "Type")}</h3>
@@ -143,6 +127,7 @@ function App() {
                 </p>
               </article>
             </div>
+            <TokenReference lang={lang} dark={dark} />
           </section>
           <section id="components">
             <p className="eyebrow">
@@ -250,6 +235,7 @@ function App() {
                 </Button>
               </dialog>
             </div>
+            <ComponentShowcase lang={lang} />
             <div className="demo">
               <h3>{t("任务反馈 · 演示", "Task feedback · demo")}</h3>
               <div className="actions">
@@ -301,8 +287,9 @@ function App() {
               {t("03 / 页面模式", "03 / Screen patterns")}
             </p>
             <h2>
-              {t("这些页面正在使用 HappyHands", "Pages built with HappyHands")}
+              {t("从组件到页面", "From components to screens")}
             </h2>
+            <ScreenPatterns lang={lang} />
             <div className="rules">
               <article>
                 <h3>{t("官网", "Portal")}</h3>
@@ -397,8 +384,8 @@ function App() {
             </div>
             <p className="note">
               {t(
-                "当前提供设计变量与 React Button 源码，接入前请核对项目技术栈。",
-                "Tokens and the React Button source are available. Check compatibility with your project before adoption.",
+                "当前提供设计变量与 React Button、Select 源码，接入前请核对项目技术栈。",
+                "Tokens and the React Button and Select sources are available. Check compatibility with your project before adoption.",
               )}
             </p>
           </section>
@@ -429,6 +416,7 @@ function App() {
               <a href="/systems/quartz/">
                 {t("了解 Quartz", "Explore Quartz")} <Icon name="right" />
               </a>
+              <a href="/systems/lime/">{t("了解 Lime", "Explore Lime")} <Icon name="right" /></a>
             </div>
             <details>
               <summary>

@@ -58,9 +58,9 @@ textarea {
   border-radius: var(--hh-radius-sm);
   padding: 8px 10px;
 }
-input:focus,
-textarea:focus,
-select:focus {
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
   outline: 2px solid var(--hh-ring);
 }
 label {
@@ -947,9 +947,10 @@ p {
   padding: var(--hh-space-2) 0;
 }
 .font-install a {
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  color: var(--hh-brand-text);
+  text-decoration: none;
 }
+.font-install a:hover { text-decoration: underline; }
 .font-install p,
 .font-install textarea {
   margin: var(--hh-space-2) 0;
@@ -1344,8 +1345,11 @@ button[aria-pressed="true"] {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  text-decoration: underline;
+  gap: var(--hh-space-2);
+  color: var(--hh-ink);
+  text-decoration: none;
 }
+.studio-advanced a:hover { color: var(--hh-brand-text); }
 .preview-options {
   position: relative;
   margin-left: auto;
@@ -1467,4 +1471,72 @@ button[aria-pressed="true"] {
   flex-wrap: wrap;
   gap: var(--hh-space-2) var(--hh-space-6);
   padding-left: var(--hh-space-4);
+}
+
+/* Editor controls use the site theme; the sample keeps its editable theme. */
+.controls .token-row {
+  padding: var(--hh-space-2);
+  margin-inline: calc(-1 * var(--hh-space-2));
+  border-bottom-color: transparent;
+  border-radius: var(--hh-radius-md);
+}
+.controls .token-row:hover { background: var(--hh-bg-sunken); }
+.controls .token-row:focus-within { background: var(--hh-bg-hover); }
+.controls .token-row input:not([type="color"]):not([type="range"]) {
+  min-height: 32px;
+  background: transparent;
+  border-color: transparent;
+  border-radius: var(--hh-radius-sm);
+}
+.controls .token-row input:not([type="range"]):focus-visible {
+  outline: 2px solid var(--hh-ring);
+  outline-offset: 1px;
+}
+.controls .token-row input[type="color"] {
+  width: 28px;
+  height: 28px;
+  padding: 2px;
+  background: var(--hh-bg-raised);
+  border-color: var(--hh-line-strong);
+  border-radius: var(--hh-radius-sm);
+}
+.controls .hh-select-field > select,
+.studio-project-bar .hh-select-field > select,
+.preview-toolbar .hh-select-field > select {
+  min-height: 36px;
+  border-color: var(--hh-line);
+  background: var(--hh-bg-raised);
+  padding-inline-start: var(--hh-space-3);
+  padding-inline-end: calc(var(--hh-space-3) + 16px + var(--hh-space-2));
+  border-radius: var(--hh-radius-md);
+}
+.controls .hh-select-field > select:hover,
+.studio-project-bar .hh-select-field > select:hover,
+.preview-toolbar .hh-select-field > select:hover { border-color: var(--hh-line-strong); }
+.controls .hh-select-field > .hh-icon,
+.studio-project-bar .hh-select-field > .hh-icon,
+.preview-toolbar .hh-select-field > .hh-icon { color: var(--hh-ink-muted); }
+.controls .hh-select-field > select:focus-visible,
+.studio-project-bar .hh-select-field > select:focus-visible,
+.preview-toolbar .hh-select-field > select:focus-visible {
+  outline: 2px solid var(--hh-ring);
+  outline-offset: 2px;
+}
+.control-tabs {
+  padding: var(--hh-space-1);
+  gap: var(--hh-space-1);
+  background: var(--hh-bg-sunken);
+  border: 0;
+  border-radius: var(--hh-radius-md);
+}
+.control-tabs button { border-radius: var(--hh-radius-sm); color: var(--hh-ink-muted); }
+.control-tabs button[aria-pressed="true"] {
+  border: 0;
+  background: var(--hh-bg-raised);
+  color: var(--hh-ink);
+  font-weight: 600;
+}
+@media (forced-colors: active) {
+  .controls .token-row:focus-within { outline: 1px solid Highlight; }
+  .control-tabs button[aria-pressed="true"] { outline: 1px solid Highlight; }
 }
