@@ -209,6 +209,14 @@ function App() {
   const panelOrigin = useRef<HTMLElement | null>(null);
   const [draft, setDraft] = useState(boot.draft),
     [h, setH] = useState(() => history(boot.draft.styles));
+  const [creatingProject, setCreatingProject] = useState(false);
+  const [projectId, setProjectId] = useState("");
+  const [projectError, setProjectError] = useState("");
+  const projectTrigger = useRef<HTMLButtonElement>(null);
+  function closeProjectForm() {
+    setCreatingProject(false);
+    projectTrigger.current?.focus();
+  }
   const saved = useRef(boot.draft.revision);
   const blocked = useRef(false);
   const [mode, setMode] = useState<Mode>("light"),
@@ -267,8 +275,10 @@ function App() {
     try {
       setError("");
       action();
+      return true;
     } catch (e) {
       setError((e as Error).message);
+      return false;
     }
   }
   function persist(next = current()) {
@@ -355,7 +365,7 @@ function App() {
     );
   }
   function switchProject(id: string) {
-    guard(() => {
+    return guard(() => {
       persist();
       const next = read(id);
       saved.current = next.revision;
@@ -451,16 +461,53 @@ function App() {
             ))}
           </Select>
           <Button
+            ref={projectTrigger}
             aria-label={t("新建项目")}
+            aria-expanded={creatingProject}
+            aria-controls="new-project-form"
             onClick={() => {
-              const id = prompt(t("新项目 ID（英文、数字和短横线）"));
-              if (id && /^[\w-]{1,80}$/.test(id)) switchProject(id);
+              if (creatingProject) closeProjectForm();
+              else {
+                setProjectId("");
+                setProjectError("");
+                setCreatingProject(true);
+              }
             }}
           >
             <Icon name="plus" />
           </Button>
         </div>
       </div>
+      {creatingProject && (
+        <form id="new-project-form" className="studio-new-project"
+          onKeyDown={(event) => {
+            if (event.key === "Escape") { event.stopPropagation(); closeProjectForm(); }
+          }}
+          onSubmit={(event) => {
+            event.preventDefault();
+            const id = projectId.trim();
+            if (!/^[\w-]{1,80}$/.test(id)) {
+              setProjectError(t("请输入 1–80 位英文、数字、短横线或下划线"));
+              return;
+            }
+            if (projectIds.includes(id)) {
+              setProjectError(t("项目已存在，请在项目列表中选择"));
+              return;
+            }
+            if (switchProject(id)) closeProjectForm();
+          }}>
+          <label htmlFor="new-project-id">{t("项目 ID")}</label>
+          <div className="studio-new-project-controls">
+            <input id="new-project-id" autoFocus value={projectId} maxLength={80}
+              autoComplete="off" spellCheck={false} aria-invalid={!!projectError}
+              aria-describedby={projectError ? "new-project-error" : undefined}
+              onChange={(event) => { setProjectId(event.target.value); setProjectError(""); }} />
+            <Button type="submit" variant="primary">{t("创建项目")}</Button>
+            <Button type="button" onClick={closeProjectForm}>{t("取消")}</Button>
+          </div>
+          {projectError && <p id="new-project-error" role="alert">{projectError}</p>}
+        </form>
+      )}
       <main className="studio-shell">
         <div className="studio-title">
           <div>

@@ -324,5 +324,11 @@
   "字体加载代码已包含在导出文件顶部。使用时需要联网。": "Font imports are included at the top of the exported file. An internet connection is required.",
   "这个格式不加载字体。请同时下载字体 CSS，并在项目全局 CSS 顶部引入。": "This format does not load fonts. Download the font CSS too and import it at the top of your global stylesheet.",
   "下载字体 CSS": "Download font CSS",
-  "字体由 HappyHands 托管。自行托管时，请一并保留字体文件与许可证。自定义字体需由你的项目加载。": "Fonts are hosted by HappyHands. Keep font files and licenses when self-hosting. Load custom fonts in your project."
+  "字体由 HappyHands 托管。自行托管时，请一并保留字体文件与许可证。自定义字体需由你的项目加载。": "Fonts are hosted by HappyHands. Keep font files and licenses when self-hosting. Load custom fonts in your project.",
+  "项目 ID": "Project ID",
+  "创建项目": "Create project",
+  "请输入 1–80 位英文、数字、短横线或下划线": "Use 1–80 letters, numbers, hyphens or underscores",
+  "项目已存在，请在项目列表中选择": "Project already exists. Select it from the project list.",
+  "本地项目 / 自动保存": "Local project / Autosaved",
+  "主题预览 / 以下为示例内容，不代表项目数据": "Theme preview / Sample content, not project data"
 }
