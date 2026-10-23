@@ -504,3 +504,10 @@ h1 {
  .system-cover-label strong { font-size:16px; }
  .system-cover-label p { margin:5px 0; font-size:13px; }
 }
+
+.reference-topics { display:flex; flex-wrap:wrap; gap:8px; margin-block:20px; }
+.reference-topics button { padding:8px 14px; border:1px solid var(--hh-line); border-radius:var(--hh-radius-md); background:transparent; color:var(--hh-ink); min-height:44px; cursor:pointer; }
+.reference-topics button[aria-pressed="true"] { background:var(--hh-ink); color:var(--hh-bg); }
+
+.kage-grid { margin-top:24px; }
+.reference-import-note { margin-block:32px; padding-block:24px; border-block:1px solid var(--hh-line); }

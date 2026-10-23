@@ -18,3 +18,8 @@ Add illustrated HappyHands, Quartz and Lime selectors to the design-system direc
 
 ## Release boundary
 PR preview only. Await user visual approval before merging. Local screenshots are under public/pr31-preview. Production is unchanged.
+
+## Design reference browsing follow-up
+Kage now loads up to six live product-website references on entry. Topic buttons submit bounded searches; loading, empty and retry states remain explicit. Refero guideline import is linked with an explanation of its distinct workflow; no upstream catalog is mirrored.
+
+Verified actual six-result response and six remote thumbnails, 5138-character original detail analysis, close/detail return, and 1440px / 390px layouts without document overflow. Upstream transient failures were observed; retry is available. Typecheck, build and four API/routing/handoff tests passed. Independent review found no actionable regression. Hero and skill sources unchanged. Screenshots: desktop-references.png and mobile-references.png.

@@ -21,6 +21,11 @@ export function ProviderReference({ lang }: { lang: "zh" | "en" }) {
     <h2>{t("从真实产品中寻找设计参考", "Find references from real products")}</h2>
     <p>{t("查找页面布局、区块和交互参考，查看来源后再应用到项目。", "Find page layouts, sections and interaction references, with sources to review before applying them.")}</p>
     <KageGallery lang={lang} />
+    <aside className="reference-import-note">
+      <h3>{t("已有风格规范？", "Already have style guidelines?")}</h3>
+      <p>{t("Refero Styles 提供另一种方式：导出 DESIGN.md 后，在本站导入、阅读并生成项目接入说明。", "Refero Styles offers another path: export DESIGN.md, then import it here to review and prepare project guidance.")}</p>
+      <a href="?provider=refero">{t("导入 Refero 设计规范", "Import Refero guidelines")} →</a>
+    </aside>
     <details className="reference-setup"><summary>{t("在 AI 工具中使用 Kage", "Use Kage in your AI tool")}</summary>
     <div className="provider-columns">
       <section>
