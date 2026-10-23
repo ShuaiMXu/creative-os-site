@@ -485,3 +485,22 @@ h1 {
 .reference-actions textarea { margin-block: 12px; }
 .kage-detail h3:focus { outline-offset: 4px; }
 @media(max-width:700px) { .reference-import, .reference-document { padding: 16px; } .reference-text { padding: 12px; } }
+
+/* Illustrated system selectors: keep native links and the existing URL-backed selection. */
+.system-cover-navigation { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; padding-block:24px; }
+.system-cover-navigation a { display:block; min-width:0; padding:0; overflow:hidden; border-radius:16px; background:var(--hh-bg-raised); text-decoration:none; }
+.system-cover-navigation img { display:block; width:100%; height:auto; }
+.system-cover-label { padding:18px 20px; }
+.system-cover-label strong { font-size:18px; }
+.system-cover-label p { margin:8px 0 14px; font-size:14px; line-height:1.6; color:var(--hh-ink-muted); }
+.system-cover-label small { font-size:12px; color:var(--hh-ink-muted); }
+.system-cover-navigation a[aria-current="page"] { outline:2px solid var(--hh-ink); outline-offset:2px; }
+.system-cover-navigation a:focus-visible { outline:3px solid var(--hh-ring); outline-offset:4px; }
+@media(max-width:620px) {
+ .system-cover-navigation { grid-template-columns:1fr; gap:12px; }
+ .system-cover-navigation a { display:grid; grid-template-columns:116px minmax(0,1fr); align-items:center; }
+ .system-cover-navigation img { height:100%; object-fit:cover; }
+ .system-cover-label { padding:14px 16px; }
+ .system-cover-label strong { font-size:16px; }
+ .system-cover-label p { margin:5px 0; font-size:13px; }
+}

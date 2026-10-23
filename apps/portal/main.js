@@ -8,7 +8,9 @@ import {siteNavigation} from '../../packages/ui/site-navigation.ts';
 import '../../packages/ui/site-shell.css';
 import { connectMarkup, setupConnect } from './connect.js';
 import * as en from './content.en.js';
-import { repositories } from './content.js';
+import { repositories, heroScreens } from './content.js';
+import { startWhirl } from './whirl.js';
+import { resourceCovers } from './resource-covers.js';
 import { setupHomepageMotion } from './homepage-motion.js';
 import './homepage-motion.css';
 let disposeHomepageMotion;
@@ -109,7 +111,7 @@ function renderContent() {
   const heroCopy = document.querySelector('.hero-copy');
   if (heroCopy) heroCopy.textContent = c.hero.copy;
   const primary = document.querySelector('.button-primary');
-  if (primary) { primary.textContent = lang === 'zh' ? '开始体验优化' : 'Get started'; primary.href='#connect-agent'; }
+  if (primary) { primary.textContent = c.hero.cta; primary.href = '#apps'; }
   const secondary = document.querySelector('.button-secondary');
   if (secondary) secondary.innerHTML = `${c.hero.ctaSecondary} ${iconMarkup('external')}`;
   const scrollNote = document.querySelector('.scroll-note');
@@ -129,6 +131,7 @@ function renderContent() {
       <dl class="delivery-list">${c.delivery.items.map(([title,copy]) => `<div><dt>${title}</dt><dd>${copy}</dd></div>`).join('')}</dl>
       <p class="capability-note">${c.delivery.status}</p><a class="text-link" href="${repositories.core}/blob/main/docs/harness.md">${c.delivery.link} ${iconMarkup('external')}</a>
     </section>
+    <section class="content-section" id="design-resources"><div class="section-head"><div><h2>${lang === 'zh' ? '设计资源' : 'Design resources'}</h2></div><p>${lang === 'zh' ? '选择设计系统，或在主题工作室调整项目的视觉规范。' : 'Choose a design system or refine your project’s visual rules in Theme Studio.'}</p></div>${resourceCovers(lang)}</section>
     <section class="content-section" id="screens">
       <div class="section-head"><div><p class="kicker">${lang === 'zh' ? '案例与组件' : 'Cases and components'}</p><h2>${lang === 'zh' ? '实际项目中的设计改进' : 'Design improvements in practice'}</h2></div><p>${lang === 'zh' ? '查看修改过程与对照记录，试用组件的交互状态。' : 'Explore a documented change and try component interactions.'}</p></div>
       <div class="case-links">
@@ -171,6 +174,85 @@ function systemCard(item) {
 }
 function stepCard(item) {
   return `<article class="step-card"><span>${item[0]}</span><h3>${item[1]}</h3><p>${item[2]}</p></article>`;
+}
+
+// -- hero scroll (exact appllama motion model, smooth per-frame interpolation) --
+// Their formula: scrollYProgress from useScroll, then:
+//   opacity = map(p, [0,.35], [1,0]);  scale = map(p, [0,.35], [1,.88]);
+//   bgOpacity = map(p, [.4,.85], [1,0]);
+// We replicate with a rAF loop that lerps toward the scroll target each frame.
+const heroStage = document.querySelector('.hero-scroll-stage');
+const heroCenter = document.querySelector('.hero-center');
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+let _raf = null;
+
+function _map(v, [a, b], [c, d]) {
+  const t = Math.min(1, Math.max(0, (v - a) / (b - a)));
+  return c + t * (d - c);
+}
+function _progress() {
+  if (!heroStage) return 0;
+  const r = heroStage.getBoundingClientRect();
+  // Progress denominator = full stage height (matches appllama's useScroll
+  // with offset ["start start", "end start"] on the parent container).
+  // Live-verified: scrollY=50 → p=50/1136=0.044; text gone at scrollY≈400.
+  return r.height <= 0 ? 0 : Math.min(1, Math.max(0, -r.top / r.height));
+}
+// Direct scroll-linked animation: opacity/scale track scroll position exactly.
+// rAF batches the style write for performance but adds zero smoothing —
+// scroll down = text fades proportionally, scroll back up = text returns.
+function _apply() {
+  _raf = null;
+  if (reduceMotion.matches) {
+    heroCenter?.style.removeProperty("opacity");
+    heroCenter?.style.removeProperty("transform");
+    const whirl = document.querySelector(".hero-whirl-host");
+    whirl?.style.removeProperty("opacity");
+    whirl?.style.removeProperty("transform");
+    return;
+  }
+  const p = _progress();
+  // 1. Text fades + shrinks over [0, 0.35]
+  if (heroCenter) {
+    heroCenter.style.opacity = _map(p, [0, .35], [1, 0]).toFixed(4);
+    heroCenter.style.transform = `scale(${_map(p, [0, .35], [1, .88]).toFixed(4)})`;
+  }
+  // 2. Whirl expands (zooms past you) + 3. fades out over [0.4, 0.85].
+  // Their CSS: scale(1 + p * 0.75) on the whirl, plus the outer fade.
+  // The expansion makes the spiral feel like it's rushing outward as you scroll.
+  const whirl = document.querySelector('.hero-whirl-host');
+  if (whirl) {
+    const scale = 1 + p * 0.75;
+    const fade = _map(p, [.4, .85], [1, 0]);
+    whirl.style.opacity = fade.toFixed(4);
+    whirl.style.transform = `translate(-50%, -50%) scale(${scale.toFixed(4)})`;
+  }
+}
+function _onScroll() {
+  if (reduceMotion.matches) return;
+  if (!_raf) _raf = requestAnimationFrame(_apply);
+}
+addEventListener('scroll', _onScroll, { passive: true });
+reduceMotion.addEventListener('change', _apply);
+_apply();
+
+// -- appllama hero whirl (exact motion model, real screenshots) --
+const whirlHost = document.querySelector('.hero-whirl-host') || (() => {
+  // create the host if not in HTML
+  const hero = document.querySelector('.hero');
+  if (!hero) return null;
+  const host = document.createElement('div');
+  host.className = 'hero-whirl-host';
+  const mask = document.createElement('div');
+  mask.className = 'hero-whirl-mask';
+  mask.setAttribute('aria-hidden', 'true');
+  mask.appendChild(host);
+  hero.insertBefore(mask, hero.firstChild);
+  return host;
+})();
+if (whirlHost && heroScreens?.length) {
+  startWhirl(whirlHost, heroScreens);
+  _apply();
 }
 
 // -- copy to clipboard --
