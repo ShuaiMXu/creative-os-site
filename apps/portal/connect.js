@@ -1,7 +1,7 @@
 import {agentPresets,harnessPrompt} from './agent-presets.js';
 import {localWorkbenchMarkup,setupLocalWorkbench} from './local-workbench.js';
 import {iconMarkup} from '../../packages/ui/icons.ts';
-const guide = 'https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md';
+const guide = 'https://github.com/ShuaiMXu/happyhands/blob/main/docs/harness.md';
 let selectedAgent = 'codex';
 export function connectMarkup(lang) {
   const zh = lang === 'zh';

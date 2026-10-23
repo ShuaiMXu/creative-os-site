@@ -9,9 +9,9 @@ Use for UI explicitly adopting HappyHands. Reviewed customer products retain the
 
 ## Sources and scope
 
-In creative-os-site, read `packages/design-tokens/happyhands.json` (canonical values), generated `happyhands.css`, `packages/ui/index.tsx`, `packages/ui/components.css`, and `docs/studio-design-language.md`. Generate CSS with `node scripts/brand-tokens.mjs` if token data changes. In other projects obtain these files from an explicitly recorded repository revision; do not assume an npm or shadcn registry exists.
+In happyhands-site, read `packages/design-tokens/happyhands.json` (canonical values), generated `happyhands.css`, `packages/ui/index.tsx`, `packages/ui/components.css`, and `docs/studio-design-language.md`. Generate CSS with `node scripts/brand-tokens.mjs` if token data changes. In other projects obtain these files from an explicitly recorded repository revision; do not assume an npm or shadcn registry exists.
 
-The local workbench in creative-os currently uses `--ff-*` rather than `--hh-*`. Inspect its shared rules before adapting; do not silently claim the two libraries have already been unified.
+The local workbench in happyhands currently uses `--ff-*` rather than `--hh-*`. Inspect its shared rules before adapting; do not silently claim the two libraries have already been unified.
 
 Public website detail pages use `packages/ui/site-layout.css`, `system-page.css`, `SiteHeader`, `SystemBreadcrumb` and `SystemDirectory`. HappyHands and Quartz are the real consumers. Preserve the shared content grid, parent-catalog return path, language/theme preference and responsive directory. Do not import one app's page stylesheet as another app's base, or add broad `header`/`nav` rules that override the shared shell.
 

@@ -8,7 +8,7 @@ export const apps = [
       "截图 / 问题 / 优先级"
     ],
     "action": "阅读采集指南",
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md"
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/harness.md"
   },
   {
     "index": "02",
@@ -19,7 +19,7 @@ export const apps = [
       "品牌 / 组件 / 使用规则"
     ],
     "action": "查看设计规范",
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/reusable-design-system-extraction.md"
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/reusable-design-system-extraction.md"
   },
   {
     "index": "03",
@@ -30,7 +30,7 @@ export const apps = [
       "工作副本 / 代码差异"
     ],
     "action": "查看执行流程",
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md#choosing-a-coding-agent"
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/harness.md#choosing-a-coding-agent"
   },
   {
     "index": "04",
@@ -41,7 +41,7 @@ export const apps = [
       "前后截图 / 复核记录"
     ],
     "action": "查看复核流程",
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md#screenshot-aware-visual-review"
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/harness.md#screenshot-aware-visual-review"
   }
 ];
 
@@ -224,7 +224,7 @@ export const systems = [
       "审阅",
       "证据"
     ],
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/happyclaw-case.md",
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/happyclaw-case.md",
     "action": "阅读案例"
   },
   {
@@ -240,7 +240,7 @@ export const systems = [
       "系统先行",
       "存档"
     ],
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/firefly-ui-kit-case.md",
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/firefly-ui-kit-case.md",
     "action": "阅读案例"
   },
   {
@@ -257,7 +257,7 @@ export const systems = [
       "桌面",
       "模板"
     ],
-    "href": "https://github.com/ShuaiMXu/creative-os/issues",
+    "href": "https://github.com/ShuaiMXu/happyhands/issues",
     "action": "查看规划"
   },
   {
@@ -274,7 +274,7 @@ export const systems = [
       "消费",
       "模板"
     ],
-    "href": "https://github.com/ShuaiMXu/creative-os/issues",
+    "href": "https://github.com/ShuaiMXu/happyhands/issues",
     "action": "查看规划"
   },
   {
@@ -290,7 +290,7 @@ export const systems = [
       "SwiftUI",
       "规划中"
     ],
-    "href": "https://github.com/ShuaiMXu/creative-os/issues",
+    "href": "https://github.com/ShuaiMXu/happyhands/issues",
     "action": "查看规划"
   }
 ];

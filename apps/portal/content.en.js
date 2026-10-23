@@ -8,7 +8,7 @@ export const apps = [
       "Screenshots / Issues / Priorities"
     ],
     "action": "Read capture guide",
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md"
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/harness.md"
   },
   {
     "index": "02",
@@ -19,7 +19,7 @@ export const apps = [
       "Brand / Components / Rules"
     ],
     "action": "Read design rules guide",
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/reusable-design-system-extraction.md"
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/reusable-design-system-extraction.md"
   },
   {
     "index": "03",
@@ -30,7 +30,7 @@ export const apps = [
       "Working copy / Code diff"
     ],
     "action": "Read execution guide",
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md#choosing-a-coding-agent"
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/harness.md#choosing-a-coding-agent"
   },
   {
     "index": "04",
@@ -41,7 +41,7 @@ export const apps = [
       "Comparison / Review notes"
     ],
     "action": "Read review guide",
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md#screenshot-aware-visual-review"
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/harness.md#screenshot-aware-visual-review"
   }
 ];
 
@@ -224,7 +224,7 @@ export const systems = [
       "Review",
       "Evidence"
     ],
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/happyclaw-case.md",
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/happyclaw-case.md",
     "action": "Read case"
   },
   {
@@ -240,7 +240,7 @@ export const systems = [
       "System-first",
       "Archive"
     ],
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/firefly-ui-kit-case.md",
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/firefly-ui-kit-case.md",
     "action": "Read case"
   },
   {
@@ -257,7 +257,7 @@ export const systems = [
       "Desktop",
       "Template"
     ],
-    "href": "https://github.com/ShuaiMXu/creative-os/issues",
+    "href": "https://github.com/ShuaiMXu/happyhands/issues",
     "action": "View roadmap"
   },
   {
@@ -274,7 +274,7 @@ export const systems = [
       "Consumer",
       "Template"
     ],
-    "href": "https://github.com/ShuaiMXu/creative-os/issues",
+    "href": "https://github.com/ShuaiMXu/happyhands/issues",
     "action": "View roadmap"
   },
   {
@@ -290,7 +290,7 @@ export const systems = [
       "SwiftUI",
       "Planned"
     ],
-    "href": "https://github.com/ShuaiMXu/creative-os/issues",
+    "href": "https://github.com/ShuaiMXu/happyhands/issues",
     "action": "View roadmap"
   }
 ];
