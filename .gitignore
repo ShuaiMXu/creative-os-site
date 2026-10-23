@@ -17,3 +17,5 @@ test-results/
 /public/textures/
 
 /public/release.json
+
+/public/components/cult-ui/fonts/

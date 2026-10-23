@@ -92,12 +92,6 @@ export function KageGallery({ lang }: { lang: string }) {
   }
   return (
     <section className="kage-gallery">
-      <p>
-        {t(
-          "先浏览产品官网参考，也可以按页面类型、产品或风格查找。每次展示最多 6 项。",
-          "Start with product website references, or browse by page type, product or style. Up to six results per search.",
-        )}
-      </p>
       <div className="reference-topics" aria-label={t("参考主题", "Reference topics")}>
         {[["dashboard", "工作台", "Dashboards"], ["landing page", "产品官网", "Landing pages"], ["pricing", "定价页", "Pricing"], ["settings", "设置页", "Settings"]].map(([term, zh, en]) => (
           <button key={term} type="button" aria-pressed={activeQuery === term} onClick={() => void search(term)}>{t(zh, en)}</button>
@@ -150,7 +144,7 @@ export function KageGallery({ lang }: { lang: string }) {
               />
             )}
             <strong>{x.title}</strong>
-            <span>{[x.product, ...x.styles].filter(Boolean).join(" · ")}</span>
+            <span>{[x.product, ...x.styles].filter(Boolean).join(" / ")}</span>
             <span>{t("查看设计分析", "View design analysis")}</span>
           </button>
         ))}
@@ -195,7 +189,7 @@ export function KageGallery({ lang }: { lang: string }) {
           <p>{selected.description}</p>
           {!detailBusy && !detailError && selected.prompt && (
             <>
-              <h4>{t("设计分析 · 原文", "Design analysis · Original")}</h4>
+              <h4>{t("设计分析 / 原文", "Design analysis / Original")}</h4>
               <pre className="reference-text">{selected.prompt}</pre>
               <ReferenceActions
                 key={selected.slug}

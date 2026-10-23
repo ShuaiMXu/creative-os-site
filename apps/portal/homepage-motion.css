@@ -1,6 +1,1 @@
-.motion-reveal.motion-arrived { animation:content-arrive .65s both cubic-bezier(.22,1,.36,1); }
-.app-card { transition:background-color .2s; }.app-card:hover { background:var(--surface-2); }
-.app-card a svg,.case-links a svg { transition:transform .2s; }
-.app-card a:hover svg,.case-links a:hover svg { transform:translate(2px,-2px); }
-@keyframes content-arrive { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
-@media(prefers-reduced-motion:reduce) { .motion-reveal.motion-arrived { animation:none; }.app-card,.app-card a svg,.case-links a svg { transition:none; } }
+/* Content appears immediately; no decorative entrance animation. */

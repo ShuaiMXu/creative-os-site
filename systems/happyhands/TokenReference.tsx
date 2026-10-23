@@ -148,8 +148,8 @@ export function TokenReference({
       </div>
       <p className="reference-count" role="status">
         {t(
-          `显示 ${Math.min(limit, entries.length)} / ${entries.length} 项匹配 · 共 ${Object.keys(tokens.light).length} 项变量`,
-          `${Math.min(limit, entries.length)} of ${entries.length} matches · ${Object.keys(tokens.light).length} tokens total`,
+          `显示 ${Math.min(limit, entries.length)} / ${entries.length} 项匹配 / 共 ${Object.keys(tokens.light).length} 项变量`,
+          `${Math.min(limit, entries.length)} of ${entries.length} matches / ${Object.keys(tokens.light).length} tokens total`,
         )}
       </p>
       <div className="token-grid">

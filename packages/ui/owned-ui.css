@@ -1,0 +1,23 @@
+/* HappyHands profile: shell only; embedded source examples have their own document. */
+:root { --hh-type-small:12px; --hh-type-body:14px; --hh-type-section:20px; --hh-type-page:32px; }
+body { font-size:var(--hh-type-body); }
+:where(button,input,select,textarea) { font-size:var(--hh-type-body); }
+:where(h1) { font-size:var(--hh-type-page); }
+:where(h2,h3) { font-size:var(--hh-type-section); }
+:where(small) { font-size:var(--hh-type-small); }
+:where(button,a,input,select,textarea):focus-visible { outline:2px solid var(--hh-ring); outline-offset:3px; }
+.catalog-eyebrow, .section-eyebrow { display:none; }
+.system-cover-label { padding:16px; }
+.system-cover-navigation a { border-radius:12px; }
+.system-cover-navigation a[aria-current="page"] { outline:0.5px solid var(--hh-ink); outline-offset:2px; }
+.reference-topics button { border-width:0.5px; }
+.kage-card { border-radius:8px; }
+.kage-card strong,.kage-card span { padding:12px 16px; }
+.kage-card span + span { padding-top:0; }
+.hh-site-tools button { display:inline-flex; align-items:center; justify-content:center; gap:8px; }
+.section-head { align-items:baseline; }
+.section-head p:empty { display:none; }
+@media(prefers-reduced-motion:reduce) { *,*::before,*::after { transition:none!important; scroll-behavior:auto!important; } }
+.library-heading { align-items:center; }
+.library-heading h1,.library-heading .catalog-total { margin:0; }
+.catalog-item-head h2 { font-size:20px; }

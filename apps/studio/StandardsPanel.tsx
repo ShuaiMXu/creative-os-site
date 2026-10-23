@@ -78,7 +78,7 @@ export function StandardsPanel({
           {attention
             ? t(`${attention} 项需要关注`)
             : t("已执行的自动检查未发现偏离")}{" "}
-          · {checks.length}
+          / {checks.length}
           {t("项局部检查")}
         </span>
         <div className="toolbar">
@@ -113,7 +113,7 @@ export function StandardsPanel({
           <article key={check.id} data-status={check.status}>
             <div>
               <strong>
-                {check.mode === "light" ? t("浅色") : t("深色")} ·{" "}
+                {check.mode === "light" ? t("浅色") : t("深色")}  / {" "}
                 {t(check.label)}
               </strong>
               <span>

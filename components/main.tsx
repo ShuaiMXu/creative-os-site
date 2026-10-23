@@ -10,6 +10,7 @@ import data from "../public/components/cult-ui/catalog.json";
 import "../packages/design-tokens/happyhands.css";
 import "../packages/ui/site-layout.css";
 import "./style.css";
+import "../packages/ui/owned-ui.css";
 import { ProviderReference } from "./ProviderReference";
 import providers from "../public/components/providers.json";
 const groups: Record<string, [string, string]> = {
@@ -84,8 +85,8 @@ function App() {
   useEffect(() => {
     document.title =
       lang === "zh"
-        ? "HappyHands · 组件目录"
-        : "HappyHands · Component library";
+        ? "HappyHands / 组件目录"
+        : "HappyHands / Component library";
   }, [lang]);
   useEffect(() => {
     const handle = () => {
@@ -167,29 +168,20 @@ function App() {
       />
       <header className="library-heading">
         <div>
-          <p className="catalog-eyebrow"><a href="/apps/portal/#explore">HappyHands / {t("设计资源", "Design resources")}</a></p>
           <h1>{t("设计资源", "Design resources")}</h1>
-          <p>
-            {t(
-              "汇集不同来源的组件与设计参考，按项目规范使用。",
-              "Explore components and design references from multiple sources, adapted to your project.",
-            )}
-          </p>
         </div>
         {provider === "cult-ui" && <p className="catalog-total">
-          Cult UI ·{" "}
-          {data.count} {t("个条目", "entries")} · {data.previewCount}{" "}
-          {t("个站内预览", "local previews")}
+          Cult UI / {data.previewCount} {t("个组件可预览", "component previews")}
         </p>}
       </header>
       <nav className="resource-sections" aria-label={t("设计系统分类", "Design system sections")}>
         {[["systems",t("设计系统","Design systems")],["cult-ui",t("组件库","Component libraries")],["kage",t("设计参考","Design references")]].map(([id,label])=><a key={id} href={`?provider=${id}`} aria-current={(provider===id || id==='kage'&&provider==='refero')?'page':undefined} onClick={e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;e.preventDefault();setProvider(id);history.pushState(null,'',`?provider=${id}`);}}>{label}</a>)}
       </nav>
-      {provider !== 'systems' && <nav className="provider-navigation" aria-label={t("资源来源", "Resource sources")}>
+      {provider !== 'systems' && provider !== 'cult-ui' && <nav className="provider-navigation" aria-label={t("资源来源", "Resource sources")}>
         {providers.providers.filter(p => provider === "cult-ui" ? p.kind === "source-registry" : p.kind !== "source-registry").map(p => <a key={p.id} href={`?provider=${p.id}`} aria-current={provider === p.id ? "page" : undefined} onClick={e => {
           if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
           e.preventDefault(); setProvider(p.id); history.pushState(null, "", `?provider=${p.id}`);
-        }}><strong>{p.name}</strong><span>{p.kind === "source-registry" ? t("组件源码 · 站内预览", "Component source · Local previews") : p.id === "refero" ? t("风格与规范 · DESIGN.md", "Style guidelines · DESIGN.md") : t("页面与区块 · MCP", "Pages and sections · MCP")}</span></a>)}
+        }}><strong>{p.name}</strong><span>{p.kind === "source-registry" ? t("组件源码 / 站内预览", "Component source / Local previews") : p.id === "refero" ? t("风格与规范 / DESIGN.md", "Style guidelines / DESIGN.md") : t("页面与区块 / MCP", "Pages and sections / MCP")}</span></a>)}
       </nav>}
       {provider === 'systems' ? <SystemLibrary lang={lang} /> : provider === "refero" ? <ReferoImport lang={lang} /> : provider === "kage" ? <ProviderReference lang={lang} /> :
       <div className="library-layout">
@@ -212,7 +204,7 @@ function App() {
               <select value={group} onChange={(e) => setGroup(e.target.value)}>
                 {Object.entries(groups).map(([id, labels]) => (
                   <option key={id} value={id}>
-                    {labels[lang === "zh" ? 0 : 1]} ·{" "}
+                    {labels[lang === "zh" ? 0 : 1]}  / {" "}
                     {id === "all"
                       ? data.count
                       : data.items.filter((x) => x.category === id).length}
@@ -276,38 +268,14 @@ function App() {
           className="catalog-main"
         >
           <div className="catalog-item-head">
-            <p className="catalog-eyebrow">
-              {groups[item.category]?.[lang === "zh" ? 0 : 1]} / Cult UI
-            </p>
             <h2>{title(item)}</h2>
-            <p>
-              {t(
-                "保留上游组件与示例文案，预览在本站运行。",
-                "Upstream components and sample copy are preserved; previews run on this site.",
-              )}
-            </p>
             <details className="upstream-description">
               <summary>
                 {t("上游组件说明（英文）", "Component description")}
               </summary>
               <p>{item.description}</p>
             </details>
-            <div className="catalog-tags">
-              <span>MIT</span>
-              <span>
-                {item.aliasOf
-                  ? t("旧名称别名", "Legacy alias")
-                  : item.preview
-                    ? t("源码示例", "Source example")
-                    : t("源码已收录", "Source available")}
-              </span>
-              <span>
-                {t(
-                  "候选组件 · 待项目审阅",
-                  "Candidate · project review required",
-                )}
-              </span>
-            </div>
+
           </div>
           <div
             className="catalog-tabs"
@@ -392,8 +360,8 @@ function App() {
                   </div>
                   <p className="catalog-footnote">
                     {t(
-                      "上游布局与交互；示例图片使用本站示意素材。动态效果默认关闭，演示链接与表单不会跳转或提交。键盘与触屏支持仍需按目标项目复核。",
-                      "Upstream layouts and interactions; sample images use local illustrations. Motion starts disabled; demo links/forms do not navigate or submit. Keyboard and touch support require target-project review.",
+                      "本地示例，不连接外部服务。接入项目后仍需验证。",
+                      "Local demo; no external service connection. Validate again in your project.",
                     )}
                   </p>
                 </>
@@ -495,7 +463,7 @@ function App() {
                     <dt>{t("许可", "License")}</dt>
                     <dd>
                       <a href="/components/cult-ui/LICENSE.txt">
-                        MIT · Cult UI / Jordan Gilliam
+                        MIT / Cult UI / Jordan Gilliam
                       </a>
                     </dd>
                   </div>

@@ -14,6 +14,7 @@ import "../../packages/ui/components.css";
 import "../../packages/ui/site-layout.css";
 import "../../packages/ui/system-page.css";
 import "./style.css";
+import "../../packages/ui/owned-ui.css";
 
 function App() {
   const { lang, dark, toggleLanguage, toggleTheme } = useSitePreferences();
@@ -25,7 +26,7 @@ function App() {
   const opener = useRef<HTMLButtonElement>(null);
   React.useEffect(() => {
     document.title =
-      lang === "zh" ? "HappyHands · 设计系统" : "HappyHands · Design system";
+      lang === "zh" ? "HappyHands / 设计系统" : "HappyHands / Design system";
   }, [lang]);
   const t = (zh: string, en: string) => (lang === "zh" ? zh : en);
   const buttonLabels = {
@@ -175,8 +176,8 @@ function App() {
             <div className="demo">
               <h3>
                 {t(
-                  "表单与弹窗 · 原生交互示例",
-                  "Form & dialog · native examples",
+                  "表单与弹窗 / 原生交互示例",
+                  "Form & dialog / native examples",
                 )}
               </h3>
               <p>
@@ -237,7 +238,7 @@ function App() {
             </div>
             <ComponentShowcase lang={lang} />
             <div className="demo">
-              <h3>{t("任务反馈 · 演示", "Task feedback · demo")}</h3>
+              <h3>{t("任务反馈 / 演示", "Task feedback / demo")}</h3>
               <div className="actions">
                 {[
                   ["empty", "空", "Empty"],
@@ -341,12 +342,12 @@ function App() {
               <select value={mode} onChange={(e) => setMode(e.target.value)}>
                 <option value="existing">
                   {t(
-                    "已有项目 · 逐页迁移",
-                    "Existing project · migrate a screen",
+                    "已有项目 / 逐页迁移",
+                    "Existing project / migrate a screen",
                   )}
                 </option>
                 <option value="new">
-                  {t("新项目 · 从首屏开始", "New project · first screen")}
+                  {t("新项目 / 从首屏开始", "New project / first screen")}
                 </option>
               </select>
             </label>

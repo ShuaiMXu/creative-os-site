@@ -316,7 +316,7 @@ export async function renderCanvas(container, run) {
         v.className = 'pd-insp-value';
         v.style.cssText = 'display:flex;align-items:center;gap:6px;padding:4px 8px;border-radius:6px;background:rgb(var(--color-accent)/.08);cursor:pointer';
         v.innerHTML = `<span class="font-mono" style="font-size:10px;font-weight:700;color:rgb(var(--color-accent))">${pin.priority.toFixed(1)}</span><span style="font-size:12px;color:rgb(var(--color-label-secondary))">${pin.title}</span>`;
-        v.title = `${pin.findingId} · ${pin.verificationStatus}`;
+        v.title = `${pin.findingId} / ${pin.verificationStatus}`;
         sec.appendChild(v);
       }
       body.appendChild(sec);

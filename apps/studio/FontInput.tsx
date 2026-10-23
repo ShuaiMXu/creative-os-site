@@ -15,7 +15,7 @@ type FontKey = "font-sans" | "font-serif" | "font-mono";
 const defaults = presetStyles("happyhands").light;
 const fonts: Record<FontKey, { label: string; value: string }[]> = {
   "font-sans": [
-    { label: "HappyHands · 苹方优先", value: defaults["font-sans"] },
+    { label: "HappyHands / 苹方优先", value: defaults["font-sans"] },
     { label: "系统无衬线", value: 'system-ui, "Microsoft YaHei", sans-serif' },
     {
       label: "微软雅黑",
@@ -33,7 +33,7 @@ const fonts: Record<FontKey, { label: string; value: string }[]> = {
     },
   ],
   "font-mono": [
-    { label: "HappyHands · 等宽", value: defaults["font-mono"] },
+    { label: "HappyHands / 等宽", value: defaults["font-mono"] },
     { label: "系统等宽", value: "ui-monospace, monospace" },
     { label: "Consolas", value: 'Consolas, "Liberation Mono", monospace' },
     { label: "Courier New", value: '"Courier New", Courier, monospace' },
@@ -182,7 +182,7 @@ export function FontInput({
                 status === "loading"
                   ? "正在加载开源字体…"
                   : status === "ready"
-                    ? "字体已加载 · OFL-1.1"
+                    ? "字体已加载 / OFL-1.1"
                     : status === "error"
                       ? "字体加载失败，当前显示备用字体。"
                       : "正在准备字体…",
@@ -198,11 +198,11 @@ export function FontInput({
             <summary>{t("来源、许可证与项目接入")}</summary>
             {selectedFonts.map((font) => (
               <p key={font.id}>
-                {font.family} ·{" "}
+                {font.family}  / {" "}
                 <a href={font.source} target="_blank" rel="noreferrer">
                   {t("字体来源")}
                 </a>{" "}
-                ·{" "}
+                 / {" "}
                 <a href={font.licenseUrl} target="_blank" rel="noreferrer">
                   OFL-1.1
                 </a>

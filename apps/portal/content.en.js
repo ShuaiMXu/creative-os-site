@@ -5,7 +5,7 @@ export const apps = [
     "title": "A list of issues",
     "description": "Each finding includes its page, screenshot and impact so you can decide what to fix first.",
     "meta": [
-      "Screenshots · Issues · Priorities"
+      "Screenshots / Issues / Priorities"
     ],
     "action": "Read capture guide",
     "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md"
@@ -16,7 +16,7 @@ export const apps = [
     "title": "Your design rules",
     "description": "A record of existing colors, fonts and components, with rules that still need your review.",
     "meta": [
-      "Brand · Components · Rules"
+      "Brand / Components / Rules"
     ],
     "action": "Read design rules guide",
     "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/reusable-design-system-extraction.md"
@@ -27,7 +27,7 @@ export const apps = [
     "title": "Changes you can inspect",
     "description": "A separate working copy and code diff show exactly what changed.",
     "meta": [
-      "Working copy · Code diff"
+      "Working copy / Code diff"
     ],
     "action": "Read execution guide",
     "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md#choosing-a-coding-agent"
@@ -38,7 +38,7 @@ export const apps = [
     "title": "Before-and-after records",
     "description": "Matched page sizes and states help you compare results and record why you keep or reject a change.",
     "meta": [
-      "Comparison · Review notes"
+      "Comparison / Review notes"
     ],
     "action": "Read review guide",
     "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md#screenshot-aware-visual-review"
@@ -96,7 +96,7 @@ export const elements = [
 export const hero = {
   "eyebrow": [
     "FOR INDEPENDENT BUILDERS",
-    "ALPHA · OPEN SOURCE · LOCAL"
+    "ALPHA / OPEN SOURCE / LOCAL"
   ],
   "h1": "Make your product ",
   "h1Accent": "more professional",
@@ -108,7 +108,7 @@ export const hero = {
 
 export const screenPairs = [
   {
-    "title": "Homepage · Desktop",
+    "title": "Homepage / Desktop",
     "task": "Hierarchy",
     "beforeLabel": "BEFORE",
     "afterLabel": "AFTER",
@@ -123,7 +123,7 @@ export const screenPairs = [
     "result": "VISUAL QA FAILED"
   },
   {
-    "title": "Homepage · Mobile",
+    "title": "Homepage / Mobile",
     "task": "Task flow",
     "beforeLabel": "BEFORE",
     "afterLabel": "AFTER",
@@ -299,7 +299,7 @@ export const ui = {
   "scrollNote": "SCROLL",
   "githubLink": "GitHub",
   "footer": {
-    "left": "HappyHands · AI Product Designer",
+    "left": "HappyHands / AI Product Designer",
     "middle": "Product experience optimization",
     "right": "View source"
   }

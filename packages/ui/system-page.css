@@ -3,7 +3,7 @@
   margin-top: var(--hh-space-6);
 }
 .component-directory details {
-  border-top: 1px solid var(--hh-line);
+  border-top: 0.5px solid var(--hh-line);
   padding: var(--hh-space-4) 0;
 }
 .component-directory summary {
@@ -32,7 +32,7 @@ body {
   margin: 0;
   background: var(--hh-bg);
   color: var(--hh-ink);
-  font: 15px/1.7 var(--hh-font-sans);
+  font: 14px/1.7 var(--hh-font-sans);
 }
 .system-landing main {
   min-width: 0;
@@ -64,7 +64,7 @@ body {
   flex-wrap: wrap;
   padding-top: var(--hh-space-6);
   color: var(--hh-ink-muted);
-  font-size: 13px;
+  font-size: 12px;
 }
 .system-breadcrumb a {
   display: inline-flex;
@@ -81,7 +81,7 @@ body {
 }
 .system-landing section {
   padding: var(--section-space) 0;
-  border-bottom: 1px solid var(--hh-line);
+  border-bottom: 0.5px solid var(--hh-line);
   scroll-margin-top: 96px;
 }
 /* Returning to the overview should reveal the site header and breadcrumb too. */
@@ -96,27 +96,27 @@ body {
   padding-top: var(--hh-space-8);
 }
 .system-landing h1 {
-  font-size: clamp(42px, 5vw, 64px);
+  font-size: 32px;
   line-height: 1.12;
   letter-spacing: -0.035em;
   margin: var(--hh-space-3) 0 var(--hh-space-6);
   overflow-wrap: anywhere;
 }
 .system-landing h2 {
-  font-size: clamp(26px, 3vw, 36px);
+  font-size: 32px;
   line-height: 1.3;
   letter-spacing: -0.025em;
   margin: var(--hh-space-3) 0 var(--hh-space-6);
 }
 .system-landing h3 {
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1.5;
   margin: 0 0 var(--hh-space-3);
 }
 .system-landing .lead {
   max-width: 680px;
   color: var(--hh-ink-muted);
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1.8;
 }
 .system-landing .eyebrow {
@@ -128,7 +128,7 @@ body {
 .system-landing .note {
   margin-top: var(--hh-space-6);
   color: var(--hh-ink-muted);
-  font-size: 13px;
+  font-size: 12px;
 }
 .system-landing .actions {
   display: flex;
@@ -143,7 +143,7 @@ body {
   justify-content: center;
   min-height: 44px;
   padding: 10px 16px;
-  border: 1px solid var(--hh-line-strong);
+  border: 0.5px solid var(--hh-line-strong);
   border-radius: var(--hh-radius-md);
   background: var(--hh-bg-raised);
   color: var(--hh-ink);
@@ -172,7 +172,7 @@ body {
 }
 .system-facts {
   background: var(--hh-bg-raised);
-  border: 1px solid var(--hh-line);
+  border: 0.5px solid var(--hh-line);
   border-radius: var(--hh-radius-lg);
   padding: var(--hh-space-6);
 }
@@ -184,11 +184,11 @@ body {
   grid-template-columns: 90px minmax(0, 1fr);
   gap: var(--hh-space-4);
   padding: var(--hh-space-3) 0;
-  border-bottom: 1px solid var(--hh-line);
+  border-bottom: 0.5px solid var(--hh-line);
 }
 .system-facts dt {
   color: var(--hh-ink-muted);
-  font-size: 13px;
+  font-size: 12px;
 }
 .system-facts dd {
   margin: 0;
@@ -201,7 +201,7 @@ body {
   top: 0;
   z-index: 10;
   background: var(--hh-bg);
-  border-bottom: 1px solid var(--hh-line);
+  border-bottom: 0.5px solid var(--hh-line);
 }
 .system-landing .system-directory > summary {
   display: none;
@@ -234,7 +234,7 @@ body {
 }
 .system-landing .rules article {
   padding-top: var(--hh-space-5);
-  border-top: 1px solid var(--hh-line);
+  border-top: 0.5px solid var(--hh-line);
   min-width: 0;
 }
 .system-landing .rules p {
@@ -244,13 +244,13 @@ body {
   margin: var(--hh-space-6) 0;
   padding: var(--hh-space-6);
   background: var(--hh-bg-raised);
-  border: 1px solid var(--hh-line);
+  border: 0.5px solid var(--hh-line);
   border-radius: var(--hh-radius-lg);
 }
 .system-landing pre {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-  font: 13px/1.7 var(--hh-font-mono);
+  font: 12px/1.7 var(--hh-font-mono);
   padding: var(--hh-space-4);
   background: var(--hh-bg-sunken);
 }
@@ -266,7 +266,7 @@ body {
   padding: 10px 12px;
   color: var(--hh-ink);
   background: var(--hh-bg-raised);
-  border: 1px solid var(--hh-line-strong);
+  border: 0.5px solid var(--hh-line-strong);
   border-radius: var(--hh-radius-md);
 }
 .system-landing textarea {
@@ -281,7 +281,7 @@ body {
   padding: var(--hh-space-8);
   background: var(--hh-bg-raised);
   color: var(--hh-ink);
-  border: 1px solid var(--hh-line);
+  border: 0.5px solid var(--hh-line);
   border-radius: var(--hh-radius-xl);
   box-shadow: var(--hh-shadow-float);
 }
@@ -291,7 +291,7 @@ body {
 .system-landing footer {
   padding: var(--hh-space-8) 0;
   color: var(--hh-ink-muted);
-  font-size: 13px;
+  font-size: 12px;
 }
 .system-landing .system-related {
   display: flex;

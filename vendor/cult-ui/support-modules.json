@@ -1,0 +1,19 @@
+{
+  "components/fade-in": "support-extra-components-fade-in.tsx",
+  "components/ui/accordion": "support-extra-components-ui-accordion.tsx",
+  "components/ui/tabs": "support-extra-components-ui-tabs.tsx",
+  "components/ui/use-toast": "support-extra-components-ui-use-toast.tsx",
+  "components/ui/popover": "support-extra-components-ui-popover.tsx",
+  "components/ui/separator": "support-extra-components-ui-separator.tsx",
+  "components/ui/carousel": "support-extra-components-ui-carousel.tsx",
+  "components/ui/dialog": "support-extra-components-ui-dialog.tsx",
+  "components/ui/command": "support-extra-components-ui-command.tsx",
+  "components/ui/hover-card": "support-extra-components-ui-hover-card.tsx",
+  "components/ui/collapsible": "support-extra-components-ui-collapsible.tsx",
+  "components/ui/aspect-ratio": "support-extra-components-ui-aspect-ratio.tsx",
+  "components/ui/drawer": "support-extra-components-ui-drawer.tsx",
+  "components/ui/progress": "support-extra-components-ui-progress.tsx",
+  "components/ui/field": "support-extra-components-ui-field.tsx",
+  "components/ui/input-group": "support-extra-components-ui-input-group.tsx",
+  "components/ui/toast": "support-extra-components-ui-toast.tsx"
+}

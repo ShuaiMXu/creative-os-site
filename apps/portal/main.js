@@ -13,6 +13,7 @@ import { startWhirl } from './whirl.js';
 import { resourceCovers } from './resource-covers.js';
 import { setupHomepageMotion } from './homepage-motion.js';
 import './homepage-motion.css';
+import "../../packages/ui/owned-ui.css";
 let disposeHomepageMotion;
 
 const quickstartCommand = `git clone https://github.com/ShuaiMXu/creative-os.git
@@ -101,7 +102,7 @@ function renderContent() {
   disposeMenu = setupSiteMenu(document.querySelector('.site-header'), lang);
   // hero
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-  document.title = lang === 'zh' ? 'HappyHands · 产品体验优化' : 'HappyHands · Product experience optimization';
+  document.title = lang === 'zh' ? 'HappyHands / 产品体验优化' : 'HappyHands / Product experience optimization';
   const eyebrow = document.querySelector('.eyebrow');
   if (eyebrow) eyebrow.innerHTML = c.hero.eyebrow.map(s => `<span>${s}</span>`).join('');
   const h1 = document.querySelector('h1');
@@ -168,7 +169,7 @@ function appCard(item) {
 }
 
 const referenceImage = index => `/assets/hero/screen-${String(index).padStart(3, '0')}.webp`;
-const referenceLabel = () => lang === 'zh' ? 'Appllama 参考图 · 临时占位' : 'Appllama reference · Placeholder';
+const referenceLabel = () => lang === 'zh' ? 'Appllama 参考图 / 临时占位' : 'Appllama reference / Placeholder';
 function systemCard(item) {
   return `<article class="system-card"><p class="card-tag">${item.tag}</p><h3>${item.title}</h3><p>${item.description}</p><div class="chips">${item.traits.map(v => `<span>${v}</span>`).join('')}</div><a class="card-link" href="${item.href}">${item.action} ${iconMarkup('external')}</a></article>`;
 }

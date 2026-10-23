@@ -41,7 +41,7 @@ export function ReferoImport({ lang }: { lang: string }) {
   }
   return (
     <main id="catalog-main" className="provider-reference">
-      <p className="catalog-eyebrow">Refero Styles · DESIGN.md</p>
+      <p className="catalog-eyebrow">Refero Styles / DESIGN.md</p>
       <h2>
         {zh
           ? "导入风格规范，对照项目设计"

@@ -104,8 +104,8 @@ export function SystemExample({
             </span>
             <small>
               {t(
-                quartz ? "待确认" : "桌面 · 手机",
-                quartz ? "Pending" : "Desktop · Phone",
+                quartz ? "待确认" : "桌面 / 手机",
+                quartz ? "Pending" : "Desktop / Phone",
               )}
             </small>
           </label>

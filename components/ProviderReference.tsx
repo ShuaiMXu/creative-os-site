@@ -17,13 +17,11 @@ export function ProviderReference({ lang }: { lang: "zh" | "en" }) {
     catch { setNotice(t("请选中文本后复制。", "Select and copy the text.")); }
   }
   return <main id="catalog-main" className="provider-reference">
-    <p className="catalog-eyebrow">Kage · {t("设计参考", "Design references")}</p>
-    <h2>{t("从真实产品中寻找设计参考", "Find references from real products")}</h2>
-    <p>{t("查找页面布局、区块和交互参考，查看来源后再应用到项目。", "Find page layouts, sections and interaction references, with sources to review before applying them.")}</p>
+    <h2>{t("浏览设计参考", "Browse design references")}</h2>
     <KageGallery lang={lang} />
     <aside className="reference-import-note">
       <h3>{t("已有风格规范？", "Already have style guidelines?")}</h3>
-      <p>{t("Refero Styles 提供另一种方式：导出 DESIGN.md 后，在本站导入、阅读并生成项目接入说明。", "Refero Styles offers another path: export DESIGN.md, then import it here to review and prepare project guidance.")}</p>
+      <p>{t("导入 Refero 的 DESIGN.md，生成项目接入说明。", "Refero Styles offers another path: export DESIGN.md, then import it here to review and prepare project guidance.")}</p>
       <a href="?provider=refero">{t("导入 Refero 设计规范", "Import Refero guidelines")} →</a>
     </aside>
     <details className="reference-setup"><summary>{t("在 AI 工具中使用 Kage", "Use Kage in your AI tool")}</summary>
@@ -49,7 +47,7 @@ export function ProviderReference({ lang }: { lang: "zh" | "en" }) {
     <p aria-live="polite">{notice}</p>
     <details><summary>{t("来源与使用范围", "Source and usage")}</summary>
       <p>{t("Kage 提供参考截图和设计分析，不是开源组件包。分析提示词可用于项目；截图与品牌资产属于原产品。该来源不做整库镜像，也不计入本站可运行组件数量。", "Kage provides screenshots and design analysis, not an open-source component package. Prompts can inform projects; screenshots and brand assets belong to their owners. This source is not mirrored or counted as runnable components.")}</p>
-      <a href={provider.documentation} target="_blank" rel="noreferrer">{t("官方接入说明", "Official connection guide")}</a>{" · "}<a href={provider.terms} target="_blank" rel="noreferrer">{t("使用条款", "Terms")}</a>
+      <a href={provider.documentation} target="_blank" rel="noreferrer">{t("官方接入说明", "Official connection guide")}</a>{" / "}<a href={provider.terms} target="_blank" rel="noreferrer">{t("使用条款", "Terms")}</a>
     </details>
   </main>;
 }

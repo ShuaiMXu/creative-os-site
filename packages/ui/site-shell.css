@@ -15,7 +15,7 @@ header.hh-site-header {
   padding: 8px var(--page-inset, max(20px, calc((100% - 1280px) / 2)));
   background: var(--hh-bg-raised);
   color: var(--hh-ink);
-  border-bottom: 1px solid var(--hh-line);
+  border-bottom: 0.5px solid var(--hh-line);
   transform: none;
   backdrop-filter: none;
 }
@@ -83,7 +83,7 @@ header.hh-site-header #lang-switch button {
   min-height: 44px;
   padding: 8px 12px;
   background: var(--hh-bg-raised);
-  border: 1px solid var(--hh-line);
+  border: 0.5px solid var(--hh-line);
   border-radius: var(--hh-radius-md);
   color: var(--hh-ink);
   font: 500 14px/1.5 var(--hh-font-sans);
@@ -151,7 +151,7 @@ header.hh-site-header .hh-site-menu-toggle {
     max-height: calc(100dvh - 100px);
     overflow-y: auto;
     background: var(--hh-bg-raised);
-    border-bottom: 1px solid var(--hh-line);
+    border-bottom: 0.5px solid var(--hh-line);
   }
   header.hh-site-header[data-menu-open] nav a {
     justify-content: flex-start;

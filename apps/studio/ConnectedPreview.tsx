@@ -43,11 +43,11 @@ export function ConnectedPreview({
         return;
       if (event.data.type === "READY") {
         setReady(true);
-        setStatus("已连接 · 主题同步中");
+        setStatus("已连接 / 主题同步中");
         clearInterval(interval);
         clearTimeout(timeout);
       }
-      if (event.data.type === "APPLIED") setStatus("已连接 · 主题已应用");
+      if (event.data.type === "APPLIED") setStatus("已连接 / 主题已应用");
     };
     window.addEventListener("message", listener);
     const interval = setInterval(ping, 400);

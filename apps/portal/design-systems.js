@@ -36,7 +36,7 @@ export function designSystemsMarkup(language) {
     ]},
     {id:'system-references-title',title:t('设计参考','Design references'),copy:t('浏览页面布局与视觉风格，完善自己的设计。','Explore layouts and visual styles to refine your own design.'),items:[
       {name:'Kage',tag:t('页面与区块','Pages and sections'),copy:t('按产品或风格查找截图，查看页面结构与设计分析。','Find screenshots by product or style and explore design analysis.'),href:'/components/?provider=kage',tone:'kage'},
-      {name:'Refero Styles',tag:t('风格与规范 · DESIGN.md','Style guidelines · DESIGN.md'),copy:t('了解颜色、字体与间距规则。目前提供来源与使用说明。','Explore color, type and spacing rules. Source and usage guidance available.'),href:'/components/?provider=refero',tone:'refero'}
+      {name:'Refero Styles',tag:t('风格与规范 / DESIGN.md','Style guidelines / DESIGN.md'),copy:t('了解颜色、字体与间距规则。目前提供来源与使用说明。','Explore color, type and spacing rules. Source and usage guidance available.'),href:'/components/?provider=refero',tone:'refero'}
     ]}
   ];
   return `<div class="system-collection resource-collection">${sections.map(section => `<section class="system-resource-section" aria-labelledby="${section.id}"><header class="system-resource-heading"><h3 id="${section.id}">${section.title}</h3><p>${section.copy}</p></header><div class="resource-tile-grid">${section.items.map(card).join('')}</div></section>`).join('')}</div>`;

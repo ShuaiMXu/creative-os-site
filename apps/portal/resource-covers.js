@@ -30,7 +30,7 @@ export function resourceCovers(language) {
       <rect width="231" height="55" rx="10" fill="#F9F8F4" stroke="#D4CFC4"/>
       <rect x="9" y="9" width="39" height="37" rx="5" fill="#292927"/><rect x="52" y="9" width="39" height="37" rx="5" fill="#8B857A"/><rect x="95" y="9" width="39" height="37" rx="5" fill="#E8E2D6"/><rect x="138" y="9" width="39" height="37" rx="5" fill="#F57F28"/><rect x="181" y="9" width="41" height="37" rx="5" fill="#F8D7B7"/>
     </g>
-    <text x="28" y="356" class="cover-index" fill="#756F65">${t('从规则，到体验。','FROM RULES TO EXPERIENCE.')}</text><text x="572" y="356" text-anchor="end" class="cover-index" fill="#756F65">COLOR · TYPE · COMPONENTS</text>
+    <text x="28" y="356" class="cover-index" fill="#756F65">${t('从规则，到体验。','FROM RULES TO EXPERIENCE.')}</text><text x="572" y="356" text-anchor="end" class="cover-index" fill="#756F65">COLOR / TYPE / COMPONENTS</text>
   </svg>`;
   const studio=`<svg viewBox="0 0 600 380" fill="none" aria-hidden="true" focusable="false">
     <rect width="600" height="380" fill="#203D35"/>
@@ -54,7 +54,7 @@ export function resourceCovers(language) {
       <circle cx="73" cy="31" r="16" fill="#C39478"/><circle cx="115" cy="31" r="16" fill="#292927"/>
       <path d="M147 15V47" stroke="#DDDCD3"/><text x="164" y="40" font-size="27" fill="#293D31">Aa</text>
     </g>
-    <text x="28" y="356" class="cover-index" fill="#ACBEB3">${t('同一个界面，不同的表达。','ONE INTERFACE. YOUR EXPRESSION.')}</text><text x="572" y="356" text-anchor="end" class="cover-index" fill="#ACBEB3">CUSTOMIZE · PREVIEW · EXPORT</text>
+    <text x="28" y="356" class="cover-index" fill="#ACBEB3">${t('同一个界面，不同的表达。','ONE INTERFACE. YOUR EXPRESSION.')}</text><text x="572" y="356" text-anchor="end" class="cover-index" fill="#ACBEB3">CUSTOMIZE / PREVIEW / EXPORT</text>
   </svg>`;
   return `<div class="resource-covers">${[
     {href:'/components/?provider=systems',art:system,title:t('设计系统','Design systems'),copy:t('从视觉规范到组件，建立一致的产品体验。','Build a consistent experience, from visual rules to components.')},

@@ -5,7 +5,7 @@ export const apps = [
     "title": "问题清单",
     "description": "每个问题带有页面截图、位置与影响说明，便于判断先改哪一处。",
     "meta": [
-      "截图 · 问题 · 优先级"
+      "截图 / 问题 / 优先级"
     ],
     "action": "阅读采集指南",
     "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md"
@@ -16,7 +16,7 @@ export const apps = [
     "title": "项目设计规范",
     "description": "汇总项目已有的颜色、字体与组件，并标出仍需确认的规则。",
     "meta": [
-      "品牌 · 组件 · 使用规则"
+      "品牌 / 组件 / 使用规则"
     ],
     "action": "查看设计规范",
     "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/reusable-design-system-extraction.md"
@@ -27,7 +27,7 @@ export const apps = [
     "title": "代码修改记录",
     "description": "保留独立工作副本与代码差异，方便核对每处修改。",
     "meta": [
-      "工作副本 · 代码差异"
+      "工作副本 / 代码差异"
     ],
     "action": "查看执行流程",
     "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md#choosing-a-coding-agent"
@@ -38,7 +38,7 @@ export const apps = [
     "title": "前后对照记录",
     "description": "在相同尺寸与页面状态下比较结果，保留接受或拒绝修改的理由。",
     "meta": [
-      "前后截图 · 复核记录"
+      "前后截图 / 复核记录"
     ],
     "action": "查看复核流程",
     "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md#screenshot-aware-visual-review"
@@ -96,7 +96,7 @@ export const elements = [
 export const hero = {
   "eyebrow": [
     "面向独立开发者",
-    "Alpha · 开源 · 本地运行"
+    "Alpha / 开源 / 本地运行"
   ],
   "h1": "让你的产品，",
   "h1Accent": "更专业",
@@ -108,7 +108,7 @@ export const hero = {
 
 export const screenPairs = [
   {
-    "title": "首页 · 桌面端",
+    "title": "首页 / 桌面端",
     "task": "信息层级",
     "beforeLabel": "改前",
     "afterLabel": "改后",
@@ -123,7 +123,7 @@ export const screenPairs = [
     "result": "视觉复核未通过"
   },
   {
-    "title": "首页 · 移动端",
+    "title": "首页 / 移动端",
     "task": "任务连贯",
     "beforeLabel": "改前",
     "afterLabel": "改后",
@@ -244,7 +244,7 @@ export const systems = [
     "action": "阅读案例"
   },
   {
-    "tag": "预设方向 · 规划中",
+    "tag": "预设方向 / 规划中",
     "title": "SaaS 基础",
     "description": "用于后续设计基础的预设方向，尚未发布可复用模板包。",
     "values": [
@@ -261,7 +261,7 @@ export const systems = [
     "action": "查看规划"
   },
   {
-    "tag": "预设方向 · 规划中",
+    "tag": "预设方向 / 规划中",
     "title": "移动端基础",
     "description": "用于后续设计基础的预设方向，尚未发布可复用模板包。",
     "values": [
@@ -299,7 +299,7 @@ export const ui = {
   "scrollNote": "浏览产品能力",
   "githubLink": "GitHub",
   "footer": {
-    "left": "HappyHands · AI Product Designer",
+    "left": "HappyHands / AI Product Designer",
     "middle": "产品体验优化",
     "right": "查看源码"
   }

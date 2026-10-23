@@ -192,7 +192,7 @@ function shot(base, phase, entry) {
   const caption = document.createElement('figcaption');
   const state = entry?.stateId || 'page';
   const configuration = entry?.configurationId || 'unknown';
-  caption.textContent = `${phase} · ${state} · ${configuration}`;
+  caption.textContent = `${phase} / ${state} / ${configuration}`;
   let reference = entry?.screenshot;
   if (reference && !SAFE_SHOT.test(reference)) reference = null;
   if (!reference) {
@@ -221,7 +221,7 @@ function renderReviews() {
     const card = document.createElement('article');
     card.className = 'run-review';
     const title = document.createElement('strong');
-    title.textContent = `${item.skillId} · ${(item.verdict || 'unknown').toUpperCase()}`;
+    title.textContent = `${item.skillId} / ${(item.verdict || 'unknown').toUpperCase()}`;
     const rationale = document.createElement('p');
     rationale.textContent = item.problem || item.document?.rationale || 'No rationale was exported.';
     card.append(title, rationale);
@@ -276,7 +276,7 @@ function renderScore() {
   const headline = document.createElement('p');
   headline.className = 'score-headline';
   headline.textContent = score.status === 'scored'
-    ? `Experience Score ${score.score} / 100 · ${score.evaluator?.name || 'evaluator'}@${score.evaluator?.version || '?'}`
+    ? `Experience Score ${score.score} / 100 / ${score.evaluator?.name || 'evaluator'}@${score.evaluator?.version || '?'}`
     : 'Experience Score withheld — insufficient evidence';
   box.append(headline);
   const detail = document.createElement('p');
@@ -324,10 +324,10 @@ function renderRun() {
     rows.push([`Finding ${manifest.confirmation.findingId}`, `${manifest.confirmation.verdict} — ${manifest.confirmation.note}`]);
   }
   if (manifest.execution) {
-    rows.push(['Agent execution', `branch ${manifest.execution.branch} · log ${manifest.execution.logRetained ? 'retained locally, not published' : 'not retained'}`]);
+    rows.push(['Agent execution', `branch ${manifest.execution.branch} / log ${manifest.execution.logRetained ? 'retained locally, not published' : 'not retained'}`]);
   }
   for (const skill of manifest.skills) {
-    rows.push([`Skill ${skill.id}`, `${skill.status} · v${skill.version}`]);
+    rows.push([`Skill ${skill.id}`, `${skill.status} / v${skill.version}`]);
   }
   if (manifest.evaluation) {
     for (const [viewport, view] of Object.entries(manifest.evaluation.views)) {
@@ -386,7 +386,7 @@ function renderFoundation() {
   for (const [label, items] of groups) {
     const group = document.createElement('article');
     const title = document.createElement('h3');
-    title.textContent = `${label} · ${items.length}`;
+    title.textContent = `${label} / ${items.length}`;
     group.append(title);
     if (!items.length) {
       const empty = document.createElement('p');
@@ -458,7 +458,7 @@ function render() {
     button.setAttribute('aria-pressed', item.id === selected ? 'true' : 'false');
     const top = document.createElement('span');
     top.className = 'finding-top';
-    top.textContent = `${item.id} · PRIORITY ${item.priority.toFixed(1)}`;
+    top.textContent = `${item.id} / PRIORITY ${item.priority.toFixed(1)}`;
     const status = document.createElement('em');
     status.className = 'finding-status';
     status.textContent = item.status.replace(/-/g, ' ');
@@ -466,7 +466,7 @@ function render() {
     const title = document.createElement('strong');
     title.textContent = item.title;
     const explanation = document.createElement('small');
-    explanation.textContent = `Impact ${item.impact}/5 · Confidence ${item.confidence}/5 · Effort ${item.effort}/5 · ${item.evidence.length} evidence`;
+    explanation.textContent = `Impact ${item.impact}/5 / Confidence ${item.confidence}/5 / Effort ${item.effort}/5 / ${item.evidence.length} evidence`;
     button.append(top, title, explanation);
     button.addEventListener('click', () => { selected = item.id; render(); });
     findings.append(button);
@@ -607,7 +607,7 @@ async function start() {
     const option = document.createElement('option');
     option.value = `${RUN_PREFIX}${summary.id}`;
     const when = summary.createdAt ? summary.createdAt.slice(0, 10) : 'undated';
-    option.textContent = `Run ${summary.id} / ${summary.project} · ${when}`;
+    option.textContent = `Run ${summary.id} / ${summary.project} / ${when}`;
     picker.append(option);
   }
   const requested = params.get('case');

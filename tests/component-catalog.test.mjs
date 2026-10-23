@@ -33,3 +33,13 @@ test("published sources are byte-identical to the reviewed upstream snapshots", 
     );
   }
 });
+
+test("every canonical component has a runnable preview while aliases resolve to canonical entries", () => {
+ const canonical=catalog.items.filter(item=>!item.aliasOf);
+ assert.equal(canonical.length,137);
+ assert.deepEqual(canonical.filter(item=>!item.preview).map(item=>item.id),[]);
+ for(const alias of catalog.items.filter(item=>item.aliasOf)) assert.ok(canonical.find(item=>item.id===alias.aliasOf)?.preview,alias.id);
+});
+test("media and pixel fonts used by the expanded previews exist locally", async()=>{
+ for(const path of ['sample.webm','device-frame.svg',...['Square','Grid','Circle','Triangle','Line'].map(v=>`fonts/GeistPixel-${v}.woff2`)])assert.ok((await readFile('public/components/cult-ui/'+path)).length>0,path);
+});

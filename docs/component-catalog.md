@@ -19,7 +19,7 @@ The `/components/` route displays the pinned Cult UI registry, with searchable c
 
 ## Real previews
 
-The initial catalog runs 77 source-based examples. Components requiring additional frameworks, shaders, fonts, media or host services retain their source entries and list their setup requirements. A compatible import graph is only a build eligibility check, not a security or accessibility certification.
+The catalog now runs all 137 canonical component examples. The 17 legacy names point to their canonical components. Additional framework adapters, dependencies, fonts and local media are recorded below. A compatible import graph is only a build eligibility check, not a security or accessibility certification.
 
 Preview generation resolves explicit local imports and an allowed set of installed packages. It transpiles the pinned TSX and generates a statically analyzable lazy loader per example. Production runtime does not fetch or evaluate arbitrary remote code. Only the selected example is mounted; Stop Preview unmounts its document. Error boundaries show load/render failures.
 
@@ -28,9 +28,9 @@ Each example runs in a separate iframe document with its own Tailwind CSS. It ca
 Explicit preview adaptations:
 
 1. Rewrite imports to generated local modules; remove TypeScript syntax.
-2. Replace illustrative images/avatars with our authored `sample.svg`. Device frame assets are not substituted: the Mac Screen entry stays source-only.
-3. Supply standard system sans-serif font fallbacks; pixel-font examples stay source-only until matching font assets are configured.
-4. Compile upstream theme/utilities inside the preview only, omitting the unused dither import. Preserve component layout, source sample copy and interaction logic.
+2. Replace illustrative images/avatars with our authored `sample.svg`. Mac Screen uses an explicitly documented locally authored device frame.
+3. Supply system sans-serif fallbacks and all five Geist Pixel variants with their license.
+4. Compile upstream theme/utilities inside the preview only, including the dither plugin required by Dither Image. Preserve component layout, source sample copy and interaction logic.
 5. Start with reduced-motion controls and offer an explicit stop action. This does not guarantee that every upstream JS timer follows reduced-motion preferences; target integration must review that behavior.
 6. Adapt the named `TerminalAnimationDemo` export to the gallery loader's default-export contract.
 
@@ -62,6 +62,17 @@ This change has not been deployed or automatically approved for target projects.
 
 ## Preview repairs
 
-Pinned Slider and Textarea support modules plus Radix dependencies enable bg-image-texture, toolbar-expandable and wizard-expandable. Five original texture assets are vendored and hashed. Only the reviewed texture demo is exempted from the generic host-API detector: its fetch downloads local textures, not a third-party service. Its blob download is allowed in the preview; other demo navigation remains inert. Remaining source-only entries still require separate framework/media/service integration and are not claimed as working previews.
+Pinned Slider and Textarea support modules plus Radix dependencies enable bg-image-texture, toolbar-expandable and wizard-expandable. Five original texture assets are vendored and hashed. Only the reviewed texture demo is exempted from the generic host-API detector: its fetch downloads local textures, not a third-party service. Its blob download is allowed in the preview; other demo navigation remains inert. This was the earlier partial-coverage milestone; the preview adapters described below complete all 137 canonical entries. Live third-party services still require project-specific integration.
 
 Additional pinned Checkbox, Avatar, Tooltip, Select and Switch modules enable rolling-number, sortable-list, expandable, mock-browser-window and halo-toast with Sonner. Expandable demo product imagery is replaced by the documented local sample illustration; upstream source remains unchanged.
+
+
+## Expanded preview environment (2026-10-23)
+
+17 missing support modules are pinned to the same upstream revision and checked by the existing SHA-256 build gate. The complete original registry snapshots and all skills remain intact. Next Image/Link, theme, navigation and player adapters are scoped to the generated gallery; they are not published as replacement Next.js source. Intro Disclosure uses per-document ephemeral storage. The original Tooltip/Select components receive locally authored examples. Device imagery and a four-second generated video are local test fixtures. YouTube's visual player flow uses a local video rather than an external embed; it does not prove live YouTube service integration. TweetGrid's upstream source itself renders mock tweets. WebGL needs browser support. These conditions appear in each catalog entry's `previewAdaptations`.
+
+The build installs all preview dependencies, including the dither plugin, and copies Geist Pixel assets from the locked package. Original source hashes remain byte-identical. Generated media contains no third-party footage. The gallery's CSP still blocks third-party scripts, images and frames; it permits local media and blob previews for files selected by the user.
+
+## Real project adoption
+
+Selected `base-tooltip` from the catalog and reviewed its pinned source and MIT license. Adapted its Base UI provider/trigger/portal/popup composition into `packages/ui/Tooltip.tsx` for the real HappyHands shared navigation. The adapter preserves button semantics and uses the HappyHands Radix semantic tokens, 12px label, 0.5px border and a floating surface. It adds no global Tailwind reset, installs no target-side service and leaves theme/language actions intact. This is one verified adoption, not a claim that all 137 components are approved for all projects. Catalog guidance remains the existing explicit selection-to-project-agent handoff; no extra automatic installer or approval store was introduced.
