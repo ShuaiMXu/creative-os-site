@@ -10,7 +10,7 @@ const dynamic = [
     "{0}:1，普通文字参考阈值 4.5:1",
     "{0}:1; reference threshold for normal text: 4.5:1",
   ],
-  ["已保存在此浏览器 · 修订 {0}", "Saved in this browser · Revision {0}"],
+  ["已保存在此浏览器 / 修订 {0}", "Saved in this browser / Revision {0}"],
   [
     "已应用 {0} 个变量；{1} 项未应用。原始输入保留在导入面板。",
     "Applied {0} tokens; {1} skipped. Original input remains in the import panel.",

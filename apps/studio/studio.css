@@ -1540,3 +1540,14 @@ button[aria-pressed="true"] {
   .controls .token-row:focus-within { outline: 1px solid Highlight; }
   .control-tabs button[aria-pressed="true"] { outline: 1px solid Highlight; }
 }
+
+.studio-new-project { padding: 20px 30px; border-bottom: 0.5px solid var(--hh-line); background: var(--hh-bg); }
+.studio-new-project label { display: block; margin-bottom: 8px; font-weight: 600; }
+.studio-new-project-controls { display: flex; align-items: center; gap: 12px; max-width: 600px; }
+.studio-new-project-controls input { flex: 1; min-width: 0; min-height: 44px; border: 0.5px solid var(--hh-line); border-radius: 6px; padding: 8px 12px; background: var(--hh-bg-raised); color: var(--hh-ink); }
+.studio-new-project p { margin: 8px 0 0; color: var(--hh-ink); font-size: 12px; }
+@media (max-width: 700px) {
+  .studio-new-project { padding: 20px; }
+  .studio-new-project-controls { flex-wrap: wrap; }
+  .studio-new-project-controls input { flex-basis: 100%; }
+}
