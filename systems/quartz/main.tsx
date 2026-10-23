@@ -1,3 +1,5 @@
+import { FoundationSpecimen } from "../../packages/ui/FoundationSpecimen";
+import { SystemScenes } from "../../packages/ui/SystemScenes";
 import { QuartzCatalog } from "./QuartzCatalog";
 import { SystemExample } from "../../packages/ui/SystemExample";
 import { Icon } from "../../packages/ui/Icon";
@@ -97,6 +99,7 @@ function App() {
           <SystemDirectory label={t("本页目录", "On this page")}>
             <nav aria-label={t("目录", "Contents")}>
               {[
+                ["scenes", "应用场景", "Scenes"],
                 ["overview", "概览", "Overview"],
                 ["foundations", "设计原则", "Principles"],
                 ["example", "效果预览", "Example"],
@@ -110,7 +113,9 @@ function App() {
               ))}
             </nav>
           </SystemDirectory>
+          <SystemScenes system="quartz" lang={lang} dark={dark} />
           <section id="foundations">
+            <FoundationSpecimen system="quartz" lang={lang} />
             <p className="eyebrow">{t("01 / 设计原则", "01 / Principles")}</p>
             <h2>
               {t(

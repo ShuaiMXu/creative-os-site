@@ -1,0 +1,55 @@
+/* On-demand Kage references, presented within the HappyHands catalog. */
+.kage-gallery { margin-block:var(--hh-space-6); }
+.kage-search { display:flex; gap:var(--hh-space-3); align-items:end; }
+.kage-search label { display:grid; gap:var(--hh-space-2); flex:1; min-width:0; }
+.kage-search input { width:100%; min-height:44px; padding:var(--hh-space-3); }
+.kage-search button { min-height:44px; }
+.kage-suggestions,.kage-view-options,.kage-image-tools,.kage-source-links { display:flex; align-items:center; flex-wrap:wrap; gap:var(--hh-space-2); margin-block:var(--hh-space-4); }
+.kage-empty { padding-block:var(--hh-space-8); color:var(--hh-ink-muted); }
+.kage-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--hh-space-4); }
+.kage-card { text-align:left; padding:0; overflow:hidden; display:flex; flex-direction:column; background:var(--hh-bg-raised); }
+.kage-card img,.kage-card .kage-image-fallback { width:100%; height:240px; object-fit:cover; object-position:top; }
+.kage-card strong,.kage-card > span:not(.kage-image-fallback) { padding:var(--hh-space-3); overflow-wrap:anywhere; }
+.kage-card > span { font-size:12px; }
+.kage-card > span:last-child { margin-top:auto; }
+.kage-image-fallback { display:grid; place-items:center; min-height:180px; padding:var(--hh-space-4); background:var(--hh-bg-sunken); color:var(--hh-ink-muted); }
+.kage-detail { margin-top:var(--hh-space-8); padding-top:var(--hh-space-6); border-top:0.5px solid var(--hh-line); }
+.kage-detail-heading { display:flex; justify-content:space-between; align-items:start; gap:var(--hh-space-4); }
+.kage-detail-heading h3 { font-size:20px; margin:0; }
+.kage-detail-heading > div { min-width:0; overflow-wrap:anywhere; }
+.kage-detail-heading > button { flex-shrink:0; }
+.kage-gallery [role="status"]:empty { margin:0; }
+.kage-page-image { margin-block:var(--hh-space-4); background:var(--hh-bg-sunken); border:0.5px solid var(--hh-line); border-radius:var(--hh-radius-lg); overflow:auto; max-height:680px; }
+.kage-page-image img { display:block; width:100%; height:auto; }
+.kage-page-image:not(.is-full-page) img { max-height:640px; object-fit:contain; object-position:top; }
+.kage-sections-layout { display:grid; grid-template-columns:260px minmax(0,1fr); gap:var(--hh-space-6); margin-block:var(--hh-space-6); }
+.kage-section-list { display:flex; flex-direction:column; align-self:start; gap:var(--hh-space-2); max-height:640px; overflow:auto; padding:var(--hh-space-1); }
+.kage-section-list .kage-section-option { display:flex; flex-direction:column; align-items:start; text-align:left; white-space:normal; padding:var(--hh-space-3); }
+.kage-section-option span { color:var(--hh-ink-muted); font-size:12px; }
+.kage-section-option strong { font-size:14px; font-weight:500; }
+.kage-section-option[aria-pressed="true"] { border-color:var(--hh-line-strong); background:var(--hh-bg-sunken); }
+.kage-section-content { min-width:0; }
+.kage-section-content h4 { font-size:20px; margin-top:0; }
+.kage-detail .reference-text { max-height:none; }
+.kage-attribution { color:var(--hh-ink-muted); font-size:12px; }
+.kage-image-dialog { width:min(1400px,94vw); max-width:94vw; height:90vh; max-height:90vh; padding:0; border:0.5px solid var(--hh-line); border-radius:var(--hh-radius-xl); background:var(--hh-bg-raised); color:var(--hh-ink); }
+.kage-image-dialog[open] { display:flex; flex-direction:column; }
+.kage-image-dialog::backdrop { background:var(--hh-scrim); }
+.kage-dialog-toolbar { display:flex; align-items:center; justify-content:space-between; gap:var(--hh-space-4); padding:var(--hh-space-4); border-bottom:0.5px solid var(--hh-line); }
+.kage-dialog-toolbar strong { overflow-wrap:anywhere; min-width:0; }
+.kage-dialog-toolbar button { flex-shrink:0; }
+.kage-dialog-image { overflow:auto; min-height:0; flex:1; }
+.kage-dialog-image img { display:block; width:100%; height:auto; }
+@media(max-width:800px) {
+  .kage-grid {grid-template-columns:repeat(2,minmax(0,1fr));}
+  .kage-sections-layout {grid-template-columns:1fr;}
+  .kage-section-list {max-height:220px;}
+}
+@media(max-width:560px) {
+  .kage-grid {grid-template-columns:1fr;}
+  .kage-search {align-items:stretch;flex-direction:column;}
+}
+.kage-section-list .kage-section-option { flex-shrink:0; }
+.kage-detail > p:not(.kage-attribution) { max-width:84ch; line-height:1.7; }
+.kage-source-links a,.kage-section-content > a { display:inline-flex; align-items:center; min-height:44px; text-decoration:none; }
+.kage-source-links { gap:var(--hh-space-6); }

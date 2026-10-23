@@ -52,6 +52,18 @@ const safeUrl = (value) => {
   }
 };
 const text = (value) => (typeof value === "string" ? value : "");
+export function normalizeComponent(x) {
+  if (!x || typeof x !== "object") return null;
+  return {
+    slug: text(x.slug),
+    title: text(x.title),
+    description: text(x.description),
+    kind: text(x.kind),
+    image: safeUrl(x.image_url),
+    source: safeUrl(x.page_url),
+    prompt: text(x.prompt),
+  };
+}
 export function normalizeDesign(x) {
   return {
     slug: text(x.slug),
@@ -59,6 +71,11 @@ export function normalizeDesign(x) {
     description: text(x.description),
     image: safeUrl(x.thumbnail_url || x.screenshot_url),
     fullImage: safeUrl(x.screenshot_url),
+    fullPageImage: safeUrl(x.full_page_url),
+    website: safeUrl(x.source_url || x.product?.website_url),
+    components: Array.isArray(x.components)
+      ? x.components.map(normalizeComponent).filter(Boolean)
+      : [],
     source: safeUrl(x.page_url),
     product: text(x.product?.name),
     styles: Array.isArray(x.styles)
@@ -68,10 +85,10 @@ export function normalizeDesign(x) {
   };
 }
 export async function searchKage(query) {
-  const data = await callKage("search_designs", { query, limit: 6 });
+  const data = await callKage("search_designs", { ...(query ? { query } : {}), limit: 24 });
   return {
     designs: (Array.isArray(data.designs) ? data.designs : [])
-      .slice(0, 6)
+      .slice(0, 24)
       .map(normalizeDesign),
   };
 }
@@ -94,10 +111,11 @@ export default async function handler(req, res) {
   }
   const params = new URL(req.url, "http://localhost").searchParams;
   const query = params.get("query")?.trim(),
-    slug = params.get("slug");
+    slug = params.get("slug"),
+    browse = params.get("browse") === "all";
   res.setHeader("Content-Type", "application/json");
   if (
-    slug ? !/^[a-zA-Z0-9_-]{1,200}$/.test(slug) : !query || query.length > 160
+    slug ? !/^[a-zA-Z0-9_-]{1,200}$/.test(slug) : browse ? !!query : !query || query.length > 160
   ) {
     res.statusCode = 400;
     return res.end(JSON.stringify({ error: "Invalid query" }));

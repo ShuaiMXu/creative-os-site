@@ -1,3 +1,5 @@
+import { FoundationSpecimen } from "../../packages/ui/FoundationSpecimen";
+import { SystemScenes } from "../../packages/ui/SystemScenes";
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import { Button } from "../../packages/ui";
@@ -77,6 +79,7 @@ function App() {
           <SystemDirectory label={t("本页目录", "On this page")}>
             <nav aria-label={t("设计系统目录", "Design system navigation")}>
               {[
+                ["scenes", "应用场景", "Scenes"],
                 ["overview", "概览", "Overview"],
                 ["foundations", "基础规范", "Foundations"],
                 ["components", "组件目录", "Components"],
@@ -89,7 +92,9 @@ function App() {
               ))}
             </nav>
           </SystemDirectory>
+          <SystemScenes system="lime" lang={lang} dark={dark} />
           <section id="foundations">
+            <FoundationSpecimen system="lime" lang={lang} />
             <h2>{t("颜色与交互约定", "Color and interaction conventions")}</h2>
             <div className="rules">
               {[
