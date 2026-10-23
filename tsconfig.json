@@ -24,5 +24,8 @@
     "packages/ui",
     "components",
     "systems/lime"
+  ],
+  "exclude": [
+    "components/preview/adapters"
   ]
 }

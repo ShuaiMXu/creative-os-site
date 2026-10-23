@@ -1,7 +1,3 @@
-import limeRegistry from "../../systems/lime/catalog.json";
-import limePalette from "../../systems/lime/palette.json";
-import happyhandsTokens from "../../packages/design-tokens/happyhands.json";
-import quartzRegistry from "../../systems/quartz/catalog.json";
 import {iconMarkup} from '../../packages/ui/icons.ts';
 import './design-systems.css';
 
@@ -31,40 +27,17 @@ export function quartzPrompt(language, existing) {
 export function designSystemsMarkup(language) {
   const t = (zh,en) => language === 'zh' ? zh : en;
   const card = ({name,tag,copy,href,tone,coverage}) => `<article class="resource-tile" id="${name.toLowerCase().replaceAll(' ','-')}">
-    <div class="resource-tile-art resource-tile-art-${tone}" style="${tone === 'lime' ? '--tile-accent:'+limePalette.light.accent : ''}" aria-hidden="true"><span>${name}</span><div class="tile-window"><i></i><i></i><i></i><div class="tile-lines"><b></b><b></b><b></b></div><div class="tile-blocks"><b></b><b></b><b></b></div></div></div>
+    <div class="resource-tile-art resource-tile-art-${tone}" aria-hidden="true"><span>${name}</span><div class="tile-window"><i></i><i></i><i></i><div class="tile-lines"><b></b><b></b><b></b></div><div class="tile-blocks"><b></b><b></b><b></b></div></div></div>
     <div class="resource-tile-body"><p class="resource-tile-tag">${tag}</p><h4>${name}</h4><p>${copy}</p>${coverage ? `<p class="resource-tile-coverage">${coverage}</p>` : ""}<a class="text-link" href="${href}">${t('查看详情','View details')} ${iconMarkup('right')}</a></div>
   </article>`;
   const sections = [
-    {id:'system-foundations-title',title:t('设计系统','Design systems'),copy:t('为产品选择一套完整的视觉与交互规范。','Choose a visual and interaction foundation for your product.'),items:[
-      {name:'HappyHands',tag:t('我们的设计系统','Our design system'),copy:t('暖中性色、清晰排版与一致的组件状态。','Warm neutrals, clear typography and consistent component states.'),href:'/systems/happyhands/',tone:'happyhands',coverage:t(`${Object.keys(happyhandsTokens.light).length} 项变量 · 深浅外观 · 组件与页面预览`,`${Object.keys(happyhandsTokens.light).length} tokens · Light & dark · Component and screen previews`)},
-      {name:'Quartz',tag:t('设计系统 · design.how','Design system · design.how'),copy:t('面向 AI 产品的组件规范与页面模板。','Component guidelines and screen templates for AI products.'),href:'/systems/quartz/',tone:'quartz',coverage:t(`${quartzRegistry.items.length} 个目录条目 · ${quartzRegistry.items.filter(item=>item.type==='registry:block').length} 个页面模板`,`${quartzRegistry.items.length} catalog entries · ${quartzRegistry.items.filter(item=>item.type==='registry:block').length} screen blocks`)},
-      {name:'Lime',tag:t('设计系统 · design.how','Design system · design.how'),copy:t('面向消费类应用与个人助手，暖灰底色搭配黄绿色主要操作。','Warm neutral surfaces and a lime primary action for consumer apps and personal assistants.'),href:'/systems/lime/',tone:'lime',coverage:t(`${limeRegistry.items.length} 个目录条目 · ${limeRegistry.items.filter(item=>item.type==='registry:block').length} 个页面模板`,`${limeRegistry.items.length} catalog entries · ${limeRegistry.items.filter(item=>item.type==='registry:block').length} screen blocks`)}
-    ]},
     {id:'system-components-title',title:t('组件库','Component libraries'),copy:t('预览组件效果，选择适合项目的交互。','Preview components and choose interactions that fit your project.'),items:[
       {name:'Cult UI',tag:t('组件与交互','Components and interactions'),copy:t('按钮、卡片、导航与页面区块，提供预览和源码。','Buttons, cards, navigation and sections with previews and source.'),href:'/components/?provider=cult-ui',tone:'cult'}
     ]},
     {id:'system-references-title',title:t('设计参考','Design references'),copy:t('浏览页面布局与视觉风格，完善自己的设计。','Explore layouts and visual styles to refine your own design.'),items:[
       {name:'Kage',tag:t('页面与区块','Pages and sections'),copy:t('按产品或风格查找截图，查看页面结构与设计分析。','Find screenshots by product or style and explore design analysis.'),href:'/components/?provider=kage',tone:'kage'},
-      {name:'Refero Styles',tag:t('风格与规范 · DESIGN.md','Style guidelines · DESIGN.md'),copy:t('了解颜色、字体与间距规则。目前提供来源与使用说明。','Explore color, type and spacing rules. Source and usage guidance available.'),href:'/components/?provider=refero',tone:'refero'}
+      {name:'Refero Styles',tag:t('风格与规范 / DESIGN.md','Style guidelines / DESIGN.md'),copy:t('了解颜色、字体与间距规则。目前提供来源与使用说明。','Explore color, type and spacing rules. Source and usage guidance available.'),href:'/components/?provider=refero',tone:'refero'}
     ]}
   ];
-  return `<div class="system-collection resource-collection">${sections.map(section=>{
-    const rail=section.id==='system-foundations-title';
-    return `<section class="system-resource-section" aria-labelledby="${section.id}"><header class="system-resource-heading"><h3 id="${section.id}">${section.title}</h3><p>${section.copy}</p>${rail?`<div class="system-rail-controls"><button type="button" data-rail-step="-1" aria-controls="design-system-rail" aria-label="${t('上一个设计系统','Previous design system')}">←</button><button type="button" data-rail-step="1" aria-controls="design-system-rail" aria-label="${t('下一个设计系统','Next design system')}">→</button></div>`:''}</header><div class="resource-tile-grid${rail?' system-card-rail':''}" ${rail?`id="design-system-rail" tabindex="0" role="region" aria-labelledby="${section.id}"`:''}>${section.items.map(card).join('')}</div></section>`;
-  }).join('')}</div>`;
-}
-
-let cleanupRail;
-export function setupSystemRail() {
-  cleanupRail?.();
-  const rail=document.querySelector('#design-system-rail');
-  if(!rail)return;
-  const buttons=[...document.querySelectorAll('[data-rail-step]')];
-  const update=()=>{const max=rail.scrollWidth-rail.clientWidth;buttons[0].disabled=rail.scrollLeft<=1;buttons[1].disabled=rail.scrollLeft>=max-1;};
-  const move=direction=>rail.scrollBy({left:direction*((rail.firstElementChild?.getBoundingClientRect().width||300)+parseFloat(getComputedStyle(rail).columnGap||0)),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
-  buttons.forEach(button=>button.onclick=()=>move(Number(button.dataset.railStep)));
-  rail.addEventListener('scroll',update,{passive:true});
-  rail.addEventListener('keydown',event=>{if(event.target!==rail)return;if(event.key==='ArrowRight'||event.key==='ArrowLeft'){event.preventDefault();move(event.key==='ArrowRight'?1:-1);}});
-  const observer=new ResizeObserver(update);observer.observe(rail);update();
-  cleanupRail=()=>observer.disconnect();
+  return `<div class="system-collection resource-collection">${sections.map(section => `<section class="system-resource-section" aria-labelledby="${section.id}"><header class="system-resource-heading"><h3 id="${section.id}">${section.title}</h3><p>${section.copy}</p></header><div class="resource-tile-grid">${section.items.map(card).join('')}</div></section>`).join('')}</div>`;
 }

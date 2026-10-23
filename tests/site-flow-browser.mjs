@@ -76,25 +76,13 @@ try {
         await page.locator('header a[aria-current="page"]').count(),
         0,
       );
-      await follow('header a[href="/apps/portal/#explore"]');
-      assert.deepEqual(
-        await page
-          .locator(".system-resource-section:first-child article h4")
-          .allTextContents(),
-        ["HappyHands", "Quartz", "Lime"],
-      );
-      assert.equal(
-        await page.locator("#explore textarea, #explore pre").count(),
-        0,
-      );
+      assert.equal(await page.locator('#explore').count(), 0);
+      await follow('header a[href="/components/?provider=systems"]');
       await check("catalog");
-      const catalogLeft = (
-        await page.locator("#system-foundations-title").boundingBox()
-      ).x;
-      const headerLeft = (
-        await page.locator('header a[aria-label="HappyHands"]').boundingBox()
-      ).x;
-      await follow('#happyhands a[href="/systems/happyhands/"]');
+      const catalogLeft = (await page.locator('.library-heading h1').boundingBox()).x;
+      const headerLeft = (await page.locator('header a[aria-label="HappyHands"]').boundingBox()).x;
+      await page.frameLocator('iframe[title="HappyHands 完整设计规范"]').getByRole("heading", {name:"HappyHands", exact:true}).waitFor();
+      await page.goto(base + '/systems/happyhands/');
       assert.equal(await page.locator("h1").innerText(), "HappyHands");
       const detailLeft = (
         await page.locator(".system-breadcrumb").boundingBox()
@@ -158,10 +146,12 @@ try {
       await check("happyhands");
       await page.getByRole("button", { name: "English", exact: true }).click();
       assert.equal(await page.locator("html").getAttribute("lang"), "en");
-      await follow('.system-breadcrumb a[href="/apps/portal/#explore"]');
-      assert.equal(await page.locator("#happyhands").isVisible(), true);
+      await follow('.system-breadcrumb a[href="/components/?provider=systems"]');
+      assert.equal(await page.locator(".resource-sections").isVisible(), true);
       assert.equal(await page.locator("html").getAttribute("lang"), "en");
-      await follow('#quartz a[href="/systems/quartz/"]');
+      await follow('.provider-navigation a[href="?provider=systems&system=quartz"]');
+      await page.frameLocator('iframe[title="Quartz complete design system"]').getByRole("heading", {name:"Quartz", exact:true}).first().waitFor();
+      await page.goto(base + '/systems/quartz/');
       await check("quartz-en");
       const catalog = page.locator(".quartz-catalog");
       await catalog.getByRole("searchbox").fill("button");
@@ -294,7 +284,7 @@ try {
       await context.close();
     }
   console.log(
-    "PASS: home → HappyHands → home → Quartz → Theme Studio → home → connection guide, 390/768/1280px, both themes, language persistence, mobile directory, edits retained, translated panels, no page errors or overflow.",
+    "PASS: home → resource directory → HappyHands → Quartz → Theme Studio → connection guide, 390/768/965/1280px, both themes, language persistence, mobile directory, edits retained, translated panels, no page errors or overflow.",
   );
 } finally {
   await browser.close();

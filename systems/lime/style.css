@@ -2,7 +2,7 @@
   background: var(--lm-page);
   color: var(--lm-fg);
   padding: var(--hh-space-6);
-  border: 1px solid var(--lm-line-strong);
+  border: 0.5px solid var(--lm-line-strong);
   border-radius: var(--lm-radius-panel);
   min-width: 0;
   font-family: var(--hh-font-sans);
@@ -15,7 +15,7 @@
   margin-bottom: var(--hh-space-6);
 }
 .system-landing .lime-preview h2 {
-  font-size: 24px;
+  font-size: 20px;
   line-height: 1.4;
   margin: 0 0 var(--hh-space-3);
 }
@@ -40,7 +40,7 @@
   gap: var(--hh-space-3);
   padding: var(--hh-space-4) 0;
   margin: 0;
-  border-top: 1px solid var(--lm-line);
+  border-top: 0.5px solid var(--lm-line);
   max-width: none;
 }
 .system-landing .lime-preview input[type="checkbox"] {
@@ -53,7 +53,7 @@
   flex-shrink: 0;
 }
 .lime-preview .lime-preview-field {
-  font-size: 13px;
+  font-size: 12px;
 }
 .system-landing .lime-preview select {
   color: var(--lm-fg);
@@ -64,7 +64,7 @@
 .system-landing .lime-preview button {
   min-height: 44px;
   padding: var(--hh-space-2) var(--hh-space-4);
-  border: 1px solid var(--lm-line-strong);
+  border: 0.5px solid var(--lm-line-strong);
   border-radius: var(--lm-radius-control);
   background: var(--lm-surface);
   color: var(--lm-fg);
@@ -93,7 +93,7 @@
 }
 .lime-preview-result {
   padding-block: var(--hh-space-4);
-  border-top: 1px solid var(--lm-line);
+  border-top: 0.5px solid var(--lm-line);
   margin-bottom: var(--hh-space-4);
 }
 .lime-palette {
@@ -104,14 +104,14 @@
 }
 .lime-palette article {
   padding: var(--hh-space-4);
-  border: 1px solid var(--hh-line);
+  border: 0.5px solid var(--hh-line);
   border-radius: var(--hh-radius-lg);
   min-width: 0;
 }
 .lime-palette i {
   display: block;
   height: 56px;
-  border: 1px solid var(--hh-line-strong);
+  border: 0.5px solid var(--hh-line-strong);
   border-radius: var(--hh-radius-sm);
   margin-bottom: var(--hh-space-3);
 }

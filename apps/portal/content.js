@@ -21,15 +21,15 @@ export const systems = [
 ];
 
 export const screens = [
-  { label: 'BEFORE · DESKTOP', src: '/runs/06dabc2c/before/desktop.png', caption: '改之前的首页，信息层级有问题' },
-  { label: 'AFTER · DESKTOP', src: '/runs/06dabc2c/after/desktop.png', caption: '改之后，同一视口' },
-  { label: 'BEFORE · MOBILE', src: '/runs/06dabc2c/before/mobile.png', caption: '移动端基线' },
-  { label: 'AFTER · MOBILE', src: '/runs/06dabc2c/after/mobile.png', caption: '同一状态，改后' }
+  { label: 'BEFORE / DESKTOP', src: '/runs/06dabc2c/before/desktop.png', caption: '改之前的首页，信息层级有问题' },
+  { label: 'AFTER / DESKTOP', src: '/runs/06dabc2c/after/desktop.png', caption: '改之后，同一视口' },
+  { label: 'BEFORE / MOBILE', src: '/runs/06dabc2c/before/mobile.png', caption: '移动端基线' },
+  { label: 'AFTER / MOBILE', src: '/runs/06dabc2c/after/mobile.png', caption: '同一状态，改后' }
 ];
 
 export const screenPairs = [
-  { title: '首页 · 桌面端', task: '信息层级', before: screens[0], after: screens[1], result: '层级对齐了' },
-  { title: '首页 · 移动端', task: '任务连贯性', before: screens[2], after: screens[3], result: '路径没断' }
+  { title: '首页 / 桌面端', task: '信息层级', before: screens[0], after: screens[1], result: '层级对齐了' },
+  { title: '首页 / 移动端', task: '任务连贯性', before: screens[2], after: screens[3], result: '路径没断' }
 ];
 
 export const elements = [

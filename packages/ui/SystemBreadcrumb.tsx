@@ -13,7 +13,7 @@ export function SystemBreadcrumb({
     >
       <a href="/apps/portal/">{zh ? "官网" : "Home"}</a>
       <span aria-hidden="true">/</span>
-      <a href="/apps/portal/#explore">{zh ? "设计系统" : "Design systems"}</a>
+      <a href="/components/?provider=systems">{zh ? "设计系统" : "Design systems"}</a>
       <span aria-hidden="true">/</span>
       <span aria-current="page">{current}</span>
     </nav>

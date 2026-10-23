@@ -34,3 +34,23 @@ body {
   transition-duration: 0.01ms !important;
   scroll-behavior: auto !important;
 }
+
+@font-face {font-family:"Geist Pixel Square";src:url("/components/cult-ui/fonts/GeistPixel-Square.woff2") format("woff2");font-display:swap;}
+.font-pixel-square {font-family:"Geist Pixel Square",monospace;}
+:root {--font-geist-pixel-square:"Geist Pixel Square";}
+
+@font-face {font-family:"Geist Pixel Grid";src:url("/components/cult-ui/fonts/GeistPixel-Grid.woff2") format("woff2");font-display:swap;}
+.font-pixel-grid {font-family:"Geist Pixel Grid",monospace;}
+:root {--font-geist-pixel-grid:"Geist Pixel Grid";}
+
+@font-face {font-family:"Geist Pixel Circle";src:url("/components/cult-ui/fonts/GeistPixel-Circle.woff2") format("woff2");font-display:swap;}
+.font-pixel-circle {font-family:"Geist Pixel Circle",monospace;}
+:root {--font-geist-pixel-circle:"Geist Pixel Circle";}
+
+@font-face {font-family:"Geist Pixel Triangle";src:url("/components/cult-ui/fonts/GeistPixel-Triangle.woff2") format("woff2");font-display:swap;}
+.font-pixel-triangle {font-family:"Geist Pixel Triangle",monospace;}
+:root {--font-geist-pixel-triangle:"Geist Pixel Triangle";}
+
+@font-face {font-family:"Geist Pixel Line";src:url("/components/cult-ui/fonts/GeistPixel-Line.woff2") format("woff2");font-display:swap;}
+.font-pixel-line {font-family:"Geist Pixel Line",monospace;}
+:root {--font-geist-pixel-line:"Geist Pixel Line";}

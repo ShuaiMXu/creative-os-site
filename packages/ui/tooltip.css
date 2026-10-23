@@ -1,0 +1,2 @@
+.hh-tooltip-positioner { z-index:var(--hh-z-overlay); }
+.hh-tooltip { max-width:240px; padding:8px 12px; border:0.5px solid var(--hh-line-strong); border-radius:4px; background:var(--hh-bg-raised); color:var(--hh-ink); font:400 12px/1.5 var(--hh-font-sans); box-shadow:var(--hh-shadow-float); }

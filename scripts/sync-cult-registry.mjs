@@ -36,6 +36,11 @@ for (const name of ["button", "input", "label", "badge", "card", "slider", "text
     `${sourceBase}apps/www/components/ui/${name}.tsx`,
   );
 }
+const extraSupports = JSON.parse(await readFile(new URL("../vendor/cult-ui/support-modules.json", import.meta.url), "utf8"));
+for (const [key, name] of Object.entries(extraSupports)) {
+  try { hashes[name] = await download(name, `${sourceBase}apps/www/${key}.tsx`); }
+  catch { hashes[name] = await download(name, `${sourceBase}apps/www/${key}.ts`); }
+}
 hashes["globals.css"] = await download(
   "globals.css",
   `${sourceBase}apps/www/styles/globals.css`,

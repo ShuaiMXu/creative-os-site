@@ -10,6 +10,7 @@ import { createRoot } from "react-dom/client";
 import "../../packages/design-tokens/happyhands.css";
 import "../../packages/ui/site-layout.css";
 import "../../packages/ui/system-page.css";
+import "../../packages/ui/owned-ui.css";
 // @ts-ignore The catalog prompt is shared with the plain-JS portal.
 import { quartzPrompt } from "../../apps/portal/design-systems.js";
 
@@ -19,7 +20,7 @@ function App() {
   const [status, setStatus] = useState("");
   React.useEffect(() => {
     document.title =
-      lang === "zh" ? "Quartz · 设计系统" : "Quartz · Design system";
+      lang === "zh" ? "Quartz / 设计系统" : "Quartz / Design system";
   }, [lang]);
   const t = (cn: string, en: string) => (lang === "zh" ? cn : en);
 
@@ -39,8 +40,8 @@ function App() {
             <div>
               <p className="eyebrow">
                 {t(
-                  "外部设计系统 · design.how",
-                  "External design system · design.how",
+                  "外部设计系统 / design.how",
+                  "External design system / design.how",
                 )}
               </p>
               <h1>Quartz</h1>
@@ -73,7 +74,7 @@ function App() {
                 </div>
                 <div>
                   <dt>{t("技术基础", "Stack")}</dt>
-                  <dd>React · Tailwind CSS · shadcn</dd>
+                  <dd>React / Tailwind CSS / shadcn</dd>
                 </div>
                 <div>
                   <dt>{t("收录内容", "In this catalog")}</dt>
@@ -320,7 +321,7 @@ function App() {
                 <Icon name="right" />
               </a>
             </div>
-            <div className="system-return"><a href="/apps/portal/#explore">{t("返回设计系统", "All design systems")}</a><a href="/systems/lime/">{t("了解 Lime", "Explore Lime")} <Icon name="right" /></a></div>
+            <div className="system-return"><a href="/components/?provider=systems">{t("返回设计系统", "All design systems")}</a><a href="/systems/lime/">{t("了解 Lime", "Explore Lime")} <Icon name="right" /></a></div>
             <details>
               <summary>
                 {t("来源、版本与许可", "Sources, versions & licensing")}
@@ -337,7 +338,7 @@ function App() {
                   "Original documentation (external)",
                 )}
               </a>{" "}
-              ·{" "}
+               / {" "}
               <a href="https://design.how/r/quartz/registry.json">
                 {t("上游组件注册表（外部）", "Upstream registry (external)")}
               </a>

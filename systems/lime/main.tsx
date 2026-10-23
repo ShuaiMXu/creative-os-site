@@ -14,6 +14,7 @@ import "../../packages/design-tokens/happyhands.css";
 import "../../packages/ui/components.css";
 import "../../packages/ui/site-layout.css";
 import "../../packages/ui/system-page.css";
+import "../../packages/ui/owned-ui.css";
 import "../../packages/ui/system-embed";
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
   const [mode, setMode] = useState("existing"),
     [notice, setNotice] = useState("");
   React.useEffect(() => {
-    document.title = t("Lime · 设计系统", "Lime · Design system");
+    document.title = t("Lime / 设计系统", "Lime / Design system");
   }, [lang]);
   const prompt = t(
     `${mode === "existing" ? "将本项目的一个明确页面逐步对齐 Lime。" : "在本项目中用 Lime 构建第一个页面。"}先读取 https://design.how/r/lime/skill.json 与 https://design.how/r/lime/registry.json，检查项目技术栈和已有规范。保留用户已批准的品牌、业务行为、文案与数据，不重置其他应用。确认 React、Tailwind 与 shadcn 兼容后，用项目包管理器添加 https://design.how/r/lime/theme.json；遵循实际安装输出导入样式，在约定根节点设置 lime 作用域并配置 LimePortalProvider。先读取 https://design.how/systems/lime/components/<name>.md，再添加 https://design.how/r/lime/<name>.json；整屏可选 home、assistant-approval、assistant-alert、settings-rules、split-request。只在主要操作使用黄绿色，不把它铺满页面；涉及资金与自主权限时先确认真实范围，不编造金额、收款人或批准。按 https://design.how/r/lime/lint.json 配置检查，并验证深浅色、中英文、390/768/1280px、键盘焦点、错误恢复与既有流程。记录来源版本、改动和剩余限制。复制指令不会安装、执行或部署。`,
@@ -47,8 +48,8 @@ function App() {
             <div>
               <p className="eyebrow">
                 {t(
-                  "外部设计系统 · design.how",
-                  "External design system · design.how",
+                  "外部设计系统 / design.how",
+                  "External design system / design.how",
                 )}
               </p>
               <h1>Lime</h1>
@@ -253,7 +254,7 @@ function App() {
           </section>
           <footer>
             <div className="system-return">
-              <a href="/apps/portal/#explore">
+              <a href="/components/?provider=systems">
                 {t("返回设计系统", "All design systems")}
               </a>
               <a href="/systems/happyhands/">HappyHands</a>

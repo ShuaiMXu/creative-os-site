@@ -384,7 +384,7 @@ export function SystemCatalog({
           >
             {groups.map(([id, zh, en]) => (
               <option key={id} value={id}>
-                {t(zh, en)} ·{" "}
+                {t(zh, en)}  / {" "}
                 {
                   registry.items.filter(
                     (item) => id === "all" || groupOf(item) === id,
@@ -397,8 +397,8 @@ export function SystemCatalog({
       </div>
       <p className="reference-count" role="status">
         {t(
-          `显示 ${Math.min(limit, items.length)} / ${items.length} 项匹配 · 共 ${registry.items.length} 项`,
-          `${Math.min(limit, items.length)} of ${items.length} matches · ${registry.items.length} entries total`,
+          `显示 ${Math.min(limit, items.length)} / ${items.length} 项匹配 / 共 ${registry.items.length} 项`,
+          `${Math.min(limit, items.length)} of ${items.length} matches / ${registry.items.length} entries total`,
         )}
       </p>
       <div className="registry-grid">

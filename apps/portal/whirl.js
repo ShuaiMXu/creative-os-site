@@ -31,7 +31,7 @@ function buildSpiral() {
     const ua = (cursor + t) / SAMPLES;
     const angle = ua * TURNS;
     const r = MAX_R * (1 - ua);
-    // tangent: derivative of (r·cos, r·sin) along u
+    // tangent: derivative of (r * cos, r * sin) along u
     const dx = -MAX_R * Math.cos(angle) - r * Math.sin(angle) * TURNS;
     const dy = -MAX_R * Math.sin(angle) + r * Math.cos(angle) * TURNS;
     const len = Math.hypot(dx, dy);

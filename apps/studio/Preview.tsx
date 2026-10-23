@@ -50,7 +50,7 @@ export function Preview({
       }}
     >
       <p className="sample-disclaimer">
-        {t("主题预览 · 以下为示例内容，不代表项目数据")}
+        {t("主题预览 / 以下为示例内容，不代表项目数据")}
       </p>
       <div className="sample-nav" data-token="border">
         <b title={projectLabel}>{projectLabel}</b>
@@ -240,7 +240,7 @@ export function Preview({
               "我们把字体放到真实段落中。清晰的层级、舒适的阅读节奏和合适的留白，是产品体验的一部分。",
             )}
           </p>
-          <h3>Aa Bb Cc · 0123456789</h3>
+          <h3>Aa Bb Cc / 0123456789</h3>
           <p>
             ABCDEFGHIJKLMNOPQRSTUVWXYZ
             <br />
@@ -249,7 +249,7 @@ export function Preview({
           <pre data-token="font-mono">const theme = 'your next chapter';</pre>
           <blockquote data-token="muted">{t("细节决定质感。")}</blockquote>
           <p className="serif-sample" data-token="font-serif">
-            {t("衬线字体示例 · 可选字体槽")}
+            {t("衬线字体示例 / 可选字体槽")}
           </p>
         </div>
       ) : (

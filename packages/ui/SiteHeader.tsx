@@ -1,3 +1,4 @@
+import { Tooltip } from "./Tooltip";
 import { Icon } from "./Icon";
 import React, { useEffect, useRef } from "react";
 import { setupSiteMenu } from "./site-menu";
@@ -47,13 +48,14 @@ export function SiteHeader({
           <a
             key={item.href}
             href={item.href}
-            aria-current={item.href === active ? "page" : undefined}
+            aria-current={item.href === (active === "/apps/portal/#explore" ? "/components/?provider=systems" : active) ? "page" : undefined}
           >
             {lang === "zh" ? item.zh : item.en}
           </a>
         ))}
       </nav>
       <div className="hh-site-tools">
+        <Tooltip label={lang === "zh" ? `切换到${dark ? "浅色" : "深色"}模式` : `Switch to ${dark ? "light" : "dark"} mode`}>
         <button
           onClick={onTheme}
           type="button"
@@ -74,6 +76,8 @@ export function SiteHeader({
                 : "Dark"}
           </span>
         </button>
+        </Tooltip>
+        <Tooltip label={lang === "zh" ? "Switch to English" : "切换到中文"}>
         <button
           onClick={onLanguage}
           type="button"
@@ -84,6 +88,7 @@ export function SiteHeader({
             {lang === "zh" ? "English" : "中文"}
           </span>
         </button>
+        </Tooltip>
       </div>
     </header>
   );

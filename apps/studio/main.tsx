@@ -47,6 +47,7 @@ import { SiteHeader } from "../../packages/ui/SiteHeader";
 import "../../packages/design-tokens/happyhands.css";
 import "./studio.css";
 import "../../packages/ui/components.css";
+import "../../packages/ui/owned-ui.css";
 
 function download(name: string, text: string) {
   const url = URL.createObjectURL(
@@ -199,7 +200,7 @@ function App() {
   const { lang, dark, toggleLanguage, toggleTheme } = useSitePreferences();
   useEffect(() => {
     document.title =
-      lang === "zh" ? "主题工作室 · HappyHands" : "Theme Studio · HappyHands";
+      lang === "zh" ? "主题工作室 / HappyHands" : "Theme Studio / HappyHands";
   }, [lang]);
   const [panelWidth, setPanelWidth] = useState(320);
   const moreDetails = useRef<HTMLDetailsElement>(null);
@@ -215,7 +216,7 @@ function App() {
     [scene, setScene] = useState("Components"),
     [viewport, setViewport] = useState("desktop"),
     [mobile, setMobile] = useState("preview");
-  const [notice, setNotice] = useState(boot.error || "本地项目 · 自动保存"),
+  const [notice, setNotice] = useState(boot.error || "本地项目 / 自动保存"),
     [error, setError] = useState(""),
     [inspector, setInspector] = useState(false),
     [selected, setSelected] = useState<Key>("primary"),
@@ -275,7 +276,7 @@ function App() {
       throw Error("项目存在外部修改，请导出当前草稿后重新载入");
     const stored = saveDraft(localStorage, next, saved.current);
     saved.current = stored.revision;
-    setNotice(`已保存在此浏览器 · 修订 ${stored.revision}`);
+    setNotice(`已保存在此浏览器 / 修订 ${stored.revision}`);
     return stored;
   }
   useEffect(() => {
@@ -463,7 +464,6 @@ function App() {
       <main className="studio-shell">
         <div className="studio-title">
           <div>
-            <p className="eyebrow">{t("设计系统 / 主题编辑")}</p>
             <h1>{t("项目设计系统")}</h1>
             <p>{t("选择颜色和字体，预览效果，再导出到你的项目。")}</p>
           </div>
@@ -529,8 +529,8 @@ function App() {
                     {t("设置本地工作台")}
                   </a>
                   <p className="micro">
-                    {Object.keys(presets).length} {t("预设 ·")} {keys.length}{" "}
-                    {t("变量 × 2 模式 ·")}{" "}
+                    {Object.keys(presets).length} {t("预设  / ")} {keys.length}{" "}
+                    {t("变量 × 2 模式  / ")}{" "}
                     {draft.foundation
                       ? `Foundation ${draft.foundation.foundationVersion}`
                       : t("尚未确认用于本地项目")}
@@ -746,7 +746,7 @@ function App() {
                     <ul>
                       {exported.fonts.map((font) => (
                         <li key={font.id}>
-                          {font.family} ·{" "}
+                          {font.family}  / {" "}
                           <a
                             href={fontAssetOrigin + font.licenseUrl}
                             target="_blank"
@@ -835,7 +835,7 @@ function App() {
                       />
                     </label>
                     <h3>
-                      {t("2. 变更明细 ·")}
+                      {t("2. 变更明细  / ")}
                       {changes.length}
                     </h3>
                     <div className="diff-list">
@@ -1204,8 +1204,8 @@ function App() {
                     onChange={(e) => setViewport(e.target.value)}
                   >
                     <option value="desktop">{t("桌面")}</option>
-                    <option value="tablet">{t("平板 · 768")}</option>
-                    <option value="mobile">{t("手机 · 390")}</option>
+                    <option value="tablet">{t("平板 / 768")}</option>
+                    <option value="mobile">{t("手机 / 390")}</option>
                   </Select>
                   <Button
                     aria-pressed={inspector}
@@ -1245,7 +1245,7 @@ function App() {
                 <>
                   {compare && (
                     <div className="comparison-label">
-                      {t("修改前 · 本地基线")}
+                      {t("修改前 / 本地基线")}
                     </div>
                   )}
                   {compare && (
@@ -1284,8 +1284,8 @@ function App() {
                 </span>
               )}
               <span>
-                {mode === "light" ? t("浅色") : t("深色")} · {sceneLabel(scene)}{" "}
-                {t("· 样式仅作用于预览")}
+                {mode === "light" ? t("浅色") : t("深色")} / {sceneLabel(scene)}{" "}
+                {t(" /  样式仅作用于预览")}
               </span>
               <a
                 href={`https://github.com/jnsahaj/tweakcn/tree/${revision}`}
