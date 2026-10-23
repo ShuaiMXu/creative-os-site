@@ -81,6 +81,7 @@ try {
       await check("catalog");
       const catalogLeft = (await page.locator('.library-heading h1').boundingBox()).x;
       const headerLeft = (await page.locator('header a[aria-label="HappyHands"]').boundingBox()).x;
+      await follow('.system-cover-navigation a[href="?provider=systems&system=happyhands"]');
       await page.frameLocator('iframe[title="HappyHands 完整设计规范"]').getByRole("heading", {name:"HappyHands", exact:true}).waitFor();
       await page.goto(base + '/systems/happyhands/');
       assert.equal(await page.locator("h1").innerText(), "HappyHands");
