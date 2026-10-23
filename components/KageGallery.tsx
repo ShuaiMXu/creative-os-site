@@ -33,7 +33,9 @@ export function KageGallery({ lang }: { lang: string }) {
     },
     [],
   );
-  useEffect(() => { void search("landing page"); }, []);
+  useEffect(() => {
+    void search("landing page");
+  }, []);
   async function search(term: string) {
     controller.current?.abort();
     detailController.current?.abort();
@@ -92,12 +94,33 @@ export function KageGallery({ lang }: { lang: string }) {
   }
   return (
     <section className="kage-gallery">
-      <div className="reference-topics" aria-label={t("参考主题", "Reference topics")}>
-        {[["dashboard", "工作台", "Dashboards"], ["landing page", "产品官网", "Landing pages"], ["pricing", "定价页", "Pricing"], ["settings", "设置页", "Settings"]].map(([term, zh, en]) => (
-          <button key={term} type="button" aria-pressed={activeQuery === term} onClick={() => void search(term)}>{t(zh, en)}</button>
+      <div
+        className="reference-topics"
+        aria-label={t("参考主题", "Reference topics")}
+      >
+        {[
+          ["dashboard", "工作台", "Dashboards"],
+          ["landing page", "产品官网", "Landing pages"],
+          ["pricing", "定价页", "Pricing"],
+          ["settings", "设置页", "Settings"],
+        ].map(([term, zh, en]) => (
+          <button
+            key={term}
+            type="button"
+            aria-pressed={activeQuery === term}
+            onClick={() => void search(term)}
+          >
+            {t(zh, en)}
+          </button>
         ))}
       </div>
-      <form onSubmit={(e) => { e.preventDefault(); if (query.trim()) void search(query); }} className="kage-search">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (query.trim()) void search(query);
+        }}
+        className="kage-search"
+      >
         <label>
           {t("产品或风格", "Product or style")}
           <input
@@ -116,13 +139,19 @@ export function KageGallery({ lang }: { lang: string }) {
         </button>
       </form>
       <p role="status">
-        {busy ? t("正在从 Kage 加载真实参考…", "Loading references from Kage…") : error ||
-          (!busy && searched && !items.length
-            ? t("没有找到匹配的参考。", "No matching references.")
-            : "")}
+        {busy
+          ? t("正在从 Kage 加载真实参考…", "Loading references from Kage…")
+          : error ||
+            (!busy && searched && !items.length
+              ? t("没有找到匹配的参考。", "No matching references.")
+              : "")}
       </p>
-      {error && <button type="button" onClick={() => void search(activeQuery)}>{t("重新加载参考", "Retry references")}</button>}
-      <div className="kage-grid" aria-busy={busy}>
+      {error && (
+        <button type="button" onClick={() => void search(activeQuery)}>
+          {t("重新加载参考", "Retry references")}
+        </button>
+      )}
+      <div className="kage-grid" aria-busy={busy} hidden={!!selected}>
         {items.map((x) => (
           <button
             className="kage-card"
@@ -145,7 +174,6 @@ export function KageGallery({ lang }: { lang: string }) {
             )}
             <strong>{x.title}</strong>
             <span>{[x.product, ...x.styles].filter(Boolean).join(" / ")}</span>
-            <span>{t("查看设计分析", "View design analysis")}</span>
           </button>
         ))}
       </div>
@@ -158,7 +186,7 @@ export function KageGallery({ lang }: { lang: string }) {
             onClick={() => {
               detailController.current?.abort();
               setSelected(null);
-              opener.current?.focus();
+              requestAnimationFrame(() => opener.current?.focus());
             }}
           >
             {t("收起详情", "Close details")}

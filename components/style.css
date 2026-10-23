@@ -513,3 +513,34 @@ h1 {
 .reference-import-note { margin-block:32px; padding-block:24px; border-block:0.5px solid var(--hh-line); }
 
 .library-heading h1,.library-heading .catalog-total { margin:0; }
+
+/* Browse outcomes first; source and adoption belong to the selected component. */
+.library-browse { grid-template-columns:200px minmax(0,1fr); gap:32px; }
+.library-browse .library-directory { border:0; padding:0; }
+.component-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:28px 20px; }
+.component-tile { min-width:0; text-decoration:none; }
+.component-tile-art { position:relative; aspect-ratio:1.4; overflow:hidden; background:var(--hh-bg-sunken); border:0.5px solid var(--hh-line); border-radius:8px; pointer-events:none; }
+.component-tile-art iframe { display:block; width:200%; height:200%; border:0; transform:scale(.5); transform-origin:top left; pointer-events:none; }
+.component-tile-caption { padding:12px 0 0; }
+.component-tile-caption h2 { font-size:14px; line-height:1.5; font-weight:600; margin:0; }
+.component-tile-caption span { display:block; margin-top:4px; font-size:12px; color:var(--hh-ink-muted); }
+.component-tile:hover .component-tile-art { border-color:var(--hh-line-strong); }
+.gallery-pagination { display:flex; align-items:center; justify-content:center; gap:24px; margin-top:32px; }
+.gallery-pagination button,.component-detail-actions button,.system-detail-toolbar button,.catalog-empty button { min-height:44px; padding:8px 16px; border:0.5px solid var(--hh-line-strong); border-radius:4px; background:var(--hh-bg); color:var(--hh-ink); cursor:pointer; }
+.gallery-pagination button:disabled { opacity:.45; cursor:default; }
+.library-detail { display:block; max-width:1200px; }
+.component-detail-actions { display:flex; justify-content:space-between; gap:16px; margin-bottom:24px; }
+.component-detail-actions button:last-child { background:var(--hh-primary); color:var(--hh-on-primary); }
+.system-detail-toolbar { padding:24px var(--page-inset); }
+.catalog-empty { padding:48px 0; }
+@media(max-width:1100px) { .component-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:700px) {
+ .library-browse { display:block; }
+ .library-browse .library-directory { position:static; display:grid; grid-template-columns:1fr; max-height:none; margin-bottom:24px; gap:12px; }
+ .library-browse .catalog-search,.library-browse .catalog-category,.library-browse .catalog-results { margin:0; }
+ .component-grid { gap:24px 12px; }
+ .component-tile-art { aspect-ratio:1; }
+ .component-tile-caption h2 { font-size:14px; }
+ .gallery-pagination { gap:16px; }
+}
+.kage-grid[hidden] { display:none; }

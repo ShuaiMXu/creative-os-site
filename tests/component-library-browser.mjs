@@ -107,24 +107,19 @@ try {
         const errors = [];
         page.on("pageerror", (e) => errors.push(e.message));
         await page.goto(base + "/components/", { waitUntil: "networkidle" });
-        await page.locator(".catalog-list a").first().waitFor();
-        assert.equal(
-          await page.locator(".catalog-list a").count(),
-          catalog.count,
-        );
+        await page.locator(".component-tile").first().waitFor();
+        assert.equal(await page.locator(".component-tile").count(),18);
+        assert.equal(await page.locator(".catalog-tabs").count(),0);
         await page.locator("input[type=search]").fill("shift-card");
-        assert.equal(await page.locator(".catalog-list a").count(), 1);
+        assert.equal(await page.locator(".component-tile").count(),1);
         await page.locator("input[type=search]").fill("no-such-component-000");
-        assert.equal(await page.locator(".catalog-list a").count(), 0);
-        await page.locator("input[type=search]").fill("");
-        await page.locator(".catalog-check input").check();
-        assert.equal(
-          await page.locator(".catalog-list a").count(),
-          catalog.previewCount,
-        );
-        await page
-          .locator('.catalog-list a[href="?component=halo-input"]')
-          .click();
+        assert.equal(await page.locator(".component-tile").count(),0);
+        await page.getByRole('button',{name:lang==='zh'?'清除筛选':'Clear filters',exact:true}).click();
+        await page.locator("input[type=search]").fill("halo-input");
+        await page.locator('.component-tile').click();
+        await page.getByRole('button',{name:lang==='zh'?'← 返回组件库':'← All components',exact:true}).click();
+        assert.equal(await page.locator('input[type=search]').inputValue(),'halo-input');
+        await page.locator('.component-tile').click();
         const frame = page.frameLocator("iframe");
         await frame.getByPlaceholder("Display name").fill("HappyHands");
         await page
