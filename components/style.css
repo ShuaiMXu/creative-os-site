@@ -106,7 +106,7 @@ h1 {
 .library-layout {
   max-width: 1280px;
   margin: auto;
-  padding: 0 var(--hh-space-6) var(--hh-space-12);
+  padding: var(--hh-space-6) var(--hh-space-6) var(--hh-space-12);
   display: grid;
   grid-template-columns: 260px minmax(0, 1fr);
   gap: var(--hh-space-8);
@@ -127,7 +127,7 @@ h1 {
   display: grid;
   gap: var(--hh-space-2);
   font-size: 12px;
-  margin-bottom: var(--hh-space-4);
+  margin-bottom: var(--hh-space-6);
 }
 .catalog-search input,
 .catalog-category select {
