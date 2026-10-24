@@ -5,10 +5,10 @@ export const apps = [
     "title": "A list of issues",
     "description": "Each finding includes its page, screenshot and impact so you can decide what to fix first.",
     "meta": [
-      "Screenshots · Issues · Priorities"
+      "Screenshots / Issues / Priorities"
     ],
     "action": "Read capture guide",
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md"
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/harness.md"
   },
   {
     "index": "02",
@@ -16,10 +16,10 @@ export const apps = [
     "title": "Your design rules",
     "description": "A record of existing colors, fonts and components, with rules that still need your review.",
     "meta": [
-      "Brand · Components · Rules"
+      "Brand / Components / Rules"
     ],
     "action": "Read design rules guide",
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/reusable-design-system-extraction.md"
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/reusable-design-system-extraction.md"
   },
   {
     "index": "03",
@@ -27,10 +27,10 @@ export const apps = [
     "title": "Changes you can inspect",
     "description": "A separate working copy and code diff show exactly what changed.",
     "meta": [
-      "Working copy · Code diff"
+      "Working copy / Code diff"
     ],
     "action": "Read execution guide",
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md#choosing-a-coding-agent"
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/harness.md#choosing-a-coding-agent"
   },
   {
     "index": "04",
@@ -38,10 +38,10 @@ export const apps = [
     "title": "Before-and-after records",
     "description": "Matched page sizes and states help you compare results and record why you keep or reject a change.",
     "meta": [
-      "Comparison · Review notes"
+      "Comparison / Review notes"
     ],
     "action": "Read review guide",
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md#screenshot-aware-visual-review"
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/harness.md#screenshot-aware-visual-review"
   }
 ];
 
@@ -96,7 +96,7 @@ export const elements = [
 export const hero = {
   "eyebrow": [
     "FOR INDEPENDENT BUILDERS",
-    "ALPHA · OPEN SOURCE · LOCAL"
+    "ALPHA / OPEN SOURCE / LOCAL"
   ],
   "h1": "Make your product ",
   "h1Accent": "more professional",
@@ -108,7 +108,7 @@ export const hero = {
 
 export const screenPairs = [
   {
-    "title": "Homepage · Desktop",
+    "title": "Homepage / Desktop",
     "task": "Hierarchy",
     "beforeLabel": "BEFORE",
     "afterLabel": "AFTER",
@@ -123,7 +123,7 @@ export const screenPairs = [
     "result": "VISUAL QA FAILED"
   },
   {
-    "title": "Homepage · Mobile",
+    "title": "Homepage / Mobile",
     "task": "Task flow",
     "beforeLabel": "BEFORE",
     "afterLabel": "AFTER",
@@ -166,9 +166,9 @@ export const sections = {
     "kicker": "05 / GET STARTED",
     "title": "Start a product experience review",
     "titleLine2": "Select the first page to review",
-    "copy": "Install the core repository dependencies with Node.js 22.15+, pnpm 11.19+ and Chrome or Edge. Run pnpm workbench, enter your repository directory and key user task, then confirm the capture scope. Alpha is a guided local Web trial; a first capture is the beginning of a review.",
+    "copy": "The workbench runs locally. You approve code changes. Install and launch it, connect your project, choose pages to review, then inspect recommendations and results.",
     "quickstartLabel": "QUICKSTART",
-    "quickstartTitle": "After installing dependencies, open the local workbench",
+    "quickstartTitle": "Install and launch the workbench",
     "copyBtn": "Copy command"
   }
 };
@@ -224,7 +224,7 @@ export const systems = [
       "Review",
       "Evidence"
     ],
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/happyclaw-case.md",
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/happyclaw-case.md",
     "action": "Read case"
   },
   {
@@ -240,7 +240,7 @@ export const systems = [
       "System-first",
       "Archive"
     ],
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/firefly-ui-kit-case.md",
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/firefly-ui-kit-case.md",
     "action": "Read case"
   },
   {
@@ -257,7 +257,7 @@ export const systems = [
       "Desktop",
       "Template"
     ],
-    "href": "https://github.com/ShuaiMXu/creative-os/issues",
+    "href": "https://github.com/ShuaiMXu/happyhands/issues",
     "action": "View roadmap"
   },
   {
@@ -274,7 +274,7 @@ export const systems = [
       "Consumer",
       "Template"
     ],
-    "href": "https://github.com/ShuaiMXu/creative-os/issues",
+    "href": "https://github.com/ShuaiMXu/happyhands/issues",
     "action": "View roadmap"
   },
   {
@@ -290,7 +290,7 @@ export const systems = [
       "SwiftUI",
       "Planned"
     ],
-    "href": "https://github.com/ShuaiMXu/creative-os/issues",
+    "href": "https://github.com/ShuaiMXu/happyhands/issues",
     "action": "View roadmap"
   }
 ];
@@ -299,7 +299,7 @@ export const ui = {
   "scrollNote": "SCROLL",
   "githubLink": "GitHub",
   "footer": {
-    "left": "HappyHands · AI Product Designer",
+    "left": "HappyHands / AI Product Designer",
     "middle": "Product experience optimization",
     "right": "View source"
   }
@@ -326,6 +326,6 @@ export const delivery = {
       "Accept or reject changes based on review results and record unresolved issues. Apply approved design rules to new pages."
     ]
   ],
-  "status": "Installation and local setup are required. Automatic monitoring, learning and subscriptions are not available yet. See the development guide for implementation details.",
+  "status": "The development guide covers setup for page capture, code changes and review.",
   "link": "Read development guide"
 };

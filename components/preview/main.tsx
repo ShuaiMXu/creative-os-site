@@ -42,7 +42,7 @@ document.addEventListener(
   (event) => {
     const link = (event.target as Element).closest?.("a");
     // The reviewed texture demo downloads only its local asset via a blob URL.
-    if (id === 'bg-image-texture' && link?.hasAttribute('download') && link.href.startsWith(`blob:${location.origin}/`)) return;
+    if (id === 'bg-image-texture' && link?.hasAttribute('download') && (link.href.startsWith(`blob:${location.origin}/`) || link.href.startsWith("blob:null/"))) return;
     if (link) {
       event.preventDefault();
       document.getElementById("preview-note")!.textContent = zh

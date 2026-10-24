@@ -24,7 +24,7 @@ export async function renderCodeDiff(container, run, base) {
   header.className = 'pd-codediff-header';
 
   if (patchText && patchText.trim()) {
-    header.textContent = `${execution.changedFiles.length} files changed · ${execution.branch}`;
+    header.textContent = `${execution.changedFiles.length} files changed / ${execution.branch}`;
     container.appendChild(header);
     for (const file of parsePatch(patchText)) {
       container.appendChild(renderFile(file));

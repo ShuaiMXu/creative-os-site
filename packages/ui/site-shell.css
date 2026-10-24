@@ -1,3 +1,6 @@
+@import "./site-disclosure.css";
+@import "./site-links.css";
+
 header.hh-site-header {
   position: relative;
   inset: auto;
@@ -8,11 +11,11 @@ header.hh-site-header {
   gap: 24px;
   width: 100%;
   height: auto;
-  min-height: 80px;
-  padding: 16px var(--page-inset, max(20px, calc((100% - 1280px) / 2)));
+  min-height: 64px;
+  padding: 8px var(--page-inset, max(20px, calc((100% - 1280px) / 2)));
   background: var(--hh-bg-raised);
   color: var(--hh-ink);
-  border-bottom: 1px solid var(--hh-line);
+  border-bottom: 0.5px solid var(--hh-line);
   transform: none;
   backdrop-filter: none;
 }
@@ -62,9 +65,8 @@ header.hh-site-header nav a[aria-current="page"] {
   color: var(--hh-ink);
 }
 header.hh-site-header nav a[aria-current="page"] {
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 8px;
+  text-decoration: none;
+  font-weight: 600;
 }
 header.hh-site-header .hh-site-tools,
 header.hh-site-header .header-actions {
@@ -81,7 +83,7 @@ header.hh-site-header #lang-switch button {
   min-height: 44px;
   padding: 8px 12px;
   background: var(--hh-bg-raised);
-  border: 1px solid var(--hh-line);
+  border: 0.5px solid var(--hh-line);
   border-radius: var(--hh-radius-md);
   color: var(--hh-ink);
   font: 500 14px/1.5 var(--hh-font-sans);
@@ -110,7 +112,7 @@ header.hh-site-header .hh-site-menu-toggle {
   header.hh-site-header {
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 8px 12px;
-    padding: 12px var(--page-inset, 20px);
+    padding: 8px var(--page-inset, 20px);
   }
   header.hh-site-header nav {
     grid-column: 1 / -1;
@@ -145,11 +147,11 @@ header.hh-site-header .hh-site-menu-toggle {
     align-items: stretch;
     gap: 0;
     box-sizing: border-box;
-    padding: 12px var(--page-inset, 20px);
+    padding: 8px var(--page-inset, 20px);
     max-height: calc(100dvh - 100px);
     overflow-y: auto;
     background: var(--hh-bg-raised);
-    border-bottom: 1px solid var(--hh-line);
+    border-bottom: 0.5px solid var(--hh-line);
   }
   header.hh-site-header[data-menu-open] nav a {
     justify-content: flex-start;

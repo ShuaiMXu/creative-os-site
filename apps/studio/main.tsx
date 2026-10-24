@@ -47,6 +47,7 @@ import { SiteHeader } from "../../packages/ui/SiteHeader";
 import "../../packages/design-tokens/happyhands.css";
 import "./studio.css";
 import "../../packages/ui/components.css";
+import "../../packages/ui/owned-ui.css";
 
 function download(name: string, text: string) {
   const url = URL.createObjectURL(
@@ -195,11 +196,13 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
     </section>
   );
 }
+const presetCandidates = Object.keys(presets).map(id => ({ id, styles: presetStyles(id) }));
+
 function App() {
   const { lang, dark, toggleLanguage, toggleTheme } = useSitePreferences();
   useEffect(() => {
     document.title =
-      lang === "zh" ? "主题工作室 · HappyHands" : "Theme Studio · HappyHands";
+      lang === "zh" ? "主题工作室 / HappyHands" : "Theme Studio / HappyHands";
   }, [lang]);
   const [panelWidth, setPanelWidth] = useState(320);
   const moreDetails = useRef<HTMLDetailsElement>(null);
@@ -208,6 +211,14 @@ function App() {
   const panelOrigin = useRef<HTMLElement | null>(null);
   const [draft, setDraft] = useState(boot.draft),
     [h, setH] = useState(() => history(boot.draft.styles));
+  const [creatingProject, setCreatingProject] = useState(false);
+  const [projectId, setProjectId] = useState("");
+  const [projectError, setProjectError] = useState("");
+  const projectTrigger = useRef<HTMLButtonElement>(null);
+  function closeProjectForm() {
+    setCreatingProject(false);
+    projectTrigger.current?.focus();
+  }
   const saved = useRef(boot.draft.revision);
   const blocked = useRef(false);
   const [mode, setMode] = useState<Mode>("light"),
@@ -215,7 +226,7 @@ function App() {
     [scene, setScene] = useState("Components"),
     [viewport, setViewport] = useState("desktop"),
     [mobile, setMobile] = useState("preview");
-  const [notice, setNotice] = useState(boot.error || "本地项目 · 自动保存"),
+  const [notice, setNotice] = useState(boot.error || "本地项目 / 自动保存"),
     [error, setError] = useState(""),
     [inspector, setInspector] = useState(false),
     [selected, setSelected] = useState<Key>("primary"),
@@ -238,8 +249,7 @@ function App() {
       count: number;
     } | null>(null),
     [format, setFormat] = useState<ExportKind>("css");
-  const [preset, setPreset] = useState("happyhands"),
-    [search, setSearch] = useState(""),
+  const [search, setSearch] = useState(""),
     [hue, setHue] = useState(0),
     [saturation, setSaturation] = useState(1),
     [lightness, setLightness] = useState(1);
@@ -250,6 +260,11 @@ function App() {
   const styles = h.present,
     values = styles[mode],
     changes = differences(draft.baseline, styles);
+  const preset = presetCandidates.find(({styles: candidate}) => {
+    return (["light", "dark"] as const).every((m) =>
+      keys.every((key) => candidate[m][key] === styles[m][key]),
+    );
+  })?.id || "custom";
   const liveImportTarget = useRef({ id: draft.id, styles });
   const previewFonts = useFontLoading(
     (["font-sans", "font-serif", "font-mono"] as const).flatMap((key) => [
@@ -266,8 +281,10 @@ function App() {
     try {
       setError("");
       action();
+      return true;
     } catch (e) {
       setError((e as Error).message);
+      return false;
     }
   }
   function persist(next = current()) {
@@ -275,7 +292,7 @@ function App() {
       throw Error("项目存在外部修改，请导出当前草稿后重新载入");
     const stored = saveDraft(localStorage, next, saved.current);
     saved.current = stored.revision;
-    setNotice(`已保存在此浏览器 · 修订 ${stored.revision}`);
+    setNotice(`已保存在此浏览器 / 修订 ${stored.revision}`);
     return stored;
   }
   useEffect(() => {
@@ -354,7 +371,7 @@ function App() {
     );
   }
   function switchProject(id: string) {
-    guard(() => {
+    return guard(() => {
       persist();
       const next = read(id);
       saved.current = next.revision;
@@ -437,109 +454,176 @@ function App() {
         onTheme={toggleTheme}
         active="/apps/studio/"
       />
-      <div className="studio-project-bar">
-        <span>{lang === "zh" ? "主题工作室" : "Theme Studio"}</span>
-        <div className="project-select">
-          <Select
-            aria-label={t("选择项目")}
-            value={draft.id}
-            onChange={(e) => switchProject(e.target.value)}
-          >
-            {projectIds.map((id) => (
-              <option key={id}>{id}</option>
-            ))}
-          </Select>
-          <Button
-            aria-label={t("新建项目")}
-            onClick={() => {
-              const id = prompt(t("新项目 ID（英文、数字和短横线）"));
-              if (id && /^[\w-]{1,80}$/.test(id)) switchProject(id);
-            }}
-          >
-            <Icon name="plus" />
-          </Button>
-        </div>
-      </div>
       <main className="studio-shell">
         <div className="studio-title">
           <div>
-            <p className="eyebrow">{t("设计系统 / 主题编辑")}</p>
             <h1>{t("项目设计系统")}</h1>
             <p>{t("选择颜色和字体，预览效果，再导出到你的项目。")}</p>
           </div>
-          <div className="toolbar studio-actions">
-            <Button disabled={!h.past.length} onClick={() => setH(undo)}>
-              <Icon name="undo" />
-              {t("撤销")}
-            </Button>
-            <Button disabled={!h.future.length} onClick={() => setH(redo)}>
-              <Icon name="redo" />
-              {t("重做")}
-            </Button>
-            <Button
-              ref={exportTrigger}
-              variant={panel ? "secondary" : "primary"}
-              onClick={() => openPanel("export")}
-            >
-              {t("导出")}
-            </Button>
-            <details
-              className="studio-more"
-              ref={moreDetails}
-              onKeyDown={(e) => {
-                if (e.key === "Escape") {
-                  if (moreDetails.current) moreDetails.current.open = false;
-                  moreTrigger.current?.focus();
-                }
-              }}
-            >
-              <summary ref={moreTrigger}>
-                {t("更多操作")} <Icon name="down" />
-              </summary>
-              <div className="studio-more-content">
-                <Button onClick={() => openPanel("standards")}>
-                  {t("设计规范")}
-                </Button>
-                <Button
-                  onClick={() =>
-                    guard(() => {
-                      persist();
-                      if (moreDetails.current) moreDetails.current.open = false;
-                      moreTrigger.current?.focus();
-                    })
+          <div className="studio-title-tools">
+            <div className="project-select">
+              <Select
+                aria-label={t("选择项目")}
+                value={draft.id}
+                onChange={(e) => switchProject(e.target.value)}
+              >
+                {projectIds.map((id) => (
+                  <option key={id}>{id}</option>
+                ))}
+              </Select>
+              <Button
+                ref={projectTrigger}
+                aria-label={t("新建项目")}
+                aria-expanded={creatingProject}
+                aria-controls="new-project-form"
+                onClick={() => {
+                  if (creatingProject) closeProjectForm();
+                  else {
+                    setProjectId("");
+                    setProjectError("");
+                    setCreatingProject(true);
                   }
-                >
-                  {t("保存")}
-                </Button>
-                <Button onClick={() => openPanel("import")}>{t("导入")}</Button>
-                <div className="studio-advanced">
-                  <p>{t("接入本地项目")}</p>
-                  <Button
-                    onClick={() => {
-                      setConfirmed(false);
-                      openPanel("review");
-                    }}
-                  >
-                    {t("审核变更")} {changes.length || ""}
+                }}
+              >
+                <Icon name="plus" />
+              </Button>
+            </div>
+            <div className="toolbar studio-actions">
+              <Button disabled={!h.past.length} onClick={() => setH(undo)}>
+                <Icon name="undo" />
+                {t("撤销")}
+              </Button>
+              <Button disabled={!h.future.length} onClick={() => setH(redo)}>
+                <Icon name="redo" />
+                {t("重做")}
+              </Button>
+              <Button
+                ref={exportTrigger}
+                variant={panel ? "secondary" : "primary"}
+                onClick={() => openPanel("export")}
+              >
+                {t("导出")}
+              </Button>
+              <details
+                className="studio-more"
+                ref={moreDetails}
+                onKeyDown={(e) => {
+                  if (e.key === "Escape") {
+                    if (moreDetails.current) moreDetails.current.open = false;
+                    moreTrigger.current?.focus();
+                  }
+                }}
+              >
+                <summary ref={moreTrigger}>
+                  {t("更多操作")} <Icon name="down" />
+                </summary>
+                <div className="studio-more-content">
+                  <Button onClick={() => openPanel("standards")}>
+                    {t("设计规范")}
                   </Button>
-                  <p className="micro">
-                    {t("将主题交给本地工作台前，核对变更并导出批准文件。")}
-                  </p>
-                  <a className="review-link" href="/apps/portal/#connect-agent">
-                    {t("设置本地工作台")}
-                  </a>
-                  <p className="micro">
-                    {Object.keys(presets).length} {t("预设 ·")} {keys.length}{" "}
-                    {t("变量 × 2 模式 ·")}{" "}
-                    {draft.foundation
-                      ? `Foundation ${draft.foundation.foundationVersion}`
-                      : t("尚未确认用于本地项目")}
-                  </p>
+                  <Button
+                    onClick={() =>
+                      guard(() => {
+                        persist();
+                        if (moreDetails.current)
+                          moreDetails.current.open = false;
+                        moreTrigger.current?.focus();
+                      })
+                    }
+                  >
+                    {t("保存")}
+                  </Button>
+                  <Button onClick={() => openPanel("import")}>
+                    {t("导入")}
+                  </Button>
+                  <div className="studio-advanced">
+                    <p>{t("接入本地项目")}</p>
+                    <Button
+                      onClick={() => {
+                        setConfirmed(false);
+                        openPanel("review");
+                      }}
+                    >
+                      {t("审核变更")} {changes.length || ""}
+                    </Button>
+                    <p className="micro">
+                      {t("将主题交给本地工作台前，核对变更并导出批准文件。")}
+                    </p>
+                    <a
+                      className="review-link"
+                      href="/apps/portal/#connect-agent"
+                    >
+                      {t("设置本地工作台")}
+                    </a>
+                    <p className="micro">
+                      {Object.keys(presets).length} {t("预设  / ")}{" "}
+                      {keys.length} {t("变量 × 2 模式  / ")}{" "}
+                      {draft.foundation
+                        ? `Foundation ${draft.foundation.foundationVersion}`
+                        : t("尚未确认用于本地项目")}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </details>
+              </details>
+            </div>
           </div>
         </div>
+        {creatingProject && (
+          <form
+            id="new-project-form"
+            className="studio-new-project"
+            onKeyDown={(event) => {
+              if (event.key === "Escape") {
+                event.stopPropagation();
+                closeProjectForm();
+              }
+            }}
+            onSubmit={(event) => {
+              event.preventDefault();
+              const id = projectId.trim();
+              if (!/^[\w-]{1,80}$/.test(id)) {
+                setProjectError(t("请输入 1–80 位英文、数字、短横线或下划线"));
+                return;
+              }
+              if (projectIds.includes(id)) {
+                setProjectError(t("项目已存在，请在项目列表中选择"));
+                return;
+              }
+              if (switchProject(id)) closeProjectForm();
+            }}
+          >
+            <label htmlFor="new-project-id">{t("项目 ID")}</label>
+            <div className="studio-new-project-controls">
+              <input
+                id="new-project-id"
+                autoFocus
+                value={projectId}
+                maxLength={80}
+                autoComplete="off"
+                spellCheck={false}
+                aria-invalid={!!projectError}
+                aria-describedby={
+                  projectError ? "new-project-error" : undefined
+                }
+                onChange={(event) => {
+                  setProjectId(event.target.value);
+                  setProjectError("");
+                }}
+              />
+              <Button type="submit" variant="primary">
+                {t("创建项目")}
+              </Button>
+              <Button type="button" onClick={closeProjectForm}>
+                {t("取消")}
+              </Button>
+            </div>
+            {projectError && (
+              <p id="new-project-error" role="alert">
+                {projectError}
+              </p>
+            )}
+          </form>
+        )}
         <div className="status-line">
           <span role="status">{t(notice)}</span>
         </div>
@@ -746,7 +830,7 @@ function App() {
                     <ul>
                       {exported.fonts.map((font) => (
                         <li key={font.id}>
-                          {font.family} ·{" "}
+                          {font.family}  / {" "}
                           <a
                             href={fontAssetOrigin + font.licenseUrl}
                             target="_blank"
@@ -835,7 +919,7 @@ function App() {
                       />
                     </label>
                     <h3>
-                      {t("2. 变更明细 ·")}
+                      {t("2. 变更明细  / ")}
                       {changes.length}
                     </h3>
                     <div className="diff-list">
@@ -973,8 +1057,14 @@ function App() {
                 <Select
                   aria-label={t("主题预设")}
                   value={preset}
-                  onChange={(e) => setPreset(e.target.value)}
+                  onChange={(e) => {
+                    const id = e.target.value;
+                    replace(presetStyles(id));
+                    setDraft((d) => ({ ...d, provenance: { revision, source: id } }));
+                    setConfirmed(false);
+                  }}
                 >
+                  {preset === "custom" && <option value="custom" disabled>{t("自定义主题")}</option>}
                   {Object.entries(presets).map(([id, p]) => (
                     <option value={id} key={id}>
                       {p.label || id}
@@ -982,21 +1072,10 @@ function App() {
                   ))}
                 </Select>
               </label>
-              <Button
-                onClick={() => {
-                  replace(presetStyles(preset));
-                  setDraft((d) => ({
-                    ...d,
-                    provenance: { revision, source: preset },
-                  }));
-                  setConfirmed(false);
-                }}
-              >
-                {t("应用")}
-              </Button>
+
             </div>
             <p className="micro">
-              {t("替换双模式值，可撤销。默认使用苹方优先的无衬线字体。")}
+              {t("选择后立即预览浅色与深色主题，可随时撤销。")}
             </p>
             <div className="segmented">
               {(["light", "dark"] as const).map((m) => (
@@ -1204,8 +1283,8 @@ function App() {
                     onChange={(e) => setViewport(e.target.value)}
                   >
                     <option value="desktop">{t("桌面")}</option>
-                    <option value="tablet">{t("平板 · 768")}</option>
-                    <option value="mobile">{t("手机 · 390")}</option>
+                    <option value="tablet">{t("平板 / 768")}</option>
+                    <option value="mobile">{t("手机 / 390")}</option>
                   </Select>
                   <Button
                     aria-pressed={inspector}
@@ -1245,7 +1324,7 @@ function App() {
                 <>
                   {compare && (
                     <div className="comparison-label">
-                      {t("修改前 · 本地基线")}
+                      {t("修改前 / 本地基线")}
                     </div>
                   )}
                   {compare && (
@@ -1284,8 +1363,8 @@ function App() {
                 </span>
               )}
               <span>
-                {mode === "light" ? t("浅色") : t("深色")} · {sceneLabel(scene)}{" "}
-                {t("· 样式仅作用于预览")}
+                {mode === "light" ? t("浅色") : t("深色")} / {sceneLabel(scene)}{" "}
+                {t(" /  样式仅作用于预览")}
               </span>
               <a
                 href={`https://github.com/jnsahaj/tweakcn/tree/${revision}`}

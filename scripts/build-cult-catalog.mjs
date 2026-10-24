@@ -21,6 +21,9 @@ await fs.mkdir(generated, { recursive: true });
 await fs.mkdir(output, { recursive: true });
 await fs.mkdir(path.join(root,'public/textures'),{recursive:true});
 for(const name of ['fabric-of-squares','grid-noise','inflicted','debut-light','groovepaper']) await fs.copyFile(path.join(upstream,`texture-${name}.png`),path.join(root,'public/textures',`${name}.png`));
+await fs.mkdir(path.join(output,'fonts'),{recursive:true});
+for (const variant of ['Square','Grid','Circle','Triangle','Line']) await fs.copyFile(path.join(root,'node_modules/geist/dist/fonts/geist-pixel',`GeistPixel-${variant}.woff2`),path.join(output,'fonts',`GeistPixel-${variant}.woff2`));
+await fs.copyFile(path.join(root,'node_modules/geist/LICENSE.txt'),path.join(output,'fonts','LICENSE.txt'));
 const allowed = new Set([
   "react",
   "@radix-ui/react-slider",
@@ -37,6 +40,10 @@ const allowed = new Set([
   "radix-ui",
   "react-use-measure",
 ]);
+const extraPackages = ['poline','jotai','three','embla-carousel-autoplay','embla-carousel-react','react-wrap-balancer','@hugeicons/core-free-icons','@hugeicons/react','@radix-ui/react-icons','metal-fx','vaul','@paper-design/shaders-react','@tabler/icons-react','cobe','cmdk','border-beam','motion/react-client'];
+for (const name of extraPackages) allowed.add(name);
+for (const name of ['accordion','tabs','toast','popover','separator','dialog','hover-card','collapsible','aspect-ratio','progress']) allowed.add('@radix-ui/react-'+name);
+const adapters = {'next/image':'image','next/link':'link','next-themes':'theme','next/navigation':'navigation','react-player/lazy':'player'};
 const modules = new Map();
 const snapshots = new Map();
 for (const entry of registry.items) {
@@ -54,6 +61,10 @@ for (const entry of registry.items) {
 }
 for (const name of ["button", "input", "label", "badge", "card", "slider", "textarea", "checkbox", "avatar", "tooltip", "select", "switch"])
   modules.set(`components/ui/${name}`, await read(`support-${name}.tsx`));
+for (const [key, file] of Object.entries(JSON.parse(await fs.readFile(path.join(root,'vendor/cult-ui/support-modules.json'),'utf8')))) modules.set(key,await read(file));
+for (const name of [...Object.values(adapters),'storage','base-select-demo','base-tooltip-demo']) modules.set('preview-adapters/'+name, await fs.readFile(path.join(root,'components/preview/adapters',name+'.tsx'),'utf8'));
+// Only the introductory sample needs storage. Keep it ephemeral in this preview document.
+for (const key of ['registry/default/ui/intro-disclosure','registry/default/example/intro-disclosure-demo']) modules.set(key, 'import {previewStorage} from "@/preview-adapters/storage";\n'+modules.get(key).replaceAll('localStorage', 'previewStorage'));
 modules.set(
   "lib/utils",
   'import { clsx } from "clsx"; import { twMerge } from "tailwind-merge"; export function cn(...inputs) { return twMerge(clsx(inputs)); }',
@@ -76,6 +87,7 @@ const imports = (code) => {
     .map((x) => x.moduleSpecifier.text);
 };
 function localKey(from, specifier) {
+  if (adapters[specifier]) return "preview-adapters/"+adapters[specifier];
   if (specifier.startsWith("@/")) return specifier.slice(2);
   if (specifier.startsWith("."))
     return path.posix
@@ -152,7 +164,7 @@ for (const item of registry.items.filter((x) => x.type === "registry:ui")) {
       ? "hero-color-panels-demo"
       : `${item.name}-demo`;
   const demo = snapshots.get(demoName);
-  const demoFile = demo?.files
+  const demoFile = (["base-select","base-tooltip"].includes(item.name) ? "preview-adapters/"+item.name+"-demo" : null) || demo?.files
     ?.find((x) => x.path.endsWith(".tsx"))
     ?.path.replace(/\.tsx$/, "");
   const graph = new Set();
@@ -161,20 +173,6 @@ for (const item of registry.items.filter((x) => x.type === "registry:ui")) {
     : demoFile
       ? inspect(demoFile, graph)
       : ["no-demo"];
-  // These demos require media/service setup or unusual host interaction; don't execute them implicitly.
-  if (
-    [
-      "bg-media",
-      "three-d-carousel",
-      "tweet-grid",
-      "logo-carousel",
-      "halo-dropzone",
-      "youtube-video-player",
-    ].includes(item.name)
-  )
-    reasons.push("media-or-host-setup");
-  if (item.name.startsWith("pixel-")) reasons.push("pixel-font-setup");
-  if (item.name === "mac-screen") reasons.push("device-frame-asset");
   const available = reasons.length === 0;
   if (available) {
     graph.forEach((x) => selectedModules.add(x));
@@ -196,6 +194,15 @@ for (const item of registry.items.filter((x) => x.type === "registry:ui")) {
     description: item.description || snapshot.description || "",
     aliasOf: alias || null,
     preview: available,
+    previewAdaptations: available ? [
+      'Isolated browser document; original downloadable source is unchanged.',
+      'Sample images and video are local fixtures; no live external service is connected.',
+      ...([...graph].some(key=>key.startsWith('preview-adapters/')) ? ['Framework adapters apply only to the gallery; target integration must resolve its own framework.'] : []),
+      ...(item.name.startsWith('pixel-') ? ['Geist Pixel font assets are loaded locally.'] : []),
+      ...(['base-select','base-tooltip'].includes(item.name) ? ['HappyHands-authored usage example of the original component.'] : []),
+      ...(item.name==='tweet-grid' ? ['The pinned upstream TweetGrid is itself a mock renderer, not a live tweet embed.'] : []),
+      ...(item.name==='mac-screen' ? ['Device frame is a locally authored illustration.'] : []),
+    ] : [],
     limitations: [...new Set(reasons)],
     dependencies: snapshot.dependencies || item.dependencies || [],
     registryDependencies: snapshot.registryDependencies || [],
@@ -222,6 +229,7 @@ for (const item of registry.items.filter((x) => x.type === "registry:ui")) {
 let allCode = "";
 for (const key of selectedModules) {
   let code = modules.get(key);
+  if (key === "registry/default/example/globe-demo") code = code.replace("  className,", "  className = '',");
   const source = ts.createSourceFile(
     `${key}.tsx`,
     code,
@@ -269,6 +277,20 @@ for (const key of selectedModules) {
     /`https:\/\/i\.pravatar\.cc\/[^`]+`/g,
     '"/components/cult-ui/sample.svg"',
   );
+  // Review media locally: no third-party images, tracking embeds or videos execute here.
+  code = code.replace(/(["'])https?:\/\/[^"']+\.(?:mp4|webm)(?:\?[^"']*)?\1/g, '"/components/cult-ui/sample.webm"');
+  code = code.replace(/(["'])(?:https?:\/\/[^"']+\.(?:png|jpe?g|gif|webp|svg)(?:\?[^"']*)?|\/(?:feature-\d|basic-img|placeholder|component-frames\/[^"']+)\.(?:png|svg))\1/g, '"/components/cult-ui/sample.svg"');
+  code = code.replace(/(["'])\/(?:placeholders|product-images|images)\/[^"']+\.(?:png|jpe?g|gif|webp|svg)\1/g, '"/components/cult-ui/sample.svg"');
+  code = code.replace(/`\/images\/gibli\/[^`]+`/g, '"/components/cult-ui/sample.svg"');
+  code = code.replaceAll('"/cult-icon.svg"', '"/components/cult-ui/sample.svg"');
+  code = code.replace(/(["'])https:\/\/player\.vimeo\.com\/video\/[^"']+\1/g, '"/components/cult-ui/sample.webm"');
+  code = code.replace(/`https:\/\/picsum\.photos\/[^`]+`/g, '"/components/cult-ui/sample.svg"');
+  if (key === 'registry/default/ui/mac-screen') code = code.replace('src="/components/cult-ui/sample.svg"', 'src="/components/cult-ui/device-frame.svg"');
+  if (key === 'registry/default/ui/youtube-video-player') {
+    code = code.replace(/`https:\/\/i\.ytimg\.com[^`]+`/g, '"/components/cult-ui/sample.svg"')
+      .replace(/<iframe/g, '<video controls').replace(/<\/iframe>/g, '</video>')
+      .replace(/`https:\/\/www\.youtube\.com\/embed\/[^`]+`/g, '"/components/cult-ui/sample.webm"');
+  }
   const result = ts.transpileModule(code, {
     compilerOptions: {
       target: ts.ScriptTarget.ES2022,
@@ -327,7 +349,6 @@ await fs.copyFile(
 // Tailwind's reset and upstream utilities are compiled only into the isolated preview document.
 let css = await read("globals.css");
 css = css
-  .replace(/^@import "dither-plugin";.*$/m, "")
   .replace('@import "tailwindcss";', '@import "tailwindcss" source(none);');
 const compiler = await compile(css, { base: root, onDependency() {} });
 await fs.writeFile(

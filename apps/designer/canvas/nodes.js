@@ -75,7 +75,7 @@ export function renderNode(node, base) {
 
   const state = node.entry.stateId || 'page';
   const config = node.entry.configurationId || 'unknown';
-  const http = node.entry.status ? ` · ${node.entry.status}` : '';
+  const http = node.entry.status ? ` / ${node.entry.status}` : '';
   const nameSpan = document.createElement('span');
   nameSpan.textContent = `${state} / ${config}${http}`;
   nameSpan.style.overflow = 'hidden';

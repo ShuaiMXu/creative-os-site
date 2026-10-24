@@ -5,7 +5,7 @@
       "id": "refero",
       "name": "Refero Styles",
       "kind": "design-reference",
-      "status": "source-guide",
+      "status": "local-markdown-import",
       "website": "https://styles.refero.design/",
       "automaticUse": false
     },

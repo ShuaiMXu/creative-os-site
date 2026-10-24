@@ -1,3 +1,4 @@
+import { SystemScenes } from "../../packages/ui/SystemScenes";
 import { SystemExample } from "../../packages/ui/SystemExample";
 import { Icon } from "../../packages/ui/Icon";
 import { SystemDirectory } from "../../packages/ui/SystemDirectory";
@@ -7,12 +8,14 @@ import { SystemBreadcrumb } from "../../packages/ui/SystemBreadcrumb";
 import React, { useState, useRef } from "react";
 import { createRoot } from "react-dom/client";
 import { Button } from "../../packages/ui";
-import tokens from "../../packages/design-tokens/happyhands.json";
+import { TokenReference } from "./TokenReference";
+import { ComponentShowcase, ScreenPatterns } from "./Showcase";
 import "../../packages/design-tokens/happyhands.css";
 import "../../packages/ui/components.css";
 import "../../packages/ui/site-layout.css";
 import "../../packages/ui/system-page.css";
 import "./style.css";
+import "../../packages/ui/owned-ui.css";
 
 function App() {
   const { lang, dark, toggleLanguage, toggleTheme } = useSitePreferences();
@@ -24,7 +27,7 @@ function App() {
   const opener = useRef<HTMLButtonElement>(null);
   React.useEffect(() => {
     document.title =
-      lang === "zh" ? "HappyHands · 设计系统" : "HappyHands · Design system";
+      lang === "zh" ? "HappyHands / 设计系统" : "HappyHands / Design system";
   }, [lang]);
   const t = (zh: string, en: string) => (lang === "zh" ? zh : en);
   const buttonLabels = {
@@ -82,6 +85,7 @@ function App() {
           <SystemDirectory label={t("本页目录", "On this page")}>
             <nav aria-label={t("设计系统目录", "Design system navigation")}>
               {[
+                ["scenes", "应用场景", "Scenes"],
                 ["overview", "概览", "Overview"],
                 ["foundations", "基础规范", "Foundations"],
                 ["components", "组件与状态", "Components & states"],
@@ -94,26 +98,9 @@ function App() {
               ))}
             </nav>
           </SystemDirectory>
+          <SystemScenes system="happyhands" lang={lang} dark={dark} />
           <section id="foundations">
-            <p className="eyebrow">{t("01 / 基础规范", "01 / Foundations")}</p>
             <h2>{t("颜色、文字与间距", "Color, type and spacing")}</h2>
-            <div className="swatches">
-              {["bg", "bg-raised", "ink", "brand", "success", "danger"].map(
-                (key) => (
-                  <div key={key}>
-                    <i style={{ background: `var(--hh-${key})` }} />
-                    <strong>{key}</strong>
-                    <code>
-                      {
-                        (dark ? tokens.dark : tokens.light)[
-                          key as keyof typeof tokens.light
-                        ]
-                      }
-                    </code>
-                  </div>
-                ),
-              )}
-            </div>
             <div className="rules">
               <article>
                 <h3>{t("文字", "Type")}</h3>
@@ -143,11 +130,9 @@ function App() {
                 </p>
               </article>
             </div>
+            <TokenReference lang={lang} dark={dark} />
           </section>
           <section id="components">
-            <p className="eyebrow">
-              {t("02 / 组件与状态", "02 / Components & states")}
-            </p>
             <h2>{t("试用组件与交互", "Try the components")}</h2>
             <div className="demo">
               <h3>{t("按钮", "Buttons")}</h3>
@@ -190,8 +175,8 @@ function App() {
             <div className="demo">
               <h3>
                 {t(
-                  "表单与弹窗 · 原生交互示例",
-                  "Form & dialog · native examples",
+                  "表单与弹窗 / 原生交互示例",
+                  "Form & dialog / native examples",
                 )}
               </h3>
               <p>
@@ -250,8 +235,9 @@ function App() {
                 </Button>
               </dialog>
             </div>
+            <ComponentShowcase lang={lang} />
             <div className="demo">
-              <h3>{t("任务反馈 · 演示", "Task feedback · demo")}</h3>
+              <h3>{t("任务反馈 / 演示", "Task feedback / demo")}</h3>
               <div className="actions">
                 {[
                   ["empty", "空", "Empty"],
@@ -297,12 +283,10 @@ function App() {
             </div>
           </section>
           <section id="patterns">
-            <p className="eyebrow">
-              {t("03 / 页面模式", "03 / Screen patterns")}
-            </p>
             <h2>
-              {t("这些页面正在使用 HappyHands", "Pages built with HappyHands")}
+              {t("从组件到页面", "From components to screens")}
             </h2>
+            <ScreenPatterns lang={lang} />
             <div className="rules">
               <article>
                 <h3>{t("官网", "Portal")}</h3>
@@ -341,7 +325,6 @@ function App() {
             </div>
           </section>
           <section id="adopt">
-            <p className="eyebrow">{t("04 / 接入项目", "04 / Setup")}</p>
             <h2>{t("获取 AI 接入指令", "Get the AI setup prompt")}</h2>
             <p>
               {t(
@@ -354,12 +337,12 @@ function App() {
               <select value={mode} onChange={(e) => setMode(e.target.value)}>
                 <option value="existing">
                   {t(
-                    "已有项目 · 逐页迁移",
-                    "Existing project · migrate a screen",
+                    "已有项目 / 逐页迁移",
+                    "Existing project / migrate a screen",
                   )}
                 </option>
                 <option value="new">
-                  {t("新项目 · 从首屏开始", "New project · first screen")}
+                  {t("新项目 / 从首屏开始", "New project / first screen")}
                 </option>
               </select>
             </label>
@@ -397,8 +380,8 @@ function App() {
             </div>
             <p className="note">
               {t(
-                "当前提供设计变量与 React Button 源码，接入前请核对项目技术栈。",
-                "Tokens and the React Button source are available. Check compatibility with your project before adoption.",
+                "当前提供设计变量与 React Button、Select 源码，接入前请核对项目技术栈。",
+                "Tokens and the React Button and Select sources are available. Check compatibility with your project before adoption.",
               )}
             </p>
           </section>
@@ -423,12 +406,13 @@ function App() {
               </a>
             </div>
             <div className="system-return">
-              <a href="/apps/portal/#explore">
+              <a href="/components/?provider=systems">
                 <Icon name="left" /> {t("返回设计系统", "All design systems")}
               </a>
               <a href="/systems/quartz/">
                 {t("了解 Quartz", "Explore Quartz")} <Icon name="right" />
               </a>
+              <a href="/systems/lime/">{t("了解 Lime", "Explore Lime")} <Icon name="right" /></a>
             </div>
             <details>
               <summary>

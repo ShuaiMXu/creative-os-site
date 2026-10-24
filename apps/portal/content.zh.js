@@ -5,10 +5,10 @@ export const apps = [
     "title": "问题清单",
     "description": "每个问题带有页面截图、位置与影响说明，便于判断先改哪一处。",
     "meta": [
-      "截图 · 问题 · 优先级"
+      "截图 / 问题 / 优先级"
     ],
     "action": "阅读采集指南",
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md"
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/harness.md"
   },
   {
     "index": "02",
@@ -16,10 +16,10 @@ export const apps = [
     "title": "项目设计规范",
     "description": "汇总项目已有的颜色、字体与组件，并标出仍需确认的规则。",
     "meta": [
-      "品牌 · 组件 · 使用规则"
+      "品牌 / 组件 / 使用规则"
     ],
     "action": "查看设计规范",
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/reusable-design-system-extraction.md"
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/reusable-design-system-extraction.md"
   },
   {
     "index": "03",
@@ -27,10 +27,10 @@ export const apps = [
     "title": "代码修改记录",
     "description": "保留独立工作副本与代码差异，方便核对每处修改。",
     "meta": [
-      "工作副本 · 代码差异"
+      "工作副本 / 代码差异"
     ],
     "action": "查看执行流程",
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md#choosing-a-coding-agent"
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/harness.md#choosing-a-coding-agent"
   },
   {
     "index": "04",
@@ -38,10 +38,10 @@ export const apps = [
     "title": "前后对照记录",
     "description": "在相同尺寸与页面状态下比较结果，保留接受或拒绝修改的理由。",
     "meta": [
-      "前后截图 · 复核记录"
+      "前后截图 / 复核记录"
     ],
     "action": "查看复核流程",
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/harness.md#screenshot-aware-visual-review"
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/harness.md#screenshot-aware-visual-review"
   }
 ];
 
@@ -96,7 +96,7 @@ export const elements = [
 export const hero = {
   "eyebrow": [
     "面向独立开发者",
-    "Alpha · 开源 · 本地运行"
+    "Alpha / 开源 / 本地运行"
   ],
   "h1": "让你的产品，",
   "h1Accent": "更专业",
@@ -108,7 +108,7 @@ export const hero = {
 
 export const screenPairs = [
   {
-    "title": "首页 · 桌面端",
+    "title": "首页 / 桌面端",
     "task": "信息层级",
     "beforeLabel": "改前",
     "afterLabel": "改后",
@@ -123,7 +123,7 @@ export const screenPairs = [
     "result": "视觉复核未通过"
   },
   {
-    "title": "首页 · 移动端",
+    "title": "首页 / 移动端",
     "task": "任务连贯",
     "beforeLabel": "改前",
     "afterLabel": "改后",
@@ -166,9 +166,9 @@ export const sections = {
     "kicker": "05 / 开始使用",
     "title": "开始产品体验审阅",
     "titleLine2": "选择首个审阅页面",
-    "copy": "在主仓库安装依赖，准备 Node.js 22.15+、pnpm 11.19+ 和 Chrome 或 Edge。运行 pnpm workbench，在本地工作台填写项目目录和核心任务，再核对采集范围。Alpha 面向有人指导的本地 Web 试用；首次采集不等于完成设计审阅。",
+    "copy": "工作台在本地运行，代码修改由你确认。安装并启动后，连接项目，选择要检查的页面，再查看建议与修改结果。",
     "quickstartLabel": "快速开始",
-    "quickstartTitle": "安装依赖后，打开本地工作台",
+    "quickstartTitle": "首次安装并启动工作台",
     "copyBtn": "复制命令"
   }
 };
@@ -224,7 +224,7 @@ export const systems = [
       "审阅",
       "证据"
     ],
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/happyclaw-case.md",
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/happyclaw-case.md",
     "action": "阅读案例"
   },
   {
@@ -240,11 +240,11 @@ export const systems = [
       "系统先行",
       "存档"
     ],
-    "href": "https://github.com/ShuaiMXu/creative-os/blob/main/docs/firefly-ui-kit-case.md",
+    "href": "https://github.com/ShuaiMXu/happyhands/blob/main/docs/firefly-ui-kit-case.md",
     "action": "阅读案例"
   },
   {
-    "tag": "预设方向 · 规划中",
+    "tag": "预设方向 / 规划中",
     "title": "SaaS 基础",
     "description": "用于后续设计基础的预设方向，尚未发布可复用模板包。",
     "values": [
@@ -257,11 +257,11 @@ export const systems = [
       "桌面",
       "模板"
     ],
-    "href": "https://github.com/ShuaiMXu/creative-os/issues",
+    "href": "https://github.com/ShuaiMXu/happyhands/issues",
     "action": "查看规划"
   },
   {
-    "tag": "预设方向 · 规划中",
+    "tag": "预设方向 / 规划中",
     "title": "移动端基础",
     "description": "用于后续设计基础的预设方向，尚未发布可复用模板包。",
     "values": [
@@ -274,7 +274,7 @@ export const systems = [
       "消费",
       "模板"
     ],
-    "href": "https://github.com/ShuaiMXu/creative-os/issues",
+    "href": "https://github.com/ShuaiMXu/happyhands/issues",
     "action": "查看规划"
   },
   {
@@ -290,7 +290,7 @@ export const systems = [
       "SwiftUI",
       "规划中"
     ],
-    "href": "https://github.com/ShuaiMXu/creative-os/issues",
+    "href": "https://github.com/ShuaiMXu/happyhands/issues",
     "action": "查看规划"
   }
 ];
@@ -299,7 +299,7 @@ export const ui = {
   "scrollNote": "浏览产品能力",
   "githubLink": "GitHub",
   "footer": {
-    "left": "HappyHands · AI Product Designer",
+    "left": "HappyHands / AI Product Designer",
     "middle": "产品体验优化",
     "right": "查看源码"
   }
@@ -326,6 +326,6 @@ export const delivery = {
       "依据复核结果接受或拒绝修改，记录待解决的问题。新页面沿用已确认的设计规范。"
     ]
   ],
-  "status": "目前需要在本地安装和运行。自动监控、自动学习和订阅服务尚未开放。各项功能的实现情况见开发指南。",
+  "status": "采集、修改与复核的配置说明见开发指南。",
   "link": "查看开发指南"
 };

@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import {gray, grayDark} from "@radix-ui/colors";
 import { themeExport, fontAssetOrigin } from "../apps/studio/theme-export";
 import postcss from "postcss";
 
@@ -282,8 +283,8 @@ test("HappyHands profile enforces neutral actions and reports brand drift withou
   const { checkStandards } =
     await import("../packages/theme-core/standards.ts");
   const styles = presetStyles("happyhands");
-  assert.equal(styles.light.primary, "#161616");
-  assert.equal(styles.dark.primary, "#F7F6F3");
+  assert.equal(styles.light.primary, gray.gray12);
+  assert.equal(styles.dark.primary, grayDark.gray12);
   assert.ok(
     !checkStandards(styles, "happyhands").some((c) => c.status === "attention"),
   );
