@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>HappyHands — Product film storyboard</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <a class="skip" href="#story">Skip to storyboard</a>
+    <header class="page-header">
+      <a href="/apps/portal/" aria-label="HappyHands website"
+        ><img
+          class="page-logo"
+          src="/brand/happyhands-logo-ink.png"
+          alt="HappyHands"
+          width="180"
+          height="39"
+      /></a>
+      <p>Product film · Storyboard V7</p>
+      <a class="download" href="/film/storyboard/HappyHands-Storyboard-V7.pdf"
+        >Download PDF</a
+      >
+    </header>
+    <main id="story">
+      <div class="intro">
+        <div>
+          <h1>Review the full storyboard.</h1>
+          <p>85 seconds · 8 scenes · English copy</p>
+        </div>
+        <p class="stage-note">
+          Static concepts for approval. Video production has not started.
+        </p>
+      </div>
+      <div class="review-layout">
+        <nav
+          class="scene-nav"
+          aria-label="Storyboard scenes"
+          id="scene-nav"
+        ></nav>
+        <section class="current-scene" aria-label="Selected scene">
+          <div class="scene-heading">
+            <div>
+              <p id="scene-time"></p>
+              <h2 id="scene-title"></h2>
+            </div>
+            <div class="scene-controls">
+              <button id="previous" type="button">Previous</button
+              ><button id="next" type="button">Next</button>
+            </div>
+          </div>
+          <figure class="film-frame" id="frame">
+            <img
+              id="plate"
+              class="plate"
+              alt=""
+              width="1672"
+              height="941"
+            /><img
+              class="film-logo"
+              id="film-logo"
+              src="/brand/happyhands-logo-ink.png"
+              alt="HappyHands"
+            />
+            <div class="closing-copy" id="closing-copy" hidden>
+              <p>Make it feel designed.</p>
+              <span>happyhands-design.vercel.app</span>
+            </div>
+            <figcaption id="caption"></figcaption>
+          </figure>
+          <p>
+            <a id="open-frame" target="_blank" rel="noopener"
+              >Open full-size frame ↗</a
+            >
+          </p>
+          <p class="frame-note">
+            Illustrative film composition · Northstar is a fictional demo
+            project · Not a live product capture
+          </p>
+          <div class="scene-notes" aria-live="polite">
+            <section>
+              <h3>What happens</h3>
+              <p id="action"></p>
+            </section>
+            <section>
+              <h3>Camera &amp; transition</h3>
+              <p id="camera"></p>
+              <p id="transition"></p>
+            </section>
+            <section>
+              <h3>Voiceover draft</h3>
+              <p id="voiceover"></p>
+            </section>
+          </div>
+          <details class="evidence">
+            <summary>Capability and evidence</summary>
+            <p id="capability"></p>
+            <p id="boundary"></p>
+            <a id="source">Read the current implementation</a>
+          </details>
+        </section>
+      </div>
+      <section class="direction" aria-labelledby="direction-title">
+        <h2 id="direction-title">Brand and type, kept intentional.</h2>
+        <div class="direction-grid">
+          <div>
+            <h3>The official identity</h3>
+            <img
+              class="identity-sample"
+              src="/brand/happyhands-logo-ink.png"
+              alt="Official HappyHands hand-and-wordmark"
+              width="240"
+              height="52"
+            />
+            <p>
+              The original hand-and-wordmark is placed into each scene. Its
+              artwork, proportions and lettering are unchanged.
+            </p>
+          </div>
+          <div>
+            <h3>HappyHands: Instrument Sans</h3>
+            <p class="sans-specimen">Review. Refine. Verify.</p>
+            <p>
+              Regular and bold for captions, controls and readable supporting
+              text. Self-hosted font files; no synthetic weight.
+            </p>
+          </div>
+          <div>
+            <h3>Northstar: Instrument Serif</h3>
+            <p class="serif-specimen">Ideas into products.</p>
+            <p>
+              Display text only, inside the fictional project. Not used for
+              HappyHands controls or captions.
+            </p>
+          </div>
+        </div>
+        <details>
+          <summary>Artwork and production notes</summary>
+          <p>
+            These scenes are art-directed HTML/CSS compositions with exact
+            English text and the official logo. Northstar is a fictional demo.
+            Shown findings, source files and review states are authored
+            examples, not a live execution. The finished video must use real
+            Harness evidence for any execution or review outcome.
+          </p>
+          <p>
+            Source-font notices:
+            <a href="/film/storyboard/fonts/InstrumentSans-OFL.txt"
+              >Instrument Sans OFL</a
+            >
+            ·
+            <a href="/film/storyboard/fonts/InstrumentSerif-OFL.txt"
+              >Instrument Serif OFL</a
+            >. No video, audio, automatic approval or target-project deployment
+            is included.
+          </p>
+        </details>
+      </section>
+      <noscript
+        ><p>
+          JavaScript is needed to select scenes.
+          <a href="/film/storyboard/HappyHands-Storyboard-V7.pdf"
+            >Open the complete PDF storyboard</a
+          >.
+        </p></noscript
+      >
+    </main>
+    <footer class="page-footer">
+      <p>HappyHands · Product experience review</p>
+      <a href="/apps/portal/">Back to the website</a>
+    </footer>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

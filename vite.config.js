@@ -41,6 +41,8 @@ export default defineConfig({
   }],
   build: { rollupOptions: { input: {
     home: resolve('index.html'),
+    'film-storyboard': resolve('film/storyboard/index.html'),
+    'film-storyboard-frame': resolve('film/storyboard/frame.html'),
     happyhands: resolve('systems/happyhands/index.html'),
     quartz: resolve('systems/quartz/index.html'),
     lime: resolve('systems/lime/index.html'),

@@ -1,0 +1,107 @@
+{
+  "fps": 30,
+  "duration_frames": 840,
+  "scenes": [
+    {
+      "id": "page",
+      "start_frame": 0,
+      "end_frame": 120
+    },
+    {
+      "id": "inspect",
+      "start_frame": 120,
+      "end_frame": 210
+    },
+    {
+      "id": "source",
+      "start_frame": 210,
+      "end_frame": 300
+    },
+    {
+      "id": "edit",
+      "start_frame": 300,
+      "end_frame": 480
+    },
+    {
+      "id": "compare",
+      "start_frame": 480,
+      "end_frame": 630
+    },
+    {
+      "id": "pending",
+      "start_frame": 630,
+      "end_frame": 720
+    },
+    {
+      "id": "brand",
+      "start_frame": 720,
+      "end_frame": 840
+    }
+  ],
+  "captions": [
+    {
+      "from": 16,
+      "to": 112,
+      "text": "Review the whole experience."
+    },
+    {
+      "from": 130,
+      "to": 198,
+      "text": "Confirm one change."
+    },
+    {
+      "from": 224,
+      "to": 292,
+      "text": "Follow it into the source."
+    },
+    {
+      "from": 312,
+      "to": 372,
+      "text": "One scoped edit."
+    },
+    {
+      "from": 498,
+      "to": 612,
+      "text": "Check the result."
+    }
+  ],
+  "actions": [
+    {
+      "from": 190,
+      "duration": 20,
+      "src": "audio/click.mp3",
+      "volume": 0.22,
+      "label": "Scope confirmed"
+    },
+    {
+      "from": 210,
+      "duration": 34,
+      "src": "audio/page-turn.mp3",
+      "volume": 0.35,
+      "label": "Page turns to source"
+    },
+    {
+      "from": 318,
+      "duration": 20,
+      "src": "audio/click.mp3",
+      "volume": 0.28,
+      "label": "Spacing token changes"
+    },
+    {
+      "from": 400,
+      "duration": 34,
+      "src": "audio/page-turn.mp3",
+      "volume": 0.3,
+      "label": "Same page returns"
+    },
+    {
+      "from": 720,
+      "duration": 70,
+      "src": "audio/resolve.mp3",
+      "volume": 0.2,
+      "label": "Brand resolution"
+    }
+  ],
+  "voice_lines": [],
+  "bgm": false
+}

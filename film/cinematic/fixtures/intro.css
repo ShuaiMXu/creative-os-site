@@ -1,0 +1,3 @@
+/* Fictional fixture; these exact values drive the two rendered states. */
+:root { --space-4: 16px; --space-8: 32px; }
+.intro-actions { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-8); }

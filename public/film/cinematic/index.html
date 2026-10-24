@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>HappyHands · C 运动预览</title>
+    <style>
+      html {
+        color-scheme: light;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #f7f7f8;
+        color: #202020;
+        font-family: Arial, "Microsoft YaHei", sans-serif;
+      }
+      main {
+        max-width: 1360px;
+        margin: auto;
+        padding: 32px 28px 48px;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+        margin-bottom: 28px;
+      }
+      header img {
+        width: 188px;
+      }
+      header span,
+      p {
+        color: #646464;
+        font-size: 14px;
+        line-height: 1.7;
+      }
+      h1 {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 0 0 10px;
+      }
+      video {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16/9;
+        background: #fff;
+        border-radius: 8px;
+        margin: 24px 0 20px;
+        box-shadow: 0 12px 40px #2020200a;
+      }
+      a {
+        color: inherit;
+        text-underline-offset: 3px;
+      }
+      @media (max-width: 600px) {
+        main {
+          padding: 22px 16px;
+        }
+        header {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 12px;
+        }
+        h1 {
+          font-size: 21px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <img src="../../brand/happyhands-logo-ink.png" alt="HappyHands" /><span
+          >C · 跟随同一处修改</span
+        >
+      </header>
+      <h1>页面 → 源码 → 回到同一处变化</h1>
+      <p>
+        28 秒运动方向预览 · 含音效，暂未加入配乐。Northstar 为虚构演示项目。
+      </p>
+      <video controls playsinline preload="metadata" poster="poster.png">
+        <source src="preview.mp4" type="video/mp4" />
+        浏览器无法播放，<a href="preview.mp4">打开 MP4</a>。
+      </video>
+      <p>
+        本轮聚焦连续运镜、语义翻面与完整组件的前后变化。独立抽帧复核已完成；连续观感、听感与最终配乐仍待确认。
+      </p>
+    </main>
+  </body>
+</html>
