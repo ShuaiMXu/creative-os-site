@@ -1,0 +1,24 @@
+{
+  "source": "Original fictional Northstar fixture; capture.py / fixtures/northstar.html",
+  "scale": 6,
+  "page": {
+    "w": 1000,
+    "h": 640
+  },
+  "states": {
+    "before": {
+      "x": 65,
+      "y": 232.890625,
+      "w": 870,
+      "h": 106,
+      "gap": "16px"
+    },
+    "after": {
+      "x": 65,
+      "y": 232.890625,
+      "w": 870,
+      "h": 122,
+      "gap": "32px"
+    }
+  }
+}

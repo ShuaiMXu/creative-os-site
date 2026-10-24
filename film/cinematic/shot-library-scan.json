@@ -1,0 +1,23 @@
+{
+  "count": 157,
+  "selection": [
+    "card-flip-reveal",
+    "spotlight-hero-card",
+    "shot-transitions"
+  ],
+  "reason": "Single-page continuity; side-lit macro and source reveal. Other cards excluded to avoid montage and repetitive entries.",
+  "frontmatter": [
+    {
+      "path": "references\\shots\\opening\\spotlight-hero-card.md",
+      "frontmatter": "\nname: spotlight-hero-card\n一句话: 聚光灯扫过页面锁定一张卡，斜 45° 推进后卡片弹起悬浮、光束沿轮廓两圈、贴回原位\n适用: \"单一主角\"式产品开场；把一个核心对象（卡片/条目/模块）立成全片主角\n时长: 约 4.6s（82–220f）\n能量: 中（质感最高的一镜，节奏慢而稳）\n标签: effects、camera\n"
+    },
+    {
+      "path": "references\\shots\\transition\\card-flip-reveal.md",
+      "frontmatter": "\nname: card-flip-reveal\n一句话: 功能卡 3D 翻面揭示——卡片沿 Y 轴翻 180°，正面 UI 翻到侧棱最薄处闪过一道随角度移动的高光带，背面揭出大号结论数字，逐张错峰扫过整排\n适用: \"功能→成果\"的成对叙事：一排功能卡逐张翻出各自的指标/结论；元素级转场卡\n时长: 单卡翻转 26f，三卡错峰 10f，全程 ~4.9s（含 hold）\n能量: 中高\n标签: data\n"
+    },
+    {
+      "path": "references\\shots\\transition\\shot-transitions.md",
+      "frontmatter": "\nname: shot-transitions\n一句话: 镜头交棒六式——推进流白、穿暗场直航、虚焦接力、黑场字卡、whip-pan 甩镜、mask-wipe 穿窗（含纵深款），按能量落差选型\n适用: 任何两镜衔接处（技法卡，分镜阶段排完镜头后逐个接缝选一式）\n时长: n/a（技法卡；各式占用帧数见参数表，从相邻镜头预算里划）\n能量: n/a（技法卡，不占能量位）\n"
+    }
+  ]
+}

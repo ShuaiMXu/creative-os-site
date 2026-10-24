@@ -1,0 +1,14 @@
+{
+  "version":"C-v3b",
+  "accessed_at":"2026-10-24",
+  "claims":[
+    {"id":"local-scope","claim":"Code changes require a connected project and confirmation of the proposed scope.","source_file":"apps/portal/agent-presets.js","source_quote":"Connect the target repository when code changes are needed. Read DESIGN.md, tokens, components and complete Skills; confirm rules and preserve the existing brand.","usage":"scope confirmation before illustrative source edit","status":"public workflow paraphrase"},
+    {"id":"gap","claim":"The fictional fixture starts with a 16px gap and its authored project rule requires 32px.","source_file":"film/cinematic/fixtures/DESIGN.md; film/cinematic/fixtures/northstar.html; film/cinematic/public/textures/layout.json","source_quote":"The intro action group uses --space-8 (32 px)","usage":"intro measurement, source change and comparison","status":"authored example; captured DOM confirms 16px / 32px"},
+    {"id":"edit","claim":"The illustration changes the group spacing while preserving shared action styling.","source_file":"film/cinematic/fixtures/Intro.tsx; film/cinematic/fixtures/intro.css; film/cinematic/src/Film.tsx","source_quote":"gap: var(--space-4); → gap: var(--space-8);","usage":"source close-up","status":"illustrative source, not a recorded execution"},
+    {"id":"pending","claim":"Independent review and the user's decision remain pending.","source_file":"film/cinematic/src/Film.tsx","source_quote":"Independent review · Pending / Your decision · Pending","usage":"page-external review state","status":"explicit pending, no fabricated success"},
+    {"id":"brand","claim":"The featured product is HappyHands at happyhands.cc.","source_file":"public/brand/happyhands-logo-ink.png","source_url":"https://happyhands.cc/apps/portal/","usage":"intro signature and closing brand","status":"official logo hash retained; existing verified project domain"}
+  ],
+  "copy_type":"Instructional captions and closing Review. Change. Verify. are creative copy, not claims of successful execution.",
+  "fictional":["Northstar","Field Notes","Orbit Studio","the demo website/source/control arrangement"],
+  "not_claimed":["Exact shipped workbench UI","a real model executed the edit","review passed","human accepted the edit","automatic hosted repair"]
+}
